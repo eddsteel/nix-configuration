@@ -1,28 +1,31 @@
 {pkgs, lib, config, ...}:
 let
-  extensions = with pkgs.gnomeExtensions; [ caffeine ];
-  enabledExtensions = map (e: e.uuid or e.extensionUuid) extensions;
-  extensionLink = ext: let uuid = ext.uuid or ext.extensionUuid; in {
-    target = "${config.home.homeDirectory}/.local/share/gnome-shell/extensions/${uuid}";
+  home = config.home.homeDirectory;
+  raise = "${home}/src/scripts/raise.sh";
+  extensions = with pkgs.gnomeExtensions; [
+    caffeine
+    system-monitor
+    sound-output-device-chooser
+  ];
+  findUuid = e: e.uuid or e.extensionUuid;
+  extensionLink = ext: let uuid = findUuid ext; in {
+    target = "${home}/.local/share/gnome-shell/extensions/${uuid}";
     source = "${ext}/share/gnome-shell/extensions/${uuid}";
   };
-  extFiles = map (e: { name = e.name; value = extensionLink e; }) extensions;
-  extensionFiles = builtins.listToAttrs extFiles;
+  extPair = e: { name = e.name; value = extensionLink e; };
+  mkTuple = lib.hm.gvariant.mkTuple;
 in {
 
   # Put cross-OS packages (including CLI) in apps.nix
   home.packages = with pkgs; [
   ] ++ extensions;
-
-  home.file = extensionFiles;
+  home.file = builtins.listToAttrs (map extPair extensions);
 
   dconf.settings = let
-    raise = "${config.home.homeDirectory}/src/scripts/raise.sh";
     mediaKeys = "org/gnome/settings-daemon/plugins/media-keys";
-    mkTuple = lib.hm.gvariant.mkTuple;
   in {
     "org/gnome/shell".disable-user-extensions = false;
-    "org/gnome/shell".enabled-extensions = enabledExtensions;
+    "org/gnome/shell".enabled-extensions = map findUuid extensions;
 
     "org/gnome/desktop/peripherals/mouse" = {
       natural-scroll = false;
@@ -34,7 +37,7 @@ in {
     };
 
     "org/gnome/desktop/background" = {
-      picture-uri = "file://${config.home.homeDirectory}/.desktop.jpg";
+      picture-uri = "file://${home}/.desktop.jpg";
       color-shading-type="solid";
       primary-color="#000000000000";
       picture-options="zoom";

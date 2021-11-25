@@ -8,7 +8,7 @@ let
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
-  imports = [ ./git.nix ./apps.nix] ++ (if host.gnome then [./gnome.nix] else []);
+  imports = [ ./git.nix ./apps.nix ./local.nix ] ++ (if host.gnome then [./gnome.nix] else []);
   programs.home-manager.enable = true;
   home.username = host.user;
   home.homeDirectory = host.homeDir;
@@ -79,10 +79,6 @@ in {
       if [ -f ${config.home.homeDirectory}/.workrc  ]; then
           . ${config.home.homeDirectory}/.workrc
       fi
-      export HISTFILE="~/.histfile"
-      export EDITOR="emacsclient"
-      export ALTERNATE_EDITOR="emacs"
-      export LESS=" -R "
     '';
   };
 
@@ -96,11 +92,6 @@ in {
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox.override {
-      cfg = {
-        enableGnomeExtensions = host.gnome;
-      };
-    };
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       onepassword-password-manager anchors-reveal auto-tab-discard
       duckduckgo-privacy-essentials
@@ -118,6 +109,7 @@ in {
         "services.sync.username" = "edd@eddsteel.com";
         "services.sync.engine.creditcards" = false;
         "services.sync.engine.passwords" = false;
+        "accessibility.typeaheadfind.enablesound" = false;
       };
     };
   };
@@ -191,4 +183,7 @@ in {
   '';
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+
+  programs.jq.enable = true;
+  programs.exa.enable = true;
 }
