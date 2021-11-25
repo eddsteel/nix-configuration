@@ -1,15 +1,29 @@
 {pkgs, lib, config, ...}:
-{
+let
+  extensions = with pkgs.gnomeExtensions; [ caffeine ];
+  enabledExtensions = map (e: e.uuid or e.extensionUuid) extensions;
+  extensionLink = ext: let uuid = ext.uuid or ext.extensionUuid; in {
+    target = "${config.home.homeDirectory}/.local/share/gnome-shell/extensions/${uuid}";
+    source = "${ext}/share/gnome-shell/extensions/${uuid}";
+  };
+  extFiles = map (e: { name = e.name; value = extensionLink e; }) extensions;
+  extensionFiles = builtins.listToAttrs extFiles;
+in {
+
   # Put cross-OS packages (including CLI) in apps.nix
   home.packages = with pkgs; [
-    gnome.gnome-tweaks
-  ];
+  ] ++ extensions;
+
+  home.file = extensionFiles;
 
   dconf.settings = let
     raise = "${config.home.homeDirectory}/src/scripts/raise.sh";
     mediaKeys = "org/gnome/settings-daemon/plugins/media-keys";
     mkTuple = lib.hm.gvariant.mkTuple;
   in {
+    "org/gnome/shell".disable-user-extensions = false;
+    "org/gnome/shell".enabled-extensions = enabledExtensions;
+
     "org/gnome/desktop/peripherals/mouse" = {
       natural-scroll = false;
     };
