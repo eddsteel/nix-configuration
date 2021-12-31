@@ -1,25 +1,28 @@
 { config, pkgs, lib, ... }:
-
 let
   hostname = "draper";
-  host = import (./hosts + "/${hostname}.nix") { inherit pkgs; inherit config; };
-  libUtil = import ./util.nix { inherit config; inherit lib; };
+  host = import (./hosts + "/${hostname}.nix") { inherit pkgs config; };
+  util = import ./util.nix { inherit config lib; };
+  localPkgs = import ./local.nix { inherit pkgs; };
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
-  imports = [ ./git.nix ./apps.nix ./local.nix ] ++ (if host.gnome then [./gnome.nix] else []);
+  imports = [ ./git.nix ./apps.nix ] ++ (if host.gnome then [./gnome.nix] else []);
   programs.home-manager.enable = true;
   home.username = host.user;
   home.homeDirectory = host.homeDir;
   home.stateVersion = "21.05";
-  home.packages = with pkgs; [git nix-prefetch-git mr stow] ++ host.homePkgs;
+  home.packages = with pkgs;
+    [git nix-prefetch-git mr stow]
+    ++ (lib.attrsets.attrValues localPkgs) # i.e. all defined locally-built packages.
+    ++ host.homePkgs;
 
   home.file.".face".source = ./files/face;
   home.file.".desktop.jpg".source = ./files/desktop;
 
   home.file.".mrtrust".text = "${config.home.homeDirectory}/src/.mrconfig";
-  home.file."src/.mrconfig".text = libUtil.mrINI host.src.repos;
+  home.file."src/.mrconfig".text = util.mrINI host.src.repos;
   home.activation."mrUp" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     cd ~/src/
     ${netcheck} && mr -j 5 up
@@ -118,13 +121,16 @@ in {
   home.file.".ssh/id_rsa.pub".source = ./files + "/id_rsa.edd.${hostname}.pub";
   home.file.".ssh/id_rsa".source = ./secrets + "/id_rsa.edd.${hostname}";
 
+  ## S3-backed files
   home.file.".aws/credentials".source = ./secrets/aws-credentials;
   home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}
-    $DRY_RUN_CMD mkdir -p $HOME/media/music/{Albums,Loose}
-    $DRY_RUN_CMD ${netcheck} && aws s3 --region ca-central-1 sync \
-      "s3://eddsteel-disk/music/support/" "$HOME/media/music/support/"
-    $DRY_RUN_CMD chmod +x $HOME/media/music/support/*.sh
+    $DRY_RUN_CMD mkdir -p $HOME/media/music/{albums,loose}
+  '';
+  home.activation."setupTxt" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD mkdir -p $HOME/tmp
+    cd $HOME/tmp
+    $DRY_RUN_CMD s3 pull
   '';
 
   programs.gnome-terminal.enable = host.gnome;
@@ -186,4 +192,23 @@ in {
 
   programs.jq.enable = true;
   programs.exa.enable = true;
+
+  systemd.user = {
+    tmpfiles.rules = [
+      "e ${config.home.homeDirectory}/tmp                0755 edd users 10d -"
+    ];
+    startServices = true;
+
+    services.brainzo-api = {
+      Unit = { Description = "brainzo-api"; };
+      Install = { WantedBy = ["default.target"]; };
+      Service = {
+        Type = "simple";
+        Restart = "always";
+        ExecStart = "${localPkgs.brainzo}/bin/brainzo-api";
+        KillMode = "process";
+        TimeoutSec = 180;
+      };
+    };
+  };
 }

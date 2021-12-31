@@ -2,8 +2,14 @@
 let
   home = config.home.homeDirectory;
   raise = "${home}/src/scripts/raise.sh";
+  myExecutor = pkgs.gnomeExtensions.executor.overrideAttrs (old: {
+    buildCommand = old.buildCommand + ''
+        substituteInPlace $out/share/gnome-shell/extensions/executor@raujonas.github.io/extension.js --replace "'/bin/bash'" "'/usr/bin/env', 'bash'"
+    '';
+  });
   extensions = with pkgs.gnomeExtensions; [
     caffeine
+    myExecutor
     system-monitor
     sound-output-device-chooser
   ];
@@ -23,6 +29,8 @@ in {
 
   dconf.settings = let
     mediaKeys = "org/gnome/settings-daemon/plugins/media-keys";
+    extensionsKey = "org/gnome/shell/extensions";
+    colors0 = "#333333ff"; colors1 = "#555555ff"; colors2 = "#777777ff"; colors3 = "#999999ff"; colors4 = "#bbbbbbff"; colors5 = "#ddddddff";
   in {
     "org/gnome/shell".disable-user-extensions = false;
     "org/gnome/shell".enabled-extensions = map findUuid extensions;
@@ -114,6 +122,48 @@ in {
 
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
+    };
+
+    "${extensionsKey}/caffeine".user-enabled = false;
+
+    "${extensionsKey}/executor" = {
+      center-active = false;
+      center-commands-json = ''{"commands":[]}'';
+      right-active = false;
+      right-commands-json = ''{"commands":[]}'';
+      left-active = true;
+      left-commands-json=''{"commands":[{"command":"/home/edd/.nix-profile/bin/b np get","interval":5,"uuid":"13f3aa20-7461-448c-ab74-0ee48989a077"}]}'';
+      left-index = 2;
+      location = 0;
+    };
+
+    "${extensionsKey}/system-monitor" = {
+      battery-hidesystem = true;
+      battery-show-menu = true;
+      center-display = false;
+      compact-display = false;
+      cpu-graph-width = 80;
+      cpu-individual-cores = false;
+      cpu-iowait-color = colors0;
+      cpu-nice-color = colors1;
+      cpu-other-color = colors2;
+      cpu-show-text = true;
+      cpu-system-color = colors3;
+      cpu-user-color = colors4;
+      disk-read-color = colors2;
+      disk-write-color = colors4;
+      memory-buffer-color = colors1;
+      memory-cache-color = colors3;
+      memory-graph-width = 80;
+      memory-program-color = colors4;
+      move-clock = false;
+      net-collisions-color = colors1;
+      net-down-color = colors2;
+      net-downerrors-color = colors4;
+      net-graph-width = 80;
+      net-up-color = colors3;
+      net-uperrors-color = colors5;
+      thermal-sensor-file = "/sys/class/hwmon/hwmon5/temp1_input";
     };
   };
 
