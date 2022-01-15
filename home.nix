@@ -19,7 +19,7 @@ in {
   home.stateVersion = "21.05";
 
   home.packages = with pkgs;
-    [git nix-prefetch-git mr stow aws]
+    [git nix-prefetch-git mr stow awscli2]
     ++ host.homePkgs;
 
   home.file.".face".source = ./files/face;
@@ -28,8 +28,8 @@ in {
   home.file.".mrtrust".text = "${config.home.homeDirectory}/src/.mrconfig";
   home.file."src/.mrconfig".text = util.mrINI host.src.repos;
   home.activation."mrUp" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    cd ~/src/
-    ${netcheck} && mr -j 5 up
+    $DRY_RUN_CMD cd ~/src/
+    $DRY_RUN_CMD ${netcheck} && mr -j 5 up
   '';
 
   programs.bash = {
@@ -90,6 +90,7 @@ in {
       # i.e. non-nixos that need a bash hook.
       if [ -f /etc/bash.bashrc ]; then
          . /etc/bash.bashrc
+         . /etc/bashrc
       fi
     '';
   };
@@ -97,7 +98,12 @@ in {
   programs.git = {
     enable = true;
     userEmail = host.email;
-  }; # the rest is in git.nix
+    signing.key = host.gpg;
+  } // (if host.macos then {
+    extraConfig = {
+      credential.helper = "osxkeychain";
+    };
+  } else {}); # the rest is in git.nix
 
   programs.emacs.enable = true;
   # config is git/mr/stow
@@ -156,4 +162,9 @@ in {
 
   programs.jq.enable = true;
   programs.exa.enable = true;
+
+  home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    gpg --import ${gpgPub}
+    gpg --import ${gpgSec}
+  '';
 }

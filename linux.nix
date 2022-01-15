@@ -19,10 +19,6 @@ let {
     '';
   };
 
-  home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    gpg --import ${gpgPub}
-    gpg --import ${gpgSec}
-  '';
   systemd.user = {
     tmpfiles.rules = [
       "e ${config.home.homeDirectory}/tmp                0755 edd users 10d -"

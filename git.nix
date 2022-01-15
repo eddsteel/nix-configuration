@@ -1,8 +1,10 @@
-{ ... }:
+{ config, pkgs, ... }:
 {
+
+  home.file.".config/hub".source = ./secrets/hub;
+
   programs.git = {
     userName = "Edd Steel";
-    signing.key = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
     signing.signByDefault = true;
 
     aliases = {
@@ -28,28 +30,27 @@
     "*~" ".#*" "*#" "*.elc" ".DS_Store" "*.bak" "*.pyc" "/.stack-work"
     "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
     ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
-    "/node_modules" ".projectile" "/out/"];
-    includes = [ { path = ".gitconfig.extra"; } ];
+    "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"];
 
     extraConfig = {
+      branch.autosetuprebase = "always";
       color.ui = true;
-      url."https://github.com/".insteadOf = "gh:";
+      core.editor = "${pkgs.emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
+      github.user = "eddsteel";
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      push.default = "current";
+      rebase.autostash = true;
+      submodule.recurse = true;
+      tag.forceSignedAnnotated = true;
+      url."git@github.com:".insteadOf = [
+        "gh:"
+        "https://github.com"
+      ];
       url."git@github.com:eddsteel/".pushInsteadOf = [
         "git://github.com/eddsteel/"
         "https://github.com/eddsteel/"
-        "gh:eddsteel/"
       ];
-
-      core.editor = "emacsclient";
-      push.default = "current";
-      branch.autosetuprebase = "always";
-      log.mailmap = true;
-      tag.forceSignedAnnotated = true;
-      pull.rebase = true;
-      rebase.autostash = true;
-      github.user = "eddsteel";
-      submodule.recurse = true;
-      init.defaultBranch = "main";
     };
   };
 }
