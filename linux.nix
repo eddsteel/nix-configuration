@@ -1,7 +1,7 @@
 {pkgs, config, localPkgs, ...} :
-let {
+let
   localPkgs = import ./local.nix { inherit pkgs; };
-}; in {
+in {
   programs.gpg = {
     enable = true;
     settings = {
@@ -62,5 +62,5 @@ let {
     };
   };
 
-  home.packages = (lib.attrsets.attrValues localPkgs) # i.e. all defined locally-built packages.
+  home.packages = (pkgs.lib.attrsets.attrValues localPkgs); # i.e. all defined locally-built packages.
 }

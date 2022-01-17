@@ -2,6 +2,7 @@
 {
   user = "edd";
   email = "edd@eddsteel.com";
+  gpg = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
   homeDir = "/home/edd";
   src.repos = [
     {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
