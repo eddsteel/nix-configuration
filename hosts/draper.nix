@@ -11,7 +11,7 @@
     {"name" = "nixpkgs"; "remote" = "gh:NixOS/nixpkgs";}
     {"name" = "brainzo";}
   ];
-  homePkgs = with pkgs; [wmctrl vlc zoom-us psmisc];
+  homePkgs = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
   gnome = true;
   linux = true;
   macos = false;
