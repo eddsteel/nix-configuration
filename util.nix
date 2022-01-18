@@ -1,10 +1,11 @@
 { config, lib, ... }:
 with lib;
 let
-  stowOpts = "-t ${config.home.homeDirectory} -d ${config.home.homeDirectory}/src --ignore='.gitignore.*'";
   mkMrConfig = repo: let
     name = repo.name;
+    pfx = if repo ? pfx then "/${repo.pfx}" else "";
     remote = if repo ? remote then repo.remote else "gh:eddsteel/${name}";
+    stowOpts = "-t ${config.home.homeDirectory}${pfx} -d ${config.home.homeDirectory}/src --ignore='.gitignore.*'";
     attrs = {
       "checkout" = "git clone ${remote} ${name}";
     } // (optionalAttrs (repo ? stow) {

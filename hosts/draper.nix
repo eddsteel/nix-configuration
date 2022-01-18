@@ -6,11 +6,12 @@
   homeDir = "/home/edd";
   src.repos = [
     {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
-    {"name" = "df-emacs"; "stow" = true;}
+    {"name" = "df-emacs"; "stow" = true; "pfx" = ".config";}
     {"name" = "git-web-link";}
     {"name" = "scripts";}
     {"name" = "nixpkgs"; "remote" = "gh:NixOS/nixpkgs";}
     {"name" = "brainzo";}
+    {"name" = "bookbot";}
   ];
   homePkgs = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
   gnome = true;

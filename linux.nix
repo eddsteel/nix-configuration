@@ -63,4 +63,6 @@ in {
   };
 
   home.packages = (pkgs.lib.attrsets.attrValues localPkgs); # i.e. all defined locally-built packages.
+
+  home.file.".config/geary/account_01/geary.ini".source = ./files/geary.ini;
 }
