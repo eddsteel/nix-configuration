@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  hostname = "draper";
-  host = import (./hosts + "/${hostname}.nix") { inherit pkgs config; };
+  host = import ./host.nix { inherit pkgs config; }; 
   util = import ./util.nix { inherit config lib; };
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
@@ -18,7 +17,7 @@ in {
   home.stateVersion = "21.05";
 
   home.packages = with pkgs;
-    [git nix-prefetch-git mr stow awscli2]
+    [git git-secrets nix-prefetch-git mr stow awscli2]
     ++ host.homePkgs;
 
   home.file.".face".source = ./files/face;
