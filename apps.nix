@@ -4,6 +4,7 @@
     duplicati
     ripgrep
     mpv
+    unzip
   ];
 
   home.file.".config/zoomus.conf".source = ./files/zoomus.conf;

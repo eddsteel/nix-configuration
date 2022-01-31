@@ -8,10 +8,9 @@ let
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
   imports = [ ./git.nix ./apps.nix ]
-            ++ (if host.gnome then [./gnome.nix] else [])
-            ++ (if host.linux then [./linux.nix] else [])
-            ++ (if host.macos then [./macos.nix] else [])
-  ;
+            ++ (util.emptyIf host.gnome [./gnome.nix])
+            ++ (util.emptyIf host.linux [./linux.nix])
+            ++ (util.emptyIf host.macos [./macos.nix]);
 
   programs.home-manager.enable = true;
   home.username = host.user;
@@ -99,11 +98,7 @@ in {
     enable = true;
     userEmail = host.email;
     signing.key = host.gpg;
-  } // (if host.macos then {
-    extraConfig = {
-      credential.helper = "osxkeychain";
-    };
-  } else {}); # the rest is in git.nix
+  }; # the rest is in git.nix
 
   programs.emacs.enable = true;
   # config is git/mr/stow

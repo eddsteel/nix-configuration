@@ -15,4 +15,5 @@ let
   in nameValuePair name attrs;
 in {
   mrINI = repos: lib.generators.toINI {} (listToAttrs (map mkMrConfig repos));
+  emptyIf = pred: lst: if pred then lst else [];
 }
