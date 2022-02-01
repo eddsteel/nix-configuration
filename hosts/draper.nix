@@ -1,5 +1,6 @@
 {pkgs, config, ...} :
 {
+  name = "draper";
   user = "edd";
   email = "edd@eddsteel.com";
   gpg = "1BE848D76C7C4C51349DDDCC33620159D40385A0";

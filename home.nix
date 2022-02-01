@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  host = import ./host.nix { inherit pkgs config; }; 
-  util = import ./util.nix { inherit config lib; };
+  host = import ./host.nix { inherit pkgs config; };
+  util = import ./util.nix { inherit pkgs config lib host; };
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
@@ -17,8 +17,9 @@ in {
   home.stateVersion = "21.05";
 
   home.packages = with pkgs;
-    [git git-secrets nix-prefetch-git mr stow awscli2]
-    ++ host.homePkgs;
+    [git git-secrets nix-prefetch-git mr stow]
+    ++ host.homePkgs
+    ++ host.hostScripts;
 
   home.file.".face".source = ./files/face;
   home.file.".desktop.jpg".source = ./files/desktop;
@@ -98,13 +99,13 @@ in {
     userEmail = host.email;
     signing.key = host.gpg;
   }; # the rest is in git.nix
-
+  
   programs.emacs.enable = true;
   # config is git/mr/stow
 
   programs.ssh.enable = true;
-  home.file.".ssh/id_rsa.pub".source = ./files + "/id_rsa.edd.${hostname}.pub";
-  home.file.".ssh/id_rsa".source = ./secrets + "/id_rsa.edd.${hostname}";
+  home.file.".ssh/id_rsa.pub".source = ./files + "/id_rsa.edd.${host.name}.pub";
+  home.file.".ssh/id_rsa".source = ./secrets + "/id_rsa.edd.${host.name}";
 
 
   home.file.".aws/credentials".source = ./secrets/aws-credentials;
@@ -153,12 +154,12 @@ in {
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-
+  
   programs.jq.enable = true;
   programs.exa.enable = true;
 
   home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    gpg --import ${gpgPub}
-    gpg --import ${gpgSec}
+    $DRY_RUN_CMD gpg --import ${gpgPub}
+    $DRY_RUN_CMD gpg --import ${gpgSec}
   '';
 }
