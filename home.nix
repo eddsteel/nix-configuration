@@ -19,6 +19,7 @@ in {
   home.packages = with pkgs;
     [git git-secrets nix-prefetch-git mr stow]
     ++ host.homePkgs
+    ++ host.localPkgs
     ++ host.hostScripts;
 
   home.file.".face".source = ./files/face;
