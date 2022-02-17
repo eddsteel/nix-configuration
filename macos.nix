@@ -1,18 +1,16 @@
 {pkgs, lib, ...}:
-
 let
-  scripts = pkgs.callPackage ../../src/scripts {};
   emms_next = ''
   #!/usr/bin/env bash
-  ${scripts}/bin/emms next
+  ${pkgs.scripts}/bin/emms next
   '';
   emms_prev = ''
   #!/usr/bin/env bash
-  ${scripts}/bin/emms previous
+  ${pkgs.scripts}/bin/emms previous
   '';
   emms_play = ''
   #!/usr/bin/env bash
-  ${scripts}/bin/emms play-pause
+  ${pkgs.scripts}/bin/emms play-pause
   '';
 in {
 
@@ -28,7 +26,7 @@ in {
 
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".text = ''
   #!/usr/bin/env bash
-  np=$(${scripts}/bin/emms now-playing)
+  np=$(${pkgs.scripts}/bin/emms now-playing)
   echo "$np | size=13 length=50"
   '';
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".executable = true;

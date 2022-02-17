@@ -18,8 +18,5 @@
   gnome = true;
   linux = true;
   macos = false;
-  localPkgs = [
-    (pkgs.callPackage ../../../src/brainzo {})
-    (pkgs.callPackage ../../../src/scripts {})
-  ]
+  hostScripts = [];
 }

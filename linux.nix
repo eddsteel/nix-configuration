@@ -1,7 +1,5 @@
 {pkgs, config, localPkgs, ...} :
-let
-  localPkgs = import ./local.nix { inherit pkgs; };
-in {
+{
   programs.gpg = {
     enable = true;
     settings = {
@@ -31,7 +29,7 @@ in {
       Service = {
         Type = "simple";
         Restart = "always";
-        ExecStart = "${localPkgs.brainzo}/bin/brainzo-api";
+        ExecStart = "${pkgs.brainzo}/bin/brainzo-api";
         KillMode = "process";
         TimeoutSec = 180;
       };
@@ -62,7 +60,7 @@ in {
     };
   };
 
-  home.packages = (pkgs.lib.attrsets.attrValues localPkgs); # i.e. all defined locally-built packages.
+  home.packages = [pkgs.brainzo];
 
   home.file.".config/geary/account_01/geary.ini".source = ./files/geary.ini;
 }

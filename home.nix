@@ -19,14 +19,13 @@ in {
   home.packages = with pkgs;
     [git git-secrets nix-prefetch-git mr stow]
     ++ host.homePkgs
-    ++ host.localPkgs
     ++ host.hostScripts;
 
   home.file.".face".source = ./files/face;
   home.file.".desktop.jpg".source = ./files/desktop;
 
   home.file.".mrtrust".text = "${config.home.homeDirectory}/src/.mrconfig";
-  home.file."src/.mrconfig".text = util.mrINI host.src.repos;
+  home.file."src/.mrconfig".text = mrINI host.src.repos;
   home.activation."mrUp" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD cd ~/src/
     $DRY_RUN_CMD ${netcheck} && mr -j 5 up
