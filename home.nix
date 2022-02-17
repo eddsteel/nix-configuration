@@ -1,16 +1,16 @@
 { config, pkgs, lib, ... }:
 let
   host = import ./host.nix { inherit pkgs config; };
-  inherit (lib) optionals;
+  inherit (lib) optional optionals;
   inherit (import ./util.nix { inherit pkgs config lib host; }) mrINI;
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
   imports = [ ./git.nix ./apps.nix ]
-            ++ optionals host.gnome [./gnome.nix]
-            ++ optionals host.linux [./linux.nix]
-            ++ optionals host.macos [./macos.nix];
+            ++ optional host.gnome ./gnome.nix
+            ++ optional host.linux ./linux.nix
+            ++ optional host.macos ./macos.nix;
 
   programs.home-manager.enable = true;
   home.username = host.user;
@@ -19,8 +19,8 @@ in {
 
   home.packages = with pkgs;
     [git git-secrets nix-prefetch-git mr stow]
-    ++ host.homePkgs
-    ++ host.hostScripts;
+    ++ optionals (host ? packages) host.packages
+    ++ optionals (host ? scripts) host.scripts;
 
   home.file.".face".source = ./files/face;
   home.file.".desktop.jpg".source = ./files/desktop;

@@ -14,9 +14,8 @@
     {"name" = "brainzo";}
     {"name" = "bookbot";}
   ];
-  homePkgs = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
+  packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
   gnome = true;
   linux = true;
   macos = false;
-  hostScripts = [];
 }
