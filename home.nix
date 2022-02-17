@@ -1,15 +1,16 @@
 { config, pkgs, lib, ... }:
 let
   host = import ./host.nix { inherit pkgs config; };
-  util = import ./util.nix { inherit pkgs config lib host; };
+  inherit (lib) optionals;
+  inherit (import ./util.nix { inherit pkgs config lib host; }) mrINI;
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
   imports = [ ./git.nix ./apps.nix ]
-            ++ (util.emptyIf host.gnome [./gnome.nix])
-            ++ (util.emptyIf host.linux [./linux.nix])
-            ++ (util.emptyIf host.macos [./macos.nix]);
+            ++ optionals host.gnome [./gnome.nix]
+            ++ optionals host.linux [./linux.nix]
+            ++ optionals host.macos [./macos.nix];
 
   programs.home-manager.enable = true;
   home.username = host.user;
