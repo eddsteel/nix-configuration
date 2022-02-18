@@ -1,20 +1,6 @@
 {pkgs, lib, ...}:
-let
-  emms_next = ''
-  #!/usr/bin/env bash
-  ${pkgs.scripts}/bin/emms next
-  '';
-  emms_prev = ''
-  #!/usr/bin/env bash
-  ${pkgs.scripts}/bin/emms previous
-  '';
-  emms_play = ''
-  #!/usr/bin/env bash
-  ${pkgs.scripts}/bin/emms play-pause
-  '';
-in {
-
-  home.packages = with pkgs; [scripts nixUnstable coreutils gnugrep gnused findutils gawk python3];
+{
+  home.packages = with pkgs; [scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 skhd];
 
   programs.git.extraConfig.credential.helper = "osxkeychain";
 
@@ -22,7 +8,7 @@ in {
     experimental-features = nix-command flakes
   '';
 
-  home.file.".config/karabiner/karabiner.json".source = ./files/karabiner.json;
+  xdg.configFile."karabiner/karabiner.json".source = ./files/karabiner.json;
 
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".text = ''
   #!/usr/bin/env bash
@@ -32,33 +18,26 @@ in {
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".executable = true;
   home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ./files/xbar-youbi.sh;
 
-  # apptivate follows symlinks in its configuration, which might be GCed. So we have
-  # to write to scripts in its Library dir manually.
-  home.activation."copyApptivate" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  $DRY_RUN_CMD echo '${emms_next}' > ~/Library/Application\ Support/Apptivate/emms-next.sh
-  $DRY_RUN_CMD echo '${emms_prev}' > ~/Library/Application\ Support/Apptivate/emms-prev.sh
-  $DRY_RUN_CMD echo '${emms_play}' > ~/Library/Application\ Support/Apptivate/emms-play.sh
-  $DRY_RUN_CMD chmod +x ~/Library/Application\ Support/Apptivate/emms-next.sh
-  $DRY_RUN_CMD chmod +x ~/Library/Application\ Support/Apptivate/emms-prev.sh
-  $DRY_RUN_CMD chmod +x ~/Library/Application\ Support/Apptivate/emms-play.sh
-
-  if [ -f ~/.nix-profile/bin/jira ]; then
-    cat ~/.nix-profile/bin/jira > ~/Library/Application\ Support/Apptivate/jira.sh
-    chmod +x ~/Library/Application\ Support/Apptivate/jira.sh
-  fi
+  xdg.configFile."skhd/skhdrc".text = ''
+  shift + alt + cmd + ctrl - f : open -a firefox
+  shift + alt + cmd + ctrl - z : open -a zoom.us
+  shift + alt + cmd + ctrl - w : open -a wavebox
+  shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
+  shift + alt + cmd + ctrl - j : if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi
+  f7 : ${pkgs.scripts}/bin/emms previous
+  f8 : ${pkgs.scripts}/bin/emms play-pause
+  f9 : ${pkgs.scripts}/bin/emms next
   '';
 
-  home.file."Library/Application Support/Apptivate/hotkeys".source = ./files/apptivate-hotkeys.plist;
-
+  home.activation."refreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  $DRY_RUN_CMD ${pkgs.skhd}/bin/skhd -r
+  '';
 
   home.file."Library/Application Support/Spectacle/Shortcuts.json".source = ./files/spectacle-shortcuts.json;
   home.file."Library/Preferences/com.divisiblebyzero.Spectacle.plist".source = ./files/com.divisiblebyzero.Spectacle.plist;
 
-
   home.file.".default-gems".source = ./files/ruby-default-gems;
-
   home.file.".workrc".source = ./secrets/work-bashrc;
-
   home.file.".bundle/config".source = ./secrets/bundle-config;
 
   # has licence keys, MAC addresses, GPS etc., so secret

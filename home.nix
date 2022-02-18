@@ -101,7 +101,10 @@ in {
     signing.key = host.gpg;
   }; # the rest is in git.nix
   
-  programs.emacs.enable = true;
+  programs.emacs = {
+    enable = true;
+    package = if host.macos then pkgs.emacsMacport else pkgs.emacs;
+  };
   # config is git/mr/stow
 
   programs.ssh.enable = true;
