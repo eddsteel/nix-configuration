@@ -1,10 +1,8 @@
 {pkgs, config, ...} :
 {
   name = "draper";
-  user = "edd";
   email = "edd@eddsteel.com";
   gpg = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
-  homeDir = "/home/edd";
   src.repos = [
     {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
     {"name" = "df-emacs"; "stow" = true; "pfx" = ".config";}
@@ -14,7 +12,7 @@
     {"name" = "brainzo";}
     {"name" = "bookbot";}
   ];
-  packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
+  packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord git-web-link];
   gnome = true;
   linux = true;
   macos = false;

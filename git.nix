@@ -30,7 +30,7 @@
     "*~" ".#*" "*#" "*.elc" ".DS_Store" "*.bak" "*.pyc" "/.stack-work"
     "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
     ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
-    "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"];
+    "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions" "/result"];
 
     extraConfig = {
       branch.autosetuprebase = "always";

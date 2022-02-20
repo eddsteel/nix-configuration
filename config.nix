@@ -10,4 +10,8 @@
     scripts = pkgs.callPackage ../../src/scripts {};
     git-web-link = pkgs.callPackage ../../src/git-web-link {};
   };
+
+  prefs = {
+    emacs = pkgs: pkgs.emacsUnstable;
+  };
 }

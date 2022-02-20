@@ -1,7 +1,7 @@
 {pkgs, lib, config, ...}:
 let
   home = config.home.homeDirectory;
-  raise = "${home}/src/scripts/raise.sh";
+  raise = "${pkgs.scripts}/bin/raise.sh";
   myExecutor = pkgs.gnomeExtensions.executor.overrideAttrs (old: {
     buildCommand = old.buildCommand + ''
         substituteInPlace $out/share/gnome-shell/extensions/executor@raujonas.github.io/extension.js --replace "'/bin/bash'" "'/usr/bin/env', 'bash'"
@@ -92,7 +92,7 @@ in {
 
     "${mediaKeys}/custom-keybindings/custom0" = {
       binding = ''<Primary><Shift><Alt><Super>e'';
-      command = ''${raise} "emacs@" ${pkgs.emacs}/bin/emacs'';
+      command = ''${raise} "GNU Emacs at" ${pkgs.config.prefs.emacs pkgs}/bin/emacs'';
       name = ''Emacs'';
     };
 
@@ -104,7 +104,7 @@ in {
 
     "${mediaKeys}/custom-keybindings/custom2" = {
       binding = ''<Primary><Shift><Alt><Super>Return'';
-      command = ''${raise} "edd@freamon" ${pkgs.gnome.gnome-terminal}/bin/gnome-terminal'';
+      command = ''${raise} "@" ${pkgs.gnome.gnome-terminal}/bin/gnome-terminal'';
       name = ''Terminal'';
     };
 

@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  host = import ./host.nix { inherit pkgs config; };
   inherit (lib) optional optionals;
+  host = import ./host.nix { inherit pkgs config; };
   inherit (import ./util.nix { inherit pkgs config lib host; }) mrINI;
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
@@ -11,14 +11,19 @@ in {
             ++ optional host.gnome ./gnome.nix
             ++ optional host.linux ./linux.nix
             ++ optional host.macos ./macos.nix;
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
 
   programs.home-manager.enable = true;
-  home.username = host.user;
-  home.homeDirectory = host.homeDir;
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
   home.stateVersion = "21.05";
 
   home.packages = with pkgs;
-    [git git-secrets nix-prefetch-git mr stow]
+    [git git-secrets nix-prefetch-git mr stow scripts]
     ++ optionals (host ? packages) host.packages
     ++ optionals (host ? scripts) host.scripts;
 
@@ -35,7 +40,7 @@ in {
   programs.bash = {
     enable = true;
     shellAliases = {
-      ec = ''emacsclient --no-wait'';
+      ec = ''emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
       ga = ''git add'';
       gam = ''git commit -am'';
       gap = ''git add -p'';
@@ -77,7 +82,7 @@ in {
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
-      EDITOR = "emacsclient";
+      EDITOR = "emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
       ALTERNATE_EDITOR = "emacs";
       LESS = " -R ";
     };
@@ -85,6 +90,10 @@ in {
     bashrcExtra = ''
       if [ -f ${config.home.homeDirectory}/.workrc ]; then
           . ${config.home.homeDirectory}/.workrc
+      fi
+
+      if [ -f ${config.home.homeDirectory}/.profile ]; then
+          . ${config.home.homeDirectory}/.profile
       fi
 
       # i.e. non-nixos that need a bash hook.
@@ -100,10 +109,10 @@ in {
     userEmail = host.email;
     signing.key = host.gpg;
   }; # the rest is in git.nix
-  
+
   programs.emacs = {
     enable = true;
-    package = if host.macos then pkgs.emacsMacport else pkgs.emacs;
+    package = pkgs.config.prefs.emacs pkgs;
   };
   # config is git/mr/stow
 
