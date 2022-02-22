@@ -12,6 +12,6 @@
   };
 
   prefs = {
-    emacs = pkgs: pkgs.emacsUnstable;
+    emacs = pkgs: if pkgs.stdenv.isDarwin then pkgs.emacsMacport else pkgs.emacsUnstable;
   };
 }
