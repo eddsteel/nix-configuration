@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
 
-  home.file.".config/hub".source = ./secrets/hub;
+  xdg.configFile."hub".source = ./secrets/hub;
 
   programs.git = {
     userName = "Edd Steel";

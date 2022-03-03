@@ -36,31 +36,7 @@
     };
   };
 
-  programs.firefox = {
-    enable = true;
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      onepassword-password-manager anchors-reveal auto-tab-discard
-      duckduckgo-privacy-essentials
-    ];
-    # TODO use the gnome one (we get it from firefox sync currently anyway)
-    profiles."default" = {
-      id = 0;
-      path = "xtqfr4qa.default";
-      isDefault = true;
-      settings = {
-        "browser.startup.homepage" = "about:blank";
-        "browser.newtabpage.enabled" = false;
-        "browser.warnOnQuitShortcut" = false;
-        "extensions.formautofill.creditCards.enabled" = false;
-        "services.sync.username" = "edd@eddsteel.com";
-        "services.sync.engine.creditcards" = false;
-        "services.sync.engine.passwords" = false;
-        "accessibility.typeaheadfind.enablesound" = false;
-      };
-    };
-  };
-
   home.packages = [pkgs.brainzo];
 
-  home.file.".config/geary/account_01/geary.ini".source = ./files/geary.ini;
+  xdg.configFile."geary/account_01/geary.ini".source = ./files/geary.ini;
 }

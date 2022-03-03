@@ -1,6 +1,9 @@
-{pkgs, lib, ...}:
+{config, pkgs, lib, ...}:
 {
-  home.packages = with pkgs; [scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 skhd];
+  home.packages = with pkgs; [
+    scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget
+    iterm2 xbar spectacle istat-menus skhd
+  ];
 
   programs.git.extraConfig.credential.helper = "osxkeychain";
 
@@ -19,10 +22,11 @@
   home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ./files/xbar-youbi.sh;
 
   xdg.configFile."skhd/skhdrc".text = ''
-  shift + alt + cmd + ctrl - f : open -a firefox
+  shift + alt + cmd + ctrl - f : open ~/.nix-profile/Applications/firefox.app
   shift + alt + cmd + ctrl - z : open -a zoom.us
-  shift + alt + cmd + ctrl - w : open -a wavebox
+  shift + alt + cmd + ctrl - w : open ~/.nix-profile/Applications/Wavebox.app
   shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
+  shift + alt + cmd + ctrl - t : open ~/.nix-profile/Applications/iTerm2.app
   shift + alt + cmd + ctrl - j : if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi
   f7 : ${pkgs.scripts}/bin/emms previous
   f8 : ${pkgs.scripts}/bin/emms play-pause
@@ -30,7 +34,8 @@
   '';
 
   home.activation."refreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  $DRY_RUN_CMD ${pkgs.skhd}/bin/skhd -r
+  $DRY_RUN_CMD launchctl stop org.nixos.skhd
+  $DRY_RUN_CMD launchctl start org.nixos.skhd
   '';
 
   home.file."Library/Application Support/Spectacle/Shortcuts.json".source = ./files/spectacle-shortcuts.json;
@@ -46,10 +51,30 @@
   home.file."Library/Preferences/com.bjango.istatmenus5.extras.plist".source = ./secrets/com.bjango.istatmenus5.extras.plist;
   home.file."Library/Preferences/com.bjango.istatmenus6.extras.plist".source = ./secrets/com.bjango.istatmenus6.extras.plist;
 
-  home.file."Library/KeyBindings/DefaultKeyBinding.dict".source = ./files/DefaultKeyBinding.dict;
+  targets.darwin.keybindings = {
+    "^u" = "deleteToBeginningOfLine:";
+    "^w" = "deleteWordBackward:";
+    "~f" = "moveWordForward:";
+    "~b" = "moveWordBackward:";
+    "~<" = "moveToBeginningOfDocument:";
+    "~>" = "moveToEndOfDocument:";
+    "~v" = "pageUp:";
+    "~d" = "deleteWordForward:";
+    "~\010" = "deleteWordBackward:";  /* Option-backspace */
+    "~\177" = "deleteWordBackward:";  /* Option-delete */
+  };
 
   home.activation."copyItermPrefs" = lib.hm.dag.entryAfter ["writeBoundary"] ''
   $DRY_RUN_CMD cp ~/.config/nixpkgs/files/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
   '';
+
+  # https://github.com/nix-community/home-manager/blob/db00b39a9abec04245486a01b236b8d9734c9ad0/modules/targets/darwin/linkapps.nix
+  home.file."Applications/Home Manager".source = let
+    apps = pkgs.buildEnv {
+      name = "home-manager-applications";
+      paths = config.home.packages;
+      pathsToLink = "/Applications";
+    };
+  in "${apps}/Applications";
 
 }

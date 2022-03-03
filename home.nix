@@ -40,7 +40,7 @@ in {
   programs.bash = {
     enable = true;
     shellAliases = {
-      ec = ''emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
+      ec = ''${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
       ga = ''git add'';
       gam = ''git commit -am'';
       gap = ''git add -p'';
@@ -82,8 +82,8 @@ in {
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
-      EDITOR = "emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
-      ALTERNATE_EDITOR = "emacs";
+      EDITOR = "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
+      ALTERNATE_EDITOR = "${pkgs.emacs}/bin/emacs";
       LESS = " -R ";
     };
 
@@ -112,7 +112,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    package = pkgs.config.prefs.emacs pkgs;
+    package = pkgs.emacs;
   };
   # config is git/mr/stow
 
@@ -129,7 +129,6 @@ in {
   '';
   home.activation."setupTxt" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/txt
-    cd $HOME/txt
   '';
 
   programs.gnome-terminal.enable = host.gnome;
@@ -175,4 +174,26 @@ in {
     $DRY_RUN_CMD gpg --import ${gpgPub}
     $DRY_RUN_CMD gpg --import ${gpgSec}
   '';
+
+  programs.firefox = {
+    enable = true;    
+    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
+    ];
+    profiles."default" = {
+      id = 0;
+      path = "xtqfr4qa.default";
+      isDefault = true;
+      settings = {
+        "browser.startup.homepage" = "about:blank";
+        "browser.newtabpage.enabled" = false;
+        "browser.warnOnQuitShortcut" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
+        "services.sync.username" = "edd@eddsteel.com";
+        "services.sync.engine.creditcards" = false;
+        "services.sync.engine.passwords" = false;
+        "accessibility.typeaheadfind.enablesound" = false;
+      };
+    };
+  };
 }

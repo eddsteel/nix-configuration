@@ -1,15 +1,9 @@
 {pkgs, ...}:
 {
   home.packages = with pkgs; [
-    duplicati
-    jq
-    ripgrep
-    mpv
-    unzip
-    awscli2
-    aspell
-    hub
+    duplicati jq ripgrep mpv unzip awscli2 aspell aspellDicts.en
+    hub wavebox bitwarden signal intellij-idea-ce
   ];
 
-  home.file.".config/zoomus.conf".source = ./files/zoomus.conf;
+  xdg.configFile."zoomus.conf".source = ./files/zoomus.conf;
 }
