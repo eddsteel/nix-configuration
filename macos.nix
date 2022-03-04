@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget
-    iterm2 xbar spectacle istat-menus skhd intellij-idea-ce wavebox
+    iterm2 xbar spectacle istat-menus skhd intellij-idea-ce wavebox soundsource
   ];
 
   programs.git.extraConfig.credential.helper = "osxkeychain";
