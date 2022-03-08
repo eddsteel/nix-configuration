@@ -166,8 +166,8 @@ in {
   programs.exa.enable = true;
 
   home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD gpg --import ${gpgPub}
-    $DRY_RUN_CMD gpg --import ${gpgSec}
+    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --import ${gpgPub}
+    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --import ${gpgSec}
   '';
 
   programs.firefox = {
