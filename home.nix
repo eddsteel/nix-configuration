@@ -73,7 +73,7 @@ in {
       "..4" = ''cd ../../../..'';
       "..5" = ''cd ../../../../..'';
       "..6" = ''cd ../../../../../..'';
-    };
+    } // host.bashAliases;
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
@@ -83,10 +83,6 @@ in {
     };
 
     bashrcExtra = ''
-      if [ -f ${config.home.homeDirectory}/.workrc ]; then
-          . ${config.home.homeDirectory}/.workrc
-      fi
-
       if [ -f ${config.home.homeDirectory}/.profile ]; then
           . ${config.home.homeDirectory}/.profile
       fi

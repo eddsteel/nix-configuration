@@ -42,7 +42,6 @@
   home.file."Library/Preferences/com.divisiblebyzero.Spectacle.plist".source = ./files/com.divisiblebyzero.Spectacle.plist;
 
   home.file.".default-gems".source = ./files/ruby-default-gems;
-  home.file.".workrc".source = ./secrets/work-bashrc;
   home.file.".bundle/config".source = ./secrets/bundle-config;
 
   # has licence keys, MAC addresses, GPS etc., so secret
@@ -77,4 +76,5 @@
     };
   in "${apps}/Applications";
 
+  programs.bash.bashrcExtra = "ssh-add --apple-use-keychain -q";
 }
