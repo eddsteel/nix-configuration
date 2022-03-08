@@ -92,7 +92,7 @@ in {
 
     "${mediaKeys}/custom-keybindings/custom0" = {
       binding = ''<Primary><Shift><Alt><Super>e'';
-      command = ''${raise} "GNU Emacs at" ${pkgs.emacs}/bin/emacs'';
+      command = ''${raise} "GNU Emacs at" ${pkgs.my-emacs}/bin/emacs'';
       name = ''Emacs'';
     };
 

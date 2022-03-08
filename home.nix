@@ -6,16 +6,11 @@ let
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
-in {
+in {  
   imports = [ ./git.nix ./apps.nix ]
             ++ optional host.gnome ./gnome.nix
             ++ optional host.linux ./linux.nix
             ++ optional host.macos ./macos.nix;
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
 
   programs.home-manager.enable = true;
   home.username = builtins.getEnv "USER";
@@ -40,7 +35,7 @@ in {
   programs.bash = {
     enable = true;
     shellAliases = {
-      ec = ''${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
+      ec = ''${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
       ga = ''git add'';
       gam = ''git commit -am'';
       gap = ''git add -p'';
@@ -82,8 +77,8 @@ in {
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
-      EDITOR = "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
-      ALTERNATE_EDITOR = "${pkgs.emacs}/bin/emacs";
+      EDITOR = "${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
+      ALTERNATE_EDITOR = "${pkgs.my-emacs}/bin/emacs";
       LESS = " -R ";
     };
 
@@ -112,7 +107,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs;
+    package = pkgs.my-emacs;
   };
   # config is git/mr/stow
 
