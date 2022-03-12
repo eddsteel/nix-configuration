@@ -1,7 +1,7 @@
 {pkgs, ...}:
 {
   home.packages = with pkgs; [
-    duplicati jq ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain
+    duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
     hub bitwarden signal-desktop
   ];
 

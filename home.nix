@@ -6,7 +6,7 @@ let
   gpgPub = ./files/pubring.gpg;
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
-in {  
+in {
   imports = [ ./git.nix ./apps.nix ]
             ++ optional host.gnome ./gnome.nix
             ++ optional host.linux ./linux.nix
@@ -64,8 +64,6 @@ in {
       srsly = ''sudo $(fc -ln -1)'';
       ssh = ''TERM=vt100 ssh'';
       stree = ''tree --prune -P *.scala'';
-      vlc = ''vlc -f'';
-      vm = ''vagrant'';
 
       ".." = ''cd ..'';
       "..." = ''cd ../..'';
@@ -111,8 +109,8 @@ in {
   home.file.".ssh/id_rsa.pub".source = ./files + "/id_rsa.edd.${host.name}.pub";
   home.file.".ssh/id_rsa".source = ./secrets + "/id_rsa.edd.${host.name}";
 
-
   home.file.".aws/credentials".source = ./secrets/aws-credentials;
+
   ## standard locations
   home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}
@@ -122,21 +120,23 @@ in {
     $DRY_RUN_CMD mkdir -p $HOME/txt
   '';
 
-  programs.gnome-terminal.enable = host.gnome;
-  programs.gnome-terminal.themeVariant = "dark";
-  programs.gnome-terminal.showMenubar = false;
-  programs.gnome-terminal.profile."b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
-    visibleName = "Edd";
-    audibleBell = false;
-    default = true;
-    font = "Source Code Pro 12";
-    colors = {
-      palette = [
-        "#363636" "#ff0883" "#83ff08" "#ff8308" "#0883ff" "#8308ff" "#08ff83" "#b6b6b6"
-        "#424242" "#ff1e8e" "#8eff1e" "#ff8e1e" "#1e8eff" "#8e1eff" "#1eff8e" "#c2c2c2" ];
-      foregroundColor = "#b4e1fd";
-      backgroundColor = "#0d1926";
+  programs.gnome-terminal = {
+    enable = host.gnome;
+    themeVariant = "dark";
+    showMenubar = false;
+    profile."b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
+      visibleName = "Edd";
+      audibleBell = false;
+      default = true;
+      font = "Source Code Pro 12";
+      colors = {
+        palette = [
+          "#363636" "#ff0883" "#83ff08" "#ff8308" "#0883ff" "#8308ff" "#08ff83" "#b6b6b6"
+          "#424242" "#ff1e8e" "#8eff1e" "#ff8e1e" "#1e8eff" "#8e1eff" "#1eff8e" "#c2c2c2" ];
+        foregroundColor = "#b4e1fd";
+        backgroundColor = "#0d1926";
       };
+    };
   };
 
   xdg.userDirs = {
@@ -157,7 +157,7 @@ in {
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-  
+
   programs.jq.enable = true;
   programs.exa.enable = true;
 
