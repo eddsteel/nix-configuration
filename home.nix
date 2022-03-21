@@ -176,6 +176,7 @@ in {
       path = "xtqfr4qa.default";
       isDefault = true;
       settings = {
+        "browser.download.dir" = "${config.home.homeDirectory}/tmp";
         "browser.startup.homepage" = "about:blank";
         "browser.newtabpage.enabled" = false;
         "browser.warnOnQuitShortcut" = false;

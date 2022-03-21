@@ -1,5 +1,7 @@
 {config, pkgs, lib, ...}:
-{
+let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+in {
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget gnupg
     iterm2 xbar spectacle istat-menus skhd intellij-idea-ce wavebox soundsource
@@ -77,4 +79,16 @@
   in "${apps}/Applications";
 
   programs.bash.bashrcExtra = "ssh-add --apple-use-keychain -q";
+
+  # standard locations
+  home.file."media/film".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Movies";
+  home.file."media/photos".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Pictures";
+  home.file."media/music".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Music";
+  home.file."txt".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/txt";
+  home.file."tmp".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Downloads/tmp";
+
+  home.activation."setupMacosHome" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD mkdir -p $HOME/Documents/txt
+    $DRY_RUN_CMD mkdir -p $HOME/Downloads/tmp
+  '';
 }
