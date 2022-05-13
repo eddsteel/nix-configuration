@@ -13,14 +13,16 @@
       sweep = "!git branch | egrep '^  edd/' | while read b; do git branch -d $b; done";
       mrproper = "!git branch | egrep '^  edd/' | while read b; do git branch -D $b; done";
       nuke = "!git branch | while read b; do git branch -d $b; done";
+      create = "!hub create";
       pr = "!hub pull-request --browse";
-      praise = "blame";
-      decap = "reset HEAD^";
       cpr  = "!f() { git fetch -fu \${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f";
       cpr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=\${ref#refs/heads/} ; git branch -D $branch ; done";
-      create = "!hub create";
       init-remote = "!ssh git@eddsteel.com git init --bare ";
       shove = "!git commit -am \"Shoved update $(date)\" && git pull --rebase && git push origin master";
+      danglers = "!git fsck --lost-found | grep '^dangling commit' | sed 's/dangling commit //g' | xargs git show -s --oneline";
+      decap = "reset HEAD^";
+      poke = "commit --allow-empty --amend --reuse-message=HEAD";
+      praise = "blame";
       clogp = "-c core.pager='less -p^commit.*$' log -p";
     };
 
