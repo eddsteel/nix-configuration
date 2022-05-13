@@ -19,8 +19,7 @@ in {
 
   home.packages = with pkgs;
     [git git-secrets nix-prefetch-git mr stow scripts]
-    ++ optionals (host ? packages) host.packages
-    ++ optionals (host ? scripts) host.scripts;
+    ++ optionals (host ? packages) host.packages;
 
   home.file.".face".source = ./files/face;
   home.file.".desktop.jpg".source = ./files/desktop;
