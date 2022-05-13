@@ -17,4 +17,5 @@
   gnome = true;
   linux = true;
   macos = false;
+  go = false;
 }

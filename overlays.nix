@@ -22,7 +22,9 @@
         soundsource      = pkgs.callPackage pkgs/mac/soundsource.nix { inherit pkgs; };
         spectacle        = pkgs.callPackage pkgs/mac/spectacle.nix { inherit pkgs; };
         wavebox          = pkgs.callPackage pkgs/mac/wavebox.nix { inherit pkgs; };
-        xbar             = pkgs.callPackage pkgs/mac/xbar.nix { inherit pkgs; };
+        xbar             = pkgs.callPackage pkgs/mac/xbar.nix {};
+      } // {
+        circleci-cli     = pkgs.callPackage pkgs/circleci.nix {};
       }
   )
 ]

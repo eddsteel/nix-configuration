@@ -32,6 +32,8 @@ in {
     $DRY_RUN_CMD ${netcheck} && mr -j 5 up
   '';
 
+  programs.go.enable = host.go;
+
   programs.bash = {
     enable = true;
     shellAliases = {
