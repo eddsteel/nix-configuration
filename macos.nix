@@ -37,6 +37,9 @@ in {
 
   home.activation."refreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
   $DRY_RUN_CMD launchctl stop org.nixos.skhd
+  $DRY_RUN_CMD cp -f ${pkgs.skhd}/Library/LaunchDaemons/org.nixos.skhd.plist ~/Library/LaunchDaemons/
+  $DRY_RUN_CMD launchctl unload ~/Library/LaunchDaemons/org.nixos.skhd.plist
+  $DRY_RUN_CMD launchctl load ~/Library/LaunchDaemons/org.nixos.skhd.plist
   $DRY_RUN_CMD launchctl start org.nixos.skhd
   '';
 
