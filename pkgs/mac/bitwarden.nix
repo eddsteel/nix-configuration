@@ -1,8 +1,8 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "bitwarden";
-  version = "1.31.3";
-  sha = "0rqabavf0gd9359piwpryv6ak21g620ycqk01zdgfliv6kmg6nm0";
+  version = "1.32.1";
+  sha = "18zrgjxbvn2izqc8ppp6qrcwx0vk94qp88ld88mgiw9y576mbdi0";
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
