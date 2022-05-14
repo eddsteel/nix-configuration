@@ -11,6 +11,7 @@
     {"name" = "nixpkgs"; "remote" = "gh:NixOS/nixpkgs";}
     {"name" = "brainzo";}
     {"name" = "bookbot";}
+    {"name" = "tell-consul";}
   ];
   packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
   shellAliases = {};
