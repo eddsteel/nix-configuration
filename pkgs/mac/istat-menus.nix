@@ -1,8 +1,8 @@
 { pkgs ? import <nixpkgs> {}}:
 pkgs.stdenv.mkDerivation rec {
   pname = "istat-menus";
-  version = "6.61";
-  sha = "12cpz10yb6f7shbfr5pi2lvr7wx4f64qwsb6r6rj7n2lkzr8hy31";
+  version = "6.62";
+  sha = "1w3vnpmi02siz0ni633vwkwmp43w7x9a52haxj8ml1l4bn5659ig";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";

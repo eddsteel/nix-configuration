@@ -12,7 +12,12 @@
       pkgs = super;
     in
       pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
-        my-emacs         = pkgs.emacsMacport;
+        my-emacs         = pkgs.callPackage ../../src/nixpkgs/pkgs/applications/editors/emacs/macport.nix {
+          inherit (pkgs.darwin.apple_sdk.frameworks)
+            AppKit Carbon Cocoa IOKit OSAKit Quartz QuartzCore WebKit
+            ImageCaptureCore GSS ImageIO;
+          stdenv = if pkgs.stdenv.cc.isClang then pkgs.llvmPackages_6.stdenv else pkgs.stdenv;
+        };
         bitwarden        = pkgs.callPackage pkgs/mac/bitwarden.nix { inherit pkgs; };
         firefox          = pkgs.callPackage pkgs/mac/firefox.nix { inherit pkgs; };
         intellij-idea-ce = pkgs.callPackage pkgs/mac/intellij.nix { inherit pkgs; };

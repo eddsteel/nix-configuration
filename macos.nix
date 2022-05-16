@@ -2,6 +2,8 @@
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in {
+  home.file.".nix-channels".source = ./files/darwin-nix-channels;
+
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget gnupg
     iterm2 xbar spectacle istat-menus skhd intellij-idea-ce wavebox soundsource
@@ -29,6 +31,7 @@ in {
   shift + alt + cmd + ctrl - w : open ~/.nix-profile/Applications/Wavebox.app
   shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
   shift + alt + cmd + ctrl - t : open ~/.nix-profile/Applications/iTerm2.app
+  shift + alt + cmd + ctrl - s : open ~/.nix-profile/Applications/Signal.app
   shift + alt + cmd + ctrl - j : if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi
   f7 : ${pkgs.scripts}/bin/emms previous
   f8 : ${pkgs.scripts}/bin/emms play-pause
