@@ -53,6 +53,8 @@
         "git://github.com/eddsteel/"
         "https://github.com/eddsteel/"
       ];
+      # Not using shared machine
+      safe.directory = "*";
     };
   };
 }

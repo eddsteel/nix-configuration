@@ -5,7 +5,6 @@
   gpg = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
   src.repos = [
     {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
-    {"name" = "df-emacs"; "stow" = true; "pfx" = ".config";}
     {"name" = "git-web-link";}
     {"name" = "scripts";}
     {"name" = "nixpkgs"; "remote" = "gh:NixOS/nixpkgs";}

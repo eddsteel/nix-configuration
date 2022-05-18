@@ -7,7 +7,7 @@ let
   gpgSec = ./secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
-  imports = [ ./git.nix ./apps.nix ]
+  imports = [ ./git.nix ./apps.nix ./emacs.nix ]
             ++ optional host.gnome ./gnome.nix
             ++ optional host.linux ./linux.nix
             ++ optional host.macos ./macos.nix;
@@ -99,12 +99,6 @@ in {
     userEmail = host.email;
     signing.key = host.gpg;
   }; # the rest is in git.nix
-
-  programs.emacs = {
-    enable = true;
-    package = pkgs.my-emacs;
-  };
-  # config is git/mr/stow
 
   programs.ssh.enable = true;
   home.file.".ssh/id_rsa.pub".source = ./files + "/id_rsa.edd.${host.name}.pub";

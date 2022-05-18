@@ -1,0 +1,78 @@
+
+body {
+    overflow-x: hidden
+}
+
+#content {
+    margin: 0 30% 0 20%;
+}
+
+
+pre.src {
+}
+
+ul {
+    padding-left: 0px;
+}
+
+li ul {
+    padding-left: 1em;
+}
+
+* {
+    font-family: "Charter", serif
+}
+
+h1.title {
+    margin: 2em 0 * 4em;
+    font-size: 3em;
+    text-align: left;
+}
+
+h2 {
+    font-size: 2.5em;
+    margin-top: 3em;
+}
+
+h1, h2, h3 {
+    text-align: left;
+    font-family: "Geneva", "Open Sans", "Helvetica", sans;
+    margin-right: -9999rem;
+}
+
+pre.src, code, pre.src * {
+    font-family: "fira mono", "Consolas", "Bitstream Vera Mono", monospace;
+}
+
+pre.src {
+    background-color: #333;
+    color: #eee;
+    margin: 2rem -9999rem;
+    padding: 3rem 9999rem;
+    overflow-x: hidden;
+    border: none;
+    box-shadow: inset 0px 0px 30px #222;
+}
+
+blockquote {
+    display: block;
+    margin: 1rem -3rem;
+    padding: 0 3rem;
+    overflow-x: hidden;
+
+    background-color: #eee;
+    font-style: italic;
+    font-size: 1.1em;
+    text-align: justify;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 12px #ddd;
+}
+
+blockquote p {
+}
+
+blockquote p:last-child {
+    font-style: normal;
+    text-align: right;
+    font-size: 1.1em;
+}
