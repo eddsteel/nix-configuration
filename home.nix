@@ -167,7 +167,7 @@ in {
   '';
 
   programs.firefox = {
-    enable = true;    
+    enable = true;
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
     ];
