@@ -29,21 +29,6 @@
     ("P"   emms-playlist-mode-switch-buffer "playlist" :exit t)
     ("d"   emms-add-dired "add (dired)" :exit t))
 
-  ;; project. Most of this is filled out in edd/edd-proj.el, some in counsel
-  ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
-  ;;
-  (defhydra hydra-project (:exit t :idle 0.4 :columns 5) "Project"
-    ("<ESC>" nil "quit"))
-
-  ;; from wiki
-  (defhydra hydra-goto-line (goto-map ""
-                                      :pre (linum-mode 1)
-                                      :post (linum-mode -1))
-    "goto-line"
-    ("g" goto-line "go")
-    ("m" set-mark-command "mark" :bind nil)
-    ("q" nil "quit"))
-
 
   (defhydra hydra-mark-modify
     (:columns 3)  "Move/Modify"
@@ -67,37 +52,6 @@
     ("\"" er/mark-outside-quotes "mark quote (er)")
 
     ("#" mc/insert-numbers "insert numbers (mc)"))
-
-
-  ;; Thanks http://kitchingroup.cheme.cmu.edu/blog/2015/09/28/A-cursor-goto-hydra-for-emacs/
-  (defhydra hydra-goto (:exit nil :columns 4) "goto"
-
-    ("c" avy-goto-char-2 "2 char")
-    ("C" avy-goto-char "char")
-    ("L" avy-goto-char-in-line "char in line")
-    ("w" avy-goto-word-1 "word")
-    ("S" avy-goto-subword-1 "subword")
-    ("l" avy-goto-line "line")
-    ("I" ace-window "window")
-
-    ("i" swiper "swiper" :exit t)
-
-    ("s" isearch-forward "search >")
-    ("r" isearch-backward "search <")
-
-    ("nn" flycheck-next-error "next error")
-    ("np" flycheck-previous-error "prev error")
-    ("nl" list-flycheck-errors "error list" :exit t)
-    ("nc" flycheck-compile "refresh errors")
-
-    ("Nn" git-gutter:next-hunk "next git hunk")
-    ("Np" git-gutter:previous-hunk "previous git hunk")
-    ("Nl" git-gutter:statistic "count git changes")
-    ("Ns" git-gutter:popup-hunk "show current git change")
-
-    ("b" ivy-switch-buffer "buffer")
-    ("R" counsel-recentf "recentf" :exit t)
-    ("P" hydra-project/body "project >>" :exit t))
 
   (eval-after-load "org"
     '(progn

@@ -453,11 +453,6 @@
   :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-
-(use-package edd-sow
-  :config
-  (edd-sow-mode 1))
-
 (use-package edd-git-web-link
   :bind
   ("C-c g" . hydra-edd-git-web-link/body))
