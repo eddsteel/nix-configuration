@@ -23,9 +23,4 @@
         ("C-c s r" . rake)
         ("C-c s a" . rake-rerun)))
 
-(use-package rubocop
-  :delight " 👮"
-  :hook
-  (ruby-mode . rubocop-mode))
-
 (provide 'edd-ruby)

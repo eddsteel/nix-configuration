@@ -5,9 +5,6 @@
   :config
   (setq kotlin-tab-width 4)
   (setq gradle-use-gradlew nil)
-  (setq gradle-gradlew-executable (expand-file-name "gradlew" (projectile-project-root)))
-  (defhydra+ hydra-project nil "Project"
-    ("m" gradle-execute "execute gradle task"))
   (defun edd-kt/sort-imports ()
     (interactive)
     (let
@@ -34,10 +31,7 @@
   (add-to-list
    'compilation-error-regexp-alist-alist
    '(kotlin-lint
-     "^Lint error > \\(.*\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3))
-  (projectile-update-project-type
-   'gradle
-   :project-file "build.gradle.kts"))
+     "^Lint error > \\(.*\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3)))
 
 (use-package flycheck-kotlin
   :commands flycheck-kotlin-setup

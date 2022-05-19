@@ -180,7 +180,6 @@
   :commands org-gfm-export-to-markdown)
 
 (use-package graphviz-dot-mode :unless noninteractive)
-(use-package htmlize :unless noninteractive)
 (use-package org-bullets :unless noninteractive)
 
 (provide 'edd-org)

@@ -1,4 +1,3 @@
-;;(toggle-debug-on-error)
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
 (require 'edd-bootstrap)
@@ -7,23 +6,22 @@
 
 ;; Do this stuff early to avoid flicker
 ;;
-(use-package edd-ux :straight nil :if window-system :unless noninteractive)
+(use-package edd-ux :if window-system :unless noninteractive)
 
 ;; built-in features
 ;;
-(use-package edd-features :straight nil)
+(use-package edd-features)
 
 ;; org-mode, as good as built-in
 ;;
-(use-package edd-org :straight nil)
+(use-package edd-org)
 (use-package edd-gtd
-  :straight nil
   :bind
   (("C-c w" . edd/go-to-work)))
 
 ;; System-specific stuff.
 ;;
-(use-package edd-mac :if (eq 'darwin system-type) :straight nil :unless noninteractive)
+(use-package edd-mac :if (eq 'darwin system-type) :unless noninteractive)
 
 ;; whitespace
 ;;
@@ -47,9 +45,9 @@
   :config
   (global-whitespace-cleanup-mode 1))
 
-(use-package edd-hydra :demand t :straight nil)
+(use-package edd-hydra :demand t)
 
-(use-package edd-proj :straight nil)
+(use-package edd-proj)
 
 ;;--
 (use-package corfu
@@ -59,7 +57,7 @@
   (corfu-quit-at-boundary t) ;; Automatically quit at word boundary
   (corfu-quit-no-match t) ;; Automatically quit if there is no match
   :init
-  (corfu-global-mode))
+  (global-corfu-mode))
 
 ;; A few more useful configurations...
 (use-package emacs
@@ -73,13 +71,10 @@
   :config
   (setq vertico-cycle t))
 
-;; TODO do in :straight
-(add-to-list 'load-path
-             (locate-user-emacs-file "straight/repos/vertico/extensions"))
 (use-package vertico-directory
   :demand t
   :ensure nil
-  :straight nil
+ 
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -95,10 +90,6 @@
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-(use-package project
-  :config
-  (setq project-switch-use-entire-map 't)
-  )
 
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
@@ -128,12 +119,7 @@
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
-
-  (defhydra+ hydra-project nil "Project"
-    ("a" consult-ripgrep "rg")
-    ("b" consult-buffer "buffer"))
-
-
+  
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
   :config
@@ -195,11 +181,8 @@
   (marginalia-mode))
 ;;--
 
-;; utilities that are too small to live alone
-;;
 (use-package edd-util
   :demand t
-  :straight nil
   :bind
   (("C-w" . kill-region-or-backward-kill-word)
    ("C-c M-p" . edd-jump-to-prev-url)
@@ -231,12 +214,21 @@
   (global-git-gutter-mode 1))
 
 (use-package magit
+  :bind
+  (:map project-prefix-map
+        ("m" . edd/magit-and-fetch))
   :demand t
   :delight with-editor-mode
   :mode ("CODEOWNERS$" . gitignore-mode)  
   :config
   (setq magit-completing-read-function 'completing-read-default)
-  (setq magit-commit-arguments '("--gpg-sign")))
+  (setq magit-commit-arguments '("--gpg-sign"))
+  (defun edd/magit-and-fetch ()
+    (interactive)
+    (progn
+      (call-interactively #'magit-project-status)
+      (call-interactively #'magit-fetch-from-upstream)))
+  )
 
 (use-package magit-filenotify :demand t)
 
@@ -244,7 +236,7 @@
   :hook
   ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
 
-(use-package edd-ledger :straight nil)
+(use-package edd-ledger)
 
 (use-package markdown-mode+
   :mode ("\\.apib\\$" . markdown-mode))
@@ -294,21 +286,16 @@
      ("/*" "*/" "/" (scala-mode java-mode))
      ("$" "$" nil (org-mode latex-mode)))))
 
-(use-package docker-tramp)
-(use-package dockerfile-mode)
-
-(use-package edd-scala :straight nil)
-(use-package edd-haskell :straight nil)
-(use-package edd-ruby :straight nil)
-(use-package edd-rust :straight nil)
-(use-package edd-go :straight nil)
-(use-package edd-kotlin :straight nil)
+(use-package edd-scala)
+(use-package edd-haskell)
+(use-package edd-ruby)
+(use-package edd-rust)
+(use-package edd-kotlin)
 
 (use-package lua-mode)
 (use-package cc-mode
   :hook
   (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
-(use-package sml-mode)
 (use-package csv)
 (use-package groovy-mode)
 (use-package php-mode)
@@ -329,15 +316,8 @@
   (:map idris-mode-map
         ("C-c C-j" . idris-pop-to-repl)
         ("C-c C-f" . edd/idris-next-hole)))
-(use-package cider)
-(use-package protobuf-mode
-  :hook
-  (protobuf-mode . edd-protobuf/set-style)
-  :config
-  (defun edd-protobuf/set-style ()
-    (c-add-style
-     "my-style"
-     '((c-basic-offset . 2) (indent-tabs-mode . nil)))))
+
+
 (use-package hcl-mode
   :mode ("\\.tf$" . hcl-mode))
 
@@ -426,7 +406,7 @@
   (("M-%" . anzu-query-replace)
    ("C-M-%" . anzu-query-replace-regexp)))
 
-(use-package edd-emms :straight nil)
+(use-package edd-emms)
 
 (use-package dumb-jump
   :init
@@ -437,13 +417,9 @@
   ;; to tackle `fatal: --untracked not supported with --recurse-submodules'
   (setq dumb-jump-force-searcher 'rg))
 
-
-(use-package gradle-mode
-  :straight `(gradle-mode :type git :host github :repo "jacobono/emacs-gradle-mode"
-                          :fork (:host github :repo "eddsteel/emacs-gradle-mode")))
+(use-package gradle-mode)
 (use-package groovy-mode)
 (use-package php-mode)
-(use-package play-routes-mode)
 (use-package rjsx-mode
   :config
   (setq js2-strict-missing-semi-warning nil)
@@ -461,7 +437,6 @@
         ("C-c C-j" . idris-pop-to-repl)
         ("C-c C-f" . edd/idris-next-hole)))
 
-(use-package cider)
 (use-package protobuf-mode
   :hook
   (protobuf-mode . edd-protobuf/set-style)
@@ -478,16 +453,12 @@
   :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-(use-package multiple-cursors)
 
-;; TODO straight this
 (use-package edd-sow
-  :straight nil
   :config
   (edd-sow-mode 1))
 
 (use-package edd-git-web-link
-  :straight nil
   :bind
   ("C-c g" . hydra-edd-git-web-link/body))
 
@@ -515,16 +486,6 @@
   :init
   (setq server-socket-dir (expand-file-name "~/run/emacs")))
 
-(use-package edit-server
-  :init
-  (edit-server-start))
-
-(use-package copy-as-format
-  :bind
-  ("C-c M-w s" . copy-as-format-slack)
-  ("C-c M-w j" . copy-as-format-jira)
-  ("C-c M-w g" . copy-as-format-github))
-
 (use-package epa
   :config
   (setq epa-pinentry-mode 'loopback))
@@ -542,8 +503,7 @@
   (setenv "PATH" (concat (getenv "PATH") ":" "/nix/var/nix/profiles/default/bin")))
 (use-package olivetti)
 
-(use-package ligature
-  :straight `(ligature :type git :host github :repo "mickeynp/ligature.el")
+(use-package ligature  
   :config
   ;; Enable the "www" ligature in every possible major mode
   (ligature-set-ligatures 't '("www"))
@@ -566,10 +526,8 @@
                                        "\\\\" "://"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
-  (global-ligature-mode t)
-  )
+  (global-ligature-mode t))
 
-;; Emacs 28
 (use-package emacs
   :bind
   ("<Multi_key>" . edd/transient-compose)
@@ -597,3 +555,4 @@
 ;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/
 ;; https://masteringemacs.org/article/whats-new-in-emacs-28-1
 (defun org())
+()

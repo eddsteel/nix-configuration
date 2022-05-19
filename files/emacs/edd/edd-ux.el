@@ -85,20 +85,9 @@
 
   (setq custom-safe-themes '("4639288d273cbd3dc880992e6032f9c817f17c4a91f00f3872009a099f5b3f84" default)))
 
-(use-package unicode-fonts
-  :init
-  (unicode-fonts-setup)
-  (when (not (daemonp)) (edd-prep-frame (car (frame-list)))))
-
 (use-package hl-line
   :hook
-  (prog-mode . hl-line-mode)
-  :config
-  ;; use when themes don't set hl-line
-  ;;(defun edd-fix-hl-line-mode ()
-   ;;(interactive)
-  ;;(set-face-background 'hl-line (face-background 'highlight)))
-  )
+  (prog-mode . hl-line-mode))
 
 (use-package time
   :config

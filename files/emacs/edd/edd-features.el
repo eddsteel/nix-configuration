@@ -125,10 +125,8 @@
   (prog-mode . subword-mode))
 
 (use-package emacs
-  :hook
-  ((prog-mode term-mode) . abbrev-mode)
   :delight
-  (abbrev-mode) (auto-fill-function) (visual-line-mode)
+  (auto-fill-function) (visual-line-mode)
   :init
   (autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
   :config
@@ -138,9 +136,6 @@
       (feature '(upcase-region downcase-region set-goal-column narrow-to-region))
     (put feature 'disabled nil))
   (setq make-backup-files nil)
-  ;; abbrevs
-  (read-abbrev-file
-   (expand-file-name "abbreviations" user-emacs-directory))
   ;; custom file
   (setq custom-file
         (expand-file-name "custom.el" user-emacs-directory))

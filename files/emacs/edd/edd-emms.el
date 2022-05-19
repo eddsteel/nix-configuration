@@ -1,5 +1,4 @@
 (use-package emms
-  :load-path "../src/emms/lisp"
   :hook
   (emms-player-started . edd/emms-tell-consul)
   :commands (emms-smart-browse emms-pause emms-browse-by-album)

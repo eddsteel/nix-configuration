@@ -106,6 +106,11 @@ in {
 
   home.file.".aws/credentials".source = ./secrets/aws-credentials;
 
+  home.file.".aspell.conf".text = ''
+    data-dir ${config.home.homeDirectory}/.nix-profile/lib/aspell
+    lang en_CA
+  '';
+
   ## standard locations
   home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}
