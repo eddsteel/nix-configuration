@@ -2,14 +2,9 @@
 let
   home = config.home.homeDirectory;
   raise = "${pkgs.scripts}/bin/raise.sh";
-  myExecutor = pkgs.gnomeExtensions.executor.overrideAttrs (old: {
-    buildCommand = old.buildCommand + ''
-        substituteInPlace $out/share/gnome-shell/extensions/executor@raujonas.github.io/extension.js --replace "'/bin/bash'" "'/usr/bin/env', 'bash'"
-    '';
-  });
   extensions = with pkgs.gnomeExtensions; [
     caffeine
-    myExecutor
+    executor
     system-monitor
     sound-output-device-chooser
   ];

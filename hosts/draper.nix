@@ -13,7 +13,7 @@
     {"name" = "tell-consul";}
   ];
   packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
-  shellAliases = {};
+  bashAliases = {};
   gnome = true;
   linux = true;
   macos = false;
