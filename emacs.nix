@@ -45,6 +45,7 @@ in {
       marginalia
       orderless
       vertico
+      hydra
 
       anzu
       auto-complete

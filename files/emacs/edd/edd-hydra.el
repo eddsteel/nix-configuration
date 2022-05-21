@@ -60,7 +60,6 @@
   :bind
   (("C-c SPC" . hydra-music/body)
    ("C-c m" . hydra-mark-modify/body)
-   ("C-c p" . hydra-project/body)
    ("C-c s" . sbt-hydra)
    ("C-c o" . hydra-goto/body)))
 

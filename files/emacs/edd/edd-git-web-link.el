@@ -1,5 +1,4 @@
 (require 'magit)
-(require 'projectile)
 (require 'dash)
 (require 'hydra)
 
@@ -103,14 +102,11 @@
   (interactive)
   (edd-git-web-link-capture "-o"))
 
-(defun edd-git-review ()
-  (interactive)
-  (git-gutter:set-start-revision "origin/master"))
 
 (defun edd-git-browse-pr (&optional args)
   (interactive)
   (let*
-    ((default-directory (projectile-project-root))
+     ((default-directory (project-root (project-current)))
      (pr-list (split-string (shell-command-to-string "hub pr list") "[\n]" t " *"))
      (pr (completing-read "PR #:" pr-list))
      (m (string-match "^#\\([0-9]+\\) *.*" pr))
@@ -128,37 +124,38 @@
     ("b" "browse" edd-git-browse-pr)
     ]])
 
-(require 'magit)
+(transient-insert-suffix
+  'magit-dispatch "!"
+  '("}" "browse commit at point" edd-git-web-link-browse-commit-at-point))
+
 
 (transient-insert-suffix
-  'magit-dispatch "%"
+  'magit-dispatch "!"
   '("@" "PRs" edd-magit-prs))
 
 (transient-insert-suffix
-  'magit-dispatch "%"
-  '("x" "browse" edd-git-web-link-browse))
+  'magit-file-dispatch "p"
+  '("P" "Previous hunk" git-gutter:previous-hunk))
+(transient-insert-suffix
+  'magit-file-dispatch "n"
+  '("N" "Next hunk" git-gutter:next-hunk))
 
-;; TODO: move to hydra
-(defhydra hydra-edd-git-web-link (:exit nil :columns 3)
-  ("b" magit-blame "blame" :exit t)
-  ("B" magit-blame-popup "blame...")
-  ("c" edd-git-review "code review")
-  ("C" edd-git-web-link-browse-commit-at-point "browse commit at point")
-  ("d" magit-diff-buffer-file "diff")
-  ("D" magit-diff-buffer-file-popup "diff..")
-  ("f" edd-git-web-link-browse-current-file "browse current file")
-  ("F" edd-git-web-link-browse-current-file-master "browse current file on master")
-  ("g" magit-log-buffer-file "log")
-  ("G" magit-log-buffer-file-popup "log...")
-  ("l" edd-git-web-link-browse-current-line "browse current line")
-  ("L" edd-git-web-link-browse-current-line-master "browse current line on master")
-  ("n" git-gutter:next-hunk "Next hunk")
-  ("N" magit-blob-next "Next blob")
-  ("p" git-gutter:previous-hunk "Previous hunk")
-  ("P" magit-blob-previous "Previous blob")
-  ("r" edd-git-web-link-browse-current-region "browse current line")
-  ("R" edd-git-web-link-browse-current-region-master "browse current line on master")
-  ("s" git-gutter:popup-hunk "show hunk diff")
-  ("S" git-gutter:statistic "show current git change stats"))
+(transient-insert-suffix
+  'magit-file-dispatch "s"
+  '("S" "show hunk diff" git-gutter:popup-hunk))
+
+(transient-insert-suffix
+  'magit-file-dispatch '(-1 0)
+  ["Browse" [
+     ("f" "browse current file" edd-git-web-link-browse-current-file)
+     ("F" "browse current file on master" edd-git-web-link-browse-current-file-master)
+     ("l" "browse current line" edd-git-web-link-browse-current-line)
+     ("L" "browse current line on master" edd-git-web-link-browse-current-line-master)
+     ("r" "browse current region" edd-git-web-link-browse-current-region)
+     ("R" "browse current region on master" edd-git-web-link-browse-current-region-master)
+     ]])
+
+;;(transient-get-suffix 'magit-file-dispatch '(-1 0));;
+
 
 (provide 'edd-git-web-link)
