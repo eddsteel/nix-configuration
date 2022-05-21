@@ -91,6 +91,10 @@ in {
          . /etc/bash.bashrc
          . /etc/bashrc
       fi
+
+      function np() {
+        version="$1" bash -c 'nix-prefetch-url "'"$2"'" --name=test'
+      }
     '';
   };
 
