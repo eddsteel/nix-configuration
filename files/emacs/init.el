@@ -215,8 +215,9 @@
 
 (use-package magit
   :bind
-  (:map project-prefix-map
-        ("m" . edd/magit-and-fetch))
+  (("C-c g" . magit-file-dispatch)
+   (:map project-prefix-map
+         ("m" . edd/magit-and-fetch)))
   :demand t
   :delight with-editor-mode
   :mode ("CODEOWNERS$" . gitignore-mode)  

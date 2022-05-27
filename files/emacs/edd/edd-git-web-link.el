@@ -2,6 +2,16 @@
 (require 'dash)
 (require 'hydra)
 
+(defun edd-git/origin-main-or-master ()
+  (letrec
+      ((origin-branch (or
+                       (magit-get "branch" "master" "merge")
+                       (magit-get "branch" "main" "merge")))
+       (branch (if (string-prefix-p "refs/heads/" origin-branch)
+                   (substring origin-branch 11)
+                 "master")))
+    branch))
+
 (defun edd-git-web-link-capture (&rest args)
   ""
   (let
@@ -28,14 +38,14 @@
            (file-relative-name (buffer-file-name))))))
 
 (defun edd-git-web-link-browse-current-file ()
-  "Open current file in the web provider on master."
+  "Open current file in the web provider on current branch."
   (interactive)
   (edd-git-web-link-current-file "-o" "-d"))
 
 (defun edd-git-web-link-browse-current-file-master ()
-  "Open current file in the web provider on master."
+  "Open current file in the web provider on main/master."
   (interactive)
-  (edd-git-web-link-current-file "-o" "-b" "master" "-d"))
+  (edd-git-web-link-current-file "-o" "-b" (edd-git/origin-main-or-master) "-d"))
 
 
 (defun edd-git-web-link-current-line (&rest args)
@@ -59,8 +69,7 @@
 (defun edd-git-web-link-browse-current-line-master ()
   "Open current line in the web provider on master."
   (interactive)
-  (edd-git-web-link-current-line "-o" "-b" "master" "-d"))
-
+  (edd-git-web-link-current-line "-o" "-b" (edd-git/origin-main-or-master) "-d"))
 
 (defun edd-git-web-link-current-region (&rest args)
   "Derive link for current region in the web provider."
@@ -85,17 +94,17 @@
 (defun edd-git-web-link-browse-current-region-master ()
   "Open current region in the web provider."
   (interactive)
-  (edd-git-web-link-current-region "-b" "master" "-o" "-d"))
+  (edd-git-web-link-current-region "-b" (edd-git/origin-main-or-master) "-o" "-d"))
 
 (defun edd-git-web-link-commit-at-point ()
   (let ((commit (magit-commit-at-point)))
     (apply 'edd-git-web-link-capture
-           (list "-r" (edd-git-web-link-remote) "-c" commit))))
+           (list "-r" (edd-git-web-link-remote) "-c" commit "-o"))))
 
 (defun edd-git-web-link-browse-commit-at-point ()
   "Open the commit at point in the web provider"
   (interactive)
-  (edd-git-web-link-commit-at-point "-o" "-d"))
+  (edd-git-web-link-commit-at-point))
 
 (defun edd-git-web-link-browse ()
   "Open the current project in the web provider"
@@ -117,41 +126,40 @@
   (interactive)
   (magit-run-git-async "pr" args))
 
-(define-transient-command edd-magit-prs ()
-  "Extras"
-  [["PRs"
-    ("c" "create" edd-git-create-pr)
-    ("b" "browse" edd-git-browse-pr)
-    ]])
+(transient-define-prefix edd/magit-prs ()
+  ["PRs"
+   [("c" "create" edd-git-create-pr)
+    ("b" "browse" edd-git-browse-pr)]
+   ])
 
-(transient-insert-suffix
-  'magit-dispatch "!"
-  '("}" "browse commit at point" edd-git-web-link-browse-commit-at-point))
-
-(transient-insert-suffix
-  'magit-dispatch "!"
+(transient-append-suffix
+  'magit-dispatch "G"
   '("@" "PRs" edd-magit-prs))
 
-(transient-insert-suffix
-  'magit-file-dispatch "p"
-  '("P" "Previous hunk" git-gutter:previous-hunk))
-(transient-insert-suffix
-  'magit-file-dispatch "n"
-  '("N" "Next hunk" git-gutter:next-hunk))
+(bind-key "@" (lambda () (interactive) (edd/magit-prs)) 'magit-mode-map)
 
-(transient-insert-suffix
-  'magit-file-dispatch "s"
-  '("S" "show hunk diff" git-gutter:popup-hunk))
+(transient-append-suffix
+  'magit-dispatch "!"
+  '("G" "browse commit at point" edd-git-web-link-browse-commit-at-point))
 
-(transient-insert-suffix
-  'magit-file-dispatch '(-1 0)
-  ["Browse" [
-     ("f" "browse current file" edd-git-web-link-browse-current-file)
-     ("F" "browse current file on master" edd-git-web-link-browse-current-file-master)
-     ("l" "browse current line" edd-git-web-link-browse-current-line)
-     ("L" "browse current line on master" edd-git-web-link-browse-current-line-master)
-     ("r" "browse current region" edd-git-web-link-browse-current-region)
-     ("R" "browse current region on master" edd-git-web-link-browse-current-region-master)
-     ]])
+(bind-key "G" #'edd-git-web-link-browse-commit-at-point 'magit-mode-map)
+
+(transient-append-suffix
+  'magit-file-dispatch '(-1 -1)
+  [("P" "Previous hunk" git-gutter:previous-hunk)
+   ("N" "Next hunk" git-gutter:next-hunk)
+   ("S" "Show hunk diff" git-gutter:popup-hunk)])
+
+(transient-append-suffix
+  'magit-file-dispatch '(-1 -1)
+  [("f" "browse current file" edd-git-web-link-browse-current-file)
+   ("l" "browse current line" edd-git-web-link-browse-current-line)
+   ("r" "browse current region" edd-git-web-link-browse-current-region)])
+
+(transient-append-suffix
+  'magit-file-dispatch '(-1 -1)
+  [("F" "browse current file on master" edd-git-web-link-browse-current-file-master)
+   ("L" "browse current line on master" edd-git-web-link-browse-current-line-master)
+   ("R" "browse current region on master" edd-git-web-link-browse-current-region-master)])
 
 (provide 'edd-git-web-link)

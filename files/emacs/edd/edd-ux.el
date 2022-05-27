@@ -9,7 +9,7 @@
   (nano-dark))
 
 (use-package nano-modeline
-  :config
+  :init
   (nano-modeline-mode))
 
 (use-package emacs
