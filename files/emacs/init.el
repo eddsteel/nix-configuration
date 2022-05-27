@@ -298,12 +298,7 @@
   (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
 (use-package csv)
 (use-package groovy-mode)
-(use-package php-mode)
 (use-package python-mode)
-(use-package rjsx-mode
-  :config
-  (setq js2-strict-missing-semi-warning nil)
-  (setq js2-strict-trailing-comma-warning nil))
 (use-package less-css-mode)
 (use-package yaml-mode)
 (use-package idris-mode
@@ -395,8 +390,7 @@
         :map prog-mode-map
         ;; This conflicts in org mode
         ("M-<left>"  . sp-backward-barf-sexp)
-        ("M-<right>" . sp-forward-barf-sexp)
-))
+        ("M-<right>" . sp-forward-barf-sexp)))
 
 (use-package anzu
   :delight anzu-mode
@@ -418,24 +412,6 @@
   (setq dumb-jump-force-searcher 'rg))
 
 (use-package gradle-mode)
-(use-package groovy-mode)
-(use-package php-mode)
-(use-package rjsx-mode
-  :config
-  (setq js2-strict-missing-semi-warning nil)
-  (setq js2-strict-trailing-comma-warning nil))
-(use-package less-css-mode)
-(use-package yaml-mode)
-(use-package idris-mode
-  :delight (idris-simple-indent-mode)
-  :config
-  (defun edd/idris-next-hole ()
-      (interactive)
-      (search-forward " ?" nil t))
-  :bind
-  (:map idris-mode-map
-        ("C-c C-j" . idris-pop-to-repl)
-        ("C-c C-f" . edd/idris-next-hole)))
 
 (use-package protobuf-mode
   :hook
@@ -453,9 +429,7 @@
   :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-(use-package edd-git-web-link
-  :bind
-  ("C-c g" . hydra-edd-git-web-link/body))
+(use-package edd-git-web-link :demand t)
 
 (use-package iedit)
 
@@ -550,4 +524,3 @@
 ;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/
 ;; https://masteringemacs.org/article/whats-new-in-emacs-28-1
 (defun org())
-()

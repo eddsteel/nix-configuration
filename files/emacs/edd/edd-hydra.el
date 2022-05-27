@@ -1,5 +1,5 @@
 (use-package hydra
-  :config
+  :init
 
   ;; WANT:
 

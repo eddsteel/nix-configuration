@@ -1,8 +1,16 @@
 ;; theme
 ;;
-(use-package darkokai-theme
+;;(use-package darkokai-theme
+;;  :config
+;;  (load-theme 'darkokai t))
+
+(use-package nano-theme
   :config
-  (load-theme 'darkokai t))
+  (nano-dark))
+
+(use-package nano-modeline
+  :config
+  (nano-modeline-mode))
 
 (use-package emacs
   :hook

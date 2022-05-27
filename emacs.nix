@@ -26,10 +26,19 @@ let
     ${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server \
       -e "(load-file user-init-file)"
   '';
+  pkgOverrides = (self: super:
+    let
+      nixpkgsLocal = ../../src/nixpkgs;
+    in rec {
+      nixpkgs-local = import nixpkgsLocal {};
+      magit = self.nixpkgs-local.emacs.pkgs.melpaPackages.magit;
+      transient = self.nixpkgs-local.emacs.pkgs.melpaPackages.transient;
+    });
 in {
   programs.emacs = {
     enable = true;
     package = pkgs.my-emacs;
+    overrides = pkgOverrides;
     extraPackages = epkgs: with epkgs; [
       delight
       use-package
@@ -42,6 +51,7 @@ in {
       consult
       corfu
       embark
+      embark-consult
       marginalia
       orderless
       vertico
@@ -110,7 +120,6 @@ in {
       js2-mode
       kotlin-mode
       lua-mode
-      php-mode
       python-mode
       rjsx-mode
       rust-mode
@@ -123,6 +132,8 @@ in {
       flymake-go
       flymake-hlint
       restart-emacs
+      nano-theme
+      nano-modeline
     ];
   };
 

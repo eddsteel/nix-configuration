@@ -112,6 +112,8 @@
          ("<f7>" . edd/emms-start-or-previous)
          ("<f9>" . emms-next)
          ("C-M-s-p" . emms-playlist-mode-switch-buffer)
-         ("C-M-s-n" . emms-browse-by-album)))
-
+         ("C-M-s-n" . emms-browse-by-album)
+         (:map emms-browser-mode-map
+               ("C-i" . emms-browser-expand-one-level)
+               ("<tab>" . emms-browser-expand-one-level))))
 (provide 'edd-emms)

@@ -128,7 +128,6 @@
   'magit-dispatch "!"
   '("}" "browse commit at point" edd-git-web-link-browse-commit-at-point))
 
-
 (transient-insert-suffix
   'magit-dispatch "!"
   '("@" "PRs" edd-magit-prs))
@@ -154,8 +153,5 @@
      ("r" "browse current region" edd-git-web-link-browse-current-region)
      ("R" "browse current region on master" edd-git-web-link-browse-current-region-master)
      ]])
-
-;;(transient-get-suffix 'magit-file-dispatch '(-1 0));;
-
 
 (provide 'edd-git-web-link)
