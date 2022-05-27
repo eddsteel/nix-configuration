@@ -1,8 +1,8 @@
 { pkgs ? import <nixpkgs> {}}:
 pkgs.stdenv.mkDerivation rec {
   pname = "soundsource";
-  version = "5.3.11";
-  sha = "10dzimgrprmwvp7j3hjf6l31jz4l9vnjjdz83q51h4h07fgwqbs7";
+  version = "5.5.1";
+  sha = "03r864lgj19pvwsirwcjf2yzg274qc6riq2m0qhcna75khhs410a";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";

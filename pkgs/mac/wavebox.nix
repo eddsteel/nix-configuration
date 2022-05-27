@@ -1,8 +1,8 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.stdenv.mkDerivation rec {
   pname = "wavebox";
-  version = "10.101.21.2";
-  sha = "0v8hjivzay1bp4r5jsvnzlz8k66570gkjmh10jjqxz8gxk636xka";
+  version = "10.102.12.2";
+  sha = "0qngxb8a1bsj1xjxckwm5ajr55s7mrxwp4nhdj8zy30lbfmxgd3j";
 
   buildInputs = [ pkgs.undmg];
   sourceRoot = ".";
