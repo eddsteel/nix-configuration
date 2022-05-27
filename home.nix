@@ -61,9 +61,9 @@ in {
       grr = ''git remote remove'';
       gs = ''git status'';
       gsr = ''find . -type d -name ".git" -print -exec git --git-dir="{}" --work-tree="{}/.." status \;'';
+      hms = ''home-manager switch'';
       la = ''ls -a --color=auto'';
       srsly = ''sudo $(fc -ln -1)'';
-      ssh = ''TERM=vt100 ssh'';
       stree = ''tree --prune -P *.scala'';
 
       ".." = ''cd ..'';
@@ -91,10 +91,6 @@ in {
          . /etc/bash.bashrc
          . /etc/bashrc
       fi
-
-      function np() {
-        version="$1" bash -c 'nix-prefetch-url "'"$2"'" --name=test'
-      }
     '';
   };
 
