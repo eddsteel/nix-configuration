@@ -1,30 +1,21 @@
-(add-to-list 'load-path (locate-user-emacs-file "edd"))
-(add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
-(require 'edd-bootstrap)
+(require 'edd-bootstrap (locate-user-emacs-file "edd/edd-bootstrap.el"))
+
 (edd/maybe-load-config "local-pre.el")
-(defvar edd/emms-consul-p t "Whether to do consul stuff with emms")
 
-;; Do this stuff early to avoid flicker
-;;
-(use-package edd-ux :if window-system :unless noninteractive)
+(use-package edd-ux
+  :if window-system :unless noninteractive)
 
-;; built-in features
-;;
 (use-package edd-features)
 
-;; org-mode, as good as built-in
-;;
+;; TODO combine
 (use-package edd-org)
 (use-package edd-gtd
   :bind
   (("C-c w" . edd/go-to-work)))
 
-;; System-specific stuff.
-;;
-(use-package edd-mac :if (eq 'darwin system-type) :unless noninteractive)
+(use-package edd-mac
+  :if (eq 'darwin system-type) :unless noninteractive)
 
-;; whitespace
-;;
 (use-package whitespace
   :unless noninteractive
   :delight whitespace-mode
@@ -33,20 +24,17 @@
   :config
   (setq-default
    whitespace-style '(face trailing tabs empty indentation)
-   indent-tabs-mode nil)
-
-  :custom-face
-  (whitespace-empty ((nil :foreground "disabledControlTextColor" :background "#333333")))
-  (whitespace-line ((nil :background "disabledControlTextColor" :foreground "#333333")))
-  (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "#333333")))
-  (whitespace-trailing ((nil :background "disabledControlTextColor" :foreground "#333333"))))
+   indent-tabs-mode nil))
 
 (use-package whitespace-cleanup-mode
   :config
   (global-whitespace-cleanup-mode 1))
 
-(use-package edd-hydra :demand t)
+;; TODO replace with transient
+(use-package edd-hydra
+  :demand t)
 
+;; TODO move to edd-features?
 (use-package edd-proj)
 
 ;;--

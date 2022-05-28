@@ -12,4 +12,9 @@
   :config
   (exec-path-from-shell-initialize))
 
+(add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
+(add-to-list 'load-path (locate-user-emacs-file "edd"))
+
+(defvar edd/emms-consul-p t "Whether to do consul stuff with emms")
+
 (provide 'edd-bootstrap)
