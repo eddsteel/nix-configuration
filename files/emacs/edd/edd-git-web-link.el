@@ -126,10 +126,16 @@
   (interactive)
   (magit-run-git-async "pr" args))
 
+(defun edd-git-create-draft-pr (&optional args)
+  (interactive)
+  (magit-run-git-async "pr" "-d" args))
+
 (transient-define-prefix edd/magit-prs ()
   ["PRs"
    [("c" "create" edd-git-create-pr)
-    ("b" "browse" edd-git-browse-pr)]
+    ("b" "browse" edd-git-browse-pr)
+    ("d" "draft"  edd-git-create-draft-pr)
+    ]
    ])
 
 (transient-append-suffix
