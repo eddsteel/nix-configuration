@@ -1,5 +1,17 @@
-;; Bootstrap use-package
+;; Bootstrap
 ;;
+
+;; Don't rely on command line args so that raisers, restart-emacs work
+(defun is-nix (dirs path)
+  (if (null dirs)
+      nil
+    (if (string-prefix-p (car dirs) path) (car dirs)
+      (is-nix (cdr dirs) path))))
+
+(when (is-nix (list "/nix/store" "/var/run/current-system" (expand-file-name "~/.nix-profile")) (executable-find "emacs"))
+  (require 'cl-loaddefs)
+  (require 'nix-generated-autoload))
+
 (require 'use-package)
 (use-package delight)
 (use-package bind-key)
