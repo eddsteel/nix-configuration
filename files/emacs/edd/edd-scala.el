@@ -18,9 +18,7 @@
   :init
   (defun edd-scala/hook ()
     (progn
-      (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))
-      (setq-local
-       nyan-bar-length 16)))
+      (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))))
   :config
   (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters nil

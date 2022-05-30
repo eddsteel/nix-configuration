@@ -55,13 +55,13 @@
          "%T. "
        ""))
    "%n"))
-(setq emms-browser-info-title-format 'ambrevar/emms-browser-track-artist-and-title-format)
-  (defun edd/emms-modeline ()
-    (concat " 🎶 "
-            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
-                                     (emms-mode-line-playlist-current))))
-              (substring s
-                         0 (min 20 (length s))))))
+;;(setq emms-browser-info-title-format 'ambrevar/emms-browser-track-artist-and-title-format)
+;;  (defun edd/emms-modeline ()
+;;    (concat " 🎶 "
+;;            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
+;;                                     (emms-mode-line-playlist-current))))
+;;              (substring s
+;;                         0 (min 20 (length s))))))
 
   (defun edd/emms-tell-consul ()
     (when edd/emms-consul-p
@@ -77,7 +77,7 @@
                         (cons :time time)))))
         (start-process "np" "*tell-consul*" "b" "np" "set" json))))
 
-  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
+;;  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   (defun edd/emms-start-or-previous ()
     (interactive)
     (when emms-player-playing-p
@@ -107,7 +107,6 @@
                              (emms-playlist-current-selected-track)))
       ""))
 
-  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   :bind (("<f8>" . emms-pause)
          ("<f7>" . edd/emms-start-or-previous)
          ("<f9>" . emms-next)
