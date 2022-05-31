@@ -79,42 +79,18 @@
 
 
 (use-package consult
-  ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (("C-M-." . consult-line)
          :map project-prefix-map
          ("a" . consult-ripgrep)
          ("b" . consult-buffer))
-
   :hook (completion-list-mode . consult-preview-at-point-mode)
-
-  ;; The :init configuration is always executed (Not lazy)
   :init
-
-  ;; Optionally configure the register formatting. This improves the register
-  ;; preview for `consult-register', `consult-register-load',
-  ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0
         register-preview-function #'consult-register-format)
-
-  ;; Optionally tweak the register preview window.
-  ;; This adds thin lines, sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
-
-  ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
-
-  ;; Configure other variables and modes in the :config section,
-  ;; after lazily loading the package.
   :config
-
-  ;; Optionally configure preview. The default value
-  ;; is 'any, such that any key triggers the preview.
-  ;; (setq consult-preview-key 'any)
-  ;; (setq consult-preview-key (kbd "M-."))
-  ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
-  ;; For some commands and buffer sources it is useful to configure the
-  ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-theme
    :preview-key '(:debounce 0.2 any)
@@ -122,20 +98,7 @@
    consult-bookmark consult-recent-file consult-xref
    consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
    :preview-key (kbd "M-."))
-
-  ;; Optionally configure the narrowing key.
-  ;; Both < and C-+ work reasonably well.
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
-
-  ;; Optionally make narrowing help available in the minibuffer.
-  ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
-  ;; Optionally configure a function which returns the project root directory.
-  ;; There are multiple reasonable alternatives to chose from.
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-root-function #'projectile-project-root)
-  )
+  (setq consult-narrow-key "<"))
 
 (use-package embark
   :bind
@@ -143,27 +106,17 @@
    ("C-c C-o" . embark-export)
    ("M-." . embark-dwim)
    ("<help> B" . embark-bindings))
-
   :init
+  (setq prefix-help-command #'embark-prefix-help-command))
 
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
-
-  :config
-
-  ;; Hide the mode line of the Embark live/completions buffers
-  ;;(add-to-list 'display-buffer-alist
-  ;;             '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-  ;;               nil
-  ;;               (window-parameters (mode-line-format . none))))
-  )
 (use-package embark-consult
   :after (embark consult)
   :demand t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package marginalia
-  :init
-  (marginalia-mode))
+  :init (marginalia-mode))
+
 ;;--
 
 (use-package edd-util
@@ -175,8 +128,7 @@
    ("C-x k". edd-kill-a-buffer)))
 
 (use-package pdf-tools
-  :init
-  (pdf-tools-install))
+  :init (pdf-tools-install))
 
 (use-package flycheck
   :delight " 🛂"
@@ -185,14 +137,13 @@
   ((sbt-file-mode) . (lambda () (flycheck-mode -1))))
 
 (use-package rainbow-delimiters
-  :hook
-  (prog-mode . rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package auto-highlight-symbol
-  :hook
-  (prog-mode . auto-highlight-symbol-mode)
+  :hook (prog-mode . auto-highlight-symbol-mode)
   :delight)
 
+;; TODO: move edd-git-web-link to edd-git and move these there.
 (use-package git-gutter
   :delight
   :config
@@ -205,7 +156,7 @@
          ("m" . edd/magit-and-fetch)))
   :demand t
   :delight with-editor-mode
-  :mode ("CODEOWNERS$" . gitignore-mode)  
+  :mode ("CODEOWNERS$" . gitignore-mode)
   :config
   (setq magit-completing-read-function 'completing-read-default)
   (setq magit-commit-arguments '("--gpg-sign"))
@@ -213,14 +164,12 @@
     (interactive)
     (progn
       (call-interactively #'magit-project-status)
-      (call-interactively #'magit-fetch-from-upstream)))
-  )
+      (call-interactively #'magit-fetch-from-upstream))))
 
 (use-package magit-filenotify :demand t)
 
 (use-package magit-delta
-  :hook
-  ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
+  :hook ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
 
 (use-package edd-ledger)
 
@@ -228,8 +177,7 @@
   :mode ("\\.apib\\$" . markdown-mode))
 
 (use-package imenu-anywhere
-  :hook
-  (emacs-lisp-mode . jcs-use-package)
+  :hook (emacs-lisp-mode . jcs-use-package)
   :config
   (defun jcs-use-package ()
     (add-to-list
@@ -239,8 +187,7 @@
 
 ;; smoother scrolling
 (use-package smooth-scrolling
-  :hook
-  ((term-mode comint) . (lambda () (setq-local scroll-margin 0)))
+  :hook ((term-mode comint) . (lambda () (setq-local scroll-margin 0)))
   :config
   (setq smooth-scroll-margin 5
         scroll-conservatively 101
@@ -254,14 +201,12 @@
    ("C-c q r" . quickrun-region)))
 
 (use-package expand-region
-  :bind
-  (("C-=" . er/expand-region)))
+  :bind (("C-=" . er/expand-region)))
 
 ;; wrap-region
 (use-package wrap-region
   :delight wrap-region-mode
-  :hook
-  ((org-mode latex-mode prog-mode) . wrap-region-mode)
+  :hook ((org-mode latex-mode prog-mode) . wrap-region-mode)
   :config
   (wrap-region-add-wrappers
    '(("*" "*" nil org-mode)
@@ -276,12 +221,17 @@
 (use-package edd-haskell)
 (use-package edd-ruby)
 (use-package edd-rust)
-(use-package edd-kotlin)
+(use-package edd-kotlin
+  :hook (kotlin-mode . edd-kotlin/imenu)
+  :config
+  (defun edd-kotlin/imenu ()
+    (add-to-list
+     'imenu-generic-expression
+     '("Functions""\\(^\\s*fun +\\)\\([^ ]+\\)\\|\\(^\\s*fun +`\\)\\([^`]+\\)`" 2))))
 
 (use-package lua-mode)
 (use-package cc-mode
-  :hook
-  (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
+  :hook (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
 (use-package csv)
 (use-package groovy-mode)
 (use-package python-mode)
@@ -297,7 +247,6 @@
   (:map idris-mode-map
         ("C-c C-j" . idris-pop-to-repl)
         ("C-c C-f" . edd/idris-next-hole)))
-
 
 (use-package hcl-mode
   :mode ("\\.tf$" . hcl-mode))
