@@ -62,7 +62,6 @@
 (use-package vertico-directory
   :demand t
   :ensure nil
- 
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -104,7 +103,7 @@
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
-  
+
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
   :config

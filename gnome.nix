@@ -87,19 +87,19 @@ in {
 
     "${mediaKeys}/custom-keybindings/custom0" = {
       binding = ''<Primary><Shift><Alt><Super>e'';
-      command = ''${raise} "GNU Emacs at" ${pkgs.my-emacs}/bin/emacs'';
+      command = ''${raise} "GNU Emacs at" ${home}/.nix-profile/bin/emacs'';
       name = ''Emacs'';
     };
 
     "${mediaKeys}/custom-keybindings/custom1" = {
       binding = ''<Primary><Shift><Alt><Super>f'';
-      command = ''${raise} "Mozilla Firefox" ${pkgs.firefox}/bin/firefox'';
+      command = ''${raise} "Mozilla Firefox"  ${home}/.nix-profile/bin/firefox'';
       name = ''Firefox'';
     };
 
     "${mediaKeys}/custom-keybindings/custom2" = {
       binding = ''<Primary><Shift><Alt><Super>Return'';
-      command = ''${raise} "@" ${pkgs.gnome.gnome-terminal}/bin/gnome-terminal'';
+      command = ''${raise} "@" ${home}/.nix-profile/bin/gnome-terminal'';
       name = ''Terminal'';
     };
 
