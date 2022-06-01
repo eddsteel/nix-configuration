@@ -1,10 +1,15 @@
 (use-package kotlin-mode
   :mode ("build.gradle.kts" . kotlin-mode)
+  :hook edd-kotlin/imenu
   :bind
   ("C-c i" . edd-kt/sort-imports)
   :config
   (setq kotlin-tab-width 4)
   (setq gradle-use-gradlew nil)
+  (defun edd-kotlin/imenu ()
+    (add-to-list
+     'imenu-generic-expression
+     '("Functions""\\(^\\s*fun +\\)\\([^ ]+\\)\\|\\(^\\s*fun +`\\)\\([^`]+\\)`" 2)))
   (defun edd-kt/sort-imports ()
     (interactive)
     (let

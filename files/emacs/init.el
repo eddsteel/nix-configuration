@@ -7,14 +7,12 @@
 
 (use-package edd-features)
 
-;; TODO combine
-(use-package edd-org)
-(use-package edd-gtd
-  :bind
-  (("C-c w" . edd/go-to-work)))
-
 (use-package edd-mac
   :if (eq 'darwin system-type) :unless noninteractive)
+
+(use-package edd-org
+  :demand t
+  :bind (("C-c w" . edd/go-to-work)))
 
 (use-package whitespace
   :unless noninteractive
@@ -34,9 +32,6 @@
 (use-package edd-hydra
   :demand t)
 
-;; TODO move to edd-features?
-(use-package edd-proj)
-
 ;;--
 (use-package corfu
   :custom
@@ -46,12 +41,6 @@
   (corfu-quit-no-match t) ;; Automatically quit if there is no match
   :init
   (global-corfu-mode))
-
-;; A few more useful configurations...
-(use-package emacs
-  :init
-  (setq completion-cycle-threshold 3)
-  (setq tab-always-indent 'complete))
 
 (use-package vertico
   :init
@@ -76,7 +65,6 @@
   (setq completion-styles '(substring orderless)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
-
 
 (use-package consult
   :bind (("C-M-." . consult-line)
@@ -122,13 +110,11 @@
 (use-package edd-util
   :demand t
   :bind
-  (("C-w" . kill-region-or-backward-kill-word)
-   ("C-c M-p" . edd-jump-to-prev-url)
-   ("C-c M-n" . edd-jump-to-next-url)
-   ("C-x k". edd-kill-a-buffer)))
+  (("C-w" . edd-util/kill-region-or-backward-kill-word)
+   ("C-x k" . edd-util/kill-a-buffer)
+   ("M-q" . edd-util/fill-or-unfill-paragraph)))
 
-(use-package pdf-tools
-  :init (pdf-tools-install))
+(use-package pdf-tools)
 
 (use-package flycheck
   :delight " 🛂"
@@ -143,33 +129,7 @@
   :hook (prog-mode . auto-highlight-symbol-mode)
   :delight)
 
-;; TODO: move edd-git-web-link to edd-git and move these there.
-(use-package git-gutter
-  :delight
-  :config
-  (global-git-gutter-mode 1))
-
-(use-package magit
-  :bind
-  (("C-c g" . magit-file-dispatch)
-   (:map project-prefix-map
-         ("m" . edd/magit-and-fetch)))
-  :demand t
-  :delight with-editor-mode
-  :mode ("CODEOWNERS$" . gitignore-mode)
-  :config
-  (setq magit-completing-read-function 'completing-read-default)
-  (setq magit-commit-arguments '("--gpg-sign"))
-  (defun edd/magit-and-fetch ()
-    (interactive)
-    (progn
-      (call-interactively #'magit-project-status)
-      (call-interactively #'magit-fetch-from-upstream))))
-
-(use-package magit-filenotify :demand t)
-
-(use-package magit-delta
-  :hook ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
+(use-package edd-git :demand t)
 
 (use-package edd-ledger)
 
@@ -221,13 +181,7 @@
 (use-package edd-haskell)
 (use-package edd-ruby)
 (use-package edd-rust)
-(use-package edd-kotlin
-  :hook (kotlin-mode . edd-kotlin/imenu)
-  :config
-  (defun edd-kotlin/imenu ()
-    (add-to-list
-     'imenu-generic-expression
-     '("Functions""\\(^\\s*fun +\\)\\([^ ]+\\)\\|\\(^\\s*fun +`\\)\\([^`]+\\)`" 2))))
+(use-package edd-kotlin)
 
 (use-package lua-mode)
 (use-package cc-mode
@@ -364,8 +318,6 @@
   :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-(use-package edd-git-web-link :demand t)
-
 (use-package iedit)
 
 (use-package wgrep
@@ -405,9 +357,8 @@
 (use-package nix-mode
   :config
   (setenv "PATH" (concat (getenv "PATH") ":" "/nix/var/nix/profiles/default/bin")))
-(use-package olivetti)
 
-(use-package ligature  
+(use-package ligature
   :config
   ;; Enable the "www" ligature in every possible major mode
   (ligature-set-ligatures 't '("www"))

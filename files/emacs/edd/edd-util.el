@@ -1,4 +1,4 @@
-(defun kill-region-or-backward-kill-word (&optional arg region)
+(defun edd-util/kill-region-or-backward-kill-word (&optional arg region)
   "`kill-region' if the region is active, otherwise `backward-kill-word'"
   (interactive (list (prefix-numeric-value current-prefix-arg) (use-region-p)))
   (if region
@@ -22,24 +22,15 @@
 
 ;; From https://github.com/sri/dotfiles/blob/master/emacs/emacs.d/my-fns.el#L236
 ;;
-(defun edd-sudo-ff ()
+(defun edd-util/sudo-ff ()
   "Use TRAMP to `sudo' the current buffer"
   (interactive)
   (let ((file-name (buffer-file-name)))
     (when file-name
       (find-alternate-file (concat "/sudo::" file-name)))))
 
-;; Exercism submit from project root
-(with-eval-after-load "projectile"
-  (defun edd-ex-submit ()
-    (interactive)
-    (let ((file (buffer-file-name))
-          (default-directory (projectile-project-root)))
-      (display-buffer (process-buffer
-     (start-process "exercism" "*exercism*" "exercism" "submit" file))))))
 
-;; This is rad, copied from
-(defun edd-fill-or-unfill ()
+(defun edd-util/fill-or-unfill-paragraph ()
   "Like `fill-paragraph', but unfill if used twice."
   (interactive)
   (let ((fill-column
@@ -49,12 +40,9 @@
            fill-column)))
     (call-interactively #'fill-paragraph)))
 
-(global-set-key [remap fill-paragraph]
-                #'edd-fill-or-unfill)
-
 ;; From https://www.emacswiki.org/emacs/ReverseParagraphs
 ;;
-(defun edd-reverse-paragraphs (beg end)
+(defun edd-util/reverse-paragraphs (beg end)
   "Reverse the order of paragraphs in a region.
 From a program takes two point or marker arguments, BEG and END."
   (interactive "r")
@@ -148,19 +136,13 @@ From a program takes two point or marker arguments, BEG and END."
 
 ;; kill current buffer by default
 ;; http://irreal.org/blog/?p=5585
-(defun edd-kill-a-buffer (askp)
+(defun edd-util/kill-a-buffer (askp)
   (interactive "P")
   (if askp
       (kill-buffer (funcall completing-read-function
                             "Kill buffer: "
                             (mapcar #'buffer-name (buffer-list))))
-    (kill-this-buffer)))
-
-(defun edd/dashify ()
-    (interactive)
-    (save-excursion
-      (beginning-of-buffer)
-      (while (search-forward " -- " nil t) (replace-match " — "))))
+    (kill-buffer (current-buffer))))
 
 (defun edd-wibble-font ()
   "Switch GUI font between different sizes (switching between laptop and monitor)"

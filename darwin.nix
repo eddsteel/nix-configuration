@@ -27,7 +27,7 @@
   system.stateVersion = 4;
 
   fonts = {
-    fontDir.enable = true;
+#    fontDir.enable = true;
     fonts = with pkgs; [
       noto-fonts
       noto-fonts-emoji
@@ -35,6 +35,7 @@
       noto-fonts-cjk
       fira-code
       iosevka
+      open-sans
     ];
   };
 }

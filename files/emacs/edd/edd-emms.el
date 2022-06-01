@@ -1,6 +1,7 @@
 (use-package emms
   :hook
   (emms-player-started . edd/emms-tell-consul)
+  (emms-browser-mode . nano-modeline-emms-browser-mode)
   :commands (emms-smart-browse emms-pause emms-browse-by-album)
   :init
   (setq default-major-mode 'fundamental-mode) ;; shim for emms to work
@@ -106,6 +107,20 @@
                             (emms-track-description
                              (emms-playlist-current-selected-track)))
       ""))
+
+  (defun edd-emms/song ()
+    (if emms-player-playing-p
+        (emms-track-get (emms-playlist-current-selected-track) 'info-title)
+      ""))
+
+  (defun nano-modeline-emms-browser-mode ()
+    (nano-modeline-render (nano-modeline-status)
+                           (buffer-name)
+                           (edd-emms/song)
+                           ""))
+
+  (defun nano-modeline-emms-browser-mode-p ()
+    (derived-mode-p 'emms-browser-mode))
 
   :bind (("<f8>" . emms-pause)
          ("<f7>" . edd/emms-start-or-previous)

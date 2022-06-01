@@ -45,7 +45,6 @@ in {
       nyan-mode
       darkokai-theme
       basic-theme
-      olivetti
       (ligature epkgs)
 
       consult
