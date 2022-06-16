@@ -11,7 +11,6 @@
   :if (eq 'darwin system-type) :unless noninteractive)
 
 (use-package edd-org
-  :demand t
   :bind (("C-c w" . edd/go-to-work)))
 
 (use-package whitespace
@@ -28,17 +27,12 @@
   :config
   (global-whitespace-cleanup-mode 1))
 
-;; TODO replace with transient
-(use-package edd-hydra
-  :demand t)
-
-;;--
 (use-package corfu
   :custom
-  (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)  ;; Enable auto completion
-  (corfu-quit-at-boundary t) ;; Automatically quit at word boundary
-  (corfu-quit-no-match t) ;; Automatically quit if there is no match
+  (corfu-cycle t "Enable cycling for `corfu-next'/`corfu-previous'")
+  (corfu-auto t "Enable auto completion")
+  (corfu-quit-at-boundary t "Automatically quit at word boundary")
+  (corfu-quit-no-match t "Automatically quit if there is no match")
   :init
   (global-corfu-mode))
 
@@ -105,8 +99,6 @@
 (use-package marginalia
   :init (marginalia-mode))
 
-;;--
-
 (use-package edd-util
   :demand t
   :bind
@@ -114,7 +106,8 @@
    ("C-x k" . edd-util/kill-a-buffer)
    ("M-q" . edd-util/fill-or-unfill-paragraph)))
 
-(use-package pdf-tools)
+(use-package pdf-tools
+  :init (pdf-tools-install))
 
 (use-package flycheck
   :delight " 🛂"
@@ -148,12 +141,12 @@
 ;; smoother scrolling
 (use-package smooth-scrolling
   :hook ((term-mode comint) . (lambda () (setq-local scroll-margin 0)))
-  :config
-  (setq smooth-scroll-margin 5
-        scroll-conservatively 101
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil
-        scroll-margin 5))
+  :custom
+  (smooth-scroll-margin 5)
+  (scroll-conservatively 101)
+  (scroll-preserve-screen-position t)
+  (auto-window-vscroll nil)
+  (scroll-margin 5))
 
 (use-package quickrun
   :bind
@@ -283,8 +276,7 @@
 
 (use-package anzu
   :delight anzu-mode
-  :init
-  (global-anzu-mode +1)
+  :init (global-anzu-mode +1)
   :bind
   (("M-%" . anzu-query-replace)
    ("C-M-%" . anzu-query-replace-regexp)))
@@ -295,10 +287,9 @@
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  :config
-  (setq dumb-jump-default-project "~/src")
-  ;; to tackle `fatal: --untracked not supported with --recurse-submodules'
-  (setq dumb-jump-force-searcher 'rg))
+  :custom
+  (dumb-jump-default-project (expand-file-name "~/src"))
+  (dumb-jump-force-searcher 'rg "Use rg to avoid problems with submodules"))
 
 (use-package gradle-mode)
 
@@ -328,8 +319,7 @@
         ("C-c C-c" . wgrep-finish-edit)))
 
 (use-package direnv
-  :config
-  (direnv-mode))
+  :config (direnv-mode))
 
 (use-package browse-at-remote)
 
@@ -346,10 +336,9 @@
   :config
   (setq epa-pinentry-mode 'loopback))
 
-;; let's use firefox
 (use-package browse-url
-  :config
-  (setq browse-url-browser-function 'browse-url-firefox))
+  :custom
+  (browse-url-browser-function 'browse-url-firefox))
 
 (use-package make-mode
   :mode ("Makefile.inc" . makefile-mode))
@@ -379,6 +368,7 @@
                                        "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
                                        "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                                        "\\\\" "://"))
+
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
@@ -409,4 +399,3 @@
 ;; http://lists.madduck.net/pipermail/vcs-home/2013-August/000880.html
 ;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/
 ;; https://masteringemacs.org/article/whats-new-in-emacs-28-1
-(defun org())

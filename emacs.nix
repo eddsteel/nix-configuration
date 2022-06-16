@@ -21,11 +21,6 @@ let
       sha256 = "sha256-Bgb5wFyx0hMilpihxA8cTrRVw71EBOw2DczlM4lSNMs=";
     };
   };
-  refreshRunningEmacs = ''
-    test -f ${config.home.homeDirectory}/run/emacs/server && \
-    ${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server \
-      -e "(load-file user-init-file)"
-  '';
   pkgOverrides = (self: super:
     let
       nixpkgsLocal = ../../src/nixpkgs;
@@ -39,6 +34,9 @@ in {
     enable = true;
     package = pkgs.my-emacs;
     overrides = pkgOverrides;
+    extraConfig = ''
+    (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
+    '';
     extraPackages = epkgs: with epkgs; [
       delight
       use-package
@@ -130,24 +128,12 @@ in {
       flymake-easy
       flymake-go
       flymake-hlint
-      restart-emacs
       nano-theme
       nano-modeline
     ];
   };
 
-  xdg.configFile."emacs/init.el" = {
-    source = ./files/emacs/init.el;
-    onChange = refreshRunningEmacs;
-  };
-
-  xdg.configFile."emacs/edd" = {
-    source = ./files/emacs/edd;
-    onChange = refreshRunningEmacs;
-  };
-
-  xdg.configFile."emacs/local.el" = {
-    source = ./secrets/local.el;
-    onChange = refreshRunningEmacs;
-  };
+  xdg.configFile."emacs/init.el".source = ./files/emacs/init.el;
+  xdg.configFile."emacs/edd".source = ./files/emacs/edd;
+  xdg.configFile."emacs/local.el".source = ./secrets/local.el;
 }

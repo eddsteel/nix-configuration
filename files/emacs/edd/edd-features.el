@@ -1,6 +1,5 @@
 ;; Features -- tweaking of stuff that's built-in
 ;;
-;;
 (use-package term
   :functions edd/term
   :hook
@@ -129,30 +128,26 @@
   (auto-fill-function) (visual-line-mode)
   :init
   (autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
+  :custom
+  (sentence-end-double-space nil)
+  (custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (uniquify-buffer-name-style 'post-forward)
+  (scroll-preserve-screen-position 'always "Make C-v M-v symmetrical")
+  (save-interprogram-paste-before-kill t)
+  (make-backup-files nil)
+  (x-stretch-cursor t "Full-width cursor")
+  (large-file-warning-threshold 100000000)
+  (completion-cycle-threshold 3)
+  (tab-always-indent 'complete)
+
   :config
-  ;; do sentences like a normal person
-  (setq sentence-end-double-space nil)
   (dolist
       (feature '(upcase-region downcase-region set-goal-column narrow-to-region))
     (put feature 'disabled nil))
-  (setq make-backup-files nil)
-  ;; custom file
-  (setq custom-file
-        (expand-file-name "custom.el" user-emacs-directory))
-  ;; uniquify buffers
-  (setq uniquify-buffer-name-style 'post-forward)
-  ;; make C-v M-v symmetrical
-  (setq scroll-preserve-screen-position 'always)
-  ;; keep system clipboard in kill ring when overwriting it
-  (setq save-interprogram-paste-before-kill t)
-  ;; full width cursor
-  (setq x-stretch-cursor t)
-  ;; hurt me plenty
-  (setq large-file-warning-threshold 100000000)
+
   (setq initial-scratch-message
         (concat initial-scratch-message
-                "\n(load-file user-init-file)"
-                "\n(progn (require \\='restart-emacs) (restart-emacs))"))
+                "\n(load-file user-init-file)"))
   :bind
   (("M-SPC" . cycle-spacing)
    ("M-=" . count-words)
@@ -163,8 +158,7 @@
    ("M-o" . other-window)
    ("C-c r" . comint-run)))
 
-(use-package smerge-mode
-  :delight " ±")
+(use-package smerge-mode :delight " ±")
 
 ;; Override _ in ctl-x 8 to provide vowels with macrons
 (use-package emacs
@@ -179,36 +173,26 @@
       (iso-transl-define-keys iso-transl-char-map))))
 
 (use-package emacs
-  :hook
-  ((scheme-mode elisp-mode) . my-pretty-lambda)
-  :init
-  (global-prettify-symbols-mode 1)
-  (setq completion-cycle-threshold 3)
-  (setq tab-always-indent 'complete)
+  :hook ((scheme-mode elisp-mode) . my-pretty-lambda)
+  :init (global-prettify-symbols-mode 1)
   :config
   (defun my-pretty-lambda ()
-    "make some word or string show as pretty Unicode symbols"
+    "Shrink lambdas"
     (setq prettify-symbols-alist
           '(("lambda" . 955)))))
 
 (use-package re-builder
-  :config
-  (setq reb-re-syntax 'string))
+  :config (setq reb-re-syntax 'string))
 
 (use-package wdired
-  :config
-  (setq wdired-create-parent-directories t))
+  :config (setq wdired-create-parent-directories t))
 
 (use-package dired-collapse
-  :config
-  (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
+  :config (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-(use-package peep-dired
+(use-package peep-dired                                        ;
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("P" . peep-dired)))
-
-(use-package restart-emacs)
+  :bind (:map dired-mode-map ("P" . peep-dired)))
 
 (use-package project
   :bind
