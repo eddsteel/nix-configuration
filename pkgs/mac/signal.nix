@@ -1,8 +1,8 @@
-{ pkgs ? import <nixpkgs> {}}:
+{ pkgs ? import <nixpkgs> {} }:
 pkgs.stdenv.mkDerivation rec {
   pname = "signal";
-  version = "5.43.0";
-  sha = "sha256-E43X8wO/uLrBtYPaAT+RdVCub3rKEd4SkhRMqtZekZo=";
+  version = "5.45.1";
+  sha = "1861vwpxi1c0kc9gmbgq220xb1iqqb408sxhfyvdwrlamvsa7wsa";
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
@@ -14,7 +14,7 @@ pkgs.stdenv.mkDerivation rec {
 
   src = pkgs.fetchurl {
     name = "signal-${version}.dmg";
-    url = "https://updates.signal.org/desktop/signal-desktop-mac-universal-${version}.dmg";    
+    url = "https://updates.signal.org/desktop/signal-desktop-mac-universal-${version}.dmg";
     sha256 = sha;
   };
 
