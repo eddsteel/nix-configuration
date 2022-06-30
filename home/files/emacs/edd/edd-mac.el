@@ -132,4 +132,6 @@ the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
   (setq browse-url-firefox-program (expand-file-name "~/Applications/Home Manager/Firefox.app/Contents/MacOS/firefox"))
   (setq browse-url-firefox-arguments '())) ;; Just use open
 
+(setq edd-emms/consul-p nil)
+
 (provide 'edd-mac)

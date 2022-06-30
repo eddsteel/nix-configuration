@@ -1,28 +1,33 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib) optional optionals;
-  host = import ./host.nix { inherit pkgs config; };
-  inherit (import ./util.nix { inherit pkgs config lib host; }) mrINI;
-  gpgPub = ./files/pubring.gpg;
-  gpgSec = ./secrets/secring.gpg;
+
+  hostname = builtins.getEnv "HOSTNAME";
+  username = builtins.getEnv "USER";
+  homedir  = builtins.getEnv "HOME";
+
+  host = import (./hosts + "/${hostname}.nix") { inherit pkgs config; };
+  inherit (import ./home/util.nix { inherit pkgs config lib host; }) mrINI;
+  gpgPub = ./home/files/pubring.gpg;
+  gpgSec = ./home/secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
 in {
-  imports = [ ./git.nix ./apps.nix ./emacs.nix ]
-            ++ optional host.gnome ./gnome.nix
-            ++ optional host.linux ./linux.nix
-            ++ optional host.macos ./macos.nix;
+  imports = [ ./home/git.nix ./home/apps.nix ./home/emacs.nix ]
+            ++ optional host.gnome ./home/gnome.nix
+            ++ optional host.linux ./home/linux.nix
+            ++ optional host.macos ./home/macos.nix;
 
   programs.home-manager.enable = true;
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
+  home.username = username;
+  home.homeDirectory = homedir;
   home.stateVersion = "21.05";
 
   home.packages = with pkgs;
     [git git-secrets nix-prefetch-git mr stow scripts]
     ++ optionals (host ? packages) host.packages;
 
-  home.file.".face".source = ./files/face;
-  home.file.".desktop.jpg".source = ./files/desktop;
+  home.file.".face".source = ./home/files/face;
+  home.file.".desktop.jpg".source = ./home/files/desktop;
 
   home.file.".mrtrust".text = "${config.home.homeDirectory}/src/.mrconfig";
   home.file."src/.mrconfig".text = mrINI host.src.repos;
@@ -36,7 +41,7 @@ in {
   programs.bash = {
     enable = true;
     shellAliases = {
-      ec = ''${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
+      ec = ''${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
       ga = ''git add'';
       gam = ''git commit -am'';
       gap = ''git add -p'';
@@ -61,7 +66,7 @@ in {
       grr = ''git remote remove'';
       gs = ''git status'';
       gsr = ''find . -type d -name ".git" -print -exec git --git-dir="{}" --work-tree="{}/.." status \;'';
-      hms = ''home-manager switch'';
+      hms = ''HOSTNAME="${hostname}" home-manager switch'';
       la = ''ls -a --color=auto'';
       srsly = ''sudo $(fc -ln -1)'';
       stree = ''tree --prune -P *.scala'';
@@ -76,8 +81,8 @@ in {
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
-      EDITOR = "${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
-      ALTERNATE_EDITOR = "${pkgs.my-emacs}/bin/emacs";
+      EDITOR = "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
+      ALTERNATE_EDITOR = "${pkgs.emacs}/bin/emacs";
       LESS = " -R ";
     };
 
@@ -101,10 +106,10 @@ in {
   }; # the rest is in git.nix
 
   programs.ssh.enable = true;
-  home.file.".ssh/id_rsa.pub".source = ./files + "/id_rsa.edd.${host.name}.pub";
-  home.file.".ssh/id_rsa".source = ./secrets + "/id_rsa.edd.${host.name}";
+  home.file.".ssh/id_rsa.pub".source = "${./home/files}/id_rsa.edd.${host.name}.pub";
+  home.file.".ssh/id_rsa".source = "${./home/secrets}/id_rsa.edd.${host.name}";
 
-  home.file.".aws/credentials".source = ./secrets/aws-credentials;
+  home.file.".aws/credentials".source = ./home/secrets/aws-credentials;
 
   home.file.".aspell.conf".text = ''
     data-dir ${config.home.homeDirectory}/.nix-profile/lib/aspell
@@ -115,6 +120,7 @@ in {
   home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}
     $DRY_RUN_CMD mkdir -p $HOME/media/music/{albums,loose}
+    $DRY_RUN_CMD test -d ${./home/secrets}/media && cp ${./home/secrets}/media/* $HOME/media/
   '';
   home.activation."setupTxt" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/txt

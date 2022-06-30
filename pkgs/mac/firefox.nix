@@ -1,8 +1,8 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "firefox-mac";
-  version = "100.0.2";
-  sha = "1k9af2ljv9rj2pgc2q6g5kk7145r99y4kmbas3jpg2bwhp6npza9";
+  version = "102.0";
+  sha = "1p4v1qplm28np4n9y4g3qax7bnxyszssxac6jzj4gl3fdlfhi7j4";
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";

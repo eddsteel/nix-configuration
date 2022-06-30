@@ -1,7 +1,6 @@
 (use-package emms
   :hook
   (emms-player-started . edd-emms/tell-consul)
-  (emms-browser-mode . nano-modeline-emms-browser-mode)
   :commands (emms-smart-browse emms-pause emms-browse-by-album)
   :init
   (setq default-major-mode 'fundamental-mode) ;; shim for emms to work

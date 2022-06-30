@@ -3,25 +3,24 @@
     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
   }))
 
-  (self: super: {
-    my-emacs = super.emacsUnstable;
-  })
+  (self: pkgs:
+    rec {
+      nixpkgs-local = pkgs.callPackages ../../src/nixpkgs {};
+      local         = pkgs.callPackages ./pkgs {};
+      emacs         = pkgs.emacsUnstable;
+      brainzo       = local.brainzo;
+      scripts       = local.scripts;
+      git-web-link  = local.git-web-link;
+      circleci-cli  = local.circleci-cli;
+    })
 
-  (self: super:
-    let
-      pkgs = super;
-      nixpkgsLocal = ../../src/nixpkgs;
-      macApps = pkgs/mac;
-    in
-      pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
-        nixpkgs-local    = import nixpkgsLocal {};
-        my-emacs         = self.nixpkgs-local.emacsMacport;
-        mac-apps         = import macApps {inherit pkgs;};
-        bitwarden        = self.mac-apps.bitwarden;
-        signal-desktop   = self.mac-apps.signal;
-        firefox          = self.mac-apps.firefox;
-      } // {
-        circleci-cli     = pkgs.callPackage pkgs/circleci.nix {};
-      }
+  (self: pkgs:
+    pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin rec {
+      mac-apps       = pkgs.callPackages ./pkgs/mac {};
+      emacs          = self.nixpkgs-local.emacsMacport;
+      bitwarden      = self.mac-apps.bitwarden;
+      signal-desktop = self.mac-apps.signal;
+      firefox        = self.mac-apps.firefox;
+    }
   )
 ]

@@ -235,9 +235,10 @@
   :init
   (load-theme 'org-beautify t)
   :config
-  (set-face-font 'org-agenda-structure "Open Sans-12")
-  (set-face-font 'org-level-1 "Open Sans-18")
-  (set-face-font 'org-level-2 "Open Sans-16"))
+  ;;(set-face-font 'org-agenda-structure "Open Sans-12")
+  ;;(set-face-font 'org-level-1 "Open Sans-18")
+  ;;(set-face-font 'org-level-2 "Open Sans-16")
+)
 
 (use-package ox-gfm
   :after org

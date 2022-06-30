@@ -73,7 +73,7 @@ in {
   };
 
   home.activation."copyItermPrefs" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  $DRY_RUN_CMD cp ~/.config/nixpkgs/files/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+  $DRY_RUN_CMD cp ${./files}/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
   '';
 
   # https://github.com/nix-community/home-manager/blob/db00b39a9abec04245486a01b236b8d9734c9ad0/modules/targets/darwin/linkapps.nix

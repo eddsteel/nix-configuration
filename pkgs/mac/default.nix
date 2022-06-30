@@ -1,14 +1,14 @@
 { pkgs }:
 {
-  one-password = pkgs.callPackage ./1password.nix { inherit pkgs; };
-  bitwarden = pkgs.callPackage ./bitwarden.nix { inherit pkgs; };
-  firefox = pkgs.callPackage ./firefox.nix { inherit pkgs; };
-  intellij-idea-ce = pkgs.callPackage ./intellij.nix { inherit pkgs; };
-  istat-menus = pkgs.callPackage ./istat-menus.nix { inherit pkgs; };
-  iterm = pkgs.callPackage ./iterm.nix { inherit pkgs; };
-  signal = pkgs.callPackage ./signal.nix { inherit pkgs; };
-  soundsource = pkgs.callPackage ./soundsource.nix { inherit pkgs; };
-  spectacle = pkgs.callPackage ./spectacle.nix { inherit pkgs; };
-  wavebox = pkgs.callPackage ./wavebox.nix { inherit pkgs; };
-  xbar = pkgs.callPackage ./xbar.nix { inherit pkgs; };
+  one-password     = pkgs.callPackage ./1password.nix {};
+  bitwarden        = pkgs.callPackage ./bitwarden.nix {};
+  firefox          = pkgs.callPackage ./firefox.nix {};
+  intellij-idea-ce = pkgs.callPackage ./intellij.nix {};
+  istat-menus      = pkgs.callPackage ./istat-menus.nix {};
+  iterm            = pkgs.callPackage ./iterm.nix {};
+  signal           = pkgs.callPackage ./signal.nix {};
+  soundsource      = pkgs.callPackage ./soundsource.nix {};
+  spectacle        = pkgs.callPackage ./spectacle.nix {};
+  wavebox          = pkgs.callPackage ./wavebox.nix {};
+  xbar             = pkgs.callPackage ./xbar.nix {};
 }
