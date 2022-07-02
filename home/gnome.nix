@@ -127,7 +127,7 @@ in {
       right-active = false;
       right-commands-json = ''{"commands":[]}'';
       left-active = true;
-      left-commands-json=''{"commands":[{"command":"/home/edd/.nix-profile/bin/b np get","interval":5,"uuid":"13f3aa20-7461-448c-ab74-0ee48989a077"}]}'';
+      left-commands-json = ''{"commands":[]}''; #''{"commands":[{"command":"/home/edd/.nix-profile/bin/b np get","interval":5,"uuid":"13f3aa20-7461-448c-ab74-0ee48989a077"}]}'';
       left-index = 2;
       location = 0;
     };
