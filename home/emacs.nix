@@ -89,6 +89,7 @@ in {
 
       emms
 
+      lsp-mode
       cargo
       (gradle-mode-fork epkgs)
       sbt-mode
