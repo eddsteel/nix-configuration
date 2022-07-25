@@ -19,5 +19,6 @@ in
   ] ++ secrets.repos;
   bashAliases = {
     "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";
+    "gradle" = "envchain gradle gradle";
   } // secrets.aliases;
 }
