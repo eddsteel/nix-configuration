@@ -1,8 +1,8 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.stdenv.mkDerivation rec {
   pname = "signal";
-  version = "5.47.0";
-  sha = "1lh91vzfgz3w3jffl4lls5v9zh91gwkcjr1c48n1mnpscrky8317";
+  version = "5.51.0";
+  sha = "sha256-4xFIbGfJTgh+9R3pbm/1zM08b3EtldaExvIotj7META=";
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";

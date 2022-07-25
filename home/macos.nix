@@ -1,11 +1,21 @@
 {config, pkgs, lib, ...}:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
+  colima-script = pkgs.writeShellScriptBin "cnc" ''
+    args=("--")
+    for x in "$@"; do
+        if [ ! "--rm" == "$x" ]; then
+             args+=("$x")
+        fi
+    done
+
+    ${pkgs.colima}/bin/colima nerdctl "${"\${args[@]}"}"
+ '';
 in {
   home.file.".nix-channels".source = ./files/darwin-nix-channels;
 
   home.packages = with pkgs; [
-    scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget gnupg
+    scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget gnupg colima colima-script
   ] ++ (with mac-apps; [
       iterm2 xbar spectacle istat-menus skhd intellij-idea-ce wavebox soundsource
   ]);

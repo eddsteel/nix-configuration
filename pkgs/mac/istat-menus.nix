@@ -2,7 +2,7 @@
 pkgs.stdenv.mkDerivation rec {
   pname = "istat-menus";
   version = "6.62";
-  sha = "1w3vnpmi02siz0ni633vwkwmp43w7x9a52haxj8ml1l4bn5659ig";
+  sha = "sha256-D7984pb1dFZFPlI7PXQVI6TaXDeDuPtQMM7A/bdz18I=";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";

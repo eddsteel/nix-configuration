@@ -12,6 +12,7 @@
       scripts       = local.scripts;
       git-web-link  = local.git-web-link;
       circleci-cli  = local.circleci-cli;
+      hub-local     = nixpkgs-local.hub;
     })
 
   (self: pkgs:

@@ -3,14 +3,14 @@ let
   idea = pkgs.stdenv.mkDerivation rec {
     pname = "intellij-idea-ce";
     version = "2022.1.1";
-    sha = "sha256-2CT9ns3f7McjgWUm3GI6FZjmM+jzSFEahLm+sVZE0eQ=";
+    sha = "1r6i8ibb3gmrhhd52j7kx0ryd60m79idq9k5h4iwgv6zrnggs96q";
 
     buildInputs = [ pkgs.undmg ];
     sourceRoot = ".";
     phases = [ "unpackPhase" "installPhase" ];
     installPhase = ''
     mkdir -p $out/Applications
-    cp -r "IntelliJ IDEA CE.app" $out/Applications/IDEA.app    
+    cp -r "IntelliJ IDEA CE.app" $out/Applications/IDEA.app
   '';
 
     src = pkgs.fetchurl {
@@ -25,8 +25,7 @@ let
       maintainers = [];
       platforms = platforms.darwin;
     };
-  }; in
-pkgs.writeShellScriptBin "idea" ''
+  };
+in pkgs.writeShellScriptBin "idea" ''
   envchain artifactory ${idea}/Applications/IDEA.app/Contents/MacOS/idea
 ''
-
