@@ -186,10 +186,12 @@ in {
         "browser.startup.homepage" = "about:blank";
         "browser.newtabpage.enabled" = false;
         "browser.warnOnQuitShortcut" = false;
+        "browser.warnOnCloseOtherTabs" = false;
         "extensions.formautofill.creditCards.enabled" = false;
         "services.sync.username" = "edd@eddsteel.com";
         "services.sync.engine.creditcards" = false;
         "services.sync.engine.passwords" = false;
+        "services.sync.prefs.sync.browser.tabs.warnOnClose" = false;
         "accessibility.typeaheadfind.enablesound" = false;
       };
     };
