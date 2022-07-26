@@ -117,6 +117,8 @@ in {
   '';
 
   ## standard locations
+  home.file."media/desktop.jpg".source = ./home/secrets/media/desktop.jpg;
+  home.file."media/face.jpg".source = ./home/secrets/media/face.jpg;
   home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}
     $DRY_RUN_CMD mkdir -p $HOME/media/music/{albums,loose}

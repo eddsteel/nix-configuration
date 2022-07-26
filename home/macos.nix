@@ -37,13 +37,13 @@ in {
   home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ./files/xbar-youbi.sh;
 
   xdg.configFile."skhd/skhdrc".text = ''
-  shift + alt + cmd + ctrl - f : open ~/.nix-profile/Applications/firefox.app
-  shift + alt + cmd + ctrl - z : open -a zoom.us
-  shift + alt + cmd + ctrl - w : open ~/.nix-profile/Applications/Wavebox.app
   shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
-  shift + alt + cmd + ctrl - t : open ~/.nix-profile/Applications/iTerm2.app
-  shift + alt + cmd + ctrl - s : open ~/.nix-profile/Applications/Signal.app
+  shift + alt + cmd + ctrl - f : open ~/.nix-profile/Applications/firefox.app
   shift + alt + cmd + ctrl - j : if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi
+  shift + alt + cmd + ctrl - m : open ~/.nix-profile/Applications/iTerm2.app
+  shift + alt + cmd + ctrl - s : open ~/.nix-profile/Applications/Signal.app
+  shift + alt + cmd + ctrl - w : open ~/.nix-profile/Applications/Wavebox.app
+  shift + alt + cmd + ctrl - z : open -a zoom.us
   f7 : ${pkgs.scripts}/bin/emms previous
   f8 : ${pkgs.scripts}/bin/emms play-pause
   f9 : ${pkgs.scripts}/bin/emms next
