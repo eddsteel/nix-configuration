@@ -15,7 +15,7 @@ in
   src.repos = [
     {"name" = "git-web-link";}
     {"name" = "scripts";}
-    {"name" = "nixpkgs"; "remote" = "gh:NixOS/nixpkgs";}
+    {"name" = "nixpkgs"; "remote" = "git@github.com:NixOS/nixpkgs"; "fork" = true; }
   ] ++ secrets.repos;
   bashAliases = {
     "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";

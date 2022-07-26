@@ -7,7 +7,7 @@
     {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
     {"name" = "git-web-link";}
     {"name" = "scripts";}
-    {"name" = "nixpkgs"; "remote" = "gh:NixOS/nixpkgs";}
+    {"name" = "nixpkgs"; "remote" = "git@github.com:NixOS/nixpkgs";}
     {"name" = "brainzo";}
     {"name" = "bookbot";}
     {"name" = "tell-consul";}
