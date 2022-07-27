@@ -41,7 +41,7 @@ in {
   programs.bash = {
     enable = true;
     shellAliases = {
-      ec = ''${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
+      ec = ''${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
       ga = ''git add'';
       gam = ''git commit -am'';
       gap = ''git add -p'';
@@ -81,8 +81,8 @@ in {
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
-      EDITOR = "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
-      ALTERNATE_EDITOR = "${pkgs.emacs}/bin/emacs";
+      EDITOR = "${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
+      ALTERNATE_EDITOR = "${pkgs.my-emacs}/bin/emacs";
       LESS = " -R ";
     };
 

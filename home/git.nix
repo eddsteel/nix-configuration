@@ -38,7 +38,7 @@
     extraConfig = {
       branch.autosetuprebase = "always";
       color.ui = true;
-      core.editor = "${pkgs.emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
+      core.editor = "${pkgs.my-emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
       github.user = "eddsteel";
       init.defaultBranch = "main";
       pull.rebase = true;

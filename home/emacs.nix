@@ -25,13 +25,14 @@ let
     let
       local-nixpkgs = pkgs.callPackages ../../../src/nixpkgs {};
     in {
-      magit = local-nixpkgs.emacs28.pkgs.melpaPackages.magit;
-      transient = local-nixpkgs.emacs28.pkgs.melpaPackages.transient;
+      magit = local-nixpkgs.emacs.pkgs.melpaPackages.magit;
+      transient = local-nixpkgs.emacs.pkgs.melpaPackages.transient;
     });
 in {
   programs.emacs = {
     enable = true;
     overrides = pkgOverrides;
+    package = pkgs.my-emacs;
     extraConfig = ''
     (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
     '';
