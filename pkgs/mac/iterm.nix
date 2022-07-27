@@ -1,10 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
-pkgs.stdenv.mkDerivation rec {
-  pname = "iterm2";
-  version = "3.4.16";
-  versionString = pkgs.lib.strings.replaceStrings ["."] ["_"] version;
-  sha = "02wwskb6qqg303qz7l8fwfscp6l4kf5njds9kw76i7xdiq01m55h";
-
+let
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).iterm2;
+in pkgs.stdenv.mkDerivation rec {
+  pname = "iterm";
+  version = versions.version;
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";
   phases = [ "unpackPhase" "installPhase" ];
@@ -13,11 +12,7 @@ pkgs.stdenv.mkDerivation rec {
         cp -r iTerm.app "$out/Applications/iTerm2.app"
       '';
 
-  src = pkgs.fetchurl {
-    name = "iterm2-${version}.zip";
-    url = "https://iterm2.com/downloads/stable/iTerm2-${versionString}.zip";
-    sha256 = sha;
-  };
+  src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
   meta = with pkgs.lib; {
     description = "iTerm 2";

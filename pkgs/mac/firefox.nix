@@ -1,8 +1,9 @@
 { pkgs }:
-pkgs.stdenv.mkDerivation rec {
+let
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).firefox;
+in pkgs.stdenv.mkDerivation rec {
   pname = "firefox-mac";
-  version = "102.0";
-  sha = "1p4v1qplm28np4n9y4g3qax7bnxyszssxac6jzj4gl3fdlfhi7j4";
+  inherit (versions) version;
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
@@ -12,11 +13,7 @@ pkgs.stdenv.mkDerivation rec {
         cp -r Firefox.app "$out/Applications/Firefox.app"
       '';
 
-  src = pkgs.fetchurl {
-    name = "Firefox-${version}.dmg";
-    url = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/${version}/mac/en-CA/Firefox%20${version}.dmg";
-    sha256 = sha;
-  };
+  src = pkgs.fetchurl { inherit (versions) name url sha256 };
 
   meta = with pkgs.lib; {
     description = "The Firefox web browser";

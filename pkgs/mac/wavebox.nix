@@ -1,8 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
-pkgs.stdenv.mkDerivation rec {
+let
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).wavebox;
+in pkgs.stdenv.mkDerivation rec {
   pname = "wavebox";
-  version = "10.103.39.2";
-  sha = "10ss0iap5z9fj4q8w2srqnqhdj9nadxz0pgi10b3ny6pf44lmazb";
+  inherit (versions) version;
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
@@ -12,11 +13,7 @@ pkgs.stdenv.mkDerivation rec {
         cp -r Wavebox.app "$out/Applications/Wavebox.app"
       '';
 
-  src = pkgs.fetchurl {
-    name = "wavebox-${version}.dmg";
-    url = "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20${version}.dmg";
-    sha256 = sha;
-  };
+  src = pkgs.fetchurl {inherit (versions) name url sha256;};
 
   meta = with pkgs.lib; {
     description = "Wavebox";

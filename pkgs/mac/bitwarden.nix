@@ -1,9 +1,9 @@
 { pkgs }:
-pkgs.stdenv.mkDerivation rec {
+let
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).bitwarden;
+in  pkgs.stdenv.mkDerivation rec {
   pname = "bitwarden";
-  version = "2022.6.2";
-  sha = "0gdsl0hg0abg8gwm9q84h68cjyb84153wqq7jiv51bica7kfx804";
-
+  inherit (versions) version;
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
   phases = [ "unpackPhase" "installPhase" ];
@@ -12,11 +12,7 @@ pkgs.stdenv.mkDerivation rec {
     cp -r Bitwarden.app $out/Applications
   '';
 
-  src = pkgs.fetchurl {
-    name = "Bitwarden-${version}.dmg";
-    url = "https://github.com/bitwarden/clients/releases/download/desktop-v${version}/Bitwarden-${version}-universal.dmg";
-    sha256 = sha;
-  };
+  src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
   meta = with pkgs.lib; {
     description = "Bitwarden password manager";

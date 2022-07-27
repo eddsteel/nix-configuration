@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs ? import <nixpkgs> {}}:
 {
   one-password     = pkgs.callPackage ./1password.nix {};
   bitwarden        = pkgs.callPackage ./bitwarden.nix {};
