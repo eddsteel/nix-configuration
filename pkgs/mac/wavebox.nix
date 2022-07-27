@@ -2,9 +2,9 @@
 pkgs.stdenv.mkDerivation rec {
   pname = "wavebox";
   version = "10.103.39.2";
-  sha = "sha256-66tKCXHXeDsWCPFd8HtTNskGscVZC44wkS79clUEWoM=";
+  sha = "10ss0iap5z9fj4q8w2srqnqhdj9nadxz0pgi10b3ny6pf44lmazb";
 
-  buildInputs = [ pkgs.undmg];
+  buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
   phases = [ "unpackPhase" "installPhase" ];
   installPhase = ''

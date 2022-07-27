@@ -5,7 +5,7 @@
   firefox          = pkgs.callPackage ./firefox.nix {};
   intellij-idea-ce = pkgs.callPackage ./intellij.nix {};
   istat-menus      = pkgs.callPackage ./istat-menus.nix {};
-  iterm            = pkgs.callPackage ./iterm.nix {};
+  iterm2           = pkgs.callPackage ./iterm.nix {};
   signal           = pkgs.callPackage ./signal.nix {};
   soundsource      = pkgs.callPackage ./soundsource.nix {};
   spectacle        = pkgs.callPackage ./spectacle.nix {};

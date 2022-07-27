@@ -1,9 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.stdenv.mkDerivation rec {
-  pname = "iterm";
+  pname = "iterm2";
   version = "3.4.16";
   versionString = pkgs.lib.strings.replaceStrings ["."] ["_"] version;
-  sha = "02wwskb6qqg303qz7l8fwfscp6l4kf5njds9kw76i7xdiq01m55hb";
+  sha = "02wwskb6qqg303qz7l8fwfscp6l4kf5njds9kw76i7xdiq01m55h";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";
