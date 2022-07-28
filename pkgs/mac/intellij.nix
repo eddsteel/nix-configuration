@@ -1,23 +1,18 @@
 { pkgs ? import <nixpkgs> {}}:
 let
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).idea;
   idea = pkgs.stdenv.mkDerivation rec {
     pname = "intellij-idea-ce";
-    version = "2022.1.1";
-    sha = "1r6i8ibb3gmrhhd52j7kx0ryd60m79idq9k5h4iwgv6zrnggs96q";
-
+    inherit (versions) version;
     buildInputs = [ pkgs.undmg ];
     sourceRoot = ".";
     phases = [ "unpackPhase" "installPhase" ];
     installPhase = ''
-    mkdir -p $out/Applications
-    cp -r "IntelliJ IDEA CE.app" $out/Applications/IDEA.app
-  '';
+      mkdir -p $out/Applications
+      cp -r "IntelliJ IDEA CE.app" $out/Applications/IDEA.app
+    '';
 
-    src = pkgs.fetchurl {
-      name = "intellij-idea-ce-${version}.dmg";
-      url = "https://download.jetbrains.com/idea/ideaIC-${version}.dmg";
-      sha256 = sha;
-    };
+    src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
     meta = with pkgs.lib; {
       description = "Intellij IDEA Community Edition";

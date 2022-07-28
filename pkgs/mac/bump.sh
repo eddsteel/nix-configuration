@@ -1,71 +1,98 @@
 #!/bin/sh
-rm -f .components
+# TODO: use published SHAs not pre-fetched.
+
+set -e
+touch versions.json
+rm -f .*-component
+
+location() {
+    curl -Is "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}'
+}
+
+location_get() {
+    curl -Is -XGET "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}'
+}
+
+conditional_get_sha() {
+    if [ "$(jq -r .$1.url versions.json)" != "$2" ]; then
+        nix-prefetch-url --name "$3" "$2"
+    else
+        jq -r ".$1.sha256" versions.json
+    fi
+}
+
+component_json() {
+    jq -nc --arg url "$1" --arg sha "$2" --arg name "$3" --arg ver "$4"\
+       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' > ".$5-component"
+}
 
 wavebox() {
-    WB_URL=$(curl -sI https://download.wavebox.app/latest/stable/macuniversal | \
-                 awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}')
+    WB_URL=$(location "https://download.wavebox.app/latest/stable/macuniversal")
     WB_VER=$(echo "$WB_URL" | sed 's/^.*Wavebox%20\(.*\).dmg$/\1/')
-    WB_SHA=$(jq -r .wavebox.sha256 versions.json)
     WB_NME="wavebox-$WB_VER.dmg"
-    if [ $(jq -r .wavebox.url versions.json) != "$WB_URL" ]; then
-        WB_SHA=$(nix-prefetch-url --name "$WB_NME" "$WB_URL")
-    fi
-
-    jq -nc --arg url "$WB_URL" --arg sha "$WB_SHA" --arg name "$WB_NME" --arg ver "$WB_VER"\
-       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' >> .components
+    WB_SHA=$(conditional_get_sha wavebox "$WB_URL" "$WB_NME")
+    component_json "$WB_URL" "$WB_SHA" "$WB_NME" "$WB_VER" wb
 }
 
 bitwarden() {
-    BW_URL=$(curl -sI -XGET 'https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg' | \
-                 awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}')
+    BW_URL=$(location_get 'https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg')
     BW_VER=$(echo "$BW_URL" | sed 's!^.*/Bitwarden-\([^-]*\)-universal.dmg$!\1!')
-    BW_SHA=$(jq -r .bitwarden.sha256 versions.json)
     BW_NME="bitwarden-$BW_VER.dmg"
-    if [ $(jq -r .bitwarden.url versions.json) != "$BW_URL" ]; then
-        BW_SHA=$(nix-prefetch-url --name "$BW_NME" "$BW_URL")
-    fi
-
-    jq -nc --arg url "$BW_URL" --arg sha "$BW_SHA" --arg name "$BW_NME" --arg ver "$BW_VER"\
-       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' >> .components
+    BW_SHA=$(conditional_get_sha bitwarden "$BW_URL" "$BW_NME")
+    component_json "$BW_URL" "$BW_SHA" "$BW_NME" "$BW_VER" bw
 }
 
 iterm2() {
-    IT_URL=$(curl -Is https://iterm2.com/downloads/stable/latest | \
-                 awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}')
+    IT_URL=$(location "https://iterm2.com/downloads/stable/latest")
     IT_VER=$(echo "$IT_URL" | sed 's!.*/iTerm2-\([0-9_]*\).zip$!\1!' | sed 's/_/./g')
     IT_NME="iterm2-$IT_VER.zip"
-    IT_SHA=$(jq -r .iterm2.sha256 versions.json)
-    if [ $(jq -r .iterm2.url versions.json) != "$IT_URL" ]; then
-        IT_SHA=$(nix-prefetch-url --name "$IT_NME" "$IT_URL")
-    fi
-
-    jq -nc --arg url "$IT_URL" --arg sha "$IT_SHA" --arg name "$IT_NME" --arg ver "$IT_VER"\
-       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' >> .components
-
+    IT_SHA=$(conditional_get_sha iterm2 "$IT_URL" "$IT_NME")
+    component_json "$IT_URL" "$IT_SHA" "$IT_NME" "$IT_VER" it
 }
 
 firefox() {
-    FF_URL=$(curl -sI 'https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA' | \
-                 awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}')
+    FF_URL=$(location 'https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA')
     FF_VER=$(echo "$FF_URL" | sed 's!^.*/releases/\([0-9.]*\)/mac/.*$!\1!')
     FF_NME="Firefox-$FF_VER.dmg"
-    FF_SHA=$(jq -r .firefox.sha256 versions.json)
-    if [ $(jq -r .firefox.url versions.json) != "$FF_URL" ]; then
-        FF_SHA=$(nix-prefetch-url --name "$FF_NME" "$FF_URL")
-    fi
-
-    jq -nc --arg url "$FF_URL" --arg sha "$FF_SHA" --arg name "$FF_NME" --arg ver "$FF_VER"\
-       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' >> .components
+    FF_SHA=$(conditional_get_sha firefox "$FF_URL" "$FF_NME")
+    component_json "$FF_URL" "$FF_SHA" "$FF_NME" "$FF_VER" ff
 }
 
-wavebox
-bitwarden
-iterm2
-firefox
+idea() {
+    # note: for apple silicon insert '-aarch64' before '.dmg'
+    IJ_URL=$(location 'https://data.services.jetbrains.com/products/download?code=IIC&platform=mac')
+    IJ_VER=$(echo "$IJ_URL" | sed 's!^.*/ideaIC-\([0-9.]*\).dmg$!\1!')
+    IJ_NME="intellij-idea-ce-$IJ_VER.dmg"
+    IJ_SHA=$(conditional_get_sha idea "$IJ_URL" "$IJ_NME")
+    component_json "$IJ_URL" "$IJ_SHA" "$IJ_NME" "$IJ_VER" ij
+}
 
-jq -n --slurpfile components .components \
-   '{"wavebox": $components[0], "bitwarden": $components[1], "iterm2": $components[2], "firefox": $components[3]}' \
-   > new.json
+signal() {
+    SN_NME=$(curl -s https://updates.signal.org/desktop/latest-mac.yml | grep -Eo 'signal-desktop-mac-universal.*.dmg$')
+    SN_URL="https://updates.signal.org/desktop/$SN_NME"
+    SN_VER=$(echo $SN_NME | sed 's!^.*mac-universal-\([0-9.]*\).dmg$!\1!')
+    SN_SHA=$(conditional_get_sha signal "$SN_URL" "$SN_NME")
+    component_json "$SN_URL" "$SN_SHA" "$SN_NME" "$SN_VER" sn
+}
 
-rm .components
+wavebox &
+bitwarden &
+iterm2 &
+firefox &
+idea &
+signal &
+
+wait
+
+jq -n \
+   --slurpfile wb .wb-component \
+   --slurpfile bw .bw-component \
+   --slurpfile it .it-component \
+   --slurpfile ff .ff-component \
+   --slurpfile ij .ij-component \
+   --slurpfile sn .sn-component \
+   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0]}' \
+   >new.json
+
+rm .*-component
 mv new.json versions.json

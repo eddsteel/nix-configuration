@@ -22,5 +22,17 @@
     "sha256": "06z0r0fqpcnv7mx24ix2ili09x7iprci6102js0jj6byfjkbr1gd",
     "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/103.0/mac/en-CA/Firefox%20103.0.dmg",
     "version": "103.0"
+  },
+  "idea": {
+    "name": "intellij-idea-ce-2022.2.dmg",
+    "sha256": "13fnk7qh8mj2pnx0xhdv0scs7r6lj5ha2zx4l6g4r50821z2xma3",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2022.2.dmg",
+    "version": "2022.2"
+  },
+  "signal": {
+    "name": "signal-desktop-mac-universal-5.51.1.dmg",
+    "sha256": "0dpl2irc7ky0fxicqvhklagbkbfbarcwic8fh3sl6ak2dqpmsm2a",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-5.51.1.dmg",
+    "version": "5.51.1"
   }
 }

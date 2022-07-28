@@ -13,7 +13,7 @@ in pkgs.stdenv.mkDerivation rec {
         cp -r Firefox.app "$out/Applications/Firefox.app"
       '';
 
-  src = pkgs.fetchurl { inherit (versions) name url sha256 };
+  src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
   meta = with pkgs.lib; {
     description = "The Firefox web browser";
