@@ -1,8 +1,9 @@
 { pkgs ? import <nixpkgs> {}}:
-pkgs.stdenv.mkDerivation rec {
+let
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).istatmenus;
+in pkgs.stdenv.mkDerivation rec {
   pname = "istat-menus";
-  version = "6.62";
-  sha = "sha256-D7984pb1dFZFPlI7PXQVI6TaXDeDuPtQMM7A/bdz18I=";
+  inherit (versions) version;
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";
@@ -12,11 +13,7 @@ pkgs.stdenv.mkDerivation rec {
     cp -r "iStat Menus.app" $out/Applications
   '';
 
-  src = pkgs.fetchurl {
-    name = "iStat-Menus-${version}.zip";
-    url = "https://cdn.bjango.com/files/istatmenus6/istatmenus${version}.zip";
-    sha256 = sha;
-  };
+  src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
   meta = with pkgs.lib; {
     description = "iStat Menus 6, Mac system monitor for your menubar";

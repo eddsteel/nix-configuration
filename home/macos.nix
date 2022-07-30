@@ -17,7 +17,7 @@ in {
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget gnupg colima colima-script
   ] ++ (with mac-apps; [
-      iterm2 xbar spectacle istat-menus skhd intellij-idea-ce wavebox soundsource
+    iterm2 xbar rectangle istat-menus skhd intellij-idea-ce wavebox soundsource
   ]);
 
   programs.git.extraConfig.credential.helper = "osxkeychain";
@@ -57,8 +57,7 @@ in {
   $DRY_RUN_CMD launchctl start org.nixos.skhd
   '';
 
-  home.file."Library/Application Support/Spectacle/Shortcuts.json".source = ./files/spectacle-shortcuts.json;
-  home.file."Library/Preferences/com.divisiblebyzero.Spectacle.plist".source = ./files/com.divisiblebyzero.Spectacle.plist;
+  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ./files/rectangle-preferences.plist;
 
   home.file.".default-gems".source = ./files/ruby-default-gems;
   home.file.".bundle/config".source = ./secrets/bundle-config;

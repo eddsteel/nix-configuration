@@ -6,7 +6,7 @@ touch versions.json
 rm -f .*-component
 
 location() {
-    curl -Is "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}'
+    curl -Is "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}' | head -n 1
 }
 
 location_get() {
@@ -26,20 +26,33 @@ component_json() {
        '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' > ".$5-component"
 }
 
+standard() {
+    URL=${URL-$(location "$1")}
+    VER=$(echo $URL | sed "s!$2!\1!")
+    NME="$3-$VER.$4"
+    SHA=$(conditional_get_sha $5 "$URL" "$NME")
+    component_json "$URL" "$SHA" "$NME" "$VER" $6
+}
+
+github() {
+    url=$(location "https://github.com/$1/releases/latest")
+    VER=$(echo $url | sed 's!^.*/tag/v\([-0-9.a-zA-Z]*\)$!\1!')
+    NME="$2$VER.dmg"
+    URL="https://github.com/$1/releases/download/v$VER/$NME"
+    SHA=$(conditional_get_sha $3 "$URL" "$NME")
+    component_json "$URL" "$SHA" "$NME" "$VER" $4
+}
+
 wavebox() {
-    WB_URL=$(location "https://download.wavebox.app/latest/stable/macuniversal")
-    WB_VER=$(echo "$WB_URL" | sed 's/^.*Wavebox%20\(.*\).dmg$/\1/')
-    WB_NME="wavebox-$WB_VER.dmg"
-    WB_SHA=$(conditional_get_sha wavebox "$WB_URL" "$WB_NME")
-    component_json "$WB_URL" "$WB_SHA" "$WB_NME" "$WB_VER" wb
+    standard "https://download.wavebox.app/latest/stable/macuniversal" \
+             '^.*Wavebox%20\(.*\).dmg$' \
+             "wavebox" "dmg" "wavebox" "wb"
 }
 
 bitwarden() {
     BW_URL=$(location_get 'https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg')
-    BW_VER=$(echo "$BW_URL" | sed 's!^.*/Bitwarden-\([^-]*\)-universal.dmg$!\1!')
-    BW_NME="bitwarden-$BW_VER.dmg"
-    BW_SHA=$(conditional_get_sha bitwarden "$BW_URL" "$BW_NME")
-    component_json "$BW_URL" "$BW_SHA" "$BW_NME" "$BW_VER" bw
+    URL=$BW_URL standard '#' '^.*/Bitwarden-\([^-]*\)-universal.dmg$' \
+                "bitwarden" "dmg" "bitwarden" "bw"
 }
 
 iterm2() {
@@ -51,20 +64,16 @@ iterm2() {
 }
 
 firefox() {
-    FF_URL=$(location 'https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA')
-    FF_VER=$(echo "$FF_URL" | sed 's!^.*/releases/\([0-9.]*\)/mac/.*$!\1!')
-    FF_NME="Firefox-$FF_VER.dmg"
-    FF_SHA=$(conditional_get_sha firefox "$FF_URL" "$FF_NME")
-    component_json "$FF_URL" "$FF_SHA" "$FF_NME" "$FF_VER" ff
+    standard 'https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA' \
+             '^.*/releases/\([0-9.]*\)/mac/.*$' \
+             "Firefox" "dmg" "firefox" "ff"
 }
 
 idea() {
     # note: for apple silicon insert '-aarch64' before '.dmg'
-    IJ_URL=$(location 'https://data.services.jetbrains.com/products/download?code=IIC&platform=mac')
-    IJ_VER=$(echo "$IJ_URL" | sed 's!^.*/ideaIC-\([0-9.]*\).dmg$!\1!')
-    IJ_NME="intellij-idea-ce-$IJ_VER.dmg"
-    IJ_SHA=$(conditional_get_sha idea "$IJ_URL" "$IJ_NME")
-    component_json "$IJ_URL" "$IJ_SHA" "$IJ_NME" "$IJ_VER" ij
+    standard 'https://data.services.jetbrains.com/products/download?code=IIC&platform=mac' \
+             '^.*/ideaIC-\([0-9.]*\).dmg$' \
+             "intellij-idea-ce" "dmg" "idea" ij
 }
 
 signal() {
@@ -75,12 +84,29 @@ signal() {
     component_json "$SN_URL" "$SN_SHA" "$SN_NME" "$SN_VER" sn
 }
 
+istat() {
+    standard 'https://download.bjango.com/istatmenus/' \
+             '^.*/istatmenus\([0-9.]*\).zip$' \
+             "istat" "zip" "istatmenus" im
+}
+
+rectangle() {
+    github "rxhanson/Rectangle" "Rectangle" "rectangle" "re"
+}
+
+xbar() {
+    github "matryer/xbar" "xbar.v" "xbar" "xb"
+}
+
 wavebox &
 bitwarden &
 iterm2 &
 firefox &
 idea &
 signal &
+istat &
+rectangle &
+xbar &
 
 wait
 
@@ -91,7 +117,10 @@ jq -n \
    --slurpfile ff .ff-component \
    --slurpfile ij .ij-component \
    --slurpfile sn .sn-component \
-   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0]}' \
+   --slurpfile im .im-component \
+   --slurpfile re .re-component \
+   --slurpfile xb .xb-component \
+   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0]}' \
    >new.json
 
 rm .*-component

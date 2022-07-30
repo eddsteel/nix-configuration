@@ -30,9 +30,27 @@
     "version": "2022.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-5.51.1.dmg",
-    "sha256": "0dpl2irc7ky0fxicqvhklagbkbfbarcwic8fh3sl6ak2dqpmsm2a",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-5.51.1.dmg",
-    "version": "5.51.1"
+    "name": "signal-desktop-mac-universal-5.52.0.dmg",
+    "sha256": "0isn5kz9rjjqhygml3n5i7awyyqvz4jk9c4yq1g56nfk3gyr9naw",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-5.52.0.dmg",
+    "version": "5.52.0"
+  },
+  "istatmenus": {
+    "name": "istat-6.62.zip",
+    "sha256": "0im5hyclgvn6kq587kbf6r9vndn5xrdymy2sm23i93yd7v6nh590",
+    "url": "https://cdn.bjango.com/files/istatmenus6/istatmenus6.62.zip",
+    "version": "6.62"
+  },
+  "rectangle": {
+    "name": "Rectangle0.57.dmg",
+    "sha256": "0pxk76q07m85j5sjf6z1zpqkjxqppr4acwwaj3xjh1k0pp2gdwnb",
+    "url": "https://github.com/rxhanson/Rectangle/releases/download/v0.57/Rectangle0.57.dmg",
+    "version": "0.57"
+  },
+  "xbar": {
+    "name": "xbar.v2.1.7-beta.dmg",
+    "sha256": "0gy73f8gkfa41kvl8rzqbbgrsi9xfz1wkqysw362wkjd1v2afzha",
+    "url": "https://github.com/matryer/xbar/releases/download/v2.1.7-beta/xbar.v2.1.7-beta.dmg",
+    "version": "2.1.7-beta"
   }
 }
