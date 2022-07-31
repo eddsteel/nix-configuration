@@ -22,6 +22,9 @@
       bitwarden      = self.mac-apps.bitwarden;
       signal-desktop = self.mac-apps.signal;
       firefox        = self.mac-apps.firefox;
+      intellij-idea  = self.mac-apps.intellij-idea-ce;
+      iterm2         = self.mac-apps.iterm2;
+      wavebox        = self.mac-apps.wavebox;
     }
   )
 ]

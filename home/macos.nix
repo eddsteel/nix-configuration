@@ -15,7 +15,8 @@ in {
   home.file.".nix-channels".source = ./files/darwin-nix-channels;
 
   home.packages = with pkgs; [
-    scripts nixUnstable coreutils gnugrep gnused findutils gawk python3 wget gnupg colima colima-script
+    scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
+    ps wget gnupg colima colima-script
   ] ++ (with mac-apps; [
     iterm2 xbar rectangle istat-menus skhd intellij-idea-ce wavebox soundsource
   ]);
@@ -37,8 +38,9 @@ in {
   home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ./files/xbar-youbi.sh;
 
   xdg.configFile."skhd/skhdrc".text = ''
-  shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
-  shift + alt + cmd + ctrl - f : open ~/.nix-profile/Applications/firefox.app
+  shift + alt + cmd + ctrl - e : open /Applications/Emacs.app
+  shift + alt + cmd + ctrl - f : open ~/.nix-profile/Applications/Firefox.app
+  shift + alt + cmd + ctrl - i : idea
   shift + alt + cmd + ctrl - j : if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi
   shift + alt + cmd + ctrl - m : open ~/.nix-profile/Applications/iTerm2.app
   shift + alt + cmd + ctrl - s : open ~/.nix-profile/Applications/Signal.app
@@ -49,19 +51,74 @@ in {
   f9 : ${pkgs.scripts}/bin/emms next
   '';
 
-  home.activation."refreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  $DRY_RUN_CMD launchctl stop org.nixos.skhd
-  $DRY_RUN_CMD cp -f ${pkgs.skhd}/Library/LaunchDaemons/org.nixos.skhd.plist ~/Library/LaunchDaemons/
-  $DRY_RUN_CMD launchctl unload ~/Library/LaunchDaemons/org.nixos.skhd.plist
-  $DRY_RUN_CMD launchctl load ~/Library/LaunchDaemons/org.nixos.skhd.plist
-  $DRY_RUN_CMD launchctl start org.nixos.skhd
+  home.file."Library/LaunchAgents/com.koekeishiya.skhd.plist".text = let
+      path = builtins.getEnv "PATH";
+    in ''
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.koekeishiya.skhd</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>${pkgs.skhd}/bin/skhd</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>${path}</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/skhd.out</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/skhd.err</string>
+</dict>
+</plist>
   '';
 
-  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ./files/rectangle-preferences.plist;
+  home.activation."refreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  $DRY_RUN_CMD launchctl stop com.koekeishiya.skhd
+  $DRY_RUN_CMD launchctl unload ~/Library/LaunchAgents/com.koekeishiya.skhd.plist
+  $DRY_RUN_CMD launchctl load -w ~/Library/LaunchAgents/com.koekeishiya.skhd.plist
+  $DRY_RUN_CMD launchctl start com.koekeishiya.skhd
+  '';
+
+  home.activation."macPrefs" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD defaults write com.apple.menuextra.clock IsAnalog -bool true
+    $DRY_RUN_CMD defaults write com.apple.dock "autohide" -bool true
+    $DRY_RUN_CMD defaults write com.apple.dock "region" "CA"
+    $DRY_RUN_CMD defaults write com.apple.dock "tilesize" "45"
+    $DRY_RUN_CMD defaults write com.apple.dock "show-recents" -bool false
+    $DRY_RUN_CMD defaults write com.apple.screencapture "location" "~/media/pictures"
+    $DRY_RUN_CMD defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
+    $DRY_RUN_CMD defaults write com.apple.Finder "AppleShowAllFiles" -bool "false"
+    $DRY_RUN_CMD killall Finder
+
+    $DRY_RUN_CMD defaults import com.googlecode.iterm2 ${./files}/com.googlecode.iterm2.plist
+ '';
+
+  home.activation."macDock" = let
+    app-def-write = a: ''$DRY_RUN_CMD defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>${a}</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"'';
+    add-dock-app = p: a: app-def-write "${p}/Applications/${a}.app";
+  in lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD defaults write com.apple.dock persistent-apps -array
+    ${add-dock-app pkgs.firefox "Firefox"}
+    ${add-dock-app pkgs.iterm2 "iTerm2"}
+    ${add-dock-app pkgs.wavebox "Wavebox"}
+    # TODO!
+    ${app-def-write "/Applications/Emacs.app"}
+    $DRY_RUN_CMD killall Dock
+  '';
 
   home.file.".default-gems".source = ./files/ruby-default-gems;
   home.file.".bundle/config".source = ./secrets/bundle-config;
 
+  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ./files/rectangle-preferences.plist;
   # has licence keys, MAC addresses, GPS etc., so secret
   home.file."Library/Preferences/com.bjango.istatmenus.plist".source = ./secrets/com.bjango.istatmenus.plist;
   home.file."Library/Preferences/com.bjango.istatmenus.status.plist".source = ./secrets/com.bjango.istatmenus.status.plist;
@@ -81,10 +138,6 @@ in {
     "~\177" = "deleteWordBackward:";  /* Option-delete */
   };
 
-  home.activation."copyItermPrefs" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  $DRY_RUN_CMD cp ${./files}/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
-  '';
-
   # https://github.com/nix-community/home-manager/blob/db00b39a9abec04245486a01b236b8d9734c9ad0/modules/targets/darwin/linkapps.nix
   home.file."Applications/Home Manager".source = let
     apps = pkgs.buildEnv {
@@ -98,7 +151,6 @@ in {
 
   # standard locations
   home.file."media/film".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Movies";
-  home.file."media/photos".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Pictures";
   home.file."media/music".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Music";
   home.file."txt".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/txt";
   home.file."tmp".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Downloads/tmp";
@@ -106,5 +158,6 @@ in {
   home.activation."setupMacosHome" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/Documents/txt
     $DRY_RUN_CMD mkdir -p $HOME/Downloads/tmp
+    $DRY_RUN_CMD mkdir -p $HOME/media/pictures
   '';
 }

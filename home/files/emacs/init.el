@@ -1,6 +1,11 @@
-(require 'edd-bootstrap (locate-user-emacs-file "edd/edd-bootstrap.el"))
+(setq user-emacs-directory "~/.config/emacs")
+(defun edd/maybe-load-config (name)
+  (let ((conf (locate-user-emacs-file name)))
+    (when (file-readable-p conf) (load-file conf))))
 
 (edd/maybe-load-config "local-pre.el")
+
+(require 'edd-bootstrap (locate-user-emacs-file "edd/edd-bootstrap.el"))
 
 (use-package edd-ux
   :if window-system :unless noninteractive)

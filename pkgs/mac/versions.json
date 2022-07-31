@@ -25,8 +25,8 @@
   },
   "idea": {
     "name": "intellij-idea-ce-2022.2.dmg",
-    "sha256": "13fnk7qh8mj2pnx0xhdv0scs7r6lj5ha2zx4l6g4r50821z2xma3",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2022.2.dmg",
+    "sha256": "1krnm6ba9z24f2nn33mz70kidsadv5wc0qw6qbvxnxh719676lqc",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2022.2-aarch64.dmg",
     "version": "2022.2"
   },
   "signal": {

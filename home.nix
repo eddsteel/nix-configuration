@@ -122,7 +122,6 @@ in {
   home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}
     $DRY_RUN_CMD mkdir -p $HOME/media/music/{albums,loose}
-    $DRY_RUN_CMD test -d ${./home/secrets}/media && cp ${./home/secrets}/media/* $HOME/media/
   '';
   home.activation."setupTxt" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/txt
@@ -184,6 +183,7 @@ in {
       path = "xtqfr4qa.default";
       isDefault = true;
       settings = {
+        "browser.aboutConfig.showWarning" = false;
         "browser.download.dir" = "${config.home.homeDirectory}/tmp";
         "browser.startup.homepage" = "about:blank";
         "browser.newtabpage.enabled" = false;
@@ -195,6 +195,10 @@ in {
         "services.sync.engine.passwords" = false;
         "services.sync.prefs.sync.browser.tabs.warnOnClose" = false;
         "accessibility.typeaheadfind.enablesound" = false;
+        "signon.rememberSignons" = false;
+        "signon.autofillForms" = false;
+        "signon.generation.enabled" = false;
+
       };
     };
   };

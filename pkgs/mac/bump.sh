@@ -70,9 +70,9 @@ firefox() {
 }
 
 idea() {
-    # note: for apple silicon insert '-aarch64' before '.dmg'
-    standard 'https://data.services.jetbrains.com/products/download?code=IIC&platform=mac' \
-             '^.*/ideaIC-\([0-9.]*\).dmg$' \
+    url=$(location 'https://data.services.jetbrains.com/products/download?code=IIC&platform=mac')
+    url2=$(echo $url | sed 's/.dmg$/-aarch64.dmg/')
+    URL="$url2" standard '#' '^.*/ideaIC-\([0-9.]*\)-aarch64.dmg$' \
              "intellij-idea-ce" "dmg" "idea" ij
 }
 
