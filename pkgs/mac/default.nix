@@ -10,4 +10,5 @@ with pkgs; {
   rectangle        = callPackage ./rectangle.nix {};
   wavebox          = callPackage ./wavebox.nix {};
   xbar             = callPackage ./xbar.nix {};
+  exfalso          = callPackage ./exfalso.nix {};
 }

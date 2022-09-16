@@ -98,6 +98,16 @@ xbar() {
     github "matryer/xbar" "xbar.v" "xbar" "xb"
 }
 
+exfalso() {
+    # update github to allow (v-/release-)
+    url="https://github.com/quodlibet/quodlibet/releases/tag/release-4.4.0" # $(location "https://github.com/$1/releases/latest")
+    VER="4.4.0" # $(echo $url | sed 's!^.*/tag/release-\([-0-9.a-zA-Z]*\)$!\1!')
+    NME="ExFalso-$VER.dmg"
+    URL="https://github.com/quodlibet/quodlibet/releases/download/release-$VER/$NME"
+    SHA=$(conditional_get_sha exfalso "$URL" "$NME")
+    component_json "$URL" "$SHA" "$NME" "$VER" ef
+}
+
 wavebox &
 bitwarden &
 iterm2 &
@@ -107,6 +117,7 @@ signal &
 istat &
 rectangle &
 xbar &
+exfalso &
 
 wait
 
@@ -120,7 +131,8 @@ jq -n \
    --slurpfile im .im-component \
    --slurpfile re .re-component \
    --slurpfile xb .xb-component \
-   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0]}' \
+   --slurpfile ef .ef-component \
+   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0]}' \
    >new.json
 
 rm .*-component
