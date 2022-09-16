@@ -224,6 +224,7 @@
     (let ((default-directory (project-root (project-current))))
       (if (file-exists-p (expand-file-name "build.gradle.kts"))
           (compile "envchain gradle gradle test")
-        (message "don't know how to test this")))))
+        (message "don't know how to test this"))))
+  )
 
 (provide 'edd-features)

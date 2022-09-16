@@ -13,6 +13,7 @@
   :config (exec-path-from-shell-initialize))
 
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
+(add-to-list 'load-path user-emacs-directory)
 
 (defvar edd-emms/consul-p t "Whether to do consul stuff with emms")
 

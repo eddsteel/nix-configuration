@@ -159,7 +159,7 @@
 
   (transient-append-suffix
     'magit-dispatch "G"
-    '("@" "PRs" edd-magit-prs))
+    '("@" "PRs" edd/magit-prs))
 
   (transient-append-suffix
     'magit-dispatch "!"
@@ -171,17 +171,19 @@
      ("N" "Next hunk" git-gutter:next-hunk)
      ("S" "Show hunk diff" git-gutter:popup-hunk)])
 
-  (transient-append-suffix
-    'magit-file-dispatch '(-1 -1)
-    [("f" "browse current file" edd-git-web-link-browse-current-file)
-     ("l" "browse current line" edd-git-web-link-browse-current-line)
-     ("r" "browse current region" edd-git-web-link-browse-current-region)])
+
+  (transient-define-prefix edd/magit-web-link ()
+    ["browse"
+     [("f" "browse current file" edd-git-web-link-browse-current-file)
+      ("l" "browse current line" edd-git-web-link-browse-current-line)
+      ("r" "browse current region" edd-git-web-link-browse-current-region)
+      ("F" "browse current file on master" edd-git-web-link-browse-current-file-master)
+      ("L" "browse current line on master" edd-git-web-link-browse-current-line-master)
+      ("R" "browse current region on master" edd-git-web-link-browse-current-region-master)]])
 
   (transient-append-suffix
-    'magit-file-dispatch '(-1 -1)
-    [("F" "browse current file on master" edd-git-web-link-browse-current-file-master)
-     ("L" "browse current line on master" edd-git-web-link-browse-current-line-master)
-     ("R" "browse current region on master" edd-git-web-link-browse-current-region-master)]))
+    'magit-file-dispatch "g"
+    '("x" "Browse" edd/magit-web-link)))
 
 (use-package magit-filenotify :demand t)
 

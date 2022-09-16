@@ -69,7 +69,8 @@
   :bind (("C-M-." . consult-line)
          :map project-prefix-map
          ("a" . consult-ripgrep)
-         ("b" . consult-buffer))
+         ("b" . consult-buffer)
+         ("I" . edd-proj/idea))
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   (setq register-preview-delay 0
@@ -85,6 +86,17 @@
    consult-bookmark consult-recent-file consult-xref
    consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
    :preview-key (kbd "M-."))
+  (defun edd-proj/idea ()
+    (interactive)
+    "Open IDEA in current project"
+    (let
+        ((root (project-root (project-current))))
+      (start-process
+       (format "*IDEA %s*" (consult--project-name root))
+       nil
+       "idea"
+       (expand-file-name root)
+       )))
   (setq consult-narrow-key "<"))
 
 (use-package embark
@@ -377,6 +389,8 @@
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
+
+(use-package restclient)
 
 (use-package emacs
   :bind
