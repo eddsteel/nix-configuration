@@ -7,7 +7,7 @@
     rec {
       nixpkgs-local = pkgs.callPackages ../../src/nixpkgs {};
       local         = pkgs.callPackages ./pkgs {};
-      emacs         = pkgs.emacsUnstable;
+#      emacs         = pkgs.emacsUnstable;
       brainzo       = local.brainzo;
       scripts       = local.scripts;
       git-web-link  = local.git-web-link;
@@ -18,13 +18,14 @@
   (self: pkgs:
     pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin rec {
       mac-apps       = pkgs.callPackages ./pkgs/mac {};
-      emacs          = self.nixpkgs-local.emacsMacport;
+#      emacs          = self.nixpkgs-local.emacsMacport;
       bitwarden      = self.mac-apps.bitwarden;
       signal-desktop = self.mac-apps.signal;
       firefox        = self.mac-apps.firefox;
       intellij-idea  = self.mac-apps.intellij-idea-ce;
       iterm2         = self.mac-apps.iterm2;
       wavebox        = self.mac-apps.wavebox;
+      exfalso        = self.mac-apps.exfalso;
     }
   )
 ]

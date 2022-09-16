@@ -10,7 +10,7 @@ let
   inherit (import ./home/util.nix { inherit pkgs config lib host; }) mrINI;
   gpgPub = ./home/files/pubring.gpg;
   gpgSec = ./home/secrets/secring.gpg;
-  netcheck = "ping -c 1 1.1.1.1 2>/dev/null >/dev/null";
+  netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
 in {
   imports = [ ./home/git.nix ./home/apps.nix ./home/emacs.nix ]
             ++ optional host.gnome ./home/gnome.nix
@@ -31,10 +31,10 @@ in {
 
   home.file.".mrtrust".text = "${config.home.homeDirectory}/src/.mrconfig";
   home.file."src/.mrconfig".text = mrINI host.src.repos;
-  home.activation."mrUp" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD cd ~/src/
-    $DRY_RUN_CMD ${netcheck} && mr -j 5 up
-  '';
+#  home.activation."mrUp" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+#    $DRY_RUN_CMD cd ~/src/
+#    $DRY_RUN_CMD ${netcheck} && mr -j 5 up
+#  '';
 
   programs.go.enable = host.go;
 
@@ -105,7 +105,16 @@ in {
     signing.key = host.gpg;
   }; # the rest is in git.nix
 
-  programs.ssh.enable = true;
+  programs.ssh = {
+    enable = true;
+    extraConfig = ''
+  Host *
+    IgnoreUnknown UseKeychain
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_rsa
+    '';
+  };
   home.file.".ssh/id_rsa.pub".source = "${./home/files}/id_rsa.edd.${host.name}.pub";
   home.file.".ssh/id_rsa".source = "${./home/secrets}/id_rsa.edd.${host.name}";
 
@@ -202,4 +211,8 @@ in {
       };
     };
   };
+
+  home.file.".gradle/gradle.properties".text = ''
+  org.gradle.java.installations.paths=${pkgs.jdk8},${pkgs.jdk11},${pkgs.jdk17}
+'';
 }

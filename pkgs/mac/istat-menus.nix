@@ -10,7 +10,7 @@ in pkgs.stdenv.mkDerivation rec {
   phases = [ "unpackPhase" "installPhase" ];
   installPhase = ''
     mkdir -p $out/Applications
-    cp -r "iStat Menus.app" $out/Applications
+    cp -r "iStat Menus.app" $out/Applications/iStatMenus.app
   '';
 
   src = pkgs.fetchurl { inherit (versions) name url sha256; };

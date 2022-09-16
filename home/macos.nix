@@ -11,12 +11,24 @@ let
 
     ${pkgs.colima}/bin/colima nerdctl "${"\${args[@]}"}"
  '';
+  op = pkgs.writeShellScriptBin "op" ''
+    open "$HOME/Applications/Home Manager/$1"
+  '';
+  op-compl = pkgs.writeShellScriptBin "op-completion.bash" ''
+    _op() {
+        local cur prev words cword
+        _init_completion || return
+       COMPREPLY=($(cd ~/Applications/Home\ Manager && compgen -o dirnames -- "$cur"))
+    }
+
+    complete -F _op op
+  '';
 in {
   home.file.".nix-channels".source = ./files/darwin-nix-channels;
 
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
-    ps wget gnupg colima colima-script
+    ps wget gnupg colima colima-script op
   ] ++ (with mac-apps; [
     iterm2 xbar rectangle istat-menus skhd intellij-idea-ce wavebox soundsource
   ]);
@@ -81,7 +93,7 @@ in {
 </plist>
   '';
 
-  home.activation."refreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation."macRefreshSKHD" = lib.hm.dag.entryAfter ["writeBoundary"] ''
   $DRY_RUN_CMD launchctl stop com.koekeishiya.skhd
   $DRY_RUN_CMD launchctl unload ~/Library/LaunchAgents/com.koekeishiya.skhd.plist
   $DRY_RUN_CMD launchctl load -w ~/Library/LaunchAgents/com.koekeishiya.skhd.plist
@@ -100,6 +112,7 @@ in {
     $DRY_RUN_CMD killall Finder
 
     $DRY_RUN_CMD defaults import com.googlecode.iterm2 ${./files}/com.googlecode.iterm2.plist
+    $DRY_RUN_CMD defaults import com.rogueamoeba.soundsource ${./secrets}/com.rogueamoeba.soundsource.plist
  '';
 
   home.activation."macDock" = let
@@ -107,9 +120,11 @@ in {
     add-dock-app = p: a: app-def-write "${p}/Applications/${a}.app";
   in lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD defaults write com.apple.dock persistent-apps -array
+    ${app-def-write "/System/Applications/System Preferences.app"}
     ${add-dock-app pkgs.firefox "Firefox"}
     ${add-dock-app pkgs.iterm2 "iTerm2"}
     ${add-dock-app pkgs.wavebox "Wavebox"}
+    ${add-dock-app pkgs.bitwarden "Bitwarden"}
     # TODO!
     ${app-def-write "/Applications/Emacs.app"}
     $DRY_RUN_CMD killall Dock
@@ -147,7 +162,10 @@ in {
     };
   in "${apps}/Applications";
 
-  programs.bash.bashrcExtra = "ssh-add --apple-use-keychain -q";
+  programs.bash.bashrcExtra = ''
+    /usr/bin/ssh-add --apple-use-keychain -q;
+    source ${op-compl}/bin/op-completion.bash
+  '';
 
   # standard locations
   home.file."media/film".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Movies";
