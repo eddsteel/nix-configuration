@@ -1,13 +1,13 @@
 ;; Features -- tweaking of stuff that's built-in
 ;;
 (use-package term
-  :functions edd/term
+  :functions edd-term/term
   :hook
-  (term-mode . edd-term-hook)
+  (term-mode . edd-term/hook)
 
   :config
-  (defvar edd/term-shell "bash" "Command to run when running term")
-  (defun edd/term (pfx)
+  (defvar edd-term/shell "bash" "Command to run when running term")
+  (defun edd-term/term (pfx)
     (interactive "p")
     "Open my currently favourite kind of terminal, smartly.
 
@@ -17,22 +17,20 @@
      Otherwise will switch to *ansi-term*"
     (let ((bn (buffer-name))
           (tl "*ansi-term*")
-          (newterm (lambda () (ansi-term edd/term-shell))))
+          (newterm (lambda () (ansi-term edd-term/shell))))
       (if (and (<= pfx 1) (get-buffer tl) (not (string-prefix-p tl bn)))
           (switch-to-buffer tl)
         (funcall newterm))))
 
   ;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
   ;;
-  (defun edd-term-hook ()
-    (goto-address-mode)
-    (define-key term-raw-map (kbd "C-c SPC") 'hydra-music/body)
-    (define-key term-raw-map (kbd "C-y") 'edd-term-paste))
+  (defun edd-term/hook ()
+    (goto-address-mode))
 
   ;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
   ;; with an addition: strip space/newlines from the end.
   ;;
-  (defun edd-term-paste (&optional string)
+  (defun edd-term/paste (&optional string)
     (interactive)
     (process-send-string
      (get-buffer-process (current-buffer))
@@ -45,11 +43,15 @@
       (after term-kill-buffer-on-exit activate)
     (kill-buffer))
 
-  :bind (("C-c x" . edd/term)
+  :bind (("C-c x" . edd-term/term)
          :map term-mode-map
+         ("C-c x" . edd-term/term)
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)
          :map term-raw-map
+         ("C-c SPC" . edd-emms/control)
+         ("C-y" . edd-term/paste)
+         ("C-c x" . edd-term/term)
          ("M-o" . other-window)
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)))
@@ -139,6 +141,7 @@
   (large-file-warning-threshold 100000000)
   (completion-cycle-threshold 3)
   (tab-always-indent 'complete)
+  (next-error-message-highlight 't)
 
   :config
   (dolist
