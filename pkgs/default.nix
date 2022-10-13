@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs ? import <nixpkgs> {}}:
 {
   brainzo      = pkgs.callPackage ../../../src/brainzo/default.nix {};
   scripts      = pkgs.callPackage ../../../src/scripts/default.nix {};
