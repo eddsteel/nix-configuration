@@ -23,7 +23,7 @@
   (scroll-bar-mode -1)
   (setq visible-bell nil)
   (setq ring-bell-function 'ignore)
-  (defalias 'yes-or-no-p 'y-or-n-p)
+  (setq use-short-answers 't)
   (column-number-mode t)
   (show-paren-mode t)
 
