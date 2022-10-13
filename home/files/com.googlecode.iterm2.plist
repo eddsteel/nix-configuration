@@ -400,7 +400,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/bash -l</string>
+			<string>/var/run/current-system/sw/bin/bash -l</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
