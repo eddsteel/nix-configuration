@@ -5,20 +5,24 @@
 
   (self: pkgs:
     rec {
-      nixpkgs-local = pkgs.callPackages ../../src/nixpkgs {};
-      local         = pkgs.callPackages ./pkgs {};
-      my-emacs      = pkgs.emacsUnstable;
-      brainzo       = local.brainzo;
-      scripts       = local.scripts;
-      git-web-link  = local.git-web-link;
-      circleci-cli  = local.circleci-cli;
-      hub-local     = nixpkgs-local.hub;
-    })
+      nixpkgs-local  = pkgs.callPackages ../../src/nixpkgs {};
+      local          = pkgs.callPackages ./pkgs {};
+      my-emacs       = pkgs.emacsUnstable;
+      brainzo        = local.brainzo;
+      scripts        = local.scripts;
+      git-web-link   = local.git-web-link;
+      circleci-cli   = local.circleci-cli;
+      hub-local      = nixpkgs-local.hub;
+      signal-desktop = nixpkgs-local.signal-desktop;
+      exfalso        = pkgs.quodlibet;
+    }
+  )
 
   (self: pkgs:
     pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin rec {
+      nixpkgs-local  = pkgs.callPackages ../../src/nixpkgs {};
       mac-apps       = pkgs.callPackages ./pkgs/mac {};
-      my-emacs          = self.nixpkgs-local.emacsMacport;
+      my-emacs       = self.nixpkgs-local.emacsMacport;
       bitwarden      = self.mac-apps.bitwarden;
       signal-desktop = self.mac-apps.signal;
       firefox        = self.mac-apps.firefox;
