@@ -29,11 +29,11 @@
     lfs.enable = true;
     delta.enable = true;
     ignores = ["/target/" "lib_managed/" "tags" ".history" ".ensime*"
-    "*~" ".#*" "*#" "*.elc" ".DS_Store" "*.bak" "*.pyc" "/.stack-work"
+    "*~" ".#*" "*#" "*.elc" ".DS_Store" "*.bak" "*.pyc" "/.stack-work/"
     "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
     ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
     "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"
-    "/result" "/.idea"];
+    "/result" "/.idea/" "/tf/"];
 
     extraConfig = {
       branch.autosetuprebase = "always";

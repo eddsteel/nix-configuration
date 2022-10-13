@@ -213,7 +213,11 @@
         ("C-c C-f" . edd/idris-next-hole)))
 
 (use-package hcl-mode
-  :mode ("\\.tf$" . hcl-mode))
+  :mode ("\\.tf$" . hcl-mode)
+  :config
+  (add-to-list 'compilation-error-regexp-alist 'hcl)
+  (add-to-list 'compilation-error-regexp-alist-alist
+             '(hcl "on \\([^ ]*\\) line \\([0-9]+\\)" 1 2)))
 
 (use-package volatile-highlights
   :delight
