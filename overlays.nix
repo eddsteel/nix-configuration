@@ -26,6 +26,7 @@
       iterm2         = self.mac-apps.iterm2;
       wavebox        = self.mac-apps.wavebox;
       exfalso        = self.mac-apps.exfalso;
+      terraform-docs = self.mac-apps.terraform-docs;
     }
   )
 ]

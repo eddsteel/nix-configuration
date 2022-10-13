@@ -36,7 +36,7 @@ standard() {
 
 github() {
     url=$(location "https://github.com/$1/releases/latest")
-    VER=$(echo $url | sed 's!^.*/tag/v\([-0-9.a-zA-Z]*\)$!\1!')
+    VER=$(echo $url | sed "s!^.*/tag/$5\([-0-9.a-zA-Z]*\)\$!\1!")
     NME="$2$VER.dmg"
     URL="https://github.com/$1/releases/download/v$VER/$NME"
     SHA=$(conditional_get_sha $3 "$URL" "$NME")
@@ -91,11 +91,11 @@ istat() {
 }
 
 rectangle() {
-    github "rxhanson/Rectangle" "Rectangle" "rectangle" "re"
+    github "rxhanson/Rectangle" "Rectangle" "rectangle" "re" "v"
 }
 
 xbar() {
-    github "matryer/xbar" "xbar.v" "xbar" "xb"
+    github "matryer/xbar" "xbar.v" "xbar" "xb" "v"
 }
 
 exfalso() {
@@ -108,6 +108,15 @@ exfalso() {
     component_json "$URL" "$SHA" "$NME" "$VER" ef
 }
 
+caffeine() {
+    url=$(location "https://github.com/IntelliScape/caffeine/releases/latest")
+    VER=$(echo $url | sed "s!^.*/tag/\([-0-9.a-zA-Z]*\)\$!\1!")
+    NME="Caffeine.dmg"
+    URL="https://github.com/IntelliScape/caffeine/releases/download/$VER/$NME"
+    SHA=$(conditional_get_sha caffeine "$URL" "$NME")
+    component_json "$URL" "$SHA" "$NME" "$VER" cf
+}
+
 wavebox &
 bitwarden &
 iterm2 &
@@ -118,6 +127,7 @@ istat &
 rectangle &
 xbar &
 exfalso &
+caffeine &
 
 wait
 
@@ -132,7 +142,8 @@ jq -n \
    --slurpfile re .re-component \
    --slurpfile xb .xb-component \
    --slurpfile ef .ef-component \
-   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0]}' \
+   --slurpfile cf .cf-component \
+   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0]}' \
    >new.json
 
 rm .*-component

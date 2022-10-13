@@ -1,9 +1,9 @@
 {
   "wavebox": {
-    "name": "wavebox-10.105.26.2.dmg",
-    "sha256": "1vf0sn6sxc0imbcy0j5vjnjv29s1p29i6qfck165wrsh6g7b6g3c",
-    "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.105.26.2.dmg",
-    "version": "10.105.26.2"
+    "name": "wavebox-10.106.5.2.dmg",
+    "sha256": "1w3gi8j0ggnp9jqvycz9vj0ycxb8wnlbq8yhwq7g32rx5ipgi13l",
+    "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.106.5.2.dmg",
+    "version": "10.106.5.2"
   },
   "bitwarden": {
     "name": "bitwarden-2022.9.1.dmg",
@@ -18,22 +18,22 @@
     "version": "3.4.16"
   },
   "firefox": {
-    "name": "Firefox-104.0.2.dmg",
-    "sha256": "1cdvcmxka4kqj1swp52mnj8pxc0acrhnp79pffg86hj57w7m6di4",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/104.0.2/mac/en-CA/Firefox%20104.0.2.dmg",
-    "version": "104.0.2"
+    "name": "Firefox-105.0.3.dmg",
+    "sha256": "0gkwd1wmbfd6kslvdwicgh71lfzp3bwgsl5s9s4w8n51k654b5a8",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/105.0.3/mac/en-CA/Firefox%20105.0.3.dmg",
+    "version": "105.0.3"
   },
   "idea": {
-    "name": "intellij-idea-ce-2022.2.2.dmg",
-    "sha256": "0yyyq7wfhibymdqhzrdkw24n6z6xfqf22k9qcqlq2smbksx38jyx",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2022.2.2-aarch64.dmg",
-    "version": "2022.2.2"
+    "name": "intellij-idea-ce-2022.2.3.dmg",
+    "sha256": "0yhwgnchnsl2azmjamq4ni4j0nbi9b9d9pnd6bill0sjyk570g1k",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2022.2.3-aarch64.dmg",
+    "version": "2022.2.3"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-5.59.0.dmg",
-    "sha256": "0069wa40g6gkgjqjv954xqdz2xqqsps5r2sa5r13hm3bj84kxpm8",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-5.59.0.dmg",
-    "version": "5.59.0"
+    "name": "signal-desktop-mac-universal-5.62.0.dmg",
+    "sha256": "0dr3ihsp186784612gy5h0n03j26xj46p7cp49prrfinpdmh67m8",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-5.62.0.dmg",
+    "version": "5.62.0"
   },
   "istatmenus": {
     "name": "istat-6.62.zip",
@@ -58,5 +58,11 @@
     "sha256": "1nd55k9irc98h7aqlpmb60xn7csg9nc1fxlblmp1parkg2awl3qf",
     "url": "https://github.com/quodlibet/quodlibet/releases/download/release-4.4.0/ExFalso-4.4.0.dmg",
     "version": "4.4.0"
+  },
+  "caffeine": {
+    "name": "Caffeine.dmg",
+    "sha256": "0fx0h5wi1mhlq8cdj995gkmdyqy6dpbd3zxf8fpx0pm26aw5l3i4",
+    "url": "https://github.com/IntelliScape/caffeine/releases/download/1.1.3/Caffeine.dmg",
+    "version": "1.1.3"
   }
 }
