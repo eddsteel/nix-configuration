@@ -30,7 +30,7 @@ in {
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
     ps wget gnupg colima colima-script op
   ] ++ (with mac-apps; [
-    iterm2 xbar rectangle istat-menus skhd intellij-idea-ce wavebox soundsource
+    iterm2 xbar rectangle istat-menus skhd intellij-idea-ce wavebox soundsource caffeine
   ]);
 
   programs.git.extraConfig.credential.helper = "osxkeychain";
