@@ -420,6 +420,8 @@
       (activate-transient-input-method)
       (setq default-transient-input-method old-im))))
 
+(use-package restclient)
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;

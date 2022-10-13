@@ -131,6 +131,7 @@ in {
       flymake-hlint
       nano-modeline
       nano-theme
+      restclient
     ];
   };
 
