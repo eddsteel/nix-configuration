@@ -1,51 +1,51 @@
 {
   "wavebox": {
-    "name": "wavebox-10.106.5.2.dmg",
-    "sha256": "1w3gi8j0ggnp9jqvycz9vj0ycxb8wnlbq8yhwq7g32rx5ipgi13l",
-    "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.106.5.2.dmg",
-    "version": "10.106.5.2"
+    "name": "wavebox-10.108.14.2.dmg",
+    "sha256": "1ssh53l726l1zbnqd0m4nkx7zn0f294fgnwa2dzm7vhikgspwxbi",
+    "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.108.14.2.dmg",
+    "version": "10.108.14.2"
   },
   "bitwarden": {
-    "name": "bitwarden-2022.9.1.dmg",
-    "sha256": "0im815rf3wzs1a8hbsn70n1hg7a219lhdkr03r2b23f6jv27jgzs",
-    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2022.9.1/Bitwarden-2022.9.1-universal.dmg",
-    "version": "2022.9.1"
+    "name": "bitwarden-2022.11.0.dmg",
+    "sha256": "06f0pmm67rkrwxvywpc64zcsg3zzcaaha51y8q0rl3w7s52jnfg6",
+    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2022.11.0/Bitwarden-2022.11.0-universal.dmg",
+    "version": "2022.11.0"
   },
   "iterm2": {
-    "name": "iterm2-3.4.16.zip",
-    "sha256": "02wwskb6qqg303qz7l8fwfscp6l4kf5njds9kw76i7xdiq01m55h",
-    "url": "https://iterm2.com/downloads/stable/iTerm2-3_4_16.zip",
-    "version": "3.4.16"
+    "name": "iterm2-3.4.18.zip",
+    "sha256": "1711miy8z96bwhzfrbspz23xm53592xcc0k7kdpqbwmimi3p6wkn",
+    "url": "https://iterm2.com/downloads/stable/iTerm2-3_4_18.zip",
+    "version": "3.4.18"
   },
   "firefox": {
-    "name": "Firefox-105.0.3.dmg",
-    "sha256": "0gkwd1wmbfd6kslvdwicgh71lfzp3bwgsl5s9s4w8n51k654b5a8",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/105.0.3/mac/en-CA/Firefox%20105.0.3.dmg",
-    "version": "105.0.3"
+    "name": "Firefox-107.0.1.dmg",
+    "sha256": "1rk741kmzz226bi3f37v350vq3a17if54fnm58zd604a4zcd7vqb",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/107.0.1/mac/en-CA/Firefox%20107.0.1.dmg",
+    "version": "107.0.1"
   },
   "idea": {
-    "name": "intellij-idea-ce-2022.2.3.dmg",
-    "sha256": "0yhwgnchnsl2azmjamq4ni4j0nbi9b9d9pnd6bill0sjyk570g1k",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2022.2.3-aarch64.dmg",
-    "version": "2022.2.3"
+    "name": "intellij-idea-ce-2022.3.dmg",
+    "sha256": "0y91bkdi0n8pa217nmihic03sbxv84ag87ccqgvjcbn71bprmm2x",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2022.3-aarch64.dmg",
+    "version": "2022.3"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-5.62.0.dmg",
-    "sha256": "0dr3ihsp186784612gy5h0n03j26xj46p7cp49prrfinpdmh67m8",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-5.62.0.dmg",
-    "version": "5.62.0"
+    "name": "signal-desktop-mac-universal-6.0.0.dmg",
+    "sha256": "0k3pvbcr3gl79hc7dpx414nhip4iqsyp74xdhv0v20fcy4d6j9z8",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.0.0.dmg",
+    "version": "6.0.0"
   },
   "istatmenus": {
-    "name": "istat-6.62.zip",
-    "sha256": "0im5hyclgvn6kq587kbf6r9vndn5xrdymy2sm23i93yd7v6nh590",
-    "url": "https://cdn.bjango.com/files/istatmenus6/istatmenus6.62.zip",
-    "version": "6.62"
+    "name": "istat-6.63.zip",
+    "sha256": "0i33p3gv5n0gng7krs1gwdbayh7saqgg761yf6q5nn0h4wm1gpaq",
+    "url": "https://cdn.bjango.com/files/istatmenus6/istatmenus6.63.zip",
+    "version": "6.63"
   },
   "rectangle": {
-    "name": "Rectangle0.59.dmg",
-    "sha256": "18jdyx0k4hpwvc4p62m3kc2vgagwirn4jrlcnb0zz3cni8khgbp8",
-    "url": "https://github.com/rxhanson/Rectangle/releases/download/v0.59/Rectangle0.59.dmg",
-    "version": "0.59"
+    "name": "Rectangle0.63.dmg",
+    "sha256": "12147rym51xs6rcqz0jkp4nrl654yzkma32bq097sggwlxzbs0y6",
+    "url": "https://github.com/rxhanson/Rectangle/releases/download/v0.63/Rectangle0.63.dmg",
+    "version": "0.63"
   },
   "xbar": {
     "name": "xbar.v2.1.7-beta.dmg",
