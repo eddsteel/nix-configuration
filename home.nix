@@ -196,6 +196,7 @@ in {
         "browser.download.dir" = "${config.home.homeDirectory}/tmp";
         "browser.startup.homepage" = "about:blank";
         "browser.newtabpage.enabled" = false;
+        "browser.tabs.firefox-view" = false;
         "browser.warnOnQuitShortcut" = false;
         "browser.warnOnCloseOtherTabs" = false;
         "extensions.formautofill.creditCards.enabled" = false;
