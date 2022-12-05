@@ -1,5 +1,7 @@
 (use-package ruby-mode
-  :mode "\\.rbi")
+  :mode "\\.rbi"
+  :config
+  (setq ruby-insert-encoding-magic-comment nil))
 
 (use-package web-mode)
 (use-package inf-ruby
