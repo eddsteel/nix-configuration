@@ -21,6 +21,12 @@
 (use-package whitespace
   :unless noninteractive
   :delight whitespace-mode
+  :custom-face
+  (whitespace-empty ((t (:background "white"))))
+  (whitespace-indentation ((t (:background "white"))))
+  (whitespace-trailing ((t (:background "white"))))
+  (whitespace-line ((t (:background "#666050" :foreground "#F2EBD0"))))
+  (whitespace-big-indent ((t (:background "#B58A7C"))))
   :hook
   (((prog-mode text-mode conf-mode) . whitespace-mode))
   :config

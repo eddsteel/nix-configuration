@@ -1,5 +1,9 @@
 (use-package git-gutter
   :delight
+  :custom-face
+  (git-gutter:added ((t (:foreground "#A7B57C"))))
+  (git-gutter:deleted ((t (:foreground "#B58A7C"))))
+  (git-gutter:modified ((t (:foreground "#8A7CB5"))))
   :config
   (global-git-gutter-mode 1))
 

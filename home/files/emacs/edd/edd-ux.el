@@ -1,68 +1,43 @@
 ;; theme
 ;;
-;;(use-package darkokai-theme
-;;  :config
-;;  (load-theme 'darkokai t))
-
 (use-package nano-theme
+  :custom
+  (nano-light-background "#E5DFC5")
+  (nano-light-critical "#B65D42")
+  (nano-light-strong "#42393C")
+  (nano-light-subtle "#CEC8B1")
+  (nano-light-popout "#B58A7C")
+  :custom-face
+  (highlight ((t (:background "#F2EBD0"))))
+  (nano-faded ((t (:foreground "#666050"))))
+  (nano-faded-i ((t (:background "#545044"))))
+  (nano-salient ((t (:foreground "#7CA7B5"))))
+  (nano-salient-i ((t (:background "#7CA7B5"))))
+  (nano-popout ((t (:foreground "#B58A7C"))))
+  (nano-popout-i ((t (:background "#B58A7C"))))
+  (nano-mono ((t (:weight light :height 130 :family "Fira Code"))))
+  (ahs-plugin-default-face ((t (:background "#B58A7C"))))
+  (ahs-plugin-default-face-unfocused ((t (:background "#B58A7C"))))
   :config
-  (nano-dark))
+  (nano-mode)
+  (nano-light)
+  (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't))
 
 (use-package nano-modeline
   :init
   (nano-modeline-mode))
 
+;; TODO: see which of these nano mode obviates
 (use-package emacs
   :hook
   (after-make-frame-functions . edd-prep-frame)
   (after-init . edd-frame-hook)
   :config
-  (tooltip-mode -1)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
   (setq visible-bell nil)
   (setq ring-bell-function 'ignore)
   (setq use-short-answers 't)
   (column-number-mode t)
   (show-paren-mode t)
-
-  (add-to-list 'default-frame-alist '(height . 63))
-  (add-to-list 'default-frame-alist '(width . 120))
-  ;; Modeline
-  ;;
-;;  (defvar edd-vc-mode-line
-;;    '(" " (:propertize
-;;           ;; Strip the backend name from the VC status information
-;;           (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
-;;                    (substring vc-mode (+ (length backend) 2))))
-;;           face font-lock-variable-name-face))
-;;    "Mode line format for VC Mode.")
-;;
-;;  (put 'edd-vc-mode-line 'risky-local-variable t)
-
-;;  (make-face 'mode-line-major-mode-face)
-;;  (make-face 'mode-line-minor-mode-face)
-;;
-;;  (set-face-attribute 'mode-line-major-mode-face nil
-;;                      :height 1.0
-;;                      :inherit 'mode-line-face)
-;;
-;;  (set-face-attribute 'mode-line-minor-mode-face nil
-;;                      :inherit 'mode-line-face)
-;;
-;;  (setq-default mode-line-format
-;;                '("%e"
-;;                  mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
-;;                  " "
-;;                  mode-line-misc-info
-;;                  mode-line-frame-identification mode-line-buffer-identification " "
-;;                  mode-line-position
-;;                  (vc-mode edd-vc-mode)
-;;                  " "
-;;                  (:propertize mode-name face mode-line-major-mode-face)
-;;                  (:eval (propertize (format-mode-line minor-mode-alist) 'face 'mode-line-minor-mode-face))
-;;                  mode-line-end-spaces))
 
   ;; C-h for delete
   (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
@@ -96,44 +71,5 @@
 (use-package hl-line
   :hook
   (prog-mode . hl-line-mode))
-
-;;(use-package time
-;;  :config
-;;  ;; Mode line I like.
-;;  (display-time-mode 1)
-;;  (setq display-time-string-forms
-;;        '((propertize (concat day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load)))))
-;;
-;;(use-package battery
-;;  :config
-;;  (display-battery-mode t)
-;;  (setq battery-mode-line-format " %b%p%%"))
-;;
-;;(use-package nyan-mode
-;;  :config
-;;  (nyan-mode 1))
-;;
-;;(use-package basic-theme
-;;  :commands edd-ux/basic-mode
-;;  :config
-;;  (defun edd-ux/basic-mode ()
-;;    "Get super basic"
-;;    (interactive)
-;;    (enable-theme 'basic)
-;;    (setq-default mode-line-format "")
-;;    (setq mode-line-format "")
-;;    (let ((faces-to-toggle '(mode-line mode-line-inactive mode-line-highlight mode-line-emphasis)))
-;;      (mapcar (lambda (face)
-;;                (set-face-attribute face nil :height 100))
-;;              faces-to-toggle))
-;;    (let* ((sans-font (cond ((x-list-fonts "Lucida Grande") '(:font "Lucida Grande"))
-;;                            ((x-list-fonts "Verdana") '(:font "Verdana"))
-;;                            ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))))
-;;           (background-color (face-background 'default nil 'default))
-;;           (padding `(:line-width 5 :color ,background-color)))
-;;      (custom-theme-set-faces 'org-beautify
-;;                              `(org-level-3 ((t (:box ,padding))))
-;;                              `(org-level-2 ((t (:box ,padding))))
-;;                              `(org-level-1 ((t (:box ,padding))))))))
 
 (provide 'edd-ux)

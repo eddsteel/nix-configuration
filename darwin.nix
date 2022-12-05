@@ -39,6 +39,8 @@
       fira-code
       iosevka
       open-sans
+      roboto-mono
+      roboto
     ];
   };
 }

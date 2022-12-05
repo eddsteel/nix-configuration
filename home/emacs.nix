@@ -116,6 +116,7 @@ in {
       kotlin-mode
       lua-mode
       python-mode
+      restclient-jq
       rjsx-mode
       rust-mode
       scala-mode
@@ -126,8 +127,8 @@ in {
       flymake-easy
       flymake-go
       flymake-hlint
-      nano-theme
       nano-modeline
+      nano-theme
     ];
   };
 
