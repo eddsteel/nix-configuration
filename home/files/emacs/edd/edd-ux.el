@@ -10,7 +10,7 @@
   :custom-face
   (highlight ((t (:background "#F2EBD0"))))
   (nano-faded ((t (:foreground "#666050"))))
-  (nano-faded-i ((t (:background "#545044"))))
+  (nano-faded-i ((t (:background "#666050"))))
   (nano-salient ((t (:foreground "#7CA7B5"))))
   (nano-salient-i ((t (:background "#7CA7B5"))))
   (nano-popout ((t (:foreground "#B58A7C"))))
@@ -18,6 +18,9 @@
   (nano-mono ((t (:weight light :height 130 :family "Fira Code"))))
   (ahs-plugin-default-face ((t (:background "#B58A7C"))))
   (ahs-plugin-default-face-unfocused ((t (:background "#B58A7C"))))
+  (menu ((t (:background "#CEC8B1"))))
+  (corfu-bar ((t (:background "#CEC8B1"))))
+  (mode-line ((t (:background "#E5DFC5" :foreground "#37474F" :box (:line-width 3 :color "#E5DFC5" :style nil)))))
   :config
   (nano-mode)
   (nano-light)

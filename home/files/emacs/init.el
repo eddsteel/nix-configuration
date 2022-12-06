@@ -303,6 +303,13 @@
 
 (use-package anzu
   :delight anzu-mode
+  :custom-face
+  (anzu-mode-line ((t (:foreground "#F2EBD0" :background "#CEC8B1"))))
+  (anzu-match-1 ((t (:foreground "#A7B57C" :background "#CEC8B1"))))
+  (anzu-match-2 ((t (:foreground "#7CA7B5" :background "#CEC8B1"))))
+  (anzu-match-3 ((t (:foreground "#B58A7C" :background "#CEC8B1"))))
+  (anzu-replace-to ((t (:foreground "#B58A7C" :background "#CEC8B1"))))
+  (anzu-replace-highlight ((t (:foreground "#B58A7C" :background "#CEC8B1"))))
   :init (global-anzu-mode +1)
   :bind
   (("M-%" . anzu-query-replace)
