@@ -12,7 +12,7 @@
     {"name" = "bookbot";}
     {"name" = "tell-consul";}
   ];
-  packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord];
+  packages = with pkgs; [wmctrl vlc zoom-us psmisc ledger discord nixpkgs-local.wavebox];
   bashAliases = {};
   gnome = true;
   linux = true;
