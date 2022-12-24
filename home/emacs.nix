@@ -132,6 +132,7 @@ in {
       nano-modeline
       nano-theme
       restclient
+      fish-mode
     ];
   };
 

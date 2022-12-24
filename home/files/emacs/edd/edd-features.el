@@ -6,7 +6,7 @@
   (term-mode . edd-term/hook)
 
   :config
-  (defvar edd-term/shell "bash" "Command to run when running term")
+  (defvar edd-term/shell "fish" "Command to run when running term")
   (defun edd-term/term (pfx)
     (interactive "p")
     "Open my currently favourite kind of terminal, smartly.

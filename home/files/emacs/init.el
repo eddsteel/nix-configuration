@@ -422,6 +422,7 @@
 
 (use-package restclient)
 
+(use-package fish-mode)
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;

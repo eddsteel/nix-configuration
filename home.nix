@@ -11,6 +11,43 @@ let
   gpgPub = ./home/files/pubring.gpg;
   gpgSec = ./home/secrets/secring.gpg;
   netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
+  shellAliases = {
+    ec = ''${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
+    ga = ''git add'';
+    gam = ''git commit -am'';
+    gap = ''git add -p'';
+    gau = ''git add -u'';
+    gaup = ''git add -up'';
+    gb = ''git branch'';
+    gc = ''git checkout'';
+    gcl = ''git clone'';
+    gd = ''git diff'';
+    gdc = ''git diff --cached'';
+    gf = ''git fetch'';
+    gl = ''git pull'';
+    glg = ''git lg'';
+    glgh = ''git lgh'';
+    glr = ''git pull --rebase'';
+    gm = ''git commit -m'';
+    gma = ''git commit --amend --reuse-message=HEAD'';
+    gp = ''git push'';
+    gpr = ''hub pull-request'';
+    gr = ''git rm'';
+    gra = ''git remote add'';
+    grr = ''git remote remove'';
+    gs = ''git status'';
+    gsr = ''find . -type d -name ".git" -print -exec git --git-dir="{}" --work-tree="{}/.." status \;'';
+    hms = ''HOSTNAME="${hostname}" home-manager switch'';
+    la = ''ls -a --color=auto'';
+    srsly = ''sudo $(fc -ln -1)'';
+    stree = ''tree --prune -P *.scala'';
+   ".." = ''cd ..'';
+    "..." = ''cd ../..'';
+    "..3" = ''cd ../../..'';
+    "..4" = ''cd ../../../..'';
+    "..5" = ''cd ../../../../..'';
+    "..6" = ''cd ../../../../../..'';
+  } // host.bashAliases;
 in {
   imports = [ ./home/git.nix ./home/apps.nix ./home/emacs.nix ]
             ++ optional host.gnome ./home/gnome.nix
@@ -40,44 +77,7 @@ in {
 
   programs.bash = {
     enable = true;
-    shellAliases = {
-      ec = ''${pkgs.my-emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server'';
-      ga = ''git add'';
-      gam = ''git commit -am'';
-      gap = ''git add -p'';
-      gau = ''git add -u'';
-      gaup = ''git add -up'';
-      gb = ''git branch'';
-      gc = ''git checkout'';
-      gcl = ''git clone'';
-      gd = ''git diff'';
-      gdc = ''git diff --cached'';
-      gf = ''git fetch'';
-      gl = ''git pull'';
-      glg = ''git lg'';
-      glgh = ''git lgh'';
-      glr = ''git pull --rebase'';
-      gm = ''git commit -m'';
-      gma = ''git commit --amend --reuse-message=HEAD'';
-      gp = ''git push'';
-      gpr = ''hub pull-request'';
-      gr = ''git rm'';
-      gra = ''git remote add'';
-      grr = ''git remote remove'';
-      gs = ''git status'';
-      gsr = ''find . -type d -name ".git" -print -exec git --git-dir="{}" --work-tree="{}/.." status \;'';
-      hms = ''HOSTNAME="${hostname}" home-manager switch'';
-      la = ''ls -a --color=auto'';
-      srsly = ''sudo $(fc -ln -1)'';
-      stree = ''tree --prune -P *.scala'';
-
-      ".." = ''cd ..'';
-      "..." = ''cd ../..'';
-      "..3" = ''cd ../../..'';
-      "..4" = ''cd ../../../..'';
-      "..5" = ''cd ../../../../..'';
-      "..6" = ''cd ../../../../../..'';
-    } // host.bashAliases;
+    inherit shellAliases;
     historyFile = "${config.home.homeDirectory}/.histfile";
 
     sessionVariables = {
@@ -96,6 +96,31 @@ in {
          . /etc/bash.bashrc
          . /etc/bashrc
       fi
+    '';
+  };
+
+  programs.fish = {
+    enable = true;
+    inherit shellAliases;
+    plugins = [
+      {
+        name = "fish-history-merge";
+        src = pkgs.fetchFromGitHub {
+          owner = "2m";
+          repo = "fish-history-merge";
+          rev = "7e415b8ab843a64313708273cf659efbf471ad39";
+          sha256 = "1hlc2ghnc8xidwzj2v1rjrw7gbpkkkld9y2mg4dh2qmcvlizcbd3";
+        };
+      }
+    ];
+    functions = {
+      mergehistory = {
+        body = "history merge; echo . >> ~/.ping";
+        onEvent = "fish_postexec";
+      };
+    };
+    shellInit = ''
+      set fish_greeting
     '';
   };
 
@@ -208,7 +233,6 @@ in {
         "signon.rememberSignons" = false;
         "signon.autofillForms" = false;
         "signon.generation.enabled" = false;
-
       };
     };
   };
