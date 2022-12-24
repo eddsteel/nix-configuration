@@ -51,7 +51,6 @@ in {
       marginalia
       orderless
       vertico
-      hydra
 
       anzu
       auto-complete
@@ -133,6 +132,7 @@ in {
       nano-theme
       restclient
       fish-mode
+      multiple-cursors
     ];
   };
 

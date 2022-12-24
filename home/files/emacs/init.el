@@ -343,8 +343,6 @@
   :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-(use-package iedit)
-
 (use-package wgrep
   :after grep
   :bind
@@ -423,6 +421,12 @@
 (use-package restclient)
 
 (use-package fish-mode)
+(use-package multiple-cursors
+  :bind
+  ("C-;" . mc/mark-next-like-this)
+  ("C-:" . mc/mark-all-like-this)
+  ("C-c ;" . mc/edit-lines))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
