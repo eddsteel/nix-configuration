@@ -23,8 +23,7 @@
   (mode-line ((t (:background "#E5DFC5" :foreground "#37474F" :box (:line-width 3 :color "#E5DFC5" :style nil)))))
   :config
   (nano-mode)
-  (nano-light)
-  (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't))
+  (nano-light))
 
 (use-package nano-modeline
   :init
@@ -59,8 +58,8 @@
                 (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't)
                 (put 'default-frame-alist 'alpha '(100 80)))
             (progn
-              (set-face-attribute 'default nil :font "Fira Code-13")
-              (set-face-attribute 'fixed-pitch nil :font "Fira Code-13")
+              (set-face-attribute 'default nil :font "Fira Code-13" :weight 'normal)
+              (set-face-attribute 'fixed-pitch nil :font "Fira Code-13" :weight 'normal)
               ))
           (when (member "Noto Emoji" (font-family-list))
             (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
