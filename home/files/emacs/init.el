@@ -407,6 +407,8 @@
 
 (use-package restclient)
 
+(use-package fish-mode)
+
 (use-package emacs
   :bind
   ("<Multi_key>" . edd/transient-compose)
