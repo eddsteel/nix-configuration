@@ -213,7 +213,7 @@ in {
   };
 
   xdg.userDirs = {
-    enable = true
+    enable = true;
     createDirectories = true;
     desktop = "$HOME/tmp";
     documents = "$HOME/txt";

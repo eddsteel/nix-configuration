@@ -23,20 +23,20 @@
     ];
     startServices = true;
 
-    services.brainzo-api = {
-      Unit = { Description = "brainzo-api"; };
-      Install = { WantedBy = ["default.target"]; };
-      Service = {
-        Type = "simple";
-        Restart = "always";
-        ExecStart = "${pkgs.brainzo}/bin/brainzo-api";
-        KillMode = "process";
-        TimeoutSec = 180;
-      };
-    };
+#    services.brainzo-api = {
+#      Unit = { Description = "brainzo-api"; };
+#      Install = { WantedBy = ["default.target"]; };
+#      Service = {
+#        Type = "simple";
+#        Restart = "always";
+#        ExecStart = "${pkgs.brainzo}/bin/brainzo-api";
+#        KillMode = "process";
+#        TimeoutSec = 180;
+#      };
+#    };
   };
 
-  home.packages = [pkgs.brainzo];
+ # home.packages = [pkgs.brainzo];
 
   xdg.configFile."geary/account_01/geary.ini".source = ./files/geary.ini;
 }

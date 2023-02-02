@@ -46,7 +46,6 @@ in with lib; {
     extraAliases = mkOption {
       default = {};
     };
-    homeConfig = mkOption {};
   };
   config = mkIf cfg.enable {
     home.shellAliases = aliases // cfg.extraAliases;
@@ -61,7 +60,6 @@ in with lib; {
         HISTCONTROL = "ignoredups:erasedups";
         HISTSIZE = "100000";
         HISTFILESIZE = "1000000";
-        HOME_MANAGER_CONFIG = cfg.homeConfig;
       };
 
       bashrcExtra = ''
@@ -86,7 +84,6 @@ in with lib; {
       shellInit = ''
       set -gx EDITOR "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
       set -gx ALTERNATE_EDITOR "${pkgs.emacs}/bin/emacs";
-      set -gx HOME_MANAGER_CONFIG ${cfg.homeConfig};
 
       # emacs dir tracking
       if [ -n "$INSIDE_EMACS" ]

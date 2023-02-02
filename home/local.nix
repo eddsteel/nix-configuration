@@ -1,13 +1,19 @@
 { lib, config, ... }:
 with lib;
 let
-  username = config.home.username;
-  homedir = config.home.homeDirectory;
-  hostname = builtins.getEnv "HOSTNAME";
+  cfg = config.local;
 in {
+  options.local = {
+    username = mkOption {};
+    homedir = mkOption {};
+    hostname = mkOption {};
+  };
+
   config = {
-    home.file.".ssh/id_rsa.pub".source = "${./files}/id_rsa.${username}.${hostname}.pub";
-    home.file.".ssh/id_rsa".source = "${./secrets}/id_rsa.${username}.${hostname}";
-    shell.homeConfig = "${homedir}/.config/nixpkgs/systems/${hostname}/home.nix";
+    home.username = cfg.username;
+    home.homeDirectory = cfg.homedir;
+
+    home.file.".ssh/id_rsa.pub".source = "${./files}/id_rsa.${cfg.username}.${cfg.hostname}.pub";
+    home.file.".ssh/id_rsa".source = "${./secrets}/id_rsa.${cfg.username}.${cfg.hostname}";
   };
 }

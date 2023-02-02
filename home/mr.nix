@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.programs.mr;
-
+  homedir = config.home.homeDirectory;
   netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
   mkMrConfig = me: repo: let
     name = repo.name;

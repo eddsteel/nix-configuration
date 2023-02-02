@@ -14,9 +14,13 @@ in {
     ../../home/workstation.nix
   ];
 
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
   home.stateVersion = "21.05";
+
+  local = {
+    username = "edd";
+    homedir = "/Users/edd";
+    host = "work";
+  };
 
   programs.home-manager.enable = true;
 
