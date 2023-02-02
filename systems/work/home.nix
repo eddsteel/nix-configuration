@@ -19,7 +19,7 @@ in {
   local = {
     username = "edd";
     homedir = "/Users/edd";
-    host = "work";
+    hostname = "work";
   };
 
   programs.home-manager.enable = true;
