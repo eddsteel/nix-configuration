@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
-
   xdg.configFile."hub".source = ./secrets/hub;
 
   programs.git = {
+    enable = true;
     userName = "Edd Steel";
     signing.signByDefault = true;
 
@@ -27,7 +27,6 @@
     };
 
     lfs.enable = true;
-    delta.enable = true;
     ignores = ["/target/" "lib_managed/" "tags" ".history" ".ensime*"
     "*~" ".#*" "*#" "*.elc" ".DS_Store" "*.bak" "*.pyc" "/.stack-work/"
     "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
