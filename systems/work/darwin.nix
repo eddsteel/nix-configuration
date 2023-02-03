@@ -1,19 +1,22 @@
 # Nix-Darwin configuration for my work computer.
 { config, pkgs, ... }:
 {
+  imports = [ ../per-host.nix ];
   environment.systemPackages = [];
 
   environment.etc."nix/nix.conf".text = ''
     build-users-group = nixbld
   '';
 
-  # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/src/nix-systems/work.nix
-  environment.darwinConfig = "$HOME/src/nix-systems/work.nix";
-  environment.pathsToLink = [ "/share/bash-completion" ];
-  environment.variables = {
-    HOSTNAME = "work";
+  perHost = {
+    enable = true;
+    hostName = "work";
+    os = "darwin";
+    user = "edd";
+    configPath = "/Users/edd/src/nix-configuration";
   };
+
+  environment.pathsToLink = [ "/share/bash-completion" ];
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -33,7 +36,6 @@
     fontDir.enable = true;
     fonts = with pkgs; [
       fira-code
-      iosevka
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
@@ -46,6 +48,5 @@
 
   nix = {
     gc.automatic = true;
-    gc.dates = "02:00";
   };
 }

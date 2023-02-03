@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   work-pkgs = pkgs.callPackages ../../../../src/nix-work {};
-  secrets = import ../../home/secrets { inherit work-pkgs; };
+  secrets = import ../../secrets { inherit work-pkgs; };
 in {
   imports = [
     ../../home/emacs.nix

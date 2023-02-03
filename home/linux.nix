@@ -38,5 +38,5 @@
 
  # home.packages = [pkgs.brainzo];
 
-  xdg.configFile."geary/account_01/geary.ini".source = ./files/geary.ini;
+  xdg.configFile."geary/account_01/geary.ini".source = ../files/geary.ini;
 }

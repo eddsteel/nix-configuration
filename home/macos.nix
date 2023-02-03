@@ -24,7 +24,7 @@ let
     complete -F _op op
   '';
 in {
-  home.file.".nix-channels".source = ./files/darwin-nix-channels;
+  home.file.".nix-channels".source = ../files/darwin-nix-channels;
 
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
@@ -39,7 +39,7 @@ in {
     experimental-features = nix-command flakes
   '';
 
-  xdg.configFile."karabiner/karabiner.json".source = ./files/karabiner.json;
+  xdg.configFile."karabiner/karabiner.json".source = ../files/karabiner.json;
 
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".text = ''
   #!/usr/bin/env bash
@@ -47,7 +47,7 @@ in {
   echo "$np | size=13 length=50"
   '';
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".executable = true;
-  home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ./files/xbar-youbi.sh;
+  home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ../files/xbar-youbi.sh;
 
   xdg.configFile."skhd/skhdrc".text = ''
   shift + alt + cmd + ctrl - e : open /Applications/Emacs.app
@@ -111,8 +111,8 @@ in {
     $DRY_RUN_CMD defaults write com.apple.Finder "AppleShowAllFiles" -bool "false"
     $DRY_RUN_CMD killall Finder
 
-    $DRY_RUN_CMD defaults import com.googlecode.iterm2 ${./files}/com.googlecode.iterm2.plist
-    $DRY_RUN_CMD defaults import com.rogueamoeba.soundsource ${./secrets}/com.rogueamoeba.soundsource.plist
+    $DRY_RUN_CMD defaults import com.googlecode.iterm2 ${../files}/com.googlecode.iterm2.plist
+    $DRY_RUN_CMD defaults import com.rogueamoeba.soundsource ${../secrets}/com.rogueamoeba.soundsource.plist
  '';
 
   home.activation."macDock" = let
@@ -130,15 +130,15 @@ in {
     $DRY_RUN_CMD killall Dock
   '';
 
-  home.file.".default-gems".source = ./files/ruby-default-gems;
-  home.file.".bundle/config".source = ./secrets/bundle-config;
+  home.file.".default-gems".source = ../files/ruby-default-gems;
+  home.file.".bundle/config".source = ../secrets/bundle-config;
 
-  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ./files/rectangle-preferences.plist;
+  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ../files/rectangle-preferences.plist;
   # has licence keys, MAC addresses, GPS etc., so secret
-  home.file."Library/Preferences/com.bjango.istatmenus.plist".source = ./secrets/com.bjango.istatmenus.plist;
-  home.file."Library/Preferences/com.bjango.istatmenus.status.plist".source = ./secrets/com.bjango.istatmenus.status.plist;
-  home.file."Library/Preferences/com.bjango.istatmenus5.extras.plist".source = ./secrets/com.bjango.istatmenus5.extras.plist;
-  home.file."Library/Preferences/com.bjango.istatmenus6.extras.plist".source = ./secrets/com.bjango.istatmenus6.extras.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus.plist".source = ../secrets/com.bjango.istatmenus.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus.status.plist".source = ../secrets/com.bjango.istatmenus.status.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus5.extras.plist".source = ../secrets/com.bjango.istatmenus5.extras.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus6.extras.plist".source = ../secrets/com.bjango.istatmenus6.extras.plist;
 
   targets.darwin.keybindings = {
     "^u" = "deleteToBeginningOfLine:";

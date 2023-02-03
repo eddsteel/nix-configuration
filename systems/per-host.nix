@@ -13,26 +13,49 @@ in {
       default = "nixos";
       description = "nixos or darwin";
     };
+    user = mkOption {
+      type = types.str;
+      default = "root";
+      description = "User (required for darwin)";
+    };
     configPath = mkOption {
-      type = types.path;
+      type = types.str; #Paths would be copied into the store.
       default = "/etc/${cfg.os}";
     };
   };
 
-  config = mkIf cfg.enable {
-    networking.hostName = cfg.hostName;
-
-    nix.nixPath = [
-      "${cfg.os}-config=${cfg.configPath}/systems/${cfg.hostName}/${cfg.os}.nix"
-      "hm-config=${cfg.configPath}/systems/${cfg.hostName}/home.nix"
-      "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+  config = let
+    localRoot = "${cfg.configPath}/systems/${cfg.hostName}";
+    osconfig = "${localRoot}/${cfg.os}.nix";
+    homeconfig = "${localRoot}/home.nix";
+    pkgsconfig = "${cfg.configPath}/nixpkgs.nix";
+  in mkIf cfg.enable {
+    nix.nixPath = (if cfg.os == "nixos" then [
+      { nixos-config = osconfig; }
+    ] else []) ++ [
+      "hm-config=${homeconfig}"
+      "nixpkgs=/nix/var/nix/profiles/per-user/${cfg.user}/channels/${cfg.os}"
       "/nix/var/nix/profiles/per-user/root/channels"
+      { nixpkgs-overlays = "${cfg.configPath}/overlays.nix";}
     ];
 
-    environment.variables = {
-      HOSTNAME = cfg.hostName;
-      NIXOS_CONFIG = "${cfg.configPath}/nixpkgs/systems/${cfg.hostName}/${cfg.os}.nix";
-      HOME_MANAGER_CONFIG = "${cfg.configPath}/nixpkgs/systems/${cfg.hostName}/home.nix";
-    };
+    nixpkgs.overlays = import "${cfg.configPath}/overlays.nix";
+
+    environment = let
+      envvars = {
+        HOSTNAME = cfg.hostName;
+        HOME_MANAGER_CONFIG = homeconfig;
+        NIXPKGS_CONFIG = pkgsconfig;
+      };
+    in if cfg.os == "darwin"
+      then {
+        variables = envvars;
+        darwinConfig = osconfig;
+      }
+      else {
+        variables = envvars // {
+          NIXOS_CONFIG = osconfig;
+        };
+      };
   };
 }

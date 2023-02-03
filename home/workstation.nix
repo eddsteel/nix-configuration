@@ -2,8 +2,8 @@
 let
   cfg = config.workstation;
   homedir = config.home.homeDirectory;
-  gpgPub = ./files/pubring.gpg;
-  gpgSec = ./secrets/secring.gpg;
+  gpgPub = ../files/pubring.gpg;
+  gpgSec = ../secrets/secring.gpg;
   repos = [
     {"name" = "nix-configuration";}
     {"name" = "nix-darwin"; "remote" = "git@github.com:LnL7/nix-darwin";}
@@ -25,7 +25,7 @@ in with lib; {
       bitwarden signal-desktop moreutils exfalso
     ];
 
-    xdg.configFile."zoomus.conf".source = ./files/zoomus.conf;
+    xdg.configFile."zoomus.conf".source = ../files/zoomus.conf;
 
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
@@ -38,7 +38,7 @@ in with lib; {
       rootdir = "${homedir}/src";
     };
 
-    home.file.".aws/credentials".source = secrets/aws-credentials;
+    home.file.".aws/credentials".source = ../secrets/aws-credentials;
 
     home.file.".aspell.conf".text = ''
       data-dir ${homedir}/.nix-profile/lib/aspell
@@ -47,10 +47,10 @@ in with lib; {
     home.file.".gradle/gradle.properties".text = ''
       org.gradle.java.installations.paths=${pkgs.jdk8},${pkgs.jdk11},${pkgs.jdk17}
     '';
-    home.file.".face".source = ./files/face;
-    home.file.".desktop.jpg".source = ./files/desktop;
-    home.file."media/desktop.jpg".source = ./secrets/media/desktop.jpg;
-    home.file."media/face.jpg".source = ./secrets/media/face.jpg;
+    home.file.".face".source = ../files/face;
+    home.file.".desktop.jpg".source = ../files/desktop;
+    home.file."media/desktop.jpg".source = ../secrets/media/desktop.jpg;
+    home.file."media/face.jpg".source = ../secrets/media/face.jpg;
 
     home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}

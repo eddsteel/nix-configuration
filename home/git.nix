@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  xdg.configFile."hub".source = ./secrets/hub;
+  xdg.configFile."hub".source = ../secrets/hub;
 
   programs.git = {
     enable = true;

@@ -136,7 +136,7 @@ in {
     ];
   };
 
-  xdg.configFile."emacs/init.el".source = ./files/emacs/init.el;
-  xdg.configFile."emacs/edd".source = ./files/emacs/edd;
-  xdg.configFile."emacs/local.el".source = ./secrets/local.el;
+  xdg.configFile."emacs/init.el".source = ../files/emacs/init.el;
+  xdg.configFile."emacs/edd".source = ../files/emacs/edd;
+  xdg.configFile."emacs/local.el".source = ../secrets/local.el;
 }

@@ -18,10 +18,10 @@
     "version": "3.4.19"
   },
   "firefox": {
-    "name": "Firefox-109.0.dmg",
-    "sha256": "0lyg1ng5z62yfs1m9d1wwhr9xlffk7c51ildlhp8vyfrjslzhg1m",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/109.0/mac/en-CA/Firefox%20109.0.dmg",
-    "version": "109.0"
+    "name": "Firefox-109.0.1.dmg",
+    "sha256": "1mkbdyn4an7490l58n7w3dva305miyagsskbgfnrk14qmbg1dzsp",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/109.0.1/mac/en-CA/Firefox%20109.0.1.dmg",
+    "version": "109.0.1"
   },
   "idea": {
     "name": "intellij-idea-ce-2022.3.2.dmg",
@@ -30,16 +30,16 @@
     "version": "2022.3.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.3.0.dmg",
-    "sha256": "0zqxljl6lrgdy0s80i7qpg6y1jw7mzikv1zv3bd9ji6vxw0wxz6j",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.3.0.dmg",
-    "version": "6.3.0"
+    "name": "signal-desktop-mac-universal-6.4.1.dmg",
+    "sha256": "16vjk0n6pbwniqxxaglk3m202zgmwpll986myv3wkk1agvg1b872",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.4.1.dmg",
+    "version": "6.4.1"
   },
   "istatmenus": {
-    "name": "istat-6.63.zip",
-    "sha256": "0i33p3gv5n0gng7krs1gwdbayh7saqgg761yf6q5nn0h4wm1gpaq",
-    "url": "https://cdn.bjango.com/files/istatmenus6/istatmenus6.63.zip",
-    "version": "6.63"
+    "name": "istat-6.70.zip",
+    "sha256": "19zc3wf8zjlhh35wzs2zah6w3p1ibvdcvdgszxgkjd0xrlrsl713",
+    "url": "https://cdn.bjango.com/files/istatmenus6/istatmenus6.70.zip",
+    "version": "6.70"
   },
   "rectangle": {
     "name": "Rectangle0.65.dmg",

@@ -1,33 +1,46 @@
 { config, pkgs, ... }:
 let
+  hostName = "draper"
   consul-cert = /nix/store/pz1jqbq4ja3ms2cvbbmjlkc3k85klcm8-consul-cert;
 in {
   imports = [ ../per-host.nix ./hardware.nix ];
 
   perHost = {
     enable = true;
-    hostName = "draper";
-    configPath = "/home/edd/.config/nixpkgs";
+    inherit hostName;
+    configPath = "/home/edd/src/nix-configuration";
   };
 
-  networking.extraHosts = ''
-  192.168.1.39  gusting
-  192.168.1.165 blinds
-  '';
+  networking = {
+    inherit hostName;
+    extraHosts = ''
+    192.168.1.39  gusting
+    192.168.1.165 blinds
+    '';
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices = {
-    "user" = {
-      device = "/dev/disk/by-uuid/0e8169a6-a23d-4651-9042-3b5d08f2679e";
+    firewall.allowedTCPPorts = [
+      22 4242 8000 8096 8200 8300 8301 8302 8500 8543
+    ];
+    firewall.allowedUDPPorts = [ 1900 ];
+  };
+
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    initrd.luks.devices = {
+      "user" = {
+        device = "/dev/disk/by-uuid/0e8169a6-a23d-4651-9042-3b5d08f2679e";
+      };
     };
   };
 
-  fileSystems."/".options = ["noatime"];
-  fileSystems."/boot".options = ["noatime"];
-  fileSystems."/home".options = ["noatime"];
-  fileSystems."/nix".options = ["noatime"];
+  fileSystems = {
+    "/".options = ["noatime"];
+    "/boot".options = ["noatime"];
+    "/home".options = ["noatime"];
+    "/nix".options = ["noatime"];
+  };
 
   # Set your time zone.
   time.timeZone = "Canada/Pacific";
@@ -80,8 +93,8 @@ in {
     shell = pkgs.fish;
     extraGroups = [ "wheel" "docker" "cdrom"];
     openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../home/files/id_rsa.edd.work.pub)
-      (builtins.readFile ../../home/files/id_rsa.edd.gusting.pub)
+      (builtins.readFile ../../files/id_rsa.edd.work.pub)
+      (builtins.readFile ../../files/id_rsa.edd.gusting.pub)
     ];
   };
 
@@ -89,7 +102,7 @@ in {
   users.users.builder = {
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../home/files/id_rsa.root.gusting.pub)
+      (builtins.readFile ../../files/id_rsa.root.gusting.pub)
     ];
   };
   nix.settings.trusted-users = [ "builder" ];
@@ -203,11 +216,6 @@ in {
 
   security.pki.certificates = [ "${consul-cert}/server.crt"];
 
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [
-    22 4242 8000 8096 8200 8300 8301 8302 8500 8543
-  ];
-   networking.firewall.allowedUDPPorts = [ 1900 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
