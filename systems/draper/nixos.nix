@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  hostName = "draper"
+  hostName = "draper";
   consul-cert = /nix/store/pz1jqbq4ja3ms2cvbbmjlkc3k85klcm8-consul-cert;
 in {
   imports = [ ../per-host.nix ./hardware.nix ];
@@ -8,7 +8,6 @@ in {
   perHost = {
     enable = true;
     inherit hostName;
-    configPath = "/home/edd/src/nix-configuration";
   };
 
   networking = {
@@ -115,6 +114,7 @@ in {
     home-manager
     links2
     mr
+    nixos-option
     playerctl
     vim
     wget

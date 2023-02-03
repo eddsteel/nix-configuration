@@ -60,6 +60,7 @@ in with lib; {
         HISTCONTROL = "ignoredups:erasedups";
         HISTSIZE = "100000";
         HISTFILESIZE = "1000000";
+        NIXPKGS_CONFIG = toString <nixpkgs-config>;
       };
 
       bashrcExtra = ''
@@ -82,8 +83,9 @@ in with lib; {
     programs.fish = {
       enable = true;
       shellInit = ''
-      set -gx EDITOR "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server";
-      set -gx ALTERNATE_EDITOR "${pkgs.emacs}/bin/emacs";
+      set -gx EDITOR "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server"
+      set -gx ALTERNATE_EDITOR "${pkgs.emacs}/bin/emacs"
+      set NIXPKGS_CONFIG ${toString <nixpkgs-config>}
 
       # emacs dir tracking
       if [ -n "$INSIDE_EMACS" ]

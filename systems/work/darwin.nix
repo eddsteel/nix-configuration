@@ -13,7 +13,6 @@
     hostName = "work";
     os = "darwin";
     user = "edd";
-    configPath = "/Users/edd/src/nix-configuration";
   };
 
   environment.pathsToLink = [ "/share/bash-completion" ];

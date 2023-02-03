@@ -18,38 +18,38 @@ in {
       default = "root";
       description = "User (required for darwin)";
     };
-    configPath = mkOption {
-      type = types.str; #Paths would be copied into the store.
-      default = "/etc/${cfg.os}";
-    };
   };
 
   config = let
-    localRoot = "${cfg.configPath}/systems/${cfg.hostName}";
+    configPath = toString <nix-config>;
+    localRoot = "${configPath}/systems/${cfg.hostName}";
     osconfig = "${localRoot}/${cfg.os}.nix";
     homeconfig = "${localRoot}/home.nix";
-    pkgsconfig = "${cfg.configPath}/nixpkgs.nix";
+    pkgsconfig = "${configPath}/nixpkgs.nix";
   in mkIf cfg.enable {
     nix.nixPath = (if cfg.os == "nixos" then [
-      { nixos-config = osconfig; }
+      "nixos-config=${osconfig}"
     ] else []) ++ [
       "hm-config=${homeconfig}"
       "nixpkgs=/nix/var/nix/profiles/per-user/${cfg.user}/channels/${cfg.os}"
+      "nixpkgs-config=${pkgsconfig}"
       "/nix/var/nix/profiles/per-user/root/channels"
-      { nixpkgs-overlays = "${cfg.configPath}/overlays.nix";}
+      "nixpkgs-overlays=${configPath}/overlays.nix"
+      "nix-config=${configPath}" # ∞
     ];
 
-    nixpkgs.overlays = import "${cfg.configPath}/overlays.nix";
+    nixpkgs.overlays = import "${configPath}/overlays.nix";
 
     environment = let
       envvars = {
         HOSTNAME = cfg.hostName;
         HOME_MANAGER_CONFIG = homeconfig;
-        NIXPKGS_CONFIG = pkgsconfig;
       };
     in if cfg.os == "darwin"
       then {
-        variables = envvars;
+        variables = envvars // {
+          NIXPKGS_CONFIG = pkgsconfig;
+        }; # It's an error to configure this in nixos 🙄
         darwinConfig = osconfig;
       }
       else {
