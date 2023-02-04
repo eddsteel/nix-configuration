@@ -27,15 +27,14 @@ in {
     homeconfig = "${localRoot}/home.nix";
     pkgsconfig = "${configPath}/nixpkgs.nix";
   in mkIf cfg.enable {
-    nix.nixPath = (if cfg.os == "nixos" then [
-      "nixos-config=${osconfig}"
-    ] else []) ++ [
+    nix.nixPath = [
+      "${cfg.os}-config=${osconfig}"
       "hm-config=${homeconfig}"
       "nixpkgs=/nix/var/nix/profiles/per-user/${cfg.user}/channels/${cfg.os}"
       "nixpkgs-config=${pkgsconfig}"
-      "/nix/var/nix/profiles/per-user/root/channels"
       "nixpkgs-overlays=${configPath}/overlays.nix"
       "nix-config=${configPath}" # ∞
+      "/nix/var/nix/profiles/per-user/root/channels"
     ];
 
     nixpkgs.overlays = import "${configPath}/overlays.nix";
