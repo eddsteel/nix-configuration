@@ -12,7 +12,6 @@
     enable = true;
     hostName = "work";
     os = "darwin";
-    user = "edd";
   };
 
   environment.pathsToLink = [ "/share/bash-completion" ];

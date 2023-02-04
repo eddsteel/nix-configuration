@@ -13,31 +13,28 @@ in {
       default = "nixos";
       description = "nixos or darwin";
     };
-    user = mkOption {
-      type = types.str;
-      default = "root";
-      description = "User (required for darwin)";
-    };
   };
 
   config = let
     configPath = toString <nix-config>;
+    nixpkgsPath = toString <nixpkgs>;
     localRoot = "${configPath}/systems/${cfg.hostName}";
     osconfig = "${localRoot}/${cfg.os}.nix";
     homeconfig = "${localRoot}/home.nix";
     pkgsconfig = "${configPath}/nixpkgs.nix";
+    overlaysconfig = "${configPath}/overlays.nix";
   in mkIf cfg.enable {
     nix.nixPath = [
       "${cfg.os}-config=${osconfig}"
       "hm-config=${homeconfig}"
-      "nixpkgs=/nix/var/nix/profiles/per-user/${cfg.user}/channels/${cfg.os}"
+      "nixpkgs=${nixpkgsPath}" # ∞ set before we customise config
       "nixpkgs-config=${pkgsconfig}"
-      "nixpkgs-overlays=${configPath}/overlays.nix"
-      "nix-config=${configPath}" # ∞
+      "nixpkgs-overlays=${overlaysconfig}"
+      "nix-config=${configPath}" # ∞ set at the command line, once
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
 
-    nixpkgs.overlays = import "${configPath}/overlays.nix";
+    nixpkgs.overlays = import "${overlaysconfig}";
 
     environment = let
       envvars = {
