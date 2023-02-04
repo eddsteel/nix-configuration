@@ -47,10 +47,6 @@ in with lib; {
     home.file.".gradle/gradle.properties".text = ''
       org.gradle.java.installations.paths=${pkgs.jdk8},${pkgs.jdk11},${pkgs.jdk17}
     '';
-    home.file.".face".source = ../files/face;
-    home.file.".desktop.jpg".source = ../files/desktop;
-    home.file."media/desktop.jpg".source = ../secrets/media/desktop.jpg;
-    home.file."media/face.jpg".source = ../secrets/media/face.jpg;
 
     home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}

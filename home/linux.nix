@@ -39,4 +39,14 @@
  # home.packages = [pkgs.brainzo];
 
   xdg.configFile."geary/account_01/geary.ini".source = ../files/geary.ini;
+  home.file.".desktop.jpg".source = pkgs.fetchurl {
+    name = "desktop.jpg";
+    url = "https://eddsteel.com/desktop.jpg";
+    sha256 = "101mavys8azcah35f1cxiiblrbja5vwrf7kiczgv2byd0ymx9nhz";
+  };
+  home.file.".face".source = pkgs.fetchurl {
+    url = "https://eddsteel.com/face.jpg";
+    name = "face.jpg";
+      sha256 = "1y6hp0n203ccgb2a248xa3i2niflj5wxbd40q69c3p7qd79x3405";
+  };
 }

@@ -173,6 +173,17 @@ in {
   home.file."txt".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/txt";
   home.file."tmp".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Downloads/tmp";
 
+  home.file."media/desktop.jpg".source = pkgs.fetchurl {
+    name = "desktop.jpg";
+    url = "https://eddsteel.com/desktop.jpg";
+    sha256 = "101mavys8azcah35f1cxiiblrbja5vwrf7kiczgv2byd0ymx9nhz";
+  };
+  home.file."media/face.jpg".source = pkgs.fetchurl {
+    url = "https://eddsteel.com/face.jpg";
+    name = "face.jpg";
+    sha256 = "1y6hp0n203ccgb2a248xa3i2niflj5wxbd40q69c3p7qd79x3405";
+  };
+
   home.activation."setupMacosHome" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/Documents/txt
     $DRY_RUN_CMD mkdir -p $HOME/Downloads/tmp
