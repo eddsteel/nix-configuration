@@ -44,14 +44,15 @@ in {
     in if cfg.os == "darwin"
       then {
         variables = envvars // {
-          NIXPKGS_CONFIG = pkgsconfig;
-        }; # It's an error to configure this in nixos 🙄
+          NIXPKGS_CONFIG = pkgsconfig;  # It's an error to configure this in nixos 🙄
+        };
         darwinConfig = osconfig;
       }
       else {
         variables = envvars // {
           NIXOS_CONFIG = osconfig;
         };
+        etc."nix/nixpkgs-config.nix".source = pkgsconfig; # Just overwrite it instead 😈
       };
   };
 }

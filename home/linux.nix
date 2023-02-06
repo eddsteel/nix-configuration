@@ -1,5 +1,6 @@
 {pkgs, config, localPkgs, ...} :
-{
+let secrets = import ../secrets;
+in {
   programs.gpg = {
     enable = true;
     settings = {
@@ -23,20 +24,32 @@
     ];
     startServices = true;
 
-#    services.brainzo-api = {
-#      Unit = { Description = "brainzo-api"; };
-#      Install = { WantedBy = ["default.target"]; };
-#      Service = {
-#        Type = "simple";
-#        Restart = "always";
-#        ExecStart = "${pkgs.brainzo}/bin/brainzo-api";
-#        KillMode = "process";
-#        TimeoutSec = 180;
-#      };
-#    };
+    services.brainzo-api = {
+      Unit = { Description = "brainzo-api"; };
+      Install = { WantedBy = ["default.target"]; };
+      Service = {
+        Type = "simple";
+        Restart = "always";
+        ExecStart = "${pkgs.brainzo}/bin/brainzo-api";
+        KillMode = "process";
+        TimeoutSec = 180;
+      };
+    };
   };
 
- # home.packages = [pkgs.brainzo];
+  xdg.configFile."brainzo/brainzo.conf".text = ''
+[BLINDS]
+host   = blinds
+port   = 8838
+id     = ${secrets.brainzo.blinds.controller}
+blinds = ${secrets.brainzo.blinds.blinds}
+
+[RADIO]
+stations = 1xtra http://stream.live.vc.bbcmedia.co.uk/bbc_1xtra
+           bbc3  http://stream.live.vc.bbcmedia.co.uk/bbc_radio_three
+'';
+
+  home.packages = [pkgs.brainzo];
 
   xdg.configFile."geary/account_01/geary.ini".source = ../files/geary.ini;
   home.file.".desktop.jpg".source = pkgs.fetchurl {
@@ -47,6 +60,6 @@
   home.file.".face".source = pkgs.fetchurl {
     url = "https://eddsteel.com/face.jpg";
     name = "face.jpg";
-      sha256 = "1y6hp0n203ccgb2a248xa3i2niflj5wxbd40q69c3p7qd79x3405";
+    sha256 = "1y6hp0n203ccgb2a248xa3i2niflj5wxbd40q69c3p7qd79x3405";
   };
 }
