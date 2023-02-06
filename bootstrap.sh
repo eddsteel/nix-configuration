@@ -28,13 +28,13 @@ function bootstrapDarwinHome() {
 
 function bootstrapNixOS() {
     which nixos-rebuild sudo || die "sudo and nixos-rebuild are required"
-    sudo nixos-rebuild switch \
+    NIXOS_CONFIG="$WD/systems/$HOSTNAME/nixos.nix" sudo nixos-rebuild switch \
                   -I "nixos-config=$WD/systems/$HOSTNAME/nixos.nix" \
                   -I "nix-config=$WD"
 }
 
 function bootstrapNixHM() {
-    which home-manager || die "home-manager is required"
+    which home-manager || (echo "home-manager not found, skipping"; exit 0)
     NIXPKGS_CONFIG="$WD/nixpkgs.nix" home-manager switch \
                   -I "nix-config=$WD" \
                   -I "nixpkgs-config=$WD/nixpkgs.nix" \
