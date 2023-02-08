@@ -1,33 +1,35 @@
 { config, pkgs, ... }:
-{
+let
+  hostName = "gusting";
+  extraHosts = import ../hosts.nix;
+  zones = pkgs.callPackage ./zones.nix {};
+in {
   imports = [../per-host.nix ./hardware.nix];
 
   perHost = {
+    inherit hostName;
     enable = true;
-    hostName = "gusting";
+  };
+
+  networking = {
+    inherit hostName extraHosts;
+    firewall.allowedTCPPorts = [ 22 53 8096 ];
+    firewall.allowedUDPPorts = [ 53 ];
   };
 
   boot.initrd.kernelModules = [ "usb_storage" ];
-
-  networking.extraHosts = ''
-  192.168.1.165 blinds
-  192.168.1.200 draper
-  '';
-
-  # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
-  # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  fileSystems."/".options = ["noatime"];
-  fileSystems."/srv" = {
-    device = "/dev/mapper/external";
-    options = ["nofail"];
-    neededForBoot = false;
-  };
-  environment.etc."crypttab".text = ''
-    external   /dev/sda1   /boot/hdd.key luks
-  '';
+#  fileSystems."/".options = ["noatime"];
+#  fileSystems."/srv" = {
+#    device = "/dev/mapper/external";
+#    options = ["nofail"];
+#    neededForBoot = false;
+#  };
+#  environment.etc."crypttab".text = ''
+#    external   /dev/sda1   /boot/hdd.key luks
+#  '';
 
   # Set your time zone.
   time.timeZone = "Canada/Pacific";
@@ -39,10 +41,9 @@
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.edd = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" ];
      packages = [];
      openssh.authorizedKeys.keys = [ (builtins.readFile ../../files/id_rsa.edd.draper.pub) ];
   };
@@ -52,7 +53,7 @@
   environment.systemPackages = with pkgs; [
      cryptsetup
      emacs
-     vim 
+     vim
      wget
      git
      libraspberrypi
@@ -73,21 +74,25 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  services.jellyfin.enable = true;
+#  services.jellyfin.enable = true;
 
   services.unbound = {
     enable = true;
-    settings.server.interface = ["0.0.0.0"];
-    settings.server.access-control = ["127.0.0.0/24 allow" "192.168.1.0/24 allow"];
-    #settings.server.forward-addr = ["1.0.0.1" "1.1.1.1"];
+    settings = {
+      include = "${zones}/blocklist.conf";
+      server = {
+        interface = ["0.0.0.0"];
+        access-control = ["127.0.0.0/24 allow" "192.168.1.0/24 allow"];
+      };
+      forward-zone = [
+        {
+          name = ".";
+          forward-addr = ["1.0.0.1@853#cloudflaredns.com" "1.1.1.1@853#cloudflaredns.com"];
+        }
+      ];
+    };
   };
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 53 8096 ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
+  
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
