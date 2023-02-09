@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).signal;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).signal;
 in pkgs.stdenv.mkDerivation rec {
   pname = "signal";
   inherit (versions) version;

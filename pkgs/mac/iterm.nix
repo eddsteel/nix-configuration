@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).iterm2;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).iterm2;
 in pkgs.stdenv.mkDerivation rec {
   pname = "iterm";
   version = versions.version;

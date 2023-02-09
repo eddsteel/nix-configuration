@@ -1,9 +1,17 @@
 {
   "wavebox": {
-    "name": "wavebox-10.109.14.2.dmg",
-    "sha256": "1bfrxz4r6j628qpx3l5wclf26ggllcckzy0ili4canyfbnkh0kig",
-    "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.109.14.2.dmg",
-    "version": "10.109.14.2"
+    "darwin": {
+      "name": "wavebox-10.110.12.2.dmg",
+      "sha256": "0v7sjpgqikjpmkhs4l487c293yrkd04f2vlq8h5vh1rhvb79a9lx",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.110.12.2.dmg",
+      "version": "10.110.12.2"
+    },
+    "linux": {
+      "name": "wavebox-10.110.12-2.tar.gz",
+      "sha256": "0qphmxfwy1v4f2k0viqr6vkdsradcgj3kgpnazgwxxkbn9md2s03",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.110.12-2.tar.gz",
+      "version": "10.110.12-2"
+    }
   },
   "bitwarden": {
     "name": "bitwarden-2023.1.1.dmg",

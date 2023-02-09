@@ -1,6 +1,6 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).firefox;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).firefox;
 in pkgs.stdenv.mkDerivation rec {
   pname = "firefox-mac";
   inherit (versions) version;

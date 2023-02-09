@@ -1,6 +1,6 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).exfalso;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).exfalso;
 in pkgs.stdenv.mkDerivation rec {
   pname = "exfalso";
   inherit (versions) version;

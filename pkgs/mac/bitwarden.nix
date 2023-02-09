@@ -1,6 +1,6 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).bitwarden;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).bitwarden;
 in  pkgs.stdenv.mkDerivation rec {
   pname = "bitwarden";
   inherit (versions) version;

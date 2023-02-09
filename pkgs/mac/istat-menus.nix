@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {}}:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).istatmenus;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).istatmenus;
 in pkgs.stdenv.mkDerivation rec {
   pname = "istat-menus";
   inherit (versions) version;

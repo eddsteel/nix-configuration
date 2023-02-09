@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).rectangle;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).rectangle;
 in pkgs.stdenv.mkDerivation rec {
   pname = "rectangle";
   inherit (versions) version;

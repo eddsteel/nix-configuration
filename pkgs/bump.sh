@@ -44,9 +44,15 @@ github() {
 }
 
 wavebox() {
-    standard "https://download.wavebox.app/latest/stable/macuniversal" \
-             '^.*Wavebox%20\(.*\).dmg$' \
-             "wavebox" "dmg" "wavebox" "wb"
+    if [ "$1" = "darwin" ]; then
+        standard "https://download.wavebox.app/latest/stable/macuniversal" \
+                 '^.*Wavebox%20\(.*\).dmg$' \
+                 "wavebox" "dmg" "wavebox.darwin" "wbd"
+    else
+        standard "https://download.wavebox.app/latest/stable/linux/tar" \
+                 '^.*Wavebox_\(.*\).tar.gz$' \
+                 "wavebox" "tar.gz" "wavebox.linux" "wbl"
+    fi
 }
 
 bitwarden() {
@@ -117,7 +123,8 @@ caffeine() {
     component_json "$URL" "$SHA" "$NME" "$VER" cf
 }
 
-wavebox &
+wavebox linux &
+wavebox darwin &
 bitwarden &
 iterm2 &
 firefox &
@@ -132,7 +139,8 @@ caffeine &
 wait
 
 jq -n \
-   --slurpfile wb .wb-component \
+   --slurpfile wbd .wbd-component \
+   --slurpfile wbl .wbl-component \
    --slurpfile bw .bw-component \
    --slurpfile it .it-component \
    --slurpfile ff .ff-component \
@@ -143,7 +151,7 @@ jq -n \
    --slurpfile xb .xb-component \
    --slurpfile ef .ef-component \
    --slurpfile cf .cf-component \
-   '{ "wavebox": $wb[0], "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0]}' \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0]}' \
    >new.json
 
 rm .*-component

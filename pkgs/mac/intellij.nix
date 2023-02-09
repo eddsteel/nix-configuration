@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {}}:
 let
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).idea;
+  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).idea;
   idea = pkgs.stdenv.mkDerivation rec {
     pname = "intellij-idea-ce";
     inherit (versions) version;
