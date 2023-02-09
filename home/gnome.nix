@@ -82,24 +82,25 @@ in {
         "/${mediaKeys}/custom-keybindings/custom2/"
         "/${mediaKeys}/custom-keybindings/custom3/"
         "/${mediaKeys}/custom-keybindings/custom4/"
+        "/${mediaKeys}/custom-keybindings/custom5/"
       ];
     };
 
     "${mediaKeys}/custom-keybindings/custom0" = {
       binding = ''<Primary><Shift><Alt><Super>e'';
-      command = ''${raise} "GNU Emacs at" ${home}/.nix-profile/bin/emacs'';
+      command = ''${raise} "emacs.Emacs" ${home}/.nix-profile/bin/emacs'';
       name = ''Emacs'';
     };
 
     "${mediaKeys}/custom-keybindings/custom1" = {
       binding = ''<Primary><Shift><Alt><Super>f'';
-      command = ''${raise} "Mozilla Firefox"  ${home}/.nix-profile/bin/firefox'';
+      command = ''${raise} "Navigator.firefox"  ${home}/.nix-profile/bin/firefox'';
       name = ''Firefox'';
     };
 
     "${mediaKeys}/custom-keybindings/custom2" = {
-      binding = ''<Primary><Shift><Alt><Super>Return'';
-      command = ''${raise} "@" ${home}/.nix-profile/bin/gnome-terminal'';
+      binding = ''<Primary><Shift><Alt><Super>m'';
+      command = ''${raise} "gnome-terminal-server.Gnome-terminal" ${home}/.nix-profile/bin/gnome-terminal'';
       name = ''Terminal'';
     };
 
@@ -113,6 +114,12 @@ in {
       binding = ''<Primary>AudioRaiseVolume'';
       command = ''${pkgs.gnome.gnome-control-center}/bin/gnome-control-center sound'';
       name = ''sound preferences'';
+    };
+
+    "${mediaKeys}/custom-keybindings/custom5" = {
+      binding = ''<Primary><Shift><Alt><Super>w'';
+      command = ''${raise} wavebox.Wavebox ${home}/.nix-profile/bin/wavebox'';
+      name = ''Wavebox'';
     };
 
     "org/gnome/settings-daemon/plugins/color" = {
