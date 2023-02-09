@@ -14,6 +14,7 @@
       circleci-cli   = local.circleci-cli;
       hub-local      = nixpkgs-local.hub;
       exfalso        = pkgs.quodlibet;
+      wavebox        = local.wavebox;
     }
   )
 
@@ -27,7 +28,6 @@
       firefox        = self.mac-apps.firefox;
       intellij-idea  = self.mac-apps.intellij-idea-ce;
       iterm2         = self.mac-apps.iterm2;
-      wavebox        = self.mac-apps.wavebox;
       exfalso        = self.mac-apps.exfalso;
       terraform-docs = self.mac-apps.terraform-docs;
     }

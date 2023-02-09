@@ -37,8 +37,8 @@ standard() {
 github() {
     url=$(location "https://github.com/$1/releases/latest")
     VER=$(echo $url | sed "s!^.*/tag/$5\([-0-9.a-zA-Z]*\)\$!\1!")
-    NME="$2$VER.dmg"
-    URL="https://github.com/$1/releases/download/v$VER/$NME"
+    NME="$2$VER$6"
+    URL="https://github.com/$1/releases/download/$5$VER/$NME"
     SHA=$(conditional_get_sha $3 "$URL" "$NME")
     component_json "$URL" "$SHA" "$NME" "$VER" $4
 }
@@ -97,15 +97,24 @@ istat() {
 }
 
 rectangle() {
-    github "rxhanson/Rectangle" "Rectangle" "rectangle" "re" "v"
+    github "rxhanson/Rectangle" "Rectangle" "rectangle" "re" "v" ".dmg"
 }
 
 xbar() {
-    github "matryer/xbar" "xbar.v" "xbar" "xb" "v"
+    github "matryer/xbar" "xbar.v" "xbar" "xb" "v" ".dmg"
 }
 
-exfalso() {
-    # update github to allow (v-/release-)
+circleci() {
+    if [ "$1" = "darwin" ]; then
+        github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci.darwin" "ccd" "v" \
+               "_darwin_amd64.tar.gz"
+    else
+        github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci.linux" "ccl" "v" \
+               "_linux_amd64.tar.gz"
+    fi
+}
+
+exfalso() { # 4.4.0 was the last with a dmg release.
     url="https://github.com/quodlibet/quodlibet/releases/tag/release-4.4.0" # $(location "https://github.com/$1/releases/latest")
     VER="4.4.0" # $(echo $url | sed 's!^.*/tag/release-\([-0-9.a-zA-Z]*\)$!\1!')
     NME="ExFalso-$VER.dmg"
@@ -135,6 +144,8 @@ rectangle &
 xbar &
 exfalso &
 caffeine &
+circleci linux &
+circleci darwin &
 
 wait
 
@@ -151,7 +162,9 @@ jq -n \
    --slurpfile xb .xb-component \
    --slurpfile ef .ef-component \
    --slurpfile cf .cf-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0]}' \
+   --slurpfile ccd .ccd-component \
+   --slurpfile ccl .ccl-component \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci-cli": {"darwin": $ccd[0], "linux": $ccl[0]}}' \
    >new.json
 
 rm .*-component

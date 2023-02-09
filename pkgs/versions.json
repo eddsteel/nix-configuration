@@ -72,5 +72,19 @@
     "sha256": "0fx0h5wi1mhlq8cdj995gkmdyqy6dpbd3zxf8fpx0pm26aw5l3i4",
     "url": "https://github.com/IntelliScape/caffeine/releases/download/1.1.3/Caffeine.dmg",
     "version": "1.1.3"
+  },
+  "circleci-cli": {
+    "darwin": {
+      "name": "circleci-cli_0.1.23391_darwin_amd64.tar.gz",
+      "sha256": "0q5gx7dqcb3wppgdypky9bcl5dgk55zq0hzv516dx9vmdl0wmx8g",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23391/circleci-cli_0.1.23391_darwin_amd64.tar.gz",
+      "version": "0.1.23391"
+    },
+    "linux": {
+      "name": "circleci-cli_0.1.23391_linux_amd64.tar.gz",
+      "sha256": "0xsvzcrrzmf8wp1w8dvsby5wqzq4vizmjksgm141cyggk65sjfd3",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23391/circleci-cli_0.1.23391_linux_amd64.tar.gz",
+      "version": "0.1.23391"
+    }
   }
 }

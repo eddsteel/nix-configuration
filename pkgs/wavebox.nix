@@ -22,9 +22,7 @@ in if platform == "darwin"
         cp -r Wavebox.app "$out/Applications/Wavebox.app"
       '';
 
-     src = pkgs.fetchurl {
-       inherit (versions) name url sha256;
-     };
+     src = pkgs.fetchurl { inherit (versions) name url sha256; };
    }
    else let
      desktopItem = pkgs.makeDesktopItem rec {
