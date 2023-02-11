@@ -2,13 +2,13 @@
 {
   programs.firefox = {
     enable = true;
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
-    ];
     profiles."default" = {
       id = 0;
       path = "xtqfr4qa.default";
       isDefault = true;
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
+      ];
       settings = {
         "browser.aboutConfig.showWarning" = false;
         "browser.download.dir" = "${config.home.homeDirectory}/tmp";
@@ -26,7 +26,6 @@
         "signon.rememberSignons" = false;
         "signon.autofillForms" = false;
         "signon.generation.enabled" = false;
-
       };
     };
   };

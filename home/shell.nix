@@ -90,9 +90,10 @@ in with lib; {
       # emacs dir tracking
       if [ -n "$INSIDE_EMACS" ]
         function prompt_AnSiT -e fish_prompt
-          printf "\eAnSiTc %s\n" "$PWD"
+          printf "\eAnSiTh %s\n" (hostname) # this changes more than you would think if using VPNs
+          printf "\eAnSiTc %s\n" (pwd)
         end
-        printf "\eAnSiTu %s\n" "$USER"
+        printf "\eAnSiTu %s\n" (whoami)
       end
     '';
     };

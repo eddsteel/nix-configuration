@@ -38,10 +38,10 @@
     "version": "2022.3.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.4.1.dmg",
-    "sha256": "16vjk0n6pbwniqxxaglk3m202zgmwpll986myv3wkk1agvg1b872",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.4.1.dmg",
-    "version": "6.4.1"
+    "name": "signal-desktop-mac-universal-6.5.1.dmg",
+    "sha256": "0mskddlzbv4awdr4z7vn1d4kc3nq5sma531fr0q2phz9zkdxwbiz",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.5.1.dmg",
+    "version": "6.5.1"
   },
   "istatmenus": {
     "name": "istat-6.70.zip",

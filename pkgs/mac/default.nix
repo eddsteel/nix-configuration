@@ -9,7 +9,6 @@ with pkgs; {
   signal           = callPackage ./signal.nix {};
   soundsource      = callPackage ./soundsource.nix {};
   rectangle        = callPackage ./rectangle.nix {};
-  wavebox          = callPackage ./wavebox.nix {};
   xbar             = callPackage ./xbar.nix {};
   exfalso          = callPackage ./exfalso.nix {};
   terraform-docs   = callPackage ./terraform-docs.nix {};
