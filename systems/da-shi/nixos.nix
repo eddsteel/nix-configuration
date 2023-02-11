@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
   hostName = "da-shi";
+  extraHosts = import ../hosts.nix;
 in {
   imports = [../per-host.nix ./hardware.nix];
 
@@ -15,12 +16,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
-    inherit hostName;
-    extraHosts = ''
-	    192.168.1.165 blinds
-	    192.168.1.200 draper
-	    192.168.1.139 gusting
-    '';
+    inherit hostName extraHosts;
   };
 
   fileSystems."/srv" = {
