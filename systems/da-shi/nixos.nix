@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   hostName = "da-shi";
-  extraHosts = import ../hosts.nix;
+  hosts = import ../hosts.nix;
 in {
   imports = [../per-host.nix ./hardware.nix];
 
@@ -10,14 +10,15 @@ in {
     enable = true;
   };
 
+  networking = {
+    inherit hostName;
+    inherit (hosts) extraHosts;
+  };
+
   boot.initrd.kernelModules = [ "usb_storage" ];
   boot.kernelParams = [ "nomodeset" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking = {
-    inherit hostName extraHosts;
-  };
 
   fileSystems."/srv" = {
     device = "/dev/mapper/external";
