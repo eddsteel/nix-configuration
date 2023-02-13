@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 let
+  domain = "neckbeard";
   hostName = "gusting";
-  extraHosts = import ../hosts.nix;
+  hosts = import ../hosts.nix;
   zones = pkgs.callPackage ./zones.nix {};
 in {
   imports = [../per-host.nix ./hardware.nix];
@@ -12,8 +13,9 @@ in {
   };
 
   networking = {
-    inherit hostName extraHosts;
-    firewall.allowedTCPPorts = [ 22 53 8096 ];
+    inherit hostName;
+    inherit (hosts) extraHosts;
+    firewall.allowedTCPPorts = [ 22 ];
     firewall.allowedUDPPorts = [ 53 ];
   };
 
@@ -21,15 +23,15 @@ in {
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-#  fileSystems."/".options = ["noatime"];
-#  fileSystems."/srv" = {
-#    device = "/dev/mapper/external";
-#    options = ["nofail"];
-#    neededForBoot = false;
-#  };
-#  environment.etc."crypttab".text = ''
-#    external   /dev/sda1   /boot/hdd.key luks
-#  '';
+  fileSystems."/".options = ["noatime"];
+  fileSystems."/srv" = {
+    device = "/dev/mapper/external";
+    options = ["nofail"];
+    neededForBoot = false;
+  };
+  environment.etc."crypttab".text = ''
+    external   /dev/sda1   /boot/hdd.key luks
+  '';
 
   # Set your time zone.
   time.timeZone = "Canada/Pacific";
@@ -52,6 +54,7 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
      cryptsetup
+     dig
      emacs
      vim
      wget
@@ -74,25 +77,41 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-#  services.jellyfin.enable = true;
-
   services.unbound = {
     enable = true;
     settings = {
-      include = "${zones}/blocklist.conf";
       server = {
-        interface = ["0.0.0.0"];
+        interface = ["0.0.0.0" "::0"];
         access-control = ["127.0.0.0/24 allow" "192.168.1.0/24 allow"];
+        domain-insecure = "neckbeard.local";
+        local-zone = [
+          ''"localhost." static''
+          ''"127.in-addr.arpa." static''
+          ''"${domain}" transparent''
+        ];
+        local-data = [
+        ''"localhost. 10800 IN NS localhost."''
+        ''"localhost. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"''
+        ''"localhost. 10800 IN A 127.0.0.1"''
+        ''"127.in-addr.arpa. 10800 IN NS localhost."''
+        ''"127.in-addr.arpa. 10800 IN SOA localhost. nobody.invalid. 2 3600 1200 604800 10800"''
+        ''"1.0.0.127.in-addr.arpa. 10800 IN PTR localhost."''
+        ''"da-shi.${domain}  IN  A  ${hosts.da-shi}"''
+        ''"draper.${domain}  IN  A  ${hosts.draper}"''
+        ''"blinds.${domain}  IN  A  ${hosts.blinds}"''
+        ''"gusting.${domain}  IN  A  ${hosts.gusting}"''
+        ];
+        private-domain = [ '' "${domain}."''];
       };
-      forward-zone = [
-        {
+      forward-zone = {
           name = ".";
-          forward-addr = ["1.0.0.1@853#cloudflaredns.com" "1.1.1.1@853#cloudflaredns.com"];
-        }
-      ];
+          forward-tls-upstream = "yes";
+          forward-addr = ["1.0.0.1@853#cloudflare-dns.com" "1.1.1.1@853#cloudflare-dns.com"];
+        };
+      include = "${zones}/blocklist.conf";
     };
   };
-  
+
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
@@ -105,16 +124,6 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
-  systemd.services.s3sync = {
-    wants = [ "network.target" ];
-    serviceConfig.Type = "oneshot";
-    serviceConfig.User = "edd";
-    path = [ pkgs.awscli2 ];
-    script = ''
-      aws s3 sync --size-only --quiet /srv/data/ s3://eddsteel-disk/
-    '';
-  };
 
   systemd.services.backup = {
     wants = [ "srv.mount" ];
@@ -139,13 +148,6 @@ rsync -aHv --size-only --delete /home "$D/current/"
         OnCalendar = "weekly";
       };
     };
-
-   systemd.timers.s3sync = {
-     wantedBy = [ "timers.target" ];
-     timerConfig = {
-       OnCalendar = "daily";
-     };
-   };
 
   nix.distributedBuilds = true;
   nix.buildMachines = [ {

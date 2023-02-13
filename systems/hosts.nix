@@ -1,6 +1,12 @@
-''
-  192.168.1.39  gusting
-  192.168.1.88  da-shi
-  192.168.1.165 blinds
-  192.168.1.200 draper
-''
+rec {
+  gusting = "192.168.1.39";
+  da-shi = "192.168.1.88";
+  blinds = "192.168.1.165";
+  draper = "192.168.1.200";
+  extraHosts = ''
+  ${gusting}  gusting
+  ${da-shi}  da-shi
+  ${blinds} blinds
+  ${draper} draper
+  '';
+}

@@ -33,6 +33,10 @@ in stdenv.mkDerivation {
         grep -v 'android.clients.google.com$' | \
         grep -v 'clientconfig.passport.net$' | \
         grep -v 'data.microsoft.com$' | \
+        grep -v ' wa.me$' | \
+        grep -v ' www.wa.me$' | \
+        grep -Ev ' whatsapp-cdn-shv-[0-9]{2}-[a-z]{3}[0-9]\.fbcdn\.net$' | \
+        grep -Ev ' ((www|(w[0-9]\.)?web|media((-[a-z]{3}|\.[a-z]{4})[0-9]{1,2}-[0-9](\.|-)(cdn|fna))?)\.)?whatsapp\.(com|net)$' | \
         sed 's/ #.*$//;
         s/^0.0.0.0 \(.*\)/local-zone: "\1" refuse/' | \
         sort -u \

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   hostName = "draper";
-  extraHosts = import ../hosts.nix;
+  hosts = import ../hosts.nix;
   consul-cert = /nix/store/pz1jqbq4ja3ms2cvbbmjlkc3k85klcm8-consul-cert;
 in {
   imports = [ ../per-host.nix ./hardware.nix ];
@@ -12,7 +12,8 @@ in {
   };
 
   networking = {
-    inherit hostName extraHosts;
+    inherit hostName;
+    inherit (hosts) extraHosts;
     firewall.allowedTCPPorts = [
       22 4242 8000 8096 8200 8300 8301 8302 8500 8543
     ];
