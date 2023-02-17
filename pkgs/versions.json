@@ -1,23 +1,23 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.110.12.2.dmg",
-      "sha256": "0v7sjpgqikjpmkhs4l487c293yrkd04f2vlq8h5vh1rhvb79a9lx",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.110.12.2.dmg",
-      "version": "10.110.12.2"
+      "name": "wavebox-10.110.18.2.dmg",
+      "sha256": "1fxfjifkq9hv16hxbp7nwb7a9671vbmx11vk0xy73357nwa9snny",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.110.18.2.dmg",
+      "version": "10.110.18.2"
     },
     "linux": {
-      "name": "wavebox-10.110.12-2.tar.gz",
-      "sha256": "0qphmxfwy1v4f2k0viqr6vkdsradcgj3kgpnazgwxxkbn9md2s03",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.110.12-2.tar.gz",
-      "version": "10.110.12-2"
+      "name": "wavebox-10.110.18-2.tar.gz",
+      "sha256": "1b8wz30k7nzv05yphnsyjd2ahqlph6rn6x08vry6jdr17hgkll8f",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.110.18-2.tar.gz",
+      "version": "10.110.18-2"
     }
   },
   "bitwarden": {
-    "name": "bitwarden-2023.1.1.dmg",
-    "sha256": "1wg75hk3fq87jrf6nbjjb4mrhlymp1pi5cfai2bh5z2za7vcwpw8",
-    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2023.1.1/Bitwarden-2023.1.1-universal.dmg",
-    "version": "2023.1.1"
+    "name": "bitwarden-2023.2.0.dmg",
+    "sha256": "00mmhzahl2536iyhw4nvv7pws92rmmspbr7jfpkgjnkyhnkwa4bh",
+    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2023.2.0/Bitwarden-2023.2.0-universal.dmg",
+    "version": "2023.2.0"
   },
   "iterm2": {
     "name": "iterm2-3.4.19.zip",
@@ -26,10 +26,10 @@
     "version": "3.4.19"
   },
   "firefox": {
-    "name": "Firefox-109.0.1.dmg",
-    "sha256": "1mkbdyn4an7490l58n7w3dva305miyagsskbgfnrk14qmbg1dzsp",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/109.0.1/mac/en-CA/Firefox%20109.0.1.dmg",
-    "version": "109.0.1"
+    "name": "Firefox-110.0.dmg",
+    "sha256": "0377n1w9x3vkbp3ci7fma13rcn7y5vkkia9jy41zxypg1mlx1s6i",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/110.0/mac/en-CA/Firefox%20110.0.dmg",
+    "version": "110.0"
   },
   "idea": {
     "name": "intellij-idea-ce-2022.3.2.dmg",
@@ -38,10 +38,10 @@
     "version": "2022.3.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.5.1.dmg",
-    "sha256": "0mskddlzbv4awdr4z7vn1d4kc3nq5sma531fr0q2phz9zkdxwbiz",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.5.1.dmg",
-    "version": "6.5.1"
+    "name": "signal-desktop-mac-universal-6.6.0.dmg",
+    "sha256": "10hl1s2siap0m43dz0jinkpypg6zaf9bksb2h0fgd4l6sim4a6kz",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.6.0.dmg",
+    "version": "6.6.0"
   },
   "istatmenus": {
     "name": "istat-6.70.zip",
