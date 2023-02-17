@@ -24,6 +24,7 @@ in {
     pkgsconfig = "${configPath}/nixpkgs.nix";
     overlaysconfig = "${configPath}/overlays.nix";
   in mkIf cfg.enable {
+    networking.hostName = cfg.hostName;
     nix.nixPath = [
       "${cfg.os}-config=${osconfig}"
       "hm-config=${homeconfig}"

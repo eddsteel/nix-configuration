@@ -12,7 +12,6 @@ in {
   };
 
   networking = {
-    inherit hostName;
     inherit (hosts) extraHosts;
     firewall.allowedTCPPorts = [
       22 4242 8000 8096 8200 8300 8301 8302 8500 8543

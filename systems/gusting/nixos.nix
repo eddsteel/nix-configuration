@@ -13,7 +13,6 @@ in {
   };
 
   networking = {
-    inherit hostName;
     inherit (hosts) extraHosts;
     firewall.allowedTCPPorts = [ 22 ];
     firewall.allowedUDPPorts = [ 53 ];

@@ -11,7 +11,6 @@ in {
   };
 
   networking = {
-    inherit hostName;
     inherit (hosts) extraHosts;
   };
 
