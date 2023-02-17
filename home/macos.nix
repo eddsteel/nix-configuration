@@ -14,7 +14,7 @@ let
   op = pkgs.writeShellScriptBin "op" ''
     open "$HOME/Applications/Home Manager/$1"
   '';
-  op-compl = pkgs.writeShellScriptBin "op-completion.bash" ''
+  op-compl-bsh = pkgs.writeShellScriptBin "op-completion.bash" ''
     _op() {
         local cur prev words cword
         _init_completion || return
@@ -23,6 +23,9 @@ let
 
     complete -F _op op
   '';
+  op-compl-fsh = pkgs.writeShellScriptBin "op-completion.fish" ''
+    complete -p ${op}/bin/op --no-files --exclusive --command op --arguments "(pushd $HOME/Applications/Home\ Manager; __fish_complete_directories; popd)"
+ '';
 in {
   home.file.".nix-channels".source = ../files/darwin-nix-channels;
 
@@ -164,7 +167,11 @@ in {
 
   programs.bash.bashrcExtra = ''
     /usr/bin/ssh-add --apple-use-keychain -q;
-    source ${op-compl}/bin/op-completion.bash
+    source ${op-compl-bsh}/bin/op-completion.bash
+  '';
+
+  programs.fish.shellInit = ''
+    source ${op-compl-fsh}/bin/op-completion.fish
   '';
 
   # standard locations
