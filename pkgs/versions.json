@@ -73,7 +73,7 @@
     "url": "https://github.com/IntelliScape/caffeine/releases/download/1.1.3/Caffeine.dmg",
     "version": "1.1.3"
   },
-  "circleci-cli": {
+  "circleci_cli": {
     "darwin": {
       "name": "circleci-cli_0.1.23391_darwin_amd64.tar.gz",
       "sha256": "0q5gx7dqcb3wppgdypky9bcl5dgk55zq0hzv516dx9vmdl0wmx8g",

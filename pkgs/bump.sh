@@ -106,10 +106,10 @@ xbar() {
 
 circleci() {
     if [ "$1" = "darwin" ]; then
-        github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci.darwin" "ccd" "v" \
+        github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci_cli.darwin" "ccd" "v" \
                "_darwin_amd64.tar.gz"
     else
-        github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci.linux" "ccl" "v" \
+        github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci_cli.linux" "ccl" "v" \
                "_linux_amd64.tar.gz"
     fi
 }
@@ -164,7 +164,7 @@ jq -n \
    --slurpfile cf .cf-component \
    --slurpfile ccd .ccd-component \
    --slurpfile ccl .ccl-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci-cli": {"darwin": $ccd[0], "linux": $ccl[0]}}' \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}}' \
    >new.json
 
 rm .*-component

@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 let
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).circleci-cli."${platform}";
+  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).circleci_cli."${platform}";
 in pkgs.stdenv.mkDerivation rec {
   inherit (versions) version;
   pname = "circleci";
