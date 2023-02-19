@@ -1,10 +1,16 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   hostName = "draper";
-  hosts = import ../hosts.nix;
-  consul-cert = /nix/store/pz1jqbq4ja3ms2cvbbmjlkc3k85klcm8-consul-cert;
+  sops-nix = builtins.fetchTarball {
+    url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
+  };
+  hosts = import ../hosts.nix { inherit lib; };
 in {
-  imports = [ ../per-host.nix ./hardware.nix ];
+  imports = [
+    ../per-host.nix
+    ./hardware.nix
+    "${sops-nix}/modules/sops"
+  ];
 
   perHost = {
     enable = true;
@@ -58,6 +64,11 @@ in {
   #   keyMap = "us";
   # };
 
+  sops.defaultSopsFile = ../../sops/secrets.yaml;
+  sops.secrets."consul/ca.pem".owner = "consul";
+  sops.secrets."consul/server.crt".owner = config.users.users.consul.name;
+  sops.secrets."consul/server.key".owner = config.users.users.consul.name;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -88,8 +99,9 @@ in {
     shell = pkgs.fish;
     extraGroups = [ "wheel" "docker" "cdrom"];
     openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../files/id_rsa.edd.work.pub)
+      (builtins.readFile ../../files/id_rsa.edd.ringo.pub)
       (builtins.readFile ../../files/id_rsa.edd.gusting.pub)
+#      (builtins.readFile ../../files/id_rsa.edd.da-shi.pub)
     ];
   };
 
@@ -154,7 +166,6 @@ in {
   };
 
   programs.fish.enable = true;
-
   programs.steam.enable = true;
 
   # List services that you want to enable:
@@ -164,16 +175,16 @@ in {
   services.keybase.enable = true;
   services.consul = {
     enable = true;
-    interface.bind = "enp0s13f0u3";
-    interface.advertise = "enp0s13f0u3";
+    interface.bind = "wlp0s20f3";
+    interface.advertise = "wlp0s20f3";
     extraConfig = {
       ui_config.enabled = true;
       retry_join = ["192.168.1.39"];
       datacenter = "edd";
       ports = { https = 8543;};
-      ca_file = "${consul-cert}/ca.pem";
-      cert_file = "${consul-cert}/server.crt";
-      key_file = "${consul-cert}/server.key";
+      ca_file = "/run/secrets/consul/ca.pem";
+      cert_file = "/run/secrets/consul/server.crt";
+      key_file = "/run/secrets/consul/server.key";
       http_config = {
         response_headers = {
           Access-Control-Allow-Origin = "*";
@@ -183,6 +194,7 @@ in {
       };
     };
   };
+
   environment.etc."consul.d/brainzo.json".text = ''{
     "service": {
       "name": "brainzo",
@@ -210,7 +222,9 @@ in {
     settings.media_dir = ["V,/home/media/film" "A,/home/media/music/albums"];
   };
 
-  security.pki.certificates = [ "${consul-cert}/server.crt"];
+  # unfortunately sops-nix can only provide secrets after activation, and the auto SSH host key -> PGP stuff is in a go module.
+  # Instead run `nix-shell --run 'sops -d sops/secrets.yaml | yaml2json | jq -r \'.consul | .["server.crt"]\' > secrets/consul-server.crt'`
+  security.pki.certificates = [ "../../secrets/consul-server.crt" ];
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -229,16 +243,5 @@ in {
   };
 
   virtualisation.docker.enable = true;
-#  hardware.opengl = {
-#    enable = true;
-#    extraPackages = with pkgs; [
-#      intel-media-driver
-#      vaapiIntel
-#      vaapiVdpau
-#      libvdpau-va-gl
-#      intel-compute-runtime
-#    ];
-#  };
-
   services.jellyfin.enable = true;
 }

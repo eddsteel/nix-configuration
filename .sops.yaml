@@ -1,0 +1,13 @@
+keys:
+  - &user_edd 1be848d76c7c4c51349dddcc33620159d40385a0
+  - &host_draper 15adb201a3a904714f888fd3ff27faa55e67968b
+  - &host_gusting ca582c0d8c81d1e2edf17556022390dd46aac75c
+  - &host_da_shi 46e779a733d54925829a6d17457bd4e924f94a83
+creation_rules:
+  - path_regex: sops/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *user_edd
+      - *host_draper
+      - *host_gusting
+      - *host_da_shi
