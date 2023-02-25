@@ -31,4 +31,9 @@ rec {
   extraHosts = lib.concatStringsSep "\n" (
     lib.mapAttrsToList ( host: attrs: "${attrs.ip4} ${host}") hosts
   );
+
+  services = [
+    {"name" = "media"; "host" = "da-shi"; "url" = "http://da-shi:8096";}
+    {"name" = "next"; "host" = "da-shi"; "url" = "http://da-shi:4000";}
+  ];
 }
