@@ -1,16 +1,16 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.110.18.2.dmg",
-      "sha256": "1fxfjifkq9hv16hxbp7nwb7a9671vbmx11vk0xy73357nwa9snny",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.110.18.2.dmg",
-      "version": "10.110.18.2"
+      "name": "wavebox-10.110.26.2.dmg",
+      "sha256": "0rs4q928zli1nxfvdhk6rn3y0b8718l359gg2m8rm4d69k75d0r8",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.110.26.2.dmg",
+      "version": "10.110.26.2"
     },
     "linux": {
-      "name": "wavebox-10.110.18-2.tar.gz",
-      "sha256": "1b8wz30k7nzv05yphnsyjd2ahqlph6rn6x08vry6jdr17hgkll8f",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.110.18-2.tar.gz",
-      "version": "10.110.18-2"
+      "name": "wavebox-10.110.26-2.tar.gz",
+      "sha256": "04fnnqbyq8fd4wh61lwx3j32lilqannblxxkjha0h1qn4qvr9pj9",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.110.26-2.tar.gz",
+      "version": "10.110.26-2"
     }
   },
   "bitwarden": {
@@ -38,10 +38,10 @@
     "version": "2022.3.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.6.0.dmg",
-    "sha256": "10hl1s2siap0m43dz0jinkpypg6zaf9bksb2h0fgd4l6sim4a6kz",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.6.0.dmg",
-    "version": "6.6.0"
+    "name": "signal-desktop-mac-universal-6.7.0.dmg",
+    "sha256": "0ig2wayxw5dwc3gc2dx70m0hmxrj72z5xzcn2sj1hnjmkxcrdagn",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.7.0.dmg",
+    "version": "6.7.0"
   },
   "istatmenus": {
     "name": "istat-6.70.zip",
@@ -50,10 +50,10 @@
     "version": "6.70"
   },
   "rectangle": {
-    "name": "Rectangle0.65.dmg",
-    "sha256": "0lrvcb8jna5w3gphsc0fp6varvkjh671s409ghkh04i3zrqnlyfq",
-    "url": "https://github.com/rxhanson/Rectangle/releases/download/v0.65/Rectangle0.65.dmg",
-    "version": "0.65"
+    "name": "Rectangle0.66.dmg",
+    "sha256": "0r8aj87znibj7dl63l41ilicybaf0hm6dn85rrfys9snarnvid8y",
+    "url": "https://github.com/rxhanson/Rectangle/releases/download/v0.66/Rectangle0.66.dmg",
+    "version": "0.66"
   },
   "xbar": {
     "name": "xbar.v2.1.7-beta.dmg",
@@ -75,16 +75,16 @@
   },
   "circleci_cli": {
     "darwin": {
-      "name": "circleci-cli_0.1.23391_darwin_amd64.tar.gz",
-      "sha256": "0q5gx7dqcb3wppgdypky9bcl5dgk55zq0hzv516dx9vmdl0wmx8g",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23391/circleci-cli_0.1.23391_darwin_amd64.tar.gz",
-      "version": "0.1.23391"
+      "name": "circleci-cli_0.1.23667_darwin_amd64.tar.gz",
+      "sha256": "0rr4lhk8fmnp0j6pywd51vmzpcfplp5j2lwwa6qzsbabv47db1zx",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23667/circleci-cli_0.1.23667_darwin_amd64.tar.gz",
+      "version": "0.1.23667"
     },
     "linux": {
-      "name": "circleci-cli_0.1.23391_linux_amd64.tar.gz",
-      "sha256": "0xsvzcrrzmf8wp1w8dvsby5wqzq4vizmjksgm141cyggk65sjfd3",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23391/circleci-cli_0.1.23391_linux_amd64.tar.gz",
-      "version": "0.1.23391"
+      "name": "circleci-cli_0.1.23667_linux_amd64.tar.gz",
+      "sha256": "01sgglkyaqzhjh0jiv0z6xzmfdc66qzs77q9kcybymc6zxr1qn8y",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23667/circleci-cli_0.1.23667_linux_amd64.tar.gz",
+      "version": "0.1.23667"
     }
   }
 }
