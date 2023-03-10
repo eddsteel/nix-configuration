@@ -1,16 +1,16 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.110.26.2.dmg",
-      "sha256": "0rs4q928zli1nxfvdhk6rn3y0b8718l359gg2m8rm4d69k75d0r8",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.110.26.2.dmg",
-      "version": "10.110.26.2"
+      "name": "wavebox-10.111.15.2.dmg",
+      "sha256": "0b888ab0fa97zpi6vn1laig7rl46jw3c0jj8npcnl99l6aif16yq",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.111.15.2.dmg",
+      "version": "10.111.15.2"
     },
     "linux": {
-      "name": "wavebox-10.110.26-2.tar.gz",
-      "sha256": "04fnnqbyq8fd4wh61lwx3j32lilqannblxxkjha0h1qn4qvr9pj9",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.110.26-2.tar.gz",
-      "version": "10.110.26-2"
+      "name": "wavebox-10.111.15-2.tar.gz",
+      "sha256": "163q6gxkf3qqq1x3dyjbaa73qzrv1kc8vyz8w5laj1p4q9pinljy",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.111.15-2.tar.gz",
+      "version": "10.111.15-2"
     }
   },
   "bitwarden": {
@@ -26,22 +26,22 @@
     "version": "3.4.19"
   },
   "firefox": {
-    "name": "Firefox-110.0.dmg",
-    "sha256": "0377n1w9x3vkbp3ci7fma13rcn7y5vkkia9jy41zxypg1mlx1s6i",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/110.0/mac/en-CA/Firefox%20110.0.dmg",
-    "version": "110.0"
+    "name": "Firefox-110.0.1.dmg",
+    "sha256": "1lxag5gkyhn345aaymvp8hd8r6csfqp3bgzjgd9c9y1wz61gy2cy",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/110.0.1/mac/en-CA/Firefox%20110.0.1.dmg",
+    "version": "110.0.1"
   },
   "idea": {
-    "name": "intellij-idea-ce-2022.3.2.dmg",
-    "sha256": "0ipapnpwgmbwkm2104vws1klpl6y8jn0aixqnszbib6filpab3w0",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2022.3.2-aarch64.dmg",
-    "version": "2022.3.2"
+    "name": "intellij-idea-ce-2022.3.3.dmg",
+    "sha256": "1k2mwlfj9252fglph1mgynx8pzbqn7q3jw25556nv3lklj1ky305",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2022.3.3-aarch64.dmg",
+    "version": "2022.3.3"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.7.0.dmg",
-    "sha256": "0ig2wayxw5dwc3gc2dx70m0hmxrj72z5xzcn2sj1hnjmkxcrdagn",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.7.0.dmg",
-    "version": "6.7.0"
+    "name": "signal-desktop-mac-universal-6.9.0.dmg",
+    "sha256": "0f0k5vimvlx37zvbw4capl19xa45srz7w45i2d8hk5ssnj1myzgj",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.9.0.dmg",
+    "version": "6.9.0"
   },
   "istatmenus": {
     "name": "istat-6.70.zip",
@@ -75,16 +75,16 @@
   },
   "circleci_cli": {
     "darwin": {
-      "name": "circleci-cli_0.1.23667_darwin_amd64.tar.gz",
-      "sha256": "0rr4lhk8fmnp0j6pywd51vmzpcfplp5j2lwwa6qzsbabv47db1zx",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23667/circleci-cli_0.1.23667_darwin_amd64.tar.gz",
-      "version": "0.1.23667"
+      "name": "circleci-cli_0.1.23845_darwin_amd64.tar.gz",
+      "sha256": "0d9j0dgcvc8abjmzqhcdgmh6n9g9y3kxs540lzyqs9b48vvspdi2",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23845/circleci-cli_0.1.23845_darwin_amd64.tar.gz",
+      "version": "0.1.23845"
     },
     "linux": {
-      "name": "circleci-cli_0.1.23667_linux_amd64.tar.gz",
-      "sha256": "01sgglkyaqzhjh0jiv0z6xzmfdc66qzs77q9kcybymc6zxr1qn8y",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23667/circleci-cli_0.1.23667_linux_amd64.tar.gz",
-      "version": "0.1.23667"
+      "name": "circleci-cli_0.1.23845_linux_amd64.tar.gz",
+      "sha256": "1v0lk3fbr9dc09yz2qvy69w8gnkmzfzj8wiqypx68p77vc9ppv44",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.23845/circleci-cli_0.1.23845_linux_amd64.tar.gz",
+      "version": "0.1.23845"
     }
   }
 }
