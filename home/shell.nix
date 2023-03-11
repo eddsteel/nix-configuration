@@ -54,7 +54,7 @@ in with lib; {
       historyFile = "${homedir}/.histfile";
 
       sessionVariables = {
-        EDITOR = "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${homedir}/run/emacs/server";
+        EDITOR = "${pkgs.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
         ALTERNATE_EDITOR = "${pkgs.emacs}/bin/emacs";
         LESS = " -R ";
         HISTCONTROL = "ignoredups:erasedups";
