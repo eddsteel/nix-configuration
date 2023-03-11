@@ -179,7 +179,7 @@ in {
     interface.advertise = "wlp0s20f3";
     extraConfig = {
       ui_config.enabled = true;
-      retry_join = ["192.168.1.39"];
+      retry_join = ["gusting"];
       datacenter = "edd";
       ports = { https = 8543;};
       ca_file = "/run/secrets/consul/ca.pem";
