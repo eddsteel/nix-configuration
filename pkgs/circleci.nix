@@ -1,5 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 let
+  maintainer = import ../maintainers.nix;
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
   versions = (builtins.fromJSON (builtins.readFile ./versions.json)).circleci_cli."${platform}";
 in pkgs.stdenv.mkDerivation rec {
@@ -14,7 +15,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "Circle CI CLI";
     homepage = "https://circleci.com";
-    maintainers = [];
+    maintainers = [ maintainer.eddsteel ];
     platforms = platforms.linux ++ platforms.darwin;
   };
 }

@@ -21,7 +21,7 @@ pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "SoundSource";
     homepage = https://rogueamoeba.com/soundsource;
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
     description = "iTerm 2";
     homepage = "https://iterm2.com";
     license = licenses.gpl2Only;
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "iStat Menus 6, Mac system monitor for your menubar";
     homepage = "https://bjango.com/mac/istatmenus";
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

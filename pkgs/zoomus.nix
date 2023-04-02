@@ -1,5 +1,6 @@
 { pkgs ? import <nixpkgs> {}} :
 let
+  maintainer = import ../maintainers.nix;
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
   allversions = with builtins; fromJSON (readFile ./versions.json);
   versions = allversions.zoom_us."${platform}";
@@ -12,7 +13,7 @@ let
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;
     platforms = platforms.darwin ++ platforms.linux;
-    maintainers = [];
+    maintainers = [ maintainer.eddsteel ];
   };
 in if platform == "darwin"
    then pkgs.stdenv.mkDerivation rec {

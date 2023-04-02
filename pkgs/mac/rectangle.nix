@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "Rectangle";
     homepage = "https://www.rectangleapp.com";
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

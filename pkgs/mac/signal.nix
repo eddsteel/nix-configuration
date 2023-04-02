@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "Signal messenger";
     homepage = "https://signal.org";
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

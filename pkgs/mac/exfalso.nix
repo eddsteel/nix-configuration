@@ -19,7 +19,7 @@ in pkgs.stdenv.mkDerivation rec {
     description = "ExFalso";
     homepage = "https://quodlibet.github.io";
     license = licenses.gpl2Only;
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

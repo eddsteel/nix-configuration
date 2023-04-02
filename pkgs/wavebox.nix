@@ -1,11 +1,12 @@
 { pkgs ? import <nixpkgs> {} }:
 let
+  maintainer = import ../maintainers.nix;
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
   versions = (builtins.fromJSON (builtins.readFile ./versions.json)).wavebox."${platform}";
   meta = with pkgs.lib; {
     description = "Wavebox";
     homepage = "https://wavebox.io";
-    maintainers = [];
+    maintainers = [ maintainer.eddsteel ];
     platforms = platforms.darwin ++ platforms.linux;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;

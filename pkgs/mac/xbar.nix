@@ -22,7 +22,7 @@ pkgs.stdenv.mkDerivation rec {
     description = "xbar";
     homepage = "https://xbarapp.com";
     license = licenses.mit;
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

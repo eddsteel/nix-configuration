@@ -1,6 +1,6 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).firefox;
+  versions = with builtins; (fromJSON (readFile ../versions.json)).firefox;
 in pkgs.stdenv.mkDerivation rec {
   pname = "firefox-mac";
   inherit (versions) version;
@@ -19,7 +19,7 @@ in pkgs.stdenv.mkDerivation rec {
     description = "The Firefox web browser";
     homepage = "https://www.mozilla.org/en-CA/firefox";
     license = licenses.mpl20;
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }

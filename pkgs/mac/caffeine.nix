@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "Caffeine";
     homepage = "https://intelliscapesolutions.com/apps/caffeine";
-    maintainers = [];
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }
