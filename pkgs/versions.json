@@ -100,5 +100,11 @@
       "url": "https://zoom.us/client/5.14.0.1720/zoom_x86_64.pkg.tar.xz",
       "version": "5.14.0.1720"
     }
+  },
+  "terraform_docs": {
+    "name": "terraform-docs-v0.16.0-darwin-amd64.tar.gz",
+    "sha256": "140hpg47bs39p80j8fg8lc88ic9prcbxnxr1k590i8y4wgi2517l",
+    "url": "https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-darwin-amd64.tar.gz",
+    "version": "0.16.0"
   }
 }

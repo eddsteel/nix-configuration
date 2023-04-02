@@ -1,5 +1,5 @@
 #!/bin/sh
-# TODO: use published SHAs not pre-fetched.
+# TODO: use GNU parallel with -k instead of temporary files to output to versions.json directly.
 
 set -e
 touch versions.json
@@ -104,6 +104,10 @@ xbar() {
     github "matryer/xbar" "xbar.v" "xbar" "xb" "v" ".dmg"
 }
 
+tdocs() {
+    github "terraform-docs/terraform-docs" "terraform-docs-v" "terraform_docs" "td" "v" "-darwin-amd64.tar.gz"
+}
+
 circleci() {
     if [ "$1" = "darwin" ]; then
         github "CircleCI-Public/circleci-cli" "circleci-cli_" "circleci_cli.darwin" "ccd" "v" \
@@ -164,6 +168,7 @@ circleci linux &
 circleci darwin &
 zoomus linux &
 zoomus darwin &
+tdocs &
 
 wait
 
@@ -184,7 +189,8 @@ jq -n \
    --slurpfile ccl .ccl-component \
    --slurpfile zud .zud-component \
    --slurpfile zul .zul-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}}' \
+   --slurpfile td .td-component \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0]}' \
    >new.json
 
 rm .*-component

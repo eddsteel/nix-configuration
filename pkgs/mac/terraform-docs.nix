@@ -1,13 +1,11 @@
 { pkgs ? import <nixpkgs> {} }:
-pkgs.stdenv.mkDerivation rec {
+let
+  versions = with builtins; (fromJSON (readFile ../versions.json)).terraform_docs
+in pkgs.stdenv.mkDerivation rec {
+  inherit (versions) version;
   pname = "terraform-docs";
-  version = "0.16.0";
   phases = [ "unpackPhase" "installPhase" ];
-  src = pkgs.fetchurl {
-    name = "terraform-docs-${version}.tar.gz";
-    url = "https://terraform-docs.io/dl/v${version}/terraform-docs-v${version}-Darwin-amd64.tar.gz";
-    sha256 = "sha256-9IQi4uPEowhSmSF32xfLN7GIEKPoOSQBumnodci7EJA=";
-  };
+  src = pkgs.fetchurl { inherit (versions) name url sha256; };
   installPhase = ''
     mkdir -p $out/bin
     cp output/terraform-docs $out/bin/
@@ -19,8 +17,8 @@ pkgs.stdenv.mkDerivation rec {
 
   meta = with pkgs.lib; {
     description = "Terraform Docs";
-    homepage = "https://circleci.com";
-    maintainers = [];
+    homepage = "https://terraform-docs.io/";
+    maintainers = [ (import ../../maintainers.nix).eddsteel ];
     platforms = platforms.darwin;
   };
 }
