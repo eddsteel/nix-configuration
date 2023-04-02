@@ -5,4 +5,5 @@
   git-web-link = pkgs.callPackage ../../git-web-link/default.nix {};
   circleci-cli = pkgs.callPackage ./circleci.nix {};
   wavebox      = pkgs.callPackage ./wavebox.nix {};
+  zoomus       = pkgs.callPackage ./zoomus.nix {};
 }

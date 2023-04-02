@@ -132,6 +132,22 @@ caffeine() {
     component_json "$URL" "$SHA" "$NME" "$VER" cf
 }
 
+zoomus() {
+    if [ $1 == "linux" ]; then
+        VER=$(curl -Ls 'https://zoom.us/rest/download?os=linux' | jq -r .result.downloadVO.zoom.version)
+        URL="https://zoom.us/client/$VER/zoom_x86_64.pkg.tar.xz"
+        NME="zoom_x86_64.pkg.tar.xz"
+        SHA=$(conditional_get_sha "zoom_us.$1" "$URL" "$NME")
+        component_json "$URL" "$SHA" "$NME" "$VER" zul
+    else
+        VER=$(curl -Ls 'https://zoom.us/rest/download?os=mac' | jq -r .result.downloadVO.zoomArm64.version)
+        URL="https://zoom.us/client/$VER/zoomusInstallerFull.pkg?archType=arm-64"
+        NME=zoomusInstallerFull.pkg
+        SHA=$(conditional_get_sha "zoom_us.$1" "$URL" "$NME")
+        component_json "$URL" "$SHA" "$NME" "$VER" zud
+    fi
+}
+
 wavebox linux &
 wavebox darwin &
 bitwarden &
@@ -146,6 +162,8 @@ exfalso &
 caffeine &
 circleci linux &
 circleci darwin &
+zoomus linux &
+zoomus darwin &
 
 wait
 
@@ -164,7 +182,9 @@ jq -n \
    --slurpfile cf .cf-component \
    --slurpfile ccd .ccd-component \
    --slurpfile ccl .ccl-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}}' \
+   --slurpfile zud .zud-component \
+   --slurpfile zul .zul-component \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}}' \
    >new.json
 
 rm .*-component

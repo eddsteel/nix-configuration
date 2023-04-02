@@ -15,6 +15,7 @@
       hub-local      = nixpkgs-local.hub;
       exfalso        = pkgs.quodlibet;
       wavebox        = local.wavebox;
+      zoom-us        = local.zoomus;
     }
   )
 

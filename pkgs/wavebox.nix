@@ -7,6 +7,8 @@ let
     homepage = "https://wavebox.io";
     maintainers = [];
     platforms = platforms.darwin ++ platforms.linux;
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    license = licenses.unfree;
   };
   pname = "wavebox";
 in if platform == "darwin"
