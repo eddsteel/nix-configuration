@@ -1,16 +1,16 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.111.36.2.dmg",
-      "sha256": "084z1fgvsb797abxh94d442q5n3xrmwmfxf9sk7lm6scda43nl9a",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.111.36.2.dmg",
-      "version": "10.111.36.2"
+      "name": "wavebox-10.112.6.2.dmg",
+      "sha256": "10c6xz2fhai0kcr586ppl05rbrm2g3fhiw6xgh2qdhqsyby3gknc",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.112.6.2.dmg",
+      "version": "10.112.6.2"
     },
     "linux": {
-      "name": "wavebox-10.111.36-2.tar.gz",
-      "sha256": "0xw7r92pxhwmndcq0h5080iwdx57b3fpvldz616q2cs018hrd4rb",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.111.36-2.tar.gz",
-      "version": "10.111.36-2"
+      "name": "wavebox-10.112.6-2.tar.gz",
+      "sha256": "0hdw961mvhvj1sbzqx7ivj9rdsg603hzvx1zd4551p0icrijgw7r",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.112.6-2.tar.gz",
+      "version": "10.112.6-2"
     }
   },
   "bitwarden": {
@@ -90,15 +90,15 @@
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "1ya99nqc5qj9i2b6wqq3gi14bcfrpp7k8s1pw31cdgy1ksylzsqx",
-      "url": "https://zoom.us/client/5.14.0.16775/zoomusInstallerFull.pkg?archType=arm-64",
-      "version": "5.14.0.16775"
+      "sha256": "0icyx212kdybz3nk2wqyawzx29l88yq0hzwh3fg98yhhy9ya6x4d",
+      "url": "https://zoom.us/client/5.14.2.17213/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "5.14.2.17213"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "0sjxsxf5q9h2qp8z5dvvszvpr63n2m1ab74a4cd31rr5za6pdi3p",
-      "url": "https://zoom.us/client/5.14.0.1720/zoom_x86_64.pkg.tar.xz",
-      "version": "5.14.0.1720"
+      "sha256": "1kg439cqvs8i2ghrpd6fmbmyr3696rikvs25zm1d7kcvlsb8jplk",
+      "url": "https://zoom.us/client/5.14.2.2046/zoom_x86_64.pkg.tar.xz",
+      "version": "5.14.2.2046"
     }
   },
   "terraform_docs": {
@@ -106,5 +106,11 @@
     "sha256": "140hpg47bs39p80j8fg8lc88ic9prcbxnxr1k590i8y4wgi2517l",
     "url": "https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-darwin-amd64.tar.gz",
     "version": "0.16.0"
+  },
+  "awsvpn": {
+    "name": "AWS_VPN_Client-3.2.0.pkg",
+    "sha256": "1966kbpw07p89cvghb8f4sgfix98a8wpg69qxwq8vadzvakc02fb",
+    "url": "https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg",
+    "version": "3.2.0"
   }
 }

@@ -31,10 +31,7 @@
     (interactive)
     (if (eq (face-attribute 'default :height) 120)
         (set-face-attribute 'default (selected-frame) :height 150)
-      (set-face-attribute 'default (selected-frame) :height 120)))
-
-  ;; ligatures
-  (mac-auto-operator-composition-mode))
+      (set-face-attribute 'default (selected-frame) :height 120))))
 
 
 (use-package emms

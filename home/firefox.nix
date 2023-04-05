@@ -2,12 +2,12 @@
 {
   programs.firefox = {
     enable = true;
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
-    ];
     profiles."default" = {
       id = 0;
       path = "xtqfr4qa.default";
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
+      ];
       isDefault = true;
       settings = {
         "browser.aboutConfig.showWarning" = false;

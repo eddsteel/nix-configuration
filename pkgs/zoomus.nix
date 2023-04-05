@@ -26,7 +26,6 @@ in if platform == "darwin"
     '';
 
      nativeBuildInputs = with pkgs; [
-       makeWrapper
        xar
        cpio
      ];

@@ -1,13 +1,13 @@
 [
-  (import (builtins.fetchTarball {
-    url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-  }))
+#  (import (builtins.fetchTarball {
+#    url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+#  }))
 
   (self: pkgs:
     rec {
       nixpkgs-local  = pkgs.callPackages ../../src/nixpkgs {};
       local          = pkgs.callPackages ./pkgs {};
-      my-emacs       = pkgs.emacsUnstable;
+      #my-emacs       = pkgs.emacsUnstable;
       brainzo        = local.brainzo;
       scripts        = local.scripts;
       git-web-link   = local.git-web-link;
@@ -23,7 +23,6 @@
     pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin rec {
       nixpkgs-local  = pkgs.callPackages ../../src/nixpkgs {};
       mac-apps       = pkgs.callPackages ./pkgs/mac {};
-      my-emacs       = pkgs.emacs;
       bitwarden      = self.mac-apps.bitwarden;
       signal-desktop = self.mac-apps.signal;
       firefox        = self.mac-apps.firefox;

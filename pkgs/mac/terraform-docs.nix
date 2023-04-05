@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  versions = with builtins; (fromJSON (readFile ../versions.json)).terraform_docs
+  versions = with builtins; (fromJSON (readFile ../versions.json)).terraform_docs;
 in pkgs.stdenv.mkDerivation rec {
   inherit (versions) version;
   pname = "terraform-docs";

@@ -21,20 +21,21 @@ let
       sha256 = "sha256-Bgb5wFyx0hMilpihxA8cTrRVw71EBOw2DczlM4lSNMs=";
     };
   };
-  pkgOverrides = (self: super:
-    let
-      local-nixpkgs = pkgs.callPackages ../../../src/nixpkgs {};
-    in {
-      magit = local-nixpkgs.emacs.pkgs.melpaPackages.magit;
-      transient = local-nixpkgs.emacs.pkgs.melpaPackages.transient;
-    });
+#  pkgOverrides = (self: super:
+#    let
+#      local-nixpkgs = pkgs.callPackages ../../../src/nixpkgs {};
+#    in {
+#      magit = local-nixpkgs.emacs.pkgs.melpaPackages.magit;
+#      transient = local-nixpkgs.emacs.pkgs.melpaPackages.transient;
+#    });
 in {
   programs.emacs = {
     enable = true;
-    overrides = pkgOverrides;
-    package = pkgs.my-emacs;
+ #   overrides = pkgOverrides;
+    package = pkgs.emacs;
     extraConfig = ''
     (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
+    (setq user-emacs-directory (expand-file-name "~/.config/emacs"))
     '';
     extraPackages = epkgs: with epkgs; [
       delight

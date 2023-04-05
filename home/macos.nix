@@ -53,14 +53,14 @@ in {
   home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ../files/xbar-youbi.sh;
 
   xdg.configFile."skhd/skhdrc".text = ''
-  shift + alt + cmd + ctrl - e : open /Applications/Emacs.app
+  shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
   shift + alt + cmd + ctrl - f : open ~/.nix-profile/Applications/Firefox.app
   shift + alt + cmd + ctrl - i : idea
   shift + alt + cmd + ctrl - j : if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi
   shift + alt + cmd + ctrl - m : open ~/.nix-profile/Applications/iTerm2.app
   shift + alt + cmd + ctrl - s : open ~/.nix-profile/Applications/Signal.app
   shift + alt + cmd + ctrl - w : open ~/.nix-profile/Applications/Wavebox.app
-  shift + alt + cmd + ctrl - z : open -a zoom.us
+  shift + alt + cmd + ctrl - z : open ~/.nix-profile/Applications/zoom.us.app
   f7 : ${pkgs.scripts}/bin/emms previous
   f8 : ${pkgs.scripts}/bin/emms play-pause
   f9 : ${pkgs.scripts}/bin/emms next
@@ -123,13 +123,12 @@ in {
     add-dock-app = p: a: app-def-write "${p}/Applications/${a}.app";
   in lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD defaults write com.apple.dock persistent-apps -array
-    ${app-def-write "/System/Applications/System Preferences.app"}
+    ${app-def-write "/System/Applications/System Settings.app"}
+    ${add-dock-app pkgs.emacs "Emacs"}
     ${add-dock-app pkgs.firefox "Firefox"}
     ${add-dock-app pkgs.iterm2 "iTerm2"}
     ${add-dock-app pkgs.wavebox "Wavebox"}
     ${add-dock-app pkgs.bitwarden "Bitwarden"}
-    # TODO!
-    ${app-def-write "/Applications/Emacs.app"}
     $DRY_RUN_CMD killall Dock
   '';
 

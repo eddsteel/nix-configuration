@@ -39,6 +39,7 @@ in with lib; {
     };
 
     home.file.".aws/credentials".source = ../secrets/aws-credentials;
+    home.file.".aws/config".source = ../secrets/aws-config;
 
     home.file.".aspell.conf".text = ''
       data-dir ${homedir}/.nix-profile/lib/aspell
