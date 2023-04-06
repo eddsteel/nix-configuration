@@ -6,11 +6,12 @@ let
     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
   };
   hosts = import ../hosts.nix { inherit lib; };
-  virtual-host = svc: {
+  virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
     value = {
-      enableACME = false;
-      forceSSL = false;
+      enableACME = true;
+      acmeRoot = null;
+      forceSSL = true;
       locations."/" = {
         proxyPass = svc.url;
         proxyWebsockets = true; # needed if you need to use WebSocket
@@ -78,6 +79,7 @@ in {
      libraspberrypi
      awscli2
      rsync
+     r53-ddns
    ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -93,9 +95,10 @@ in {
   # Enable the OpenSSH daemon.
 
   sops.defaultSopsFile = ../../sops/secrets.yaml;
-  sops.secrets."consul/ca.pem".owner = "consul";
+  sops.secrets."consul/ca.pem".owner = config.users.users.consul.name;
   sops.secrets."consul/server.crt".owner = config.users.users.consul.name;
   sops.secrets."consul/server.key".owner = config.users.users.consul.name;
+  sops.secrets."route53/env" = {};
 
   services.openssh.enable = true;
   services.unbound = {
@@ -159,27 +162,45 @@ in {
     };
   };
   security.pki.certificates = [ "../../secrets/consul-server.crt" ];
+
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "edd@eddsteel.com";
+      dnsProvider = "route53";
+      credentialsFile = /run/secrets/route53/env;
+    };
+  };
+
+  users.users.nginx.extraGroups = [ "acme" ];
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     # other Nginx options;
+    virtualHosts = with builtins; listToAttrs (map virtualHost hosts.services);
   };
 
-  services.nginx.virtualHosts = with builtins; listToAttrs (map virtual-host hosts.services);
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
   system.copySystemConfiguration = true;
+  system.stateVersion = "22.11";
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  systemd.services.r53-ddns = {
+    wants = [ "network.target"];
+    serviceConfig.EnvironmentFile = /run/secrets/route53/env;
+    serviceConfig.Type = "oneshot";
+    path = [ pkgs.r53-ddns ];
+    script = with builtins; lib.strings.concatStringsSep "\n" (map (svc: ''
+      r53-ddns -hostname "${svc.name}" -domain "${hosts.domain}" -zone-id $AWS_HOSTED_ZONE_ID
+    '') hosts.services);
+  };
+
+  systemd.timers.r53-ddns = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+    };
+  };
 
   systemd.services.backup = {
     wants = [ "srv.mount" ];
