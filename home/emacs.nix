@@ -21,17 +21,20 @@ let
       sha256 = "sha256-Bgb5wFyx0hMilpihxA8cTrRVw71EBOw2DczlM4lSNMs=";
     };
   };
-#  pkgOverrides = (self: super:
-#    let
-#      local-nixpkgs = pkgs.callPackages ../../../src/nixpkgs {};
-#    in {
-#      magit = local-nixpkgs.emacs.pkgs.melpaPackages.magit;
-#      transient = local-nixpkgs.emacs.pkgs.melpaPackages.transient;
-#    });
+  ob-http-fork = epkgs: epkgs.trivialBuild {
+    pname = "ob-http";
+    version = "1";
+    buildInputs = [ epkgs.s epkgs.cl-lib ];
+    src = pkgs.fetchFromGitHub {
+      owner = "eddsteel";
+      repo = "ob-http";
+      rev = "8dc7e46949d1e869662351b120e1e66782ab769a";
+      sha256 = "sha256-uEcXgkibKEydCs7WMCFEsOldx7OfjwayPwnIloOs4/Q=";
+    };
+  };
 in {
   programs.emacs = {
     enable = true;
- #   overrides = pkgOverrides;
     package = pkgs.emacs;
     extraConfig = ''
     (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
@@ -84,7 +87,7 @@ in {
       ox-gfm
       ob-kotlin
       ob-async
-      ob-http
+      (ob-http-fork epkgs)
       weather-metno
       pdf-tools
 

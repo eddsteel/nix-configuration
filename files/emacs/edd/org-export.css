@@ -40,7 +40,7 @@ h1, h2, h3 {
     margin-right: -9999rem;
 }
 
-pre.src, code, pre.src * {
+pre.src, code, pre.src *, pre.example, pre.example * {
     font-family: "fira mono", "Consolas", "Bitstream Vera Mono", monospace;
 }
 
@@ -52,6 +52,12 @@ pre.src {
     overflow-x: hidden;
     border: none;
     box-shadow: inset 0px 0px 30px #222;
+}
+
+pre.example {
+    background-color: #eee;
+    color: #999;
+    padding: 1em;
 }
 
 blockquote {

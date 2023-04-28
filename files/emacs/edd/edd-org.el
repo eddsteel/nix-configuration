@@ -199,9 +199,6 @@
   (org-agenda-structure ((nil :height 1.0)))
   (org-link ((nil :foreground "#06d8ff")))
   (org-verbatim ((nil :inherit font-lock-keyword-face)))
-  (org-block-begin-line ((nil :background "#444444")))
-  (org-block-end-line ((nil :background "#444444")))
-  (org-block ((nil :background "#444444")))
   (org-checkbox-done-text ((t (:foreground "#71696A" :strike-through t)))))
 
 (use-package weather-metno
