@@ -27,9 +27,9 @@
       signal-desktop = self.mac-apps.signal;
       firefox        = self.mac-apps.firefox;
       intellij-idea  = self.mac-apps.intellij-idea-ce;
-      iterm2         = self.mac-apps.iterm2;
       exfalso        = self.mac-apps.exfalso;
       terraform-docs = self.mac-apps.terraform-docs;
+      aws-vpn        = self.mac-apps.aws-vpn;
     }
   )
 ]

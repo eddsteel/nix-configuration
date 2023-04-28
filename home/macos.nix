@@ -31,9 +31,10 @@ in {
 
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
-    ps wget gnupg colima colima-script op
+    ps wget gnupg colima colima-script op rectangle karabiner-elements
+    iterm2 skhd swiftdefaultapps
   ] ++ (with mac-apps; [
-    iterm2 xbar rectangle istat-menus skhd intellij-idea-ce wavebox soundsource caffeine
+    xbar istat-menus intellij-idea-ce wavebox soundsource caffeine
   ]);
 
   programs.git.extraConfig.credential.helper = "osxkeychain";
@@ -194,5 +195,13 @@ in {
     $DRY_RUN_CMD mkdir -p $HOME/Documents/txt
     $DRY_RUN_CMD mkdir -p $HOME/Downloads/tmp
     $DRY_RUN_CMD mkdir -p $HOME/media/pictures
+  '';
+
+  home.activation."setDefaultApps" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoomus --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoommtg --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoomphonecall --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL callto --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL sip --app "${pkgs.zoom-us}/Applications/zoom.us.app"
   '';
 }

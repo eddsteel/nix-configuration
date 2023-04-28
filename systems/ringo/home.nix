@@ -26,7 +26,7 @@ in {
 
   home.packages = with pkgs; [
     scripts kotlin gradle terraform terraform-docs hub-local circleci-cli
-    docker gettext zoom-us
+    docker gettext zoom-us aws-vpn
   ] ++ work-pkgs.all;
 
   programs.go.enable = true;

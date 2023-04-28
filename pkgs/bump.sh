@@ -6,11 +6,20 @@ touch versions.json
 rm -f .*-component
 
 location() {
-    curl -Is "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}' | head -n 1
+    header "$1" '[lL]ocation'
 }
+
+cfversion() {
+    header "$1" x-amz-meta-version
+}
+
 
 location_get() {
     curl -Is -XGET "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}'
+}
+
+header() {
+    curl -Is "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/'"$2"'/{print $2}' | head -n 1
 }
 
 conditional_get_sha() {
@@ -41,6 +50,16 @@ github() {
     URL="https://github.com/$1/releases/download/$5$VER/$NME"
     SHA=$(conditional_get_sha $3 "$URL" "$NME")
     component_json "$URL" "$SHA" "$NME" "$VER" $4
+}
+
+#--
+
+awsvpn() {
+    URL="https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg"
+    VER=$(cfversion $URL)
+    NME="AWS_VPN_Client-${VER}.pkg"
+    SHA=$(conditional_get_sha awsvpn "$URL" "$NME")
+    component_json "$URL" "$SHA" "$NME" "$VER" av
 }
 
 wavebox() {
@@ -95,11 +114,6 @@ istat() {
              '^.*/istatmenus\([0-9.]*\).zip$' \
              "istat" "zip" "istatmenus" im
 }
-
-rectangle() {
-    github "rxhanson/Rectangle" "Rectangle" "rectangle" "re" "v" ".dmg"
-}
-
 xbar() {
     github "matryer/xbar" "xbar.v" "xbar" "xb" "v" ".dmg"
 }
@@ -145,7 +159,7 @@ zoomus() {
         component_json "$URL" "$SHA" "$NME" "$VER" zul
     else
         VER=$(curl -Ls 'https://zoom.us/rest/download?os=mac' | jq -r .result.downloadVO.zoomArm64.version)
-        URL="https://zoom.us/client/$VER/zoomusInstallerFull.pkg?archType=arm-64"
+        URL="https://zoom.us/client/$VER/zoomusInstallerFull.pkg?archType=arm64"
         NME=zoomusInstallerFull.pkg
         SHA=$(conditional_get_sha "zoom_us.$1" "$URL" "$NME")
         component_json "$URL" "$SHA" "$NME" "$VER" zud
@@ -155,12 +169,10 @@ zoomus() {
 wavebox linux &
 wavebox darwin &
 bitwarden &
-iterm2 &
 firefox &
 idea &
 signal &
 istat &
-rectangle &
 xbar &
 exfalso &
 caffeine &
@@ -169,19 +181,19 @@ circleci darwin &
 zoomus linux &
 zoomus darwin &
 tdocs &
+awsvpn &
 
 wait
 
 jq -n \
+   --slurpfile av .av-component \
    --slurpfile wbd .wbd-component \
    --slurpfile wbl .wbl-component \
    --slurpfile bw .bw-component \
-   --slurpfile it .it-component \
    --slurpfile ff .ff-component \
    --slurpfile ij .ij-component \
    --slurpfile sn .sn-component \
    --slurpfile im .im-component \
-   --slurpfile re .re-component \
    --slurpfile xb .xb-component \
    --slurpfile ef .ef-component \
    --slurpfile cf .cf-component \
@@ -190,7 +202,7 @@ jq -n \
    --slurpfile zud .zud-component \
    --slurpfile zul .zul-component \
    --slurpfile td .td-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "iterm2": $it[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "rectangle": $re[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0]}' \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0]}' \
    >new.json
 
 rm .*-component
