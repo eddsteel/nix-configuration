@@ -1,16 +1,16 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.112.11.2.dmg",
-      "sha256": "1c90vbb2pyk0z3r8b2vyahfjwqkqarix1ymkil6yazj4wpvvisrc",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.112.11.2.dmg",
-      "version": "10.112.11.2"
+      "name": "wavebox-10.113.11.2.dmg",
+      "sha256": "0bjg3hl1xx5w3rj3nr8zz269hm9bssgvafzmbd9cyrsc07rj4qnh",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.113.11.2.dmg",
+      "version": "10.113.11.2"
     },
     "linux": {
-      "name": "wavebox-10.112.11-2.tar.gz",
-      "sha256": "133rchn847ig6vh3crky66l7xcr7g9s8lmrcks4s4pjpbv9gmxg5",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.112.11-2.tar.gz",
-      "version": "10.112.11-2"
+      "name": "wavebox-10.113.11-2.tar.gz",
+      "sha256": "0krsp94c1l0qwc86v4zwbmrd9kg7mdz2m8dvvkjjs55kgc3ydq8n",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.113.11-2.tar.gz",
+      "version": "10.113.11-2"
     }
   },
   "bitwarden": {
@@ -26,10 +26,10 @@
     "version": "112.0.2"
   },
   "idea": {
-    "name": "intellij-idea-ce-2023.1.dmg",
-    "sha256": "11prz4fzwm5fax10gmcj68zrcx482b2fmj7376g1kb18rcjlb5ik",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2023.1-aarch64.dmg",
-    "version": "2023.1"
+    "name": "intellij-idea-ce-2023.1.1.dmg",
+    "sha256": "1ygnh2nn65d9xjm1rph8i7dv8lw79sypihs7qmk88r5dw59j1ay9",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2023.1.1-aarch64.dmg",
+    "version": "2023.1.1"
   },
   "signal": {
     "name": "signal-desktop-mac-universal-6.16.0.dmg",
@@ -63,30 +63,30 @@
   },
   "circleci_cli": {
     "darwin": {
-      "name": "circleci-cli_0.1.26094_darwin_amd64.tar.gz",
-      "sha256": "1fjvivbiw6aq6y7adb6ikcdcax8y1jzsk4bi2dz0i5mjmd6njpgb",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.26094/circleci-cli_0.1.26094_darwin_amd64.tar.gz",
-      "version": "0.1.26094"
+      "name": "circleci-cli_0.1.26343_darwin_amd64.tar.gz",
+      "sha256": "145in1243y9bwxx2668spsx1viazlkcjh72cp68bng7nflzk9nfi",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.26343/circleci-cli_0.1.26343_darwin_amd64.tar.gz",
+      "version": "0.1.26343"
     },
     "linux": {
-      "name": "circleci-cli_0.1.26094_linux_amd64.tar.gz",
-      "sha256": "0dbqppdb1hd7wdspjrjmyvqvpm84ya4q8jrmxl74r87mrl678bnz",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.26094/circleci-cli_0.1.26094_linux_amd64.tar.gz",
-      "version": "0.1.26094"
+      "name": "circleci-cli_0.1.26343_linux_amd64.tar.gz",
+      "sha256": "0q87gvpkxbf6nmw63jgq6xadc9asp97inzmprsm2z7kx9cgvsq32",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.26343/circleci-cli_0.1.26343_linux_amd64.tar.gz",
+      "version": "0.1.26343"
     }
   },
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "05nfvq532hh34krp939czj6b2qsw8mnpnqvxr1v17bwy96wr2yl3",
-      "url": "https://zoom.us/client/5.14.6.17822/zoomusInstallerFull.pkg?archType=arm64",
-      "version": "5.14.6.17822"
+      "sha256": "1v4w57cgssalzxxldin1xd2x708qcprgrlm6wi5ylk73h3bbz2zi",
+      "url": "https://zoom.us/client/5.14.7.18149/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "5.14.7.18149"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "18g0vrpm30fy2g09hy7i11kj9pp5xs7ixhryzjy3jsl6zvsg1zmi",
-      "url": "https://zoom.us/client/5.14.5.2430/zoom_x86_64.pkg.tar.xz",
-      "version": "5.14.5.2430"
+      "sha256": "0dddcf55y1vsjpjqhhys7nmrr1c40j5vgzwsqrm3sa617ib5xwn6",
+      "url": "https://zoom.us/client/5.14.7.2928/zoom_x86_64.pkg.tar.xz",
+      "version": "5.14.7.2928"
     }
   },
   "terraform_docs": {
