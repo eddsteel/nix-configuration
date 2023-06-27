@@ -427,7 +427,8 @@
   :bind
   ("C-;" . mc/mark-next-like-this)
   ("C-:" . mc/mark-all-like-this)
-  ("C-c ;" . mc/edit-lines))
+  ("C-c ;" . mc/edit-lines)
+  ("M-<down>" . mc/mark-more-like-this-extended))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
