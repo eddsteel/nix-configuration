@@ -41,6 +41,7 @@ in {
       envvars = {
         HOSTNAME = cfg.hostName;
         HOME_MANAGER_CONFIG = homeconfig;
+        NIX_CONF_DIR = configPath;
       };
     in if cfg.os == "darwin"
       then {
