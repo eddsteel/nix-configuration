@@ -1,16 +1,6 @@
 {config, pkgs, lib, ...}:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
-  colima-script = pkgs.writeShellScriptBin "cnc" ''
-    args=("--")
-    for x in "$@"; do
-        if [ ! "--rm" == "$x" ]; then
-             args+=("$x")
-        fi
-    done
-
-    ${pkgs.colima}/bin/colima nerdctl "${"\${args[@]}"}"
- '';
   op = pkgs.writeShellScriptBin "op" ''
     open "$HOME/Applications/Home Manager/$1"
   '';
@@ -27,23 +17,17 @@ let
     complete -p ${op}/bin/op --no-files --exclusive --command op --arguments "(pushd $HOME/Applications/Home\ Manager; __fish_complete_directories; popd)"
  '';
 in {
-  home.file.".nix-channels".source = ../files/darwin-nix-channels;
+  home.file.".nix-channels".source = ../../../files/darwin-nix-channels;
 
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
-    ps wget gnupg colima colima-script op rectangle karabiner-elements
+    ps wget gnupg colima op rectangle karabiner-elements
     iterm2 skhd swiftdefaultapps
   ] ++ (with mac-apps; [
     xbar istat-menus intellij-idea-ce wavebox soundsource caffeine
   ]);
 
-  programs.git.extraConfig.credential.helper = "osxkeychain";
-
-  xdg.configFile."nix/nix.conf".text = ''
-    experimental-features = nix-command flakes
-  '';
-
-  xdg.configFile."karabiner/karabiner.json".source = ../files/karabiner.json;
+  xdg.configFile."karabiner/karabiner.json".source = ../../../files/karabiner.json;
 
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".text = ''
   #!/usr/bin/env bash
@@ -51,7 +35,14 @@ in {
   echo "$np | size=13 length=50"
   '';
   home.file."Library/Application Support/xbar/plugins/emms-show.5.sh".executable = true;
-  home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ../files/xbar-youbi.sh;
+  home.file."Library/Application Support/xbar/plugins/youbi.60.sh".source = ../../../files/xbar-youbi.sh;
+  home.file."Library/Application Support/xbar/plugins/indoor-temp.60.sh".text = ''
+  #!/usr/bin/env bash
+  PATH="$HOME/.nix-profile/bin"
+  temp=$(nix-shell -p broadlink-cli --command 'broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature')
+  echo "$temp°C"
+  '';
+  home.file."Library/Application Support/xbar/plugins/indoor-temp.60.sh".executable = true;
 
   xdg.configFile."skhd/skhdrc".text = ''
   shift + alt + cmd + ctrl - e : open ~/.nix-profile/Applications/Emacs.app
@@ -115,8 +106,8 @@ in {
     $DRY_RUN_CMD defaults write com.apple.Finder "AppleShowAllFiles" -bool "false"
     $DRY_RUN_CMD killall Finder
 
-    $DRY_RUN_CMD defaults import com.googlecode.iterm2 ${../files}/com.googlecode.iterm2.plist
-    $DRY_RUN_CMD defaults import com.rogueamoeba.soundsource ${../secrets}/com.rogueamoeba.soundsource.plist
+    $DRY_RUN_CMD defaults import com.googlecode.iterm2 ${../../../files}/com.googlecode.iterm2.plist
+    $DRY_RUN_CMD defaults import com.rogueamoeba.soundsource ${../../../secrets}/com.rogueamoeba.soundsource.plist
  '';
 
   home.activation."macDock" = let
@@ -133,15 +124,15 @@ in {
     $DRY_RUN_CMD killall Dock
   '';
 
-  home.file.".default-gems".source = ../files/ruby-default-gems;
-  home.file.".bundle/config".source = ../secrets/bundle-config;
+  home.file.".default-gems".source = ../../../files/ruby-default-gems;
+  home.file.".bundle/config".source = ../../../secrets/bundle-config;
 
-  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ../files/rectangle-preferences.plist;
+  home.file."Library/Preferences/com.knollsoft.Rectangle.plist".source = ../../../files/rectangle-preferences.plist;
   # has licence keys, MAC addresses, GPS etc., so secret
-  home.file."Library/Preferences/com.bjango.istatmenus.plist".source = ../secrets/com.bjango.istatmenus.plist;
-  home.file."Library/Preferences/com.bjango.istatmenus.status.plist".source = ../secrets/com.bjango.istatmenus.status.plist;
-  home.file."Library/Preferences/com.bjango.istatmenus5.extras.plist".source = ../secrets/com.bjango.istatmenus5.extras.plist;
-  home.file."Library/Preferences/com.bjango.istatmenus6.extras.plist".source = ../secrets/com.bjango.istatmenus6.extras.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus.plist".source = ../../../secrets/com.bjango.istatmenus.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus.status.plist".source = ../../../secrets/com.bjango.istatmenus.status.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus5.extras.plist".source = ../../../secrets/com.bjango.istatmenus5.extras.plist;
+  home.file."Library/Preferences/com.bjango.istatmenus6.extras.plist".source = ../../../secrets/com.bjango.istatmenus6.extras.plist;
 
   targets.darwin.keybindings = {
     "^u" = "deleteToBeginningOfLine:";
@@ -204,4 +195,8 @@ in {
     $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL callto --app "${pkgs.zoom-us}/Applications/zoom.us.app"
     $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL sip --app "${pkgs.zoom-us}/Applications/zoom.us.app"
   '';
+
+  programs.git.extraConfig = {
+    credential.helper = "osxkeychain";
+  };
 }

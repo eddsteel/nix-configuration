@@ -3,7 +3,7 @@ let
   hostName = "da-shi";
   hosts = import ../hosts.nix;
 in {
-  imports = [../per-host.nix ./hardware.nix];
+  imports = [../../modules/per-host.nix ./hardware.nix];
 
   perHost = {
     inherit hostName;

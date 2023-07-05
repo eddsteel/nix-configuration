@@ -3,24 +3,9 @@ let
   work-pkgs = pkgs.callPackages ../../../../src/nix-work {};
   secrets = import ../../secrets { inherit work-pkgs; };
 in {
-  imports = [
-    ../../home/emacs.nix
-    ../../home/firefox.nix
-    ../../home/git.nix
-    ../../home/local.nix
-    ../../home/macos.nix
-    ../../home/shell.nix
-    ../../home/ssh.nix
-    ../../home/workstation.nix
-  ];
+  imports = [ ../../modules/home/macos ../../modules/home ];
 
   home.stateVersion = "21.05";
-
-  local = {
-    username = "edd";
-    homedir = "/Users/edd";
-    hostname = "ringo";
-  };
 
   programs.home-manager.enable = true;
 
@@ -31,9 +16,16 @@ in {
 
   programs.go.enable = true;
 
-  programs.git = {
-    userEmail = secrets.email;
-    signing.key = "8433C6F9F807CE8E8DFA99EFB10455BC05772724";
+  local = {
+    username = "edd";
+    homedir = "/Users/edd";
+    hostname = "ringo";
+  };
+
+  git = {
+    enable = true;
+    email = secrets.email;
+    key = "8433C6F9F807CE8E8DFA99EFB10455BC05772724";
   };
 
   shell = {
@@ -51,5 +43,14 @@ in {
       {"name" = "git-web-link";}
       {"name" = "scripts";}
     ] ++ secrets.repos;
+  };
+
+  emacs = {
+    enable = true;
+  };
+
+  firefox = {
+    enable = true;
+    sync-user = "edd@eddsteel.com";
   };
 }

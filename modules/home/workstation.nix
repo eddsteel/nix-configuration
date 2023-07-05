@@ -2,9 +2,7 @@
 let
   cfg = config.workstation;
   homedir = config.home.homeDirectory;
-  gpgPub = ../files/pubring.gpg;
-  gpgSec = ../secrets/secring.gpg;
-  repos = [
+  bootstrap-repos = [
     {"name" = "nix-configuration";}
     {"name" = "nix-darwin"; "remote" = "git@github.com:LnL7/nix-darwin";}
     {"name" = "home-manager"; "remote" = "git@github.com:nix-community/home-manager";}
@@ -17,15 +15,20 @@ in with lib; {
     enable = mkEnableOption "Useful apps and configuration for doing work";
     mr-repos = mkOption {};
     github-name = mkOption {};
+    gpg-pub = mkOption { default = ../../files/pubring.gpg; };
+    gpg-sec = mkOption { default = ../../secrets/secring.gpg; };
+    aws-credentials = mkOption { default = ../../secrets/aws-credentials; };
+    aws-config = mkOption { default = ../../secrets/aws-config; };
+    zoomus-config = mkOption { default = ../../files/zoomus.conf; };
   };
-  config = {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       git-secrets nix-prefetch-git jdk17
       duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
       bitwarden signal-desktop moreutils exfalso
     ];
 
-    xdg.configFile."zoomus.conf".source = ../files/zoomus.conf;
+    xdg.configFile."zoomus.conf".source = cfg.zoomus-config;
 
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
@@ -34,12 +37,12 @@ in with lib; {
     programs.mr = {
       enable = true;
       github-name = cfg.github-name;
-      repos = repos ++ cfg.mr-repos;
+      repos = bootstrap-repos ++ cfg.mr-repos;
       rootdir = "${homedir}/src";
     };
 
-    home.file.".aws/credentials".source = ../secrets/aws-credentials;
-    home.file.".aws/config".source = ../secrets/aws-config;
+    home.file.".aws/credentials".source = cfg.aws-credentials;
+    home.file.".aws/config".source = cfg.aws-config;
 
     home.file.".aspell.conf".text = ''
       data-dir ${homedir}/.nix-profile/lib/aspell
@@ -61,8 +64,8 @@ in with lib; {
   home.keyboard.layout = "ca+eng";
 
   home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --quiet --import ${gpgPub}
-    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --quiet --import ${gpgSec}
+    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --quiet --import ${cfg.gpg-pub}
+    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --quiet --import ${cfg.gpg-sec}
   '';
   };
 }

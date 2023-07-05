@@ -1,3 +1,4 @@
+# TODO: make this a sub-module of linux
 {pkgs, lib, config, ...}:
 let
   home = config.home.homeDirectory;

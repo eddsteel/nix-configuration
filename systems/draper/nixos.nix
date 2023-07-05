@@ -7,7 +7,7 @@ let
   hosts = import ../hosts.nix { inherit lib; };
 in {
   imports = [
-    ../per-host.nix
+    ../../modules/per-host.nix
     ./hardware.nix
     "${sops-nix}/modules/sops"
   ];

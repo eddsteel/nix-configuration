@@ -1,16 +1,8 @@
 { config, pkgs, lib, ... }:
-{
-  imports = [
-    ../../home/emacs.nix
-    ../../home/firefox.nix
-    ../../home/git.nix
-    ../../home/gnome.nix
-    ../../home/linux.nix
-    ../../home/local.nix
-    ../../home/shell.nix
-    ../../home/ssh.nix
-    ../../home/workstation.nix
-  ];
+let
+  email = "edd@eddsteel.com"
+in {
+  imports = [ ../../modules/home/linux/gnome.nix ../../modules/home/linux ../../modules/home ];
 
   home.stateVersion = "21.05";
   programs.home-manager.enable = true;
@@ -23,16 +15,17 @@
     username = "edd";
     homedir = "/home/edd";
     hostname = "draper";
+    ssh = true;
   };
 
-  programs.git = {
-    userEmail = "edd@eddsteel.com";
-    signing.key = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
+  git = {
+    inherit email;
+    enable = true;
+    key = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
   };
 
   shell = {
     enable = true;
-    extraAliases = {};
   };
 
   workstation = {
@@ -47,4 +40,13 @@
       {"name" = "tell-consul";}
     ];
   };
+
+  emacs = {
+    enable = true;
+  };
+
+  firefox = {
+    enable = true;
+    sync-user = email;
+  }
 }

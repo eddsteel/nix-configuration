@@ -1,7 +1,7 @@
 # Nix-Darwin configuration for my work computer.
 { config, pkgs, ... }:
 {
-  imports = [ ../per-host.nix ];
+  imports = [ ../../modules/per-host.nix ];
   environment.systemPackages = [];
 
   environment.etc."nix/nix.conf".text = ''

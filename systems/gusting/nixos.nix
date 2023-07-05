@@ -20,7 +20,7 @@ let
   };
 in {
   imports = [
-    ../per-host.nix
+    ../../modules/per-host.nix
     ./hardware.nix
     "${sops-nix}/modules/sops"
   ];
