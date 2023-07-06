@@ -21,7 +21,7 @@ in {
   networking = {
     hostName = "da-shi";
     inherit (hosts) extraHosts;
-    firewall.allowedTCPPorts = [ 22 4000 8096 8200 6600];
+    firewall.allowedTCPPorts = [ 22 4000 8096 8200 6600 443 80];
     firewall.allowedUDPPorts = [ 1900 ];
   };
 
@@ -139,7 +139,7 @@ in {
     serviceConfig.EnvironmentFile = /run/secrets/backup/env;
     path = [ pkgs.awscli2 ];
     script = ''
-      aws s3 sync --quiet --size-only /srv/data/ s3://eddsteel-disk/
+      aws s3 sync --only-show-errors --size-only /srv/data/ s3://eddsteel-disk/
     '';
   };
 
