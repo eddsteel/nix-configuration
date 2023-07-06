@@ -3,7 +3,7 @@ import Config
 
 config :pleroma, Pleroma.Web.Endpoint,
    url: [host: "alt.moron.city", scheme: "https", port: 443],
-   http: [ip: {0, 0, 0, 0}, port: 4000],
+   http: [ip: {0, 0, 0, 0}, port: 4000]
 
 config :pleroma, :instance,
   name: "alt.moron.city",
@@ -35,4 +35,4 @@ config :pleroma, :instance, static_dir: "/var/lib/pleroma/static"
 
 config :pleroma, configurable_from_database: true
 
-config :pleroma, Pleroma.Upload, filters: [Pleroma.Upload.Filter.Exiftool, Pleroma.Upload.Filter.AnonymizeFilename, Pleroma.Upload.Filter.Dedupe]
+config :pleroma, Pleroma.Upload, filters: [Pleroma.Upload.Filter.AnonymizeFilename, Pleroma.Upload.Filter.Dedupe]

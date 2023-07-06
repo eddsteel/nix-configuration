@@ -1,17 +1,28 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
+  sops-nix = builtins.fetchTarball {
+    url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
+  };
   hostName = "da-shi";
-  hosts = import ../hosts.nix;
+  hosts = import ../hosts.nix { inherit lib; };
+  secrets = import ../../secrets;
 in {
-  imports = [../../modules/per-host.nix ./hardware.nix];
+  imports = [
+    ../../modules/per-host.nix
+    ./hardware.nix
+    "${sops-nix}/modules/sops"
+  ];
 
   perHost = {
-    inherit hostName;
     enable = true;
+    inherit hostName;
   };
 
   networking = {
+    hostName = "da-shi";
     inherit (hosts) extraHosts;
+    firewall.allowedTCPPorts = [ 22 4000 8096 8200 6600];
+    firewall.allowedUDPPorts = [ 1900 ];
   };
 
   boot.initrd.kernelModules = [ "usb_storage" ];
@@ -38,6 +49,10 @@ in {
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
+  sops.defaultSopsFile = ../../sops/secrets.yaml;
+  sops.secrets."pleroma/secrets.exs".owner = config.users.users.pleroma.name;
+  sops.secrets."backup/env".owner = config.users.users.edd.name;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.edd = {
      isNormalUser = true;
@@ -52,15 +67,16 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     cryptsetup
-     emacs
-     vim
-     wget
-     git
-     awscli2
-     rsync
-     libxfs
-   ];
+    cryptsetup
+    exiftool
+    emacs
+    vim
+    wget
+    git
+    awscli2
+    rsync
+    libxfs
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -74,14 +90,34 @@ in {
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
   services.jellyfin.enable = true;
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 8096 6600];
-  networking.firewall.allowedUDPPorts = [ ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  services.minidlna = {
+    enable = true;
+    settings.media_dir = [ "V,/srv/data/film" "V,/srv/data/television" "A,/srv/data/albums" ];
+    openFirewall = true;
+  };
+  services.pleroma = {
+    enable = true;
+    configs = [ (lib.fileContents ../../files/pleroma-config.exs) ];
+    secretConfigFile = "/run/secrets/pleroma/secrets.exs";
+  };
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_13;
+    enableTCPIP = true;
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all all trust
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128 trust
+    '';
+    dataDir = "/srv/data/base";
+    initialScript = pkgs.writeText "pleroma-initScript" ''
+      CREATE ROLE pleroma WITH LOGIN PASSWORD '${secrets.database.pleroma.password}' CREATEDB;
+      CREATE DATABASE pleroma;
+      GRANT ALL PRIVILEGES ON DATABASE pleroma TO pleroma;
+      ALTER DATABASE pleroma OWNER to pleroma;
+    '';
+  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -100,14 +136,19 @@ in {
     wants = [ "network.target" "srv.mount"];
     serviceConfig.Type = "oneshot";
     serviceConfig.User = "edd";
+    serviceConfig.EnvironmentFile = /run/secrets/backup/env;
     path = [ pkgs.awscli2 ];
-    environment = {
-      AWS_SHARED_CREDENTIALS_FILE = "${../../secrets/aws-credentials}";
-    };
     script = ''
       aws s3 sync --quiet --size-only /srv/data/ s3://eddsteel-disk/
     '';
   };
+
+  systemd.timers.s3sync = {
+     wantedBy = [ "timers.target" ];
+     timerConfig = {
+       OnCalendar = "daily";
+     };
+   };
 
   systemd.services.backup = {
     wants = [ "srv.mount" ];
@@ -132,11 +173,4 @@ rsync -aHv --size-only --delete /home "$D/current/"
         OnCalendar = "weekly";
       };
     };
-
-   systemd.timers.s3sync = {
-     wantedBy = [ "timers.target" ];
-     timerConfig = {
-       OnCalendar = "daily";
-     };
-   };
 }

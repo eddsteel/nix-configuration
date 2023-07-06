@@ -2,12 +2,10 @@
 with lib;
 let
   cfg = config.perHost;
+  hostName = config.networking.hostName;
 in {
   options.perHost = {
     enable = mkEnableOption "Use per-host configuration";
-    hostName = mkOption {
-      type = types.str;
-    };
     os = mkOption {
       type = types.str;
       default = "nixos";
@@ -25,11 +23,10 @@ in {
     nixpkgsPath = toString <nixpkgs>;
     pkgsconfig = "${configPath}/nixpkgs.nix";
     overlaysconfig = "${configPath}/overlays";
-    localRoot = "${configPath}/systems/${cfg.hostName}";
+    localRoot = "${configPath}/systems/${hostName}";
     osconfig = "${localRoot}/${cfg.os}.nix";
     homeconfig = "${localRoot}/home.nix";
   in mkIf cfg.enable {
-    networking.hostName = cfg.hostName;
     nix.nixPath = [
       "${cfg.os}-config=${osconfig}"
       "hm-config=${homeconfig}"
@@ -43,7 +40,7 @@ in {
 
     environment = let
       envvars = {
-        HOSTNAME = cfg.hostName;
+        HOSTNAME = hostName;
         HOME_MANAGER_CONFIG = homeconfig;
         NIX_CONF_DIR = configPath;
       };
