@@ -116,7 +116,7 @@ in {
   in lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD defaults write com.apple.dock persistent-apps -array
     ${app-def-write "/System/Applications/System Settings.app"}
-    ${add-dock-app pkgs.emacs "Emacs"}
+    ${add-dock-app pkgs.emacs29 "Emacs"}
     ${add-dock-app pkgs.firefox "Firefox"}
     ${add-dock-app pkgs.iterm2 "iTerm2"}
     ${add-dock-app pkgs.wavebox "Wavebox"}
