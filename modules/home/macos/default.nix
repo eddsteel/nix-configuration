@@ -40,7 +40,7 @@ in {
   #!/usr/bin/env bash
   PATH="$HOME/.nix-profile/bin"
   temp=$(nix-shell -p broadlink-cli --command 'broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature')
-  echo "$temp°C"
+  printf "%s°C\n" $temp
   '';
   home.file."Library/Application Support/xbar/plugins/indoor-temp.60.sh".executable = true;
 
