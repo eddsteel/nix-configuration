@@ -16,6 +16,7 @@
   (nano-popout ((t (:foreground "#B58A7C"))))
   (nano-popout-i ((t (:background "#B58A7C"))))
   (nano-mono ((t (:weight light :height 130 :family "Fira Code"))))
+  (nano-strong ((t (:weight normal :height 130 :family "Fira Code"))))
   (ahs-plugin-default-face ((t (:background "#B58A7C"))))
   (ahs-plugin-default-face-unfocused ((t (:background "#B58A7C"))))
   (menu ((t (:background "#CEC8B1"))))
@@ -47,7 +48,17 @@
 
 (use-package nano-modeline
   :init
-  (nano-modeline-mode))
+  (setq-default mode-line-format nil)
+  :hook
+  (prog-mode . nano-modeline-prog-mode)
+  (text-mode . nano-modeline-text-mode)
+  (org-mode . nano-modeline-org-mode)
+  (pdf-view . nano-modeline-pdf-mode)
+  (term-mode . nano-modeline-term-mode)
+  (xwidget-webkit-mode . nano-modeline-xwidget-mode)
+  (messages-buffer-mode . nano-modeline-message-mode)
+  (org-capture-mode . nano-modeline-org-capture-mode)
+  (org-agenda-mode . nano-modeline-org-agenda-mode))
 
 ;; TODO: see which of these nano mode obviates
 (use-package emacs

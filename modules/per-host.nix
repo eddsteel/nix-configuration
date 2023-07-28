@@ -13,16 +13,21 @@ in {
       default = "nixos";
       description = "nixos or darwin";
     };
+    secrets = mkOption {
+      type = types.path;
+      default = <nix-config> + "/secrets";
+      description = "path to host-specific secrets";
+    };
   };
 
   config = let
     configPath = toString <nix-config>;
     nixpkgsPath = toString <nixpkgs>;
+    pkgsconfig = "${configPath}/nixpkgs.nix";
+    overlaysconfig = "${configPath}/overlays";
     localRoot = "${configPath}/systems/${cfg.hostName}";
     osconfig = "${localRoot}/${cfg.os}.nix";
     homeconfig = "${localRoot}/home.nix";
-    pkgsconfig = "${configPath}/nixpkgs.nix";
-    overlaysconfig = "${configPath}/overlays.nix";
   in mkIf cfg.enable {
     networking.hostName = cfg.hostName;
     nix.nixPath = [
@@ -32,10 +37,9 @@ in {
       "nixpkgs-config=${pkgsconfig}"
       "nixpkgs-overlays=${overlaysconfig}"
       "nix-config=${configPath}" # ∞ set at the command line, once
+      "secrets=${configPath}/secrets"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
-
-    nixpkgs.overlays = import "${overlaysconfig}";
 
     environment = let
       envvars = {

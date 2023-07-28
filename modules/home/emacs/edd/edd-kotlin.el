@@ -1,15 +1,14 @@
 (use-package kotlin-mode
   :mode ("build.gradle.kts" . kotlin-mode)
-  :hook edd-kotlin/imenu
+  :hook edd-kt/imenu
   :bind
   ("C-c i" . edd-kt/sort-imports)
   :config
   (setq kotlin-tab-width 4)
   (setq gradle-use-gradlew nil)
-  (defun edd-kotlin/imenu ()
-    (add-to-list
-     'imenu-generic-expression
-     '("Functions""\\(^\\s*fun +\\)\\([^ ]+\\)\\|\\(^\\s*fun +`\\)\\([^`]+\\)`" 2)))
+  (defun edd-kt/imenu ()
+    (setq-local imenu-create-index-function 'edd-kt/imenu))
+
   (defun edd-kt/sort-imports ()
     (interactive)
     (let
@@ -21,6 +20,19 @@
           return ?\M-h ?\C-n ?\M-% ?z ?z ?z ?j ?a ?v ?a return ?j
           ?a ?v ?a return ?! ?\C-n]))
       (execute-kbd-macro macro)))
+
+  (defun edd-kt/imenu-regexps ()
+    "Regexps for imenu (https://github.com/fernando-jascovich/kotlin-imenu.el)"
+    (list
+     (list nil "\\(.[^companion]*\\)\\(companion .[^{]*\\)" 2)
+     (list nil "\\(.[^constructor]*\\)\\(constructor.[^)]*\)\\)" 2)
+     (list nil "\\(.[^fun]*\\) \\(fun .[^)|{|=]*\)\\)" 2)
+     (list nil "\\(class .[^:|{|\(]*\\)" 1)
+     (list nil "\\(interface .[^:|{|\(]*\\)" 1)))
+
+  (defun edd-kt/imenu ()
+    "Create imenu index for kotlin-mode."
+    (imenu--generic-function (edd-kt/imenu-regexps)))
 
   :init
   (add-to-list

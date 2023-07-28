@@ -23,6 +23,17 @@ let
       sha256 = "sha256-Bgb5wFyx0hMilpihxA8cTrRVw71EBOw2DczlM4lSNMs=";
     };
   };
+  nano-modeline = epkgs: epkgs.trivialBuild {
+    pname = "nano-modeline";
+    version = "1";
+    src = pkgs.fetchFromGitHub {
+      owner = "rougier";
+      repo = "nano-modeline";
+      rev = "631387df3f6835a975faa1f0c8b44da1fe4b57a9";
+      sha256 = "1fmxwxigf25gl0fajcic2h6kza5g74za4l5b4pv5hny7mjkz5kvw";
+    };
+    patches = [ ./nano-modeline.patch ];
+  };
   ob-http-fork = epkgs: epkgs.trivialBuild {
     pname = "ob-http";
     version = "1";
@@ -139,7 +150,7 @@ in {
         flymake-easy
         flymake-go
         flymake-hlint
-        nano-modeline
+        (nano-modeline epkgs)
         nano-theme
         restclient
         fish-mode
@@ -147,8 +158,8 @@ in {
       ];
     };
 
-    xdg.configFile."emacs/init.el".source = ../../files/emacs/init.el;
-    xdg.configFile."emacs/edd".source = ../../files/emacs/edd;
-    xdg.configFile."emacs/local.el".source = ../../secrets/local.el;
+    xdg.configFile."emacs/init.el".source = ./init.el;
+    xdg.configFile."emacs/edd".source = ./edd;
+    xdg.configFile."emacs/local.el".source = <secrets> + "/local.el";
   };
 }

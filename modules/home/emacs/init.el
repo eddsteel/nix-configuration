@@ -87,11 +87,9 @@
   :config
   (consult-customize
    consult-theme
-   :preview-key '(:debounce 0.2 any)
    consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file consult-xref
-   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
-   :preview-key (kbd "M-."))
+   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark)
   (defun edd-proj/idea ()
     (interactive)
     "Open IDEA in current project"
@@ -103,7 +101,8 @@
        "idea"
        (expand-file-name root)
        )))
-  (setq consult-narrow-key "<"))
+  (setq consult-narrow-key "<"
+        consult-preview-key "M-."))
 
 (use-package embark
   :bind
