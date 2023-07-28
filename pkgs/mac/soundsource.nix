@@ -1,8 +1,8 @@
-{ pkgs ? import <nixpkgs> {}}:
+{ pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "soundsource";
-  version = "5.5.7";
-  sha = "1rp8isfcsfqdxwiw2b7gw6iy3dga6ayxcmbb6z08a5sc52dychw7";
+  version = "5.6.0";
+  sha = "1avm1jr75mjbps0fad3glshrwl42vnhc0f9sak038ny85f3apyi0";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";
@@ -21,7 +21,7 @@ pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "SoundSource";
     homepage = https://rogueamoeba.com/soundsource;
-    maintainers = [ (import ../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs }:
 let
   versions = (builtins.fromJSON (builtins.readFile ../versions.json)).signal;
 in pkgs.stdenv.mkDerivation rec {
@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "Signal messenger";
     homepage = "https://signal.org";
-    maintainers = [ (import ../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "xbar";
   version = "2.1.7-beta";
@@ -22,7 +22,7 @@ pkgs.stdenv.mkDerivation rec {
     description = "xbar";
     homepage = "https://xbarapp.com";
     license = licenses.mit;
-    maintainers = [ (import ../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }

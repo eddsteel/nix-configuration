@@ -1,11 +1,11 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs }:
 let
   versions = (builtins.fromJSON (builtins.readFile ../../versions.json)).awsvpn;
 in pkgs.stdenv.mkDerivation rec {
   pname = "aws-vpn";
   inherit (versions) version;
 
-  nativeBuildInputs = with pkgs; [ cpio xar];
+  nativeBuildInputs = with pkgs; [ cpio xar ];
   sourceRoot = ".";
   phases = [ "unpackPhase" "installPhase" ];
 
@@ -27,7 +27,7 @@ in pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "AWS VPN client";
     homepage = "https://aws.amazon.com/vpn/";
-    maintainers = [ (import ../../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }

@@ -19,7 +19,7 @@ in pkgs.stdenv.mkDerivation rec {
     description = "The Firefox web browser";
     homepage = "https://www.mozilla.org/en-CA/firefox";
     license = licenses.mpl20;
-    maintainers = [ (import ../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }

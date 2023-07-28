@@ -17,7 +17,7 @@ in  pkgs.stdenv.mkDerivation rec {
   meta = with pkgs.lib; {
     description = "Bitwarden password manager";
     homepage = "https://bitwarden.com";
-    maintainers = [ (import ../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }

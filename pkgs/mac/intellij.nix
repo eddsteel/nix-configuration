@@ -17,7 +17,7 @@ let
     meta = with pkgs.lib; {
       description = "Intellij IDEA Community Edition";
       homepage = "https://www.jetbrains.com/idea/";
-      maintainers = [ (import ../../maintainers.nix).eddsteel ];
+      maintainers = [ maintainers.eddsteel ];
       platforms = platforms.darwin;
     };
   };

@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs, lib }:
 let
   versions = (builtins.fromJSON (builtins.readFile ../versions.json)).iterm2;
 in pkgs.stdenv.mkDerivation rec {
@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation rec {
     description = "iTerm 2";
     homepage = "https://iterm2.com";
     license = licenses.gpl2Only;
-    maintainers = [ (import ../../maintainers.nix).eddsteel ];
+    maintainers = [ maintainers.eddsteel ];
     platforms = platforms.darwin;
   };
 }
