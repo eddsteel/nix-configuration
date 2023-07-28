@@ -34,7 +34,7 @@ in with lib; {
     programs.direnv.nix-direnv.enable = true;
     programs.jq.enable = true;
     programs.exa.enable = true;
-    programs.mr = {
+    mr = {
       enable = true;
       github-name = cfg.github-name;
       repos = bootstrap-repos ++ cfg.mr-repos;

@@ -2,7 +2,7 @@
 
 with lib;
 let
-  cfg = config.programs.mr;
+  cfg = config.mr;
   homedir = config.home.homeDirectory;
   netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
   mkMrConfig = me: repo: let
@@ -23,7 +23,7 @@ let
   mrINI = me: repos: lib.generators.toINI {} (listToAttrs (map (mkMrConfig me) repos));
 in {
   options = {
-    programs.mr = {
+    mr = {
       enable = mkEnableOption "mr, a multi-repository management tool";
       repos = mkOption {};
       rootdir = mkOption {};
