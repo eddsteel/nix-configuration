@@ -2,8 +2,8 @@
 let
   homedir = config.home.homeDirectory;
   cfg = config.shell;
-  aliases = {
-    ec = ''${pkgs.emacs}/bin/emacsclient --no-wait --socket=${homedir}/run/emacs/server'';
+  aliases = em : {
+    ec = ''${em}/bin/emacsclient --no-wait --socket=${homedir}/run/emacs/server'';
     ga = ''git add'';
     gam = ''git commit -am'';
     gap = ''git add -p'';
@@ -46,16 +46,19 @@ in with lib; {
     extraAliases = mkOption {
       default = {};
     };
+    emacs = mkOption {
+      default = pkgs.emacs;
+    };
   };
   config = mkIf cfg.enable {
-    home.shellAliases = aliases // cfg.extraAliases;
+    home.shellAliases = aliases cfg.emacs // cfg.extraAliases;
     programs.bash = {
       enable = true;
       historyFile = "${homedir}/.histfile";
 
       sessionVariables = {
-        EDITOR = "${pkgs.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
-        ALTERNATE_EDITOR = "${pkgs.emacs}/bin/emacs";
+        EDITOR = "${cfg.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
+        ALTERNATE_EDITOR = "${cfg.emacs}/bin/emacs";
         LESS = " -R ";
         HISTCONTROL = "ignoredups:erasedups";
         HISTSIZE = "100000";
@@ -83,8 +86,8 @@ in with lib; {
     programs.fish = {
       enable = true;
       shellInit = ''
-      set -gx EDITOR "${pkgs.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server"
-      set -gx ALTERNATE_EDITOR "${pkgs.emacs}/bin/emacs"
+      set -gx EDITOR "${cfg.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server"
+      set -gx ALTERNATE_EDITOR "${cfg.emacs}/bin/emacs"
       set NIXPKGS_CONFIG ${toString <nixpkgs-config>}
 
       # emacs dir tracking

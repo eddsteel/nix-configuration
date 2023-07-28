@@ -8,6 +8,7 @@ in with lib; {
     email = mkOption {};
     key = mkOption {};
     github-user = mkOption { default = "eddsteel"; };
+    emacs = mkOption { default = pkgs.emacs; };
   };
 
   config = mkIf cfg.enable {
@@ -48,7 +49,7 @@ in with lib; {
       extraConfig = {
         branch.autosetuprebase = "always";
         color.ui = true;
-        core.editor = "${pkgs.emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
+        core.editor = "${cfg.emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
         github.user = cfg.github-user;
         init.defaultBranch = "main";
         pull.rebase = true;

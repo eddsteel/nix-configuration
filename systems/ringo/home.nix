@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 let
+  emacs = pkgs.emacs29;
   work-pkgs = pkgs.callPackages ../../../../src/nix-work {};
   secrets = import ../../secrets { inherit work-pkgs; };
 in {
@@ -24,12 +25,14 @@ in {
 
   git = {
     enable = true;
+    inherit emacs;
     email = secrets.email;
     key = "8433C6F9F807CE8E8DFA99EFB10455BC05772724";
   };
 
   shell = {
     enable = true;
+    inherit emacs;
     extraAliases = {
       "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";
       "gradle" = "envchain gradle gradle";
@@ -47,6 +50,7 @@ in {
 
   emacs = {
     enable = true;
+    package = emacs;
   };
 
   firefox = {
