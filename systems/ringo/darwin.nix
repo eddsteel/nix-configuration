@@ -55,4 +55,10 @@
   nix = {
     gc.automatic = true;
   };
+
+  # this is currently broken
+  documentation = {
+    doc.enable = false;
+    man.enable = false;
+  };
 }
