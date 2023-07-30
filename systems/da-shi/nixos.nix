@@ -6,6 +6,19 @@ let
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
   secrets = import ../../secrets;
+  zones = pkgs.callPackage ../gusting/zones.nix {};
+  virtualHost = svc: {
+    name = "${svc.name}.${hosts.domain}";
+    value = {
+      enableACME = true;
+      acmeRoot = null;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = svc.url;
+        proxyWebsockets = true; # needed if you need to use WebSocket
+      };
+    };
+  };
 in {
   imports = [
     ../../modules/per-host.nix
@@ -13,16 +26,13 @@ in {
     "${sops-nix}/modules/sops"
   ];
 
-  perHost = {
-    enable = true;
-    inherit hostName;
-  };
+  perHost.enable = true;
 
   networking = {
     hostName = "da-shi";
     inherit (hosts) extraHosts;
-    firewall.allowedTCPPorts = [ 22 4000 8096 8200 6600 443 80];
-    firewall.allowedUDPPorts = [ 1900 ];
+    firewall.allowedTCPPorts = [ 22 80 443 3000 4000 8300 8301 8302 8543 8500 8096 8200 6600 8080];
+    firewall.allowedUDPPorts = [ 1900 53 55 8300 8301 8302];
   };
 
   boot.initrd.kernelModules = [ "usb_storage" ];
@@ -50,8 +60,12 @@ in {
   # };
 
   sops.defaultSopsFile = ../../sops/secrets.yaml;
-  sops.secrets."pleroma/secrets.exs".owner = config.users.users.pleroma.name;
-  sops.secrets."backup/env".owner = config.users.users.edd.name;
+  sops.secrets."consul/ca.pem".owner = config.users.users.consul.name;
+  sops.secrets."consul/server.crt".owner = config.users.users.consul.name;
+  sops.secrets."consul/server.key".owner = config.users.users.consul.name;
+  sops.secrets."route53/env" = {};
+  #sops.secrets."pleroma/secrets.exs".owner = config.users.users.pleroma.name;
+  #sops.secrets."backup/env".owner = config.users.users.edd.name;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.edd = {
@@ -76,6 +90,10 @@ in {
     awscli2
     rsync
     libxfs
+
+    dig
+    rsync
+    r53-ddns
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -91,18 +109,43 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.jellyfin.enable = true;
+  services.influxdb = {
+    enable = false;
+    dataDir = "/srv/data/influx";
+  };
   services.minidlna = {
     enable = true;
     settings.media_dir = [ "V,/srv/data/film" "V,/srv/data/television" "A,/srv/data/albums" ];
     openFirewall = true;
   };
-  services.pleroma = {
+  services.grafana = {
     enable = true;
+    dataDir = "/srv/data/grafana";
+    settings = {
+      server = {
+        # Listening Address
+        http_addr = "0.0.0.0";
+        # and Port
+        http_port = 3000;
+        # Grafana needs to know on which domain and URL it's running
+        domain = "stats.moron.city";
+      };
+
+      "plugin.marcusolsson-csv-datasource"=  {
+        allow_local_mode = true;
+      };
+      feature_toggles = {
+        enable = "publicDashboards";
+      };
+    };
+  };
+  services.pleroma = {
+    enable = false;
     configs = [ (lib.fileContents ../../files/pleroma-config.exs) ];
     secretConfigFile = "/run/secrets/pleroma/secrets.exs";
   };
   services.postgresql = {
-    enable = true;
+    enable = false;
     package = pkgs.postgresql_13;
     enableTCPIP = true;
     authentication = pkgs.lib.mkOverride 10 ''
@@ -111,12 +154,162 @@ in {
       host all all ::1/128 trust
     '';
     dataDir = "/srv/data/base";
-    initialScript = pkgs.writeText "pleroma-initScript" ''
-      CREATE ROLE pleroma WITH LOGIN PASSWORD '${secrets.database.pleroma.password}' CREATEDB;
-      CREATE DATABASE pleroma;
-      GRANT ALL PRIVILEGES ON DATABASE pleroma TO pleroma;
+    ensureDatabases = [ "pleroma" "meter" ];
+    ensureUsers = [
+      { name = "edd"; ensurePermissions = { "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES"; };}
+      { name = "pleroma"; ensurePermissions = { "DATABASE pleroma" = "ALL PRIVILEGES";};}
+      { name = "meter"; ensurePermissions = { "DATABASE meter" = "ALL PRIVILEGES";};}
+    ];
+    initialScript = pkgs.writeText "setup-pg" ''
+      ALTER ROLE pleroma WITH LOGIN PASSWORD '${secrets.database.pleroma.password}'; 
+      ALTER ROLE meter WITH LOGIN PASSWORD '${secrets.database.meter.password}';
       ALTER DATABASE pleroma OWNER to pleroma;
+      ALTER DATABASE meter OWNER to meter;
+
+      CREATE SCHEMA meters;
+      CREATE ROLE meterreader;
+
+      GRANT USAGE ON SCHEMA meters TO meter;
+      GRANT ALL ON ALL TABLES IN SCHEMA meters TO meter;
+
+      GRANT CONNECT ON DATABASE meter to meterreader;
+      GRANT USAGE ON SCHEMA meters TO meterreader;
+
+      CREATE USER grafanareader WITH LOGIN PASSWORD '${secrets.database.grafana-reader.password}'; 
+      GRANT meterreader TO grafanareader;
     '';
+  };
+
+  # TODO: put this in a meters project
+  # initialSetup = ''
+#      CREATE TABLE IF NOT EXISTS meter.meters.temperature (
+#        time TIMESTAMPZ,
+#        temperature REAL
+#      );
+#      GRANT SELECT ON meters.temperature TO meterreader;
+#      create index IF NOT EXISTS meters_time_brin_idx on meters.temperature using brin (time);
+#    '';
+  #'';
+
+    services.unbound = {
+    enable = true;
+    settings = {
+      server = {
+        interface = ["0.0.0.0" "::0"];
+        access-control = ["127.0.0.0/24 allow" "192.168.1.0/24 allow"];
+        domain-insecure = "${hosts.domain}.local";
+        local-zone = [
+          ''"localhost." static''
+          ''"127.in-addr.arpa." static''
+          ''"${hosts.domain}" transparent''
+        ];
+        # TODO refactor with hosts vars
+        local-data = [
+        ''"localhost. 10800 IN NS localhost."''
+        ''"localhost. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"''
+        ''"localhost. 10800 IN A 127.0.0.1"''
+        ''"127.in-addr.arpa. 10800 IN NS localhost."''
+        ''"127.in-addr.arpa. 10800 IN SOA localhost. nobody.invalid. 2 3600 1200 604800 10800"''
+        ''"1.0.0.127.in-addr.arpa. 10800 IN PTR localhost."''
+        ''"da-shi.${hosts.domain}  IN  A  ${hosts.hosts.da-shi.ip4}"''
+        ''"draper.${hosts.domain}  IN  A  ${hosts.hosts.draper.ip4}"''
+        ''"blinds.${hosts.domain}  IN  A  ${hosts.hosts.blinds.ip4}"''
+        ''"gusting.${hosts.domain}  IN  A  ${hosts.hosts.gusting.ip4}"''
+        ] ++ (map
+          (s: ''"${s.name}.${hosts.domain}  IN  A  ${hosts.hosts.da-shi.ip4}"'')
+          hosts.services);
+        private-domain = [ '' "${hosts.domain}."''];
+      };
+      forward-zone = {
+          name = ".";
+          forward-tls-upstream = "yes";
+          forward-addr = ["1.0.0.1@853#cloudflare-dns.com" "1.1.1.1@853#cloudflare-dns.com"];
+        };
+      include = "${zones}/blocklist.conf";
+    };
+  };
+  services.consul = {
+    enable = true;
+    interface.bind = "eth0";
+    interface.advertise = "eth0";
+    extraConfig = {
+      ui_config.enabled = true;
+      datacenter = "edd";
+      ports = { https = 8543;};
+      bootstrap = true;
+      bootstrap_expect = 1;
+      server = true;
+      ca_file = "/run/secrets/consul/ca.pem";
+      cert_file = "/run/secrets/consul/server.crt";
+      key_file = "/run/secrets/consul/server.key";
+      http_config = {
+        response_headers = {
+          Access-Control-Allow-Origin = "*";
+          Access-Control-Allow-Methods = "GET,PUT,POST,DELETE";
+          Access-Control-Allow-Headers = "content-type,user-agent";
+        };
+      };
+    };
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "edd@eddsteel.com";
+      dnsProvider = "route53";
+      credentialsFile = /run/secrets/route53/env;
+    };
+  };
+
+  users.users.nginx.extraGroups = [ "acme" ];
+
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    clientMaxBodySize = "20M";
+    # other Nginx options;
+    #    virtualHosts = with builtins; listToAttrs (map virtualHost hosts.services);
+    virtualHosts = with builtins; listToAttrs [
+      (virtualHost (elemAt hosts.services 0))
+      (virtualHost (elemAt hosts.services 1))
+      {
+        name = "media.${hosts.domain}";
+        value = {
+          enableACME = true;
+          acmeRoot = null;
+          forceSSL = true;
+          extraConfig = ''
+            # Security / XSS Mitigation Headers
+            # NOTE: X-Frame-Options may cause issues with the webOS app
+            add_header X-Frame-Options "SAMEORIGIN";
+            add_header X-XSS-Protection "0"; # Do NOT enable. This is obsolete/dangerous
+            add_header X-Content-Type-Options "nosniff";            
+
+            # Permissions policy. May cause issues on some clients
+            add_header Permissions-Policy "accelerometer=(), ambient-light-sensor=(), battery=(), bluetooth=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), payment=(), publickey-credentials-get=(), serial=(), sync-xhr=(), usb=(), xr-spatial-tracking=()" always;
+
+            # Tell browsers to use per-origin process isolation
+            add_header Origin-Agent-Cluster "?1" always;
+
+            proxy_headers_hash_max_size 20480;
+          '';
+          locations."/" = {
+            proxyPass = "http://127.0.0.2:8096";
+            extraConfig = ''
+              proxy_buffering off;
+            '';
+          };
+          #locations."/web/" = {
+          #  proxyPass = "http://127.0.0.2:8096/web/index.html";
+          #};
+          locations."/socket" = {
+            proxyPass = "http://127.0.0.2:8096";
+            proxyWebsockets = true;
+          };
+        };
+      }
+    ];
   };
 
   # Copy the NixOS configuration file and link it from the resulting system
@@ -173,4 +366,39 @@ rsync -aHv --size-only --delete /home "$D/current/"
         OnCalendar = "weekly";
       };
     };
+
+   systemd.services.temperature = {
+      wants = ["srv.mount" "network.target" ];
+      serviceConfig.Type = "oneshot";
+      path = [ pkgs.broadlink-cli ];
+      script = ''
+        temp=$(broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature)
+        dt=$(date -u +"%Y-%m-%d %H:%M:%S")
+        
+        echo "$dt,$temp" >> /srv/data/thermometer
+   '';
+   };
+   systemd.timers.temperature = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "minutely";
+      };
+   };
+
+   systemd.services.r53-ddns = {
+    wants = [ "network.target"];
+    serviceConfig.EnvironmentFile = /run/secrets/route53/env;
+    serviceConfig.Type = "oneshot";
+    path = [ pkgs.r53-ddns ];
+    script = with builtins; lib.strings.concatStringsSep "\n" (map (svc: ''
+      r53-ddns -hostname "${svc.name}" -domain "${hosts.domain}" -zone-id $AWS_HOSTED_ZONE_ID
+    '') hosts.services);
+  };
+
+  systemd.timers.r53-ddns = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+    };
+  };
 }

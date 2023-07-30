@@ -1,7 +1,7 @@
 { lib }:
 rec {
   domain = "moron.city";
-  consulMain = "gusting";
+  consulMain = "da-shi";
   hosts = {
     blinds = {
       ip4 = "192.168.1.165";
@@ -33,7 +33,8 @@ rec {
   );
 
   services = [
-    {"name" = "media"; "host" = "da-shi"; "url" = "http://da-shi:8096";}
     {"name" = "next"; "host" = "da-shi"; "url" = "http://da-shi:4000";}
+    {"name" = "stats"; "host" = "da-shi"; "url" = "http://da-shi:3000";}
+    {"name" = "media"; "host" = "da-shi"; "url" = "http://da-shi:8096";}
   ];
 }
