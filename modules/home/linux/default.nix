@@ -51,7 +51,6 @@ stations = 1xtra http://stream.live.vc.bbcmedia.co.uk/bbc_1xtra
 
   home.packages = [pkgs.brainzo];
 
-  xdg.configFile."geary/account_01/geary.ini".source = ../../../files/geary.ini;
   home.file.".desktop.jpg".source = pkgs.fetchurl {
     name = "desktop.jpg";
     url = "https://eddsteel.com/desktop.jpg";
