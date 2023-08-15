@@ -13,10 +13,10 @@ in with lib; {
       enable = true;
       profiles."default" = {
         id = 0;
-        path = "xtqfr4qa.default";
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
         ];
+        path = "xtqfr4qa.default";
         isDefault = true;
         settings = {
           "browser.aboutConfig.showWarning" = false;

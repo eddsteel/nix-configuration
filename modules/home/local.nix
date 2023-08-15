@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.local;
+  ssh-stub = "id_rsa.${cfg.username}.${cfg.hostname}";
 in {
   options.local = {
     username = mkOption {};
@@ -17,8 +18,8 @@ in {
     }
 
     (mkIf cfg.ssh {
-      home.file.".ssh/id_rsa.pub".source =  "${../../files}/id_rsa.${cfg.username}.${cfg.hostname}.pub";
-      home.file.".ssh/id_rsa".source = "${../../secrets}/id_rsa.${cfg.username}.${cfg.hostname}";
+      home.file.".ssh/id_rsa.pub".source =  "${<nix-config>}/files/${ssh-stub}.pub";
+      home.file.".ssh/id_rsa".source = "${<secrets>}/${ssh-stub}";
 
       programs.ssh = {
         enable = true;

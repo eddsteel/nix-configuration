@@ -119,18 +119,18 @@ in {
   environment.systemPackages = with pkgs; [
     awscli2
     git
-    home-manager
     links2
     mr
     nixos-option
     playerctl
     vim
+    wayland
     wget
   ];
 
   fonts = {
       fontDir.enable = true;
-      fonts = with pkgs; [
+      packages = with pkgs; [
         corefonts
         fira-code
         inconsolata
@@ -166,7 +166,6 @@ in {
   };
 
   programs.fish.enable = true;
-  programs.steam.enable = true;
 
   # List services that you want to enable:
 

@@ -18,7 +18,8 @@ in {
   };
 
   home.packages = with pkgs; [
-    wmctrl vlc zoom-us psmisc ledger discord nixpkgs-local.wavebox handbrake
+    wmctrl psmisc ledger nixpkgs-local.wavebox handbrake
+    zoom-us discord vlc
   ];
 
   local = {

@@ -28,9 +28,9 @@ rec {
       mac = "BC-83-85-A7-BE-61";
     };
   };
-  extraHosts = lib.concatStringsSep "\n" (
+  extraHosts = (lib.concatStringsSep "\n" (
     lib.mapAttrsToList ( host: attrs: "${attrs.ip4} ${host}") hosts
-  );
+  ));
 
   services = [
     {"name" = "next"; "host" = "da-shi"; "url" = "http://da-shi:4000";}

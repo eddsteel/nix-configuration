@@ -1,7 +1,5 @@
 { config, lib, pkgs, ...}:
-
-with lib;
-let
+with lib; let
   cfg = config.mr;
   homedir = config.home.homeDirectory;
   netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
