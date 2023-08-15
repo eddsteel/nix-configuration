@@ -49,6 +49,7 @@
 (use-package nano-modeline
   :init
   (setq-default mode-line-format nil)
+  (nano-modeline-text-mode t)
   :hook
   (prog-mode . nano-modeline-prog-mode)
   (text-mode . nano-modeline-text-mode)

@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   emacs = pkgs.emacs29;
+  homedir = "/Users/edd";
   work-pkgs = pkgs.callPackages ../../../../src/nix-work {};
   secrets = import ../../secrets { inherit work-pkgs; };
 in {
@@ -8,7 +9,10 @@ in {
 
   home.stateVersion = "21.05";
 
-  programs.home-manager.enable = true;
+  programs.home-manager = {
+    enable = true;
+    path = "${homedir}/src/home-manager"
+  };
 
   home.packages = with pkgs; [
     scripts kotlin gradle terraform terraform-docs hub-local circleci-cli
@@ -18,8 +22,8 @@ in {
   programs.go.enable = true;
 
   local = {
+    inherit homedir;
     username = "edd";
-    homedir = "/Users/edd";
     hostname = "ringo";
   };
 
