@@ -15,7 +15,7 @@ in {
   };
 
   home.packages = with pkgs; [
-    scripts kotlin gradle terraform terraform-docs hub-local circleci-cli
+    scripts kotlin gradle terraform terraform-docs hub circleci-cli
     docker gettext zoom-us aws-vpn dos2unix kubectl
   ] ++ work-pkgs.all;
 
