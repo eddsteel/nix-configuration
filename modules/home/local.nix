@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.local;
-  ssh-stub = "id_rsa.${cfg.username}.${cfg.hostname}";
+  people = import ../../people { inherit lib; };
 in {
   options.local = {
     username = mkOption {};
@@ -18,9 +18,8 @@ in {
     }
 
     (mkIf cfg.ssh {
-      home.file.".ssh/id_rsa.pub".source =  "${<nix-config>}/files/${ssh-stub}.pub";
-      home.file.".ssh/id_rsa".source = "${<nix-config>}/keys/${ssh-stub}";
-
+      home.file.".ssh/id_rsa.pub".text = with cfg; people.pubkey username hostname;
+      home.file.".ssh/id_rsa".text = with cfg; people.seckey username hostname;
       programs.ssh = {
         enable = true;
         extraConfig = ''

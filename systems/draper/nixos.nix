@@ -5,6 +5,7 @@ let
     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
   };
   hosts = import ../hosts.nix { inherit lib; };
+  people = import ../../people { inherit lib; };
 in {
   imports = [
     ../../modules/per-host.nix
@@ -98,19 +99,13 @@ in {
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = [ "wheel" "docker" "cdrom"];
-    openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../files/id_rsa.edd.ringo.pub)
-      (builtins.readFile ../../files/id_rsa.edd.gusting.pub)
-#      (builtins.readFile ../../files/id_rsa.edd.da-shi.pub)
-    ];
+    openssh.authorizedKeys.keys = people.pubkeys
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   users.users.builder = {
     isNormalUser = true;
-    openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../files/id_rsa.root.gusting.pub)
-    ];
+    openssh.authorizedKeys.keys = people.pubkey "root" "gusting";
   };
   nix.settings.trusted-users = [ "builder" ];
 

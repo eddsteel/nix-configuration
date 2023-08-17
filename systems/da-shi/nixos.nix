@@ -5,7 +5,8 @@ let
   };
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
-  secrets = import ../../secrets;
+  people = import ../../people { inherit lib; };
+  secrets = import <secrets>;
   zones = pkgs.callPackage ../gusting/zones.nix {};
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
@@ -72,10 +73,7 @@ in {
      isNormalUser = true;
      extraGroups = [ "wheel" "sudo" ]; # Enable ‘sudo’ for the user.
      packages = [];
-     openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../files/id_rsa.edd.draper.pub)
-      (builtins.readFile ../../files/id_rsa.edd.gusting.pub)
-     ];
+     openssh.authorizedKeys.keys = people.pubkeys;
   };
 
   # List packages installed in system profile. To search, run:

@@ -6,6 +6,7 @@ let
     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
   };
   hosts = import ../hosts.nix { inherit lib; };
+  people = import ../../people {inherit lib; };
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
     value = {
@@ -64,7 +65,7 @@ in {
      isNormalUser = true;
      extraGroups = [ "wheel" ];
      packages = [];
-     openssh.authorizedKeys.keys = [ (builtins.readFile ../../files/id_rsa.edd.draper.pub) ];
+     openssh.authorizedKeys.keys = people.pubkeys;
   };
 
   # List packages installed in system profile. To search, run:
