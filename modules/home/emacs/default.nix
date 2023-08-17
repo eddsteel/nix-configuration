@@ -60,9 +60,6 @@ in {
     '';
       extraPackages = epkgs: with epkgs; [
         delight
-        use-package
-        nyan-mode
-        darkokai-theme
         basic-theme
         (ligature epkgs)
 
