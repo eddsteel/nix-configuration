@@ -11,7 +11,7 @@ in {
 
   programs.home-manager = {
     enable = true;
-    path = "${homedir}/src/home-manager"
+    path = "${homedir}/src/home-manager";
   };
 
   home.packages = with pkgs; [

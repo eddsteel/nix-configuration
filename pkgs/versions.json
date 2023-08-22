@@ -7,10 +7,10 @@
       "version": "10.115.27.2"
     },
     "linux": {
-      "name": "wavebox-10.114.32-2.tar.gz",
-      "sha256": "0biw5lynmq0z7n1yc3dm4r3712yfrcbpxpzzdh109f6882yw76ss",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.114.32-2.tar.gz",
-      "version": "10.114.32-2"
+      "name": "wavebox-10.115.27-2.tar.gz",
+      "sha256": "1w86k89i6441p981hs4yz0ascwaan1n1g7k45b893jy3202bl6ja",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.115.27-2.tar.gz",
+      "version": "10.115.27-2"
     }
   },
   "bitwarden": {
@@ -20,10 +20,10 @@
     "version": "2023.7.1"
   },
   "firefox": {
-    "name": "Firefox-116.0.2.dmg",
-    "sha256": "1f77pkkvfm4m1mxpmg9ga4x3k3z0f427zy621h4x96ywiwdda1ny",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/116.0.2/mac/en-CA/Firefox%20116.0.2.dmg",
-    "version": "116.0.2"
+    "name": "Firefox-116.0.3.dmg",
+    "sha256": "0190mid3bdcx6b2nix53f8d0g92v0xa5l0ifiiwbdiabmsmvmbx6",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/116.0.3/mac/en-CA/Firefox%20116.0.3.dmg",
+    "version": "116.0.3"
   },
   "idea": {
     "name": "intellij-idea-ce-2023.2.dmg",
@@ -32,10 +32,10 @@
     "version": "2023.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.28.0.dmg",
-    "sha256": "10m54hyc1s30qnjnpk3f33pxc902qv6x2cn3rl2bsqdpys25bl5f",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.28.0.dmg",
-    "version": "6.28.0"
+    "name": "signal-desktop-mac-universal-6.29.0.dmg",
+    "sha256": "16wgvcf1zgnc5ymr2gyy11mx0cn361xzbi9kpahg38gb6p8s0ynx",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.29.0.dmg",
+    "version": "6.29.0"
   },
   "istatmenus": {
     "name": "istat-6.71.zip",
@@ -78,15 +78,15 @@
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "0935agj86h6qh74260sx6jhfmyc6fhc8b85kyp5lhbv8vnxwjs9r",
-      "url": "https://zoom.us/client/5.15.7.21404/zoomusInstallerFull.pkg?archType=arm64",
-      "version": "5.15.7.21404"
+      "sha256": "1cj8smrw1aga22znnhb0vc17pb0smc36cjj94hvkxfh03maa9q0b",
+      "url": "https://zoom.us/client/5.15.10.21826/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "5.15.10.21826"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "1dns88zj1wbdrwxb64900y8c6z4p5c5437p9g5zkg7hvf3yqvywb",
-      "url": "https://zoom.us/client/5.15.7.6521/zoom_x86_64.pkg.tar.xz",
-      "version": "5.15.7.6521"
+      "sha256": "12prqc7b7dgi1nn0qh3wv63l9ihw9gwszyqzavqm182rlp9lcz18",
+      "url": "https://zoom.us/client/5.15.10.6882/zoom_x86_64.pkg.tar.xz",
+      "version": "5.15.10.6882"
     }
   },
   "terraform_docs": {
@@ -97,7 +97,7 @@
   },
   "awsvpn": {
     "name": "AWS_VPN_Client-3.7.0.pkg",
-    "sha256": "sha256-PLhU0/QxBMmzO7PdJuzqJrMyQIroXWH4fv/s+YPOVus=",
+    "sha256": "sha256-SjSyW0gjOwLWEHY4o4aPfkGahNILtJifezlKrpqd4Ao=",
     "url": "https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg",
     "version": "3.7.0"
   }

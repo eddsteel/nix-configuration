@@ -23,7 +23,7 @@
   (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters nil
 	scala-indent:align-forms nil
-	scala-indent:use-javadoc-style)
+	scala-indent:use-javadoc-style 't)
 
   (defun edd-run-scala ()
     (interactive)
