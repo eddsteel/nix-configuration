@@ -10,9 +10,10 @@
 
   perHost = {
     enable = true;
-    hostName = "ringo";
     os = "darwin";
   };
+
+  networking.hostName = "ringo" ;
 
   environment.pathsToLink = [ "/share/bash-completion" ];
   environment.shells = with pkgs; [ bashInteractive zsh fish ];

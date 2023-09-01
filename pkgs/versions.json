@@ -96,9 +96,9 @@
     "version": "0.16.0"
   },
   "awsvpn": {
-    "name": "AWS_VPN_Client-3.7.0.pkg",
-    "sha256": "sha256-SjSyW0gjOwLWEHY4o4aPfkGahNILtJifezlKrpqd4Ao=",
+    "name": "AWS_VPN_Client-3.8.0.pkg",
+    "sha256": "sha256-1aIpsS76LohicSem3Cf1xqG8nEJqjEZhMey9vWu7RGE=",
     "url": "https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg",
-    "version": "3.7.0"
+    "version": "3.8.0"
   }
 }

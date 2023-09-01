@@ -22,5 +22,5 @@ let
     };
   };
 in pkgs.writeShellScriptBin "idea" ''
-  envchain artifactory ${idea}/Applications/IDEA.app/Contents/MacOS/idea "$@"
+  envchain gradle ${idea}/Applications/IDEA.app/Contents/MacOS/idea "$@"
 ''
