@@ -166,6 +166,12 @@ zoomus() {
     fi
 }
 
+orbstack() {
+    standard "https://orbstack.dev/download/stable/latest/arm64" \
+             '^.*OrbStack_v\(.*\)_arm64.dmg$' \
+             "orbstack" "dmg" "orbstack" "os"
+}
+
 wavebox linux &
 wavebox darwin &
 bitwarden &
@@ -182,6 +188,7 @@ zoomus linux &
 zoomus darwin &
 tdocs &
 awsvpn &
+orbstack &
 
 wait
 
@@ -202,7 +209,8 @@ jq -n \
    --slurpfile zud .zud-component \
    --slurpfile zul .zul-component \
    --slurpfile td .td-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0]}' \
+   --slurpfile os .os-component \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "orbstack": $os[0]}' \
    >new.json
 
 rm .*-component

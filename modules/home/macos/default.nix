@@ -21,10 +21,10 @@ in {
 
   home.packages = with pkgs; [
     scripts nixUnstable coreutils gnugrep gnused findutils gawk python3
-    ps wget gnupg colima op rectangle karabiner-elements
+    ps wget gnupg op rectangle karabiner-elements
     iterm2 skhd swiftdefaultapps
   ] ++ (with mac-apps; [
-    xbar istat-menus intellij-idea-ce wavebox soundsource caffeine
+    xbar istat-menus intellij-idea-ce wavebox soundsource caffeine orbstack
   ]);
 
   xdg.configFile."karabiner/karabiner.json".source = ../../../files/karabiner.json;

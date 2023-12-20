@@ -100,5 +100,11 @@
     "sha256": "sha256-1aIpsS76LohicSem3Cf1xqG8nEJqjEZhMey9vWu7RGE=",
     "url": "https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg",
     "version": "3.8.0"
+  },
+  "orbstack": {
+    "name": "orbstack-1.1.0_16370.dmg",
+    "sha256": "0qds94bn5jjnwvaddhhclxnjpwb9mri1868h8gv04phksar9wqgn",
+    "url": "https://cdn-updates.orbstack.dev/arm64/OrbStack_v1.1.0_16370_arm64.dmg",
+    "version": "1.1.0_16370"
   }
 }
