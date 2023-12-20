@@ -2,8 +2,9 @@
 let
   emacs = pkgs.emacs29;
   homedir = "/Users/edd";
-  work-pkgs = pkgs.callPackages ../../../../src/nix-work {};
-  secrets = import ../../secrets { inherit work-pkgs; };
+  secrets = import ../../secrets {};
+  nix-work = import ../../../nix-work {};
+  inherit (secrets) work-pkgs;
 in {
   imports = [ ../../modules/home/macos ../../modules/home ];
 
@@ -16,8 +17,9 @@ in {
 
   home.packages = with pkgs; [
     scripts kotlin gradle terraform terraform-docs hub circleci-cli
-    docker gettext zoom-us aws-vpn dos2unix kubectl kubectx
-  ] ++ work-pkgs.all;
+    docker gettext zoom-us aws-vpn dos2unix kubectl kubectx bitwarden-cli
+    pre-commit bat
+  ] ++ nix-work.all ++ work-pkgs.all;
 
   programs.go.enable = true;
 
@@ -37,6 +39,7 @@ in {
   shell = {
     enable = true;
     inherit emacs;
+    inherit (secrets) email;
     extraAliases = {
       "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";
       "gradle" = "envchain gradle gradle";

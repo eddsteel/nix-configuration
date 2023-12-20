@@ -40,6 +40,7 @@ let
     "..5" = ''cd ../../../../..'';
     "..6" = ''cd ../../../../../..'';
   };
+  EDITOR = "${cfg.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
 in with lib; {
   options.shell = {
     enable = mkEnableOption "Use common shell configuration";
@@ -49,6 +50,7 @@ in with lib; {
     emacs = mkOption {
       default = pkgs.emacs;
     };
+    email = mkOption {};
   };
   config = mkIf cfg.enable {
     home.shellAliases = aliases cfg.emacs // cfg.extraAliases;
@@ -57,13 +59,14 @@ in with lib; {
       historyFile = "${homedir}/.histfile";
 
       sessionVariables = {
-        EDITOR = "${cfg.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
+        EDITOR = "${EDITOR}";
         ALTERNATE_EDITOR = "${cfg.emacs}/bin/emacs";
         LESS = " -R ";
         HISTCONTROL = "ignoredups:erasedups";
         HISTSIZE = "100000";
         HISTFILESIZE = "1000000";
         NIXPKGS_CONFIG = toString <nixpkgs-config>;
+        EMAIL = "${cfg.email}";
       };
 
       bashrcExtra = ''
@@ -86,7 +89,7 @@ in with lib; {
     programs.fish = {
       enable = true;
       shellInit = ''
-      set -gx EDITOR "${cfg.emacs}/bin/emacsclient --no-wait --socket=${config.home.homeDirectory}/run/emacs/server"
+      set -gx EDITOR "${EDITOR}"
       set -gx ALTERNATE_EDITOR "${cfg.emacs}/bin/emacs"
       set NIXPKGS_CONFIG ${toString <nixpkgs-config>}
 
@@ -97,6 +100,10 @@ in with lib; {
           printf "\eAnSiTc %s\n" (pwd)
         end
         printf "\eAnSiTu %s\n" (whoami)
+      end
+
+      function fish_title
+        true
       end
     '';
     };

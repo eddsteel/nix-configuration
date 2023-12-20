@@ -1,8 +1,8 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "soundsource";
-  version = "5.6.0";
-  sha = "1avm1jr75mjbps0fad3glshrwl42vnhc0f9sak038ny85f3apyi0";
+  version = "5.6.3";
+  sha256 = "sha256-uXQw4MEV4hkrd7tjNCxtuXpbfmdW8bilI5ZmXwn9BLM=";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";
@@ -15,7 +15,7 @@ pkgs.stdenv.mkDerivation rec {
   src = pkgs.fetchurl {
     name = "soundsource-${version}.zip";
     url = https://rogueamoeba.com/soundsource/download/SoundSource.zip;
-    sha256 = sha;
+    inherit sha256;
   };
 
   meta = with pkgs.lib; {

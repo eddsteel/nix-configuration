@@ -25,7 +25,7 @@ in with lib; {
     home.packages = with pkgs; [
       git-secrets nix-prefetch-git jdk17
       duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
-      bitwarden signal-desktop moreutils exfalso
+      bitwarden moreutils exfalso
     ];
 
     xdg.configFile."zoomus.conf".source = cfg.zoomus-config;
@@ -33,7 +33,7 @@ in with lib; {
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
     programs.jq.enable = true;
-    programs.exa.enable = true;
+    programs.eza.enable = true;
     mr = {
       enable = true;
       github-name = cfg.github-name;

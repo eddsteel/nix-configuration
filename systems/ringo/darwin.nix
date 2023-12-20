@@ -1,6 +1,7 @@
-# Nix-Darwin configuration for my work computer.
 { config, pkgs, ... }:
-{
+let
+  secrets = import ../../secrets {};
+in {
   imports = [ ../../modules/per-host.nix ];
   environment.systemPackages = [];
 
@@ -13,7 +14,10 @@
     os = "darwin";
   };
 
-  networking.hostName = "ringo" ;
+  networking.hostName = "ringo";
+  launchd.user.envVariables = {
+    "EMAIL" = secrets.email;
+  };
 
   environment.pathsToLink = [ "/share/bash-completion" ];
   environment.shells = with pkgs; [ bashInteractive zsh fish ];

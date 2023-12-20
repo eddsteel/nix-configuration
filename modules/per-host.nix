@@ -55,6 +55,7 @@ in {
         variables = envvars // {
           NIXOS_CONFIG = osconfig;
         };
+        nix.channel.enable = false;
         etc."nix/nixpkgs-config.nix".source = pkgsconfig; # Just overwrite it instead 😈
       };
   };
