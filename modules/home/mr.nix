@@ -31,11 +31,12 @@ in {
   config = mkIf cfg.enable {
     home.packages = [ pkgs.mr pkgs.stow pkgs.git ];
     home.file.".mrtrust".text = "${cfg.rootdir}/.mrconfig";
-    home.file."${cfg.rootdir}/.mrconfig".text = mrINI cfg.github-name cfg.repos;
-
-    home.activation."mrUp" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD cd ${cfg.rootdir}
-    $DRY_RUN_CMD ${netcheck} && mr -j 4 -q up
-    '';
+    home.file."${cfg.rootdir}/.mrconfig" = {
+      text = mrINI cfg.github-name cfg.repos;
+      onChange = ''
+        $DRY_RUN_CMD cd ${cfg.rootdir}
+        $DRY_RUN_CMD ${netcheck} && mr -j 4 -q up
+      '';
+    };
   };
 }

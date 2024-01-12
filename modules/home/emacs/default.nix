@@ -49,6 +49,7 @@ in {
   options.emacs = {
     enable = mkEnableOption "Emacs";
     package = mkOption { default = pkgs.emacs; };
+    local = mkOption {};
   };
   config = mkIf cfg.enable {
     programs.emacs = {
@@ -157,6 +158,6 @@ in {
 
     xdg.configFile."emacs/init.el".source = ./init.el;
     xdg.configFile."emacs/edd".source = ./edd;
-    xdg.configFile."emacs/local.el".source = <secrets> + "/local.el";
+    xdg.configFile."emacs/local.el".text = cfg.local;
   };
 }

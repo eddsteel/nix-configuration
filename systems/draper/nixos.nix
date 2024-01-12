@@ -223,6 +223,7 @@ in {
 
   # unfortunately sops-nix can only provide secrets after activation, and the auto SSH host key -> PGP stuff is in a go module.
   # Instead run `nix-shell --run 'sops -d sops/secrets.yaml | yaml2json | jq -r \'.consul | .["server.crt"]\' > secrets/consul-server.crt'`
+  # TODO: put this in a secrets.toml instead.
   security.pki.certificates = [ "../../secrets/consul-server.crt" ];
 
   # Or disable the firewall altogether.

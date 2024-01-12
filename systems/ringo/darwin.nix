@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  secrets = import ../../secrets {};
+  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
 in {
   imports = [ ../../modules/per-host.nix ];
   environment.systemPackages = [];

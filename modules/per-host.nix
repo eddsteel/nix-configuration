@@ -11,11 +11,6 @@ in {
       default = "nixos";
       description = "nixos or darwin";
     };
-    secrets = mkOption {
-      type = types.path;
-      default = <nix-config> + "/secrets";
-      description = "path to host-specific secrets";
-    };
   };
 
   config = let
@@ -34,7 +29,6 @@ in {
       "nixpkgs-config=${pkgsconfig}"
       "nixpkgs-overlays=${overlaysconfig}"
       "nix-config=${configPath}" # ∞ set at the command line, once
-      "secrets=${configPath}/secrets"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
 

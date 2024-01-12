@@ -4,19 +4,30 @@ let
 in with lib; {
   options.git = {
     enable = mkEnableOption "Standard git configuration with configurable email/signing key";
-    hub-cfg = mkOption { default = ../../secrets/hub; };
+    name = mkOption {};
     email = mkOption {};
     key = mkOption {};
-    github-user = mkOption { default = "eddsteel"; };
+    github-user = mkOption {};
+    hub-token = mkOption {};
     emacs = mkOption { default = pkgs.emacs; };
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."hub".source = cfg.hub-cfg;
+    home.packages = [ pkgs.hub pkgs.git-crypt ];
+
+    xdg.configFile."hub" = {
+      text = ''
+        github.com:
+        - user: ${cfg.github-user}
+          oauth_token: ${cfg.hub-token}
+          protocol: https
+      '';
+      executable = true;
+    };
 
     programs.git = {
       enable = true;
-      userName = "Edd Steel";
+      userName = cfg.name;
       userEmail = cfg.email;
       signing.signByDefault = true;
       signing.key = cfg.key;

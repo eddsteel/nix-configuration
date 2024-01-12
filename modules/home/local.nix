@@ -19,7 +19,7 @@ in {
 
     (mkIf cfg.ssh {
       home.file.".ssh/id_rsa.pub".source =  "${<nix-config>}/files/${ssh-stub}.pub";
-      home.file.".ssh/id_rsa".source = "${<secrets>}/${ssh-stub}";
+      home.file.".ssh/id_rsa".source = "${<nix-config>}/keys/${ssh-stub}";
 
       programs.ssh = {
         enable = true;

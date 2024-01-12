@@ -15,11 +15,11 @@ in with lib; {
     enable = mkEnableOption "Useful apps and configuration for doing work";
     mr-repos = mkOption {};
     github-name = mkOption {};
-    gpg-pub = mkOption { default = ../../files/pubring.gpg; };
-    gpg-sec = mkOption { default = ../../secrets/secring.gpg; };
-    aws-credentials = mkOption { default = ../../secrets/aws-credentials; };
-    aws-config = mkOption { default = ../../secrets/aws-config; };
-    zoomus-config = mkOption { default = ../../files/zoomus.conf; };
+    gpg-pub = mkOption { default = <nix-config> + "/files/pubring.gpg"; };
+    gpg-sec = mkOption { default = <nix-config> + "/keys/secring.gpg"; };
+    aws-credentials = mkOption {};
+    aws-configuration = mkOption {};
+    zoomus-config = mkOption { default = <nix-config> + "/files/zoomus.conf"; };
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -41,8 +41,8 @@ in with lib; {
       rootdir = "${homedir}/src";
     };
 
-    home.file.".aws/credentials".source = cfg.aws-credentials;
-    home.file.".aws/config".source = cfg.aws-config;
+    home.file.".aws/credentials".text = cfg.aws-credentials;
+    home.file.".aws/config".text = cfg.aws-configuration;
 
     home.file.".aspell.conf".text = ''
       data-dir ${homedir}/.nix-profile/lib/aspell

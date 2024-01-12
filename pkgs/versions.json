@@ -1,23 +1,23 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.120.16.2.dmg",
-      "sha256": "0yw0wgdp4zzwpn1bp62ngc1v22zmgvp7bg9qxscvb5bjjpf9m9w3",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.120.16.2.dmg",
-      "version": "10.120.16.2"
+      "name": "wavebox-10.120.17.2.dmg",
+      "sha256": "15srswcnxsv58vrwsryry03jf7c837hyw6csmmqrhpz3lzh4ijx0",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.120.17.2.dmg",
+      "version": "10.120.17.2"
     },
     "linux": {
-      "name": "wavebox-10.120.16-2.tar.gz",
-      "sha256": "1zhdy35ha570rrd3miy516azz59qk8pfwbzg3yxmmyzdd5pasvhc",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.120.16-2.tar.gz",
-      "version": "10.120.16-2"
+      "name": "wavebox-10.120.17-2.tar.gz",
+      "sha256": "1xr6qdh9d1288cy7bcl9wl5xwyxd0j4y2yi8qkyin257ndlvdmas",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.120.17-2.tar.gz",
+      "version": "10.120.17-2"
     }
   },
   "bitwarden": {
-    "name": "bitwarden-2023.12.0.dmg",
-    "sha256": "0a6922c07caddv5r998ny28arp6hsh6hq1fji2m0yxnvlcqd0llq",
-    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2023.12.0/Bitwarden-2023.12.0-universal.dmg",
-    "version": "2023.12.0"
+    "name": "bitwarden-2023.12.1.dmg",
+    "sha256": "0mk872jw3hfhi4xnxciqh7n6x8n1jw5h2cp2g1dn0snzswh3xq1i",
+    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2023.12.1/Bitwarden-2023.12.1-universal.dmg",
+    "version": "2023.12.1"
   },
   "firefox": {
     "name": "Firefox-121.0.dmg",
@@ -26,16 +26,16 @@
     "version": "121.0"
   },
   "idea": {
-    "name": "intellij-idea-ce-2023.3.1.dmg",
-    "sha256": "11is0aizwsq4fj7722aq7bcrj19fdcdgavm20s7ky1rhcwyr2c06",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2023.3.1-aarch64.dmg",
-    "version": "2023.3.1"
+    "name": "intellij-idea-ce-2023.3.2.dmg",
+    "sha256": "0xk1skmgi0w3kjmky49d9zyi3qb580dcb47iyfqzyxmmv2c4zq6v",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2023.3.2-aarch64.dmg",
+    "version": "2023.3.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-6.42.0.dmg",
-    "sha256": "1rmg90zd9svflr1lr16klzkx04w266q6bzjrnl8i0pqjna4fwsns",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.42.0.dmg",
-    "version": "6.42.0"
+    "name": "signal-desktop-mac-universal-6.42.1.dmg",
+    "sha256": "0ppsyi8hbx1qf0ahacnjagp0jrv4sb9impil6xm6n9h35lzl0cii",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-6.42.1.dmg",
+    "version": "6.42.1"
   },
   "istatmenus": {
     "name": "istat-6.73.zip",
@@ -78,15 +78,15 @@
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "1lx89yr4ni4hgrcj482a3idh274491w9m2dz12nrbndhv8xz40b2",
-      "url": "https://zoom.us/client/5.17.0.27246/zoomusInstallerFull.pkg?archType=arm64",
-      "version": "5.17.0.27246"
+      "sha256": "1l698l8k0l18g8h209i7xsb621knyp02f9gql1z9g2fxkdpc5r5g",
+      "url": "https://zoom.us/client/5.17.1.27701/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "5.17.1.27701"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "1mqj1krnrd0qhl4wffxxk4jas9h0wzlkam0s8yasl6ylysgp9fy6",
-      "url": "https://zoom.us/client/5.17.0.1682/zoom_x86_64.pkg.tar.xz",
-      "version": "5.17.0.1682"
+      "sha256": "07jxjqj3sbzijls6annjzw4w2rwidhc2f4cshaxah9vp0r635rly",
+      "url": "https://zoom.us/client/5.17.1.1840/zoom_x86_64.pkg.tar.xz",
+      "version": "5.17.1.1840"
     }
   },
   "terraform_docs": {
@@ -102,9 +102,9 @@
     "version": "3.9.0"
   },
   "orbstack": {
-    "name": "orbstack-1.1.0_16370.dmg",
-    "sha256": "0qds94bn5jjnwvaddhhclxnjpwb9mri1868h8gv04phksar9wqgn",
-    "url": "https://cdn-updates.orbstack.dev/arm64/OrbStack_v1.1.0_16370_arm64.dmg",
-    "version": "1.1.0_16370"
+    "name": "orbstack-1.3.0_16556.dmg",
+    "sha256": "0v0w2r8mnqjw3z2spdkh401xclay6gkph4sh601fci3rw6zwpay2",
+    "url": "https://cdn-updates.orbstack.dev/arm64/OrbStack_v1.3.0_16556_arm64.dmg",
+    "version": "1.3.0_16556"
   }
 }
