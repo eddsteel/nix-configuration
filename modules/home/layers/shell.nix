@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 let
   homedir = config.home.homeDirectory;
-  cfg = config.shell;
+  cfg = config.layers.shell;
   aliases = em : {
     ec = ''${em}/bin/emacsclient --no-wait --socket=${homedir}/run/emacs/server'';
     ga = ''git add'';
@@ -42,7 +42,7 @@ let
   };
   EDITOR = "${cfg.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
 in with lib; {
-  options.shell = {
+  options.layers.shell = {
     enable = mkEnableOption "Use common shell configuration";
     extraAliases = mkOption {
       default = {};

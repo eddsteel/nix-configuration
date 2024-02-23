@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.firefox;
+  cfg = config.layers.firefox;
 in with lib; {
-  options.firefox = {
+  options.layers.firefox = {
     enable = mkEnableOption "Standard firefox configuration";
     sync-user = mkOption {};
     downloads = mkOption { default = "${config.home.homeDirectory}/tmp"; };

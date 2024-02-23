@@ -1,18 +1,21 @@
 {config, pkgs, lib, ...}:
-let cfg = config.istat;
+let cfg = config.programs.istat;
 in with lib; {
-  options.istat = {
-    enable = mkEnableOption "My Istat registration";
+  options.programs.istat = {
+    enable = mkEnableOption "IStatMenus with registration and options";
     serial = mkOption {};
     email = mkOption {};
-    license5 = mkOption {};
+    extras = mkOption {};
   };
   config = mkIf cfg.enable {
     home.packages = [pkgs.mac-apps.istat-menus];
 
-    home.activation."istatRegistration" = hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD defaults write com.bjango.istatmenus license6 -dict email "${cfg.email}" serial "${cfg.serial}"
-    $DRY_RUN_CMD defaults import com.bjango.istatmenus6.extras ${../../../files}/com.bjango.istatmenus6.extras.plist
-    '';
+    targets.darwin.defaults = {
+      "com.bjango.istatmenus".license6 = {
+        email = cfg.email;
+        serial = cfg.serial;
+      };
+      "com.bjango.istatmenus6.extras" = cfg.extras;
+    };
   };
 }

@@ -11,7 +11,7 @@ in with lib; {
     enable = mkEnableOption "Manage dock apps and preferences";
     apps = mkOption { type = with types; listOf str;};
   };
-  config = mkIf pkgs.stdenv.isDarwin {
+  config = mkIf cfg.enable {
     home.activation."macDock" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     ${write-def dock-domain "persistent-apps" "-array" ""}
     ${lib.strings.concatMapStringsSep "\n" app-def-write cfg.apps}

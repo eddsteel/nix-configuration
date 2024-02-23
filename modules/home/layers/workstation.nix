@@ -1,6 +1,6 @@
 {pkgs, lib, config, ...}:
 let
-  cfg = config.workstation;
+  cfg = config.layers.workstation;
   homedir = config.home.homeDirectory;
   bootstrap-repos = [
     {"name" = "nix-configuration";}
@@ -11,7 +11,7 @@ let
 
 in with lib; {
   imports = [ ./mr.nix ];
-  options.workstation = {
+  options.layers.workstation = {
     enable = mkEnableOption "Useful apps and configuration for doing work";
     mr-repos = mkOption {};
     github-name = mkOption {};
@@ -23,9 +23,10 @@ in with lib; {
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
+      gnupg
       git-secrets nix-prefetch-git jdk17
       duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
-      bitwarden moreutils exfalso
+      bitwarden moreutils exfalso wavebox
     ];
 
     xdg.configFile."zoomus.conf".source = cfg.zoomus-config;
@@ -48,9 +49,13 @@ in with lib; {
       data-dir ${homedir}/.nix-profile/lib/aspell
       lang en_CA
     '';
-    home.file.".gradle/gradle.properties".text = ''
-      org.gradle.java.installations.paths=${pkgs.jdk8},${pkgs.jdk11},${pkgs.jdk17}
-    '';
+
+    programs.gradle = {
+      enable = true;
+      settings = {
+        "org.gradle.java.installations.paths" = with pkgs; "${jdk8},${jdk11},${jdk17},${jdk21}";
+      };
+    };
 
     home.activation."setupMedia" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/media/{music,photos,film}

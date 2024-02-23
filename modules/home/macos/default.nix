@@ -1,11 +1,13 @@
 {
   imports = [
-    ./istat.nix
-    ./rest.nix
-    ./skhd.nix
-    ./xbar.nix
-    ./soundsource.nix
     ./dock.nix
-    ./prefs.nix
+    ./istat.nix
+    ./iterm2.nix
+    ./karabiner.nix
+    ./rectangle.nix
+    ./skhd.nix
+    ./soundsource.nix
+    ./xbar.nix
+    ./zoom.nix
   ];
 }

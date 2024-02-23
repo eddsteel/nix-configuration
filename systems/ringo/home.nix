@@ -8,7 +8,7 @@ let
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
 in {
-  imports = [ ../../modules/home/macos ../../modules/home ];
+  imports = [ ../../modules/home ];
 
   home.stateVersion = "21.05";
 
@@ -18,10 +18,12 @@ in {
   };
 
   home.packages = with pkgs; [
-    scripts kotlin gradle terraform terraform-docs circleci-cli
-    docker gettext zoom-us aws-vpn dos2unix kubectl kubectx bitwarden-cli
-    pre-commit bat
-  ] ++ nix-work.all ++ work-pkgs.all;
+    scripts kotlin pre-commit bat gettext dos2unix
+    terraform terraform-docs circleci-cli aws-vpn
+    docker kubectl kubectx nixUnstable
+  ] ++ nix-work.all
+    ++ work-pkgs.all
+    ++ (with mac-apps; [intellij-idea-ce caffeine orbstack]);
 
   programs.go.enable = true;
 
@@ -31,103 +33,94 @@ in {
     hostname = "ringo";
   };
 
-  # TODO: move these out.
-  macos = {
-    enable = true;
-    prefs = {
+  layers = {
+    macos = {
       enable = true;
-      preferences-files = [
-        { domain = "com.googlecode.iterm2"; path = <nix-config> + "/files/com.googlecode.iterm2.plist"; }
-      ];
+      istat = {
+        inherit (secrets.istat) email serial;
+      };
+      soundsource = {
+        inherit (secrets.soundsource) name code;
+      };
+      inherit emacs;
     };
-  };
 
-  targets.darwin = {
-    dock = {
-      apps = [
-        "/System/Applications/System Settings.app"
-        "${emacs}/Applications/Emacs.app"
-        "${pkgs.firefox}/Applications/Firefox.app"
-        "${pkgs.iterm2}/Applications/iTerm2.app"
-        "${pkgs.wavebox}/Applications/Wavebox.app"
-        "${pkgs.bitwarden}/Applications/Bitwarden.app"
-      ];
-    };
-    defaults = {
-      "com.apple.dock" = {
-        "autohide" = true;
-        "region" = "CA";
-        "tilesize" = 75;
-        "show-recents" = false;
-      };
-      "com.apple.menuextra.clock" = {
-        "IsAnalog" = true;
-      };
-      "com.apple.screencapture" = {
-        "location" = "~/media/pictures";
-      };
-      "NSGlobalDomain" = {
-        "AppleShowAllExtensions" = true;
-      };
-      "com.apple.Finder" = {
-        "AppleShowAllFiles" = false;
-      };
-    };
-  };
-
-  istat = {
-    enable = true;
-    inherit (secrets.istat) email serial;
-  };
-
-  xbar.enable = true;
-  skhd.enable = true;
-  programs = {
-    soundsource = {
+    workstation = {
       enable = true;
-      inherit (secrets.soundsource) name code;
+      github-name = "eddsteel";
+      mr-repos = [
+        {"name" = "git-web-link";}
+        {"name" = "scripts";}
+      ] ++ secrets.workstation.repos;
+      aws-configuration = secrets.aws.configuration;
+      aws-credentials = secrets.aws.credentials;
+    };
+
+    emacs = {
+      enable = true;
+      package = emacs;
+      local = secrets.emacs.local;
+    };
+
+    firefox = {
+      enable = true;
+      sync-user = secrets.firefox.username;
+    };
+
+    git = {
+      enable = true;
+      inherit emacs;
+      hub-token = secrets.hub.token;
+      name = secrets.user.name;
+      email = secrets.user.email;
+      github-user = "eddsteel";
+      key = "8433C6F9F807CE8E8DFA99EFB10455BC05772724";
+    };
+
+    shell = {
+      enable = true;
+      inherit emacs;
+      inherit (secrets.user) email;
+      extraAliases = {
+        "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";
+        "gradle" = "envchain gradle gradle";
+      } // secrets.shell.aliases;
     };
   };
 
-  git = {
+  programs.xbar = {
     enable = true;
-    inherit emacs;
-    hub-token = secrets.hub.token;
-    name = secrets.user.name;
-    email = secrets.user.email;
-    github-user = "eddsteel";
-    key = "8433C6F9F807CE8E8DFA99EFB10455BC05772724";
+    widgets = [
+      {
+        name = "emms-show";
+        timer = 5;
+        script = ''
+            np=$(${pkgs.scripts}/bin/emms now-playing)
+            echo "$np | size=13 length=50"
+          '';
+      }
+      {
+        name = "youbi";
+        timer = 60;
+        script = ''
+            LC_ALL=ja_JP date +"%a曜日"
+            echo '---'
+            LC_ALL=ja_JP date
+          '';
+      }
+      {
+        name = "indoor-temp";
+        timer = 60;
+        script = ''
+            PATH="$HOME/.nix-profile/bin"
+            temp=$(nix-shell -p broadlink-cli --command 'broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature')
+            printf "%s°C\n" $temp
+          '';
+      }
+    ];
   };
 
-  shell = {
-    enable = true;
-    inherit emacs;
-    inherit (secrets.user) email;
-    extraAliases = {
-      "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";
-      "gradle" = "envchain gradle gradle";
-    } // secrets.shell.aliases;
-  };
-
-  workstation = {
-    enable = true;
-    github-name = "eddsteel";
-    mr-repos = [
-      {"name" = "git-web-link";}
-      {"name" = "scripts";}
-    ] ++ secrets.workstation.repos;
-    aws-configuration = secrets.aws.configuration;
-    aws-credentials = secrets.aws.credentials;
-  };
-
-  emacs = {
-    enable = true;
-    package = emacs;
-    local = secrets.emacs.local;
-  };
-
-  firefox = {
-    enable = true;
-    sync-user = secrets.firefox.username;
-  };
+  home.activation."refresh" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD killall Finder
+ '';
 }

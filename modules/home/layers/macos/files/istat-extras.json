@@ -1,0 +1,142 @@
+{
+  "MenubarTheme": 0,
+  "CPU_MenubarGraphWidth": 15,
+  "Diagnostics_Enabled": 0,
+  "Menubar-DetectedColor": "0.00 0.00 0.00 0.85",
+  "Theme-SeperateStyles": 0,
+  "Time_MenubarFormat": [
+    {
+      "format": [
+        [
+          "dd",
+          "' '",
+          "MMMM",
+          "' '",
+          "HH",
+          "':'",
+          "mm"
+        ],
+        []
+      ]
+    }
+  ],
+  "Network_GraphDownload": "0.15 0.15 0.15 1.00",
+  "DropdownTheme": 0,
+  "StatusItems-Order": [
+    6,
+    7,
+    4,
+    1,
+    2,
+    5
+  ],
+  "CPU_MenubarCombineCores": 0,
+  "DropdownGraphBackground": 1,
+  "MenubarSkinColor": 0,
+  "Time_CalendarsDisabled": [
+    "F88D85B3-4386-450F-AC13-4AD5F48C87CA",
+    "0F1FFAA2-B317-4990-96F3-C97A7D01B7F7"
+  ],
+  "Network_GraphWidth": 20,
+  "CPU_CombineLogicalCores": 0,
+  "FanControl_Enabled": true,
+  "Network_GraphMode": 1,
+  "Sensors_MenubarItems": [
+    {
+      "key": "TC0P"
+    },
+    {
+      "key": "C02924402P1LYH51Q"
+    }
+  ],
+  "Time_FirstDay": 1,
+  "DropdownTheme-Dark": 3,
+  "CPU_MenubarGroupItems": 0,
+  "Time_Cities": [
+    {
+      "city": "Current Location",
+      "identifier": "-7"
+    },
+    {
+      "city": "Vancouver",
+      "country": "Canada",
+      "longitude": -123.11934,
+      "timezone": "America/Vancouver",
+      "latitude": 49.24966,
+      "identifier": 6173331,
+      "state": "British Columbia"
+    },
+    {
+      "city": "New York City",
+      "country": "United States",
+      "longitude": -74.00597,
+      "timezone": "America/New_York",
+      "latitude": 40.71427,
+      "identifier": 5128581,
+      "state": "New York"
+    },
+    {
+      "city": "Reykjavík",
+      "country": "Iceland",
+      "longitude": -21.89541,
+      "timezone": "Atlantic/Reykjavik",
+      "latitude": 64.13548,
+      "identifier": 3413829,
+      "state": "Capital Region"
+    },
+    {
+      "city": "London",
+      "country": "United Kingdom",
+      "longitude": -0.12574,
+      "timezone": "Europe/London",
+      "latitude": 51.50853,
+      "identifier": 2643743,
+      "state": "England"
+    },
+    {
+      "city": "Lausanne",
+      "country": "Switzerland",
+      "longitude": 6.63282,
+      "timezone": "Europe/Zurich",
+      "latitude": 46.516,
+      "identifier": 2659994,
+      "state": "Vaud"
+    },
+    {
+      "city": "Ho Chi Minh City",
+      "country": "Vietnam",
+      "longitude": 106.62965,
+      "timezone": "Asia/Ho_Chi_Minh",
+      "latitude": 10.82302,
+      "identifier": 1566083,
+      "state": "Ho Chi Minh City"
+    },
+    {
+      "city": "Mumbai",
+      "country": "India",
+      "longitude": 72.88261,
+      "timezone": "Asia/Kolkata",
+      "latitude": 19.07283,
+      "identifier": 1275339,
+      "state": "Maharashtra"
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "longitude": 139.69171,
+      "timezone": "Asia/Tokyo",
+      "latitude": 35.6895,
+      "identifier": 1850147,
+      "state": "Tokyo"
+    }
+  ],
+  "Time_DropdownFormat": [
+    "HH",
+    "':'",
+    "mm",
+    "' '",
+    "zzz"
+  ],
+  "Network_GraphUpload": "0.42 0.42 0.42 1.00",
+  "MenubarSkinColor-Dark": 2
+}

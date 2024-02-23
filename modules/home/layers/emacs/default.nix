@@ -1,7 +1,7 @@
 { config, pkgs, lib, ...}:
 with lib;
 let
-  cfg = config.emacs;
+  cfg = config.layers.emacs;
   gradle-mode-fork = epkgs: epkgs.trivialBuild {
     pname = "gradle-mode";
     version = "1";
@@ -46,7 +46,7 @@ let
     };
   };
 in {
-  options.emacs = {
+  options.layers.emacs = {
     enable = mkEnableOption "Emacs";
     package = mkOption { default = pkgs.emacs; };
     local = mkOption {};

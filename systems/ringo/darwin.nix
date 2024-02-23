@@ -16,7 +16,7 @@ in {
 
   networking.hostName = "ringo";
   launchd.user.envVariables = {
-    "EMAIL" = secrets.email;
+    "EMAIL" = secrets.user.email;
   };
 
   environment.pathsToLink = [ "/share/bash-completion" ];

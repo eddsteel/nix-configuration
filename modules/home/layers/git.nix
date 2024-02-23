@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.git;
+  cfg = config.layers.git;
 in with lib; {
-  options.git = {
+  options.layers.git = {
     enable = mkEnableOption "Standard git configuration with configurable email/signing key";
     name = mkOption {};
     email = mkOption {};
