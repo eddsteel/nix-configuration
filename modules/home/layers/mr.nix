@@ -3,6 +3,7 @@ with lib; let
   cfg = config.mr;
   homedir = config.home.homeDirectory;
   netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
+  mrINI = root: me: repos: lib.generators.toINI {} (listToAttrs (map (mkMrConfig root me) repos));
   mkMrConfig = root: me: repo: let
     name = "${root}/${repo.name}";
     pfx = if repo ? pfx then "/${repo.pfx}" else "";
@@ -31,7 +32,7 @@ in {
     home.packages = [ pkgs.mr pkgs.stow pkgs.git ];
     home.file.".mrtrust".text = "${cfg.rootdir}/.mrconfig";
     home.file."${cfg.rootdir}/.mrconfig" = {
-      text = mrINI cfg.github-name cfg.repos;
+      text = mrINI cfg.rootdir cfg.github-name cfg.repos;
       onChange = ''
         $DRY_RUN_CMD cd ${cfg.rootdir}
         $DRY_RUN_CMD ${netcheck} && mr -j 4 -q up

@@ -17,21 +17,16 @@ in with lib; {
     github-name = mkOption {};
     gpg-pub = mkOption { default = ./pubring.gpg; };
     gpg-sec = mkOption { default = <nix-config> + "/keys/secring.gpg"; };
-    aws-credentials = mkOption { default = <secrets> + "/aws-credentials"; };
-    aws-config = mkOption { default = <secrets> + "/aws-config"; };
+    aws-credentials = mkOption {};
+    aws-configuration = mkOption {};
     zoomus-config = mkOption { default = ./zoomus.conf; };
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       gnupg
-      git-secrets nix-prefetch-git jdk17
-<<<<<<<< HEAD:modules/home/layers/workstation.nix
+      git-secrets nix-prefetch-git
       duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
       bitwarden moreutils exfalso wavebox
-========
-      duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain
-      tree bitwarden signal-desktop moreutils exfalso
->>>>>>>> 789f169 (re-org people and workstation module):modules/home/workstation/default.nix
     ];
 
     xdg.configFile."zoomus.conf".source = cfg.zoomus-config;

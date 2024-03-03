@@ -6,7 +6,6 @@ let
   extensions = with pkgs.gnomeExtensions; [
     caffeine
     executor
-    system-monitor
     sound-output-device-chooser
   ];
   findUuid = e: e.uuid or e.extensionUuid;
@@ -20,6 +19,13 @@ in {
 
   # Put cross-OS packages (including CLI) in apps.nix
   home.packages = with pkgs; [
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-libav
+    gst_all_1.gst-vaapi
   ] ++ extensions;
   home.file = builtins.listToAttrs (map extPair extensions);
 

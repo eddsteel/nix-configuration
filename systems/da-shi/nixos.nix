@@ -5,9 +5,9 @@ let
   };
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
-  people = import ../../people { inherit lib; };
+  people = import ../people.nix { inherit lib; };
   secrets = import <secrets>;
-  zones = pkgs.callPackage ../gusting/zones.nix {};
+  zones = pkgs.callPackage ./zones.nix {};
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
     value = {

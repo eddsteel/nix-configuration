@@ -45,8 +45,10 @@ in if platform == "darwin"
 
      # don't remove runtime deps
      dontPatchELF = true;
+      # ignore optional Qt 6 shim
+     autoPatchelfIgnoreMissingDeps = [ "libQt6Widgets.so.6" "libQt6Gui.so.6" "libQt6Core.so.6" ];
 
-     nativeBuildInputs = [ autoPatchelfHook makeWrapper qt5.wrapQtAppsHook ];
+     nativeBuildInputs = [ autoPatchelfHook makeWrapper qt5.wrapQtAppsHook copyDesktopItems ];
 
      buildInputs = with xorg; [
        libXdmcp
@@ -67,13 +69,15 @@ in if platform == "darwin"
      runtimeDependencies = [ (lib.getLib udev) libnotify gtk4 ];
 
      installPhase = ''
-    mkdir -p $out/bin $out/opt/wavebox
-    cp -r * $out/opt/wavebox
+     runHook preInstall
+     mkdir -p $out/bin $out/opt/wavebox
+     cp -r * $out/opt/wavebox
 
-    # provide desktop item and icon
-    mkdir -p $out/share/applications $out/share/icons/hicolor/128x128/apps
-    ln -s ${desktopItem}/share/applications/* $out/share/applications
+    # provide desktop icon
+    mkdir -p $out/share/icons/hicolor/128x128/apps
+
     ln -s $out/opt/wavebox/product_logo_128.png $out/share/icons/hicolor/128x128/apps/wavebox.png
+    runHook postInstall
   '';
 
      postFixup = ''

@@ -6,7 +6,7 @@ let
     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
   };
   hosts = import ../hosts.nix { inherit lib; };
-  people = import ../../people {inherit lib; };
+  people = import ../people.nix {inherit lib; };
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
     value = {

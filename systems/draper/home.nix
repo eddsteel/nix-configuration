@@ -2,8 +2,8 @@
 let
   username = "edd";
   homedir = "/home/${username}";
-  email = "${username}@eddsteel.com";
   emacs = pkgs.emacs29-pgtk;
+  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
 in {
   imports = [
     ../../modules/home/linux/gnome.nix
@@ -28,37 +28,54 @@ in {
     ssh = true;
   };
 
-  git = {
+  # this is a bit weird huh? Extract brainzo to a service at least.
+  linux = {
     enable = true;
-    inherit emacs email;
-    key = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
+    blinds-controller = secrets.brainzo.blinds.controller;
+    blinds = secrets.brainzo.blinds.blinds;
   };
 
-  shell = {
-    enable = true;
-    inherit emacs;
-  };
+  layers = {
+    git = {
+      enable = true;
+      inherit emacs;
+      hub-token = secrets.hub.token;
+      name = secrets.user.name;
+      email = secrets.user.email;
+      github-user = "eddsteel";
+      key = "1BE848D76C7C4C51349DDDCC33620159D40385A0";
+    };
 
-  workstation = {
-    enable = true;
-    github-name = "eddsteel";
-    mr-repos = [
-      {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
-      {"name" = "git-web-link";}
-      {"name" = "scripts";}
-      {"name" = "brainzo";}
-      {"name" = "bookbot";}
-      {"name" = "tell-consul";}
-    ];
-  };
+    shell = {
+      enable = true;
+      inherit emacs;
+      inherit (secrets.user) email;
+    };
 
-  emacs = {
-    enable = true;
-    package = emacs;
-  };
+    workstation = {
+      enable = true;
+      github-name = "eddsteel";
+      mr-repos = [
+        {"name" = "ledger"; "remote" = "git@eddsteel.com:diane.git"; "stow" = true;}
+        {"name" = "git-web-link";}
+        {"name" = "scripts";}
+        {"name" = "brainzo";}
+        {"name" = "bookbot";}
+        {"name" = "tell-consul";}
+      ];
+      aws-configuration = secrets.aws.configuration;
+      aws-credentials = secrets.aws.credentials;
+    };
 
-  firefox = {
-    enable = true;
-    sync-user = email;
+    emacs = {
+      enable = true;
+      package = emacs;
+      local = secrets.emacs.local;
+    };
+
+    firefox = {
+      enable = true;
+      sync-user = secrets.user.email;
+    };
   };
 }

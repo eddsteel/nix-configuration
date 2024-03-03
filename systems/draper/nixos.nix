@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
-let
-  hostName = "draper";
+plet
   sops-nix = builtins.fetchTarball {
     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
   };
   hosts = import ../hosts.nix { inherit lib; };
-  people = import ../../people { inherit lib; };
+  people = import ../people.nix { inherit lib; };
+  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml)
 in {
   imports = [
     ../../modules/per-host.nix
@@ -15,10 +15,10 @@ in {
 
   perHost = {
     enable = true;
-    inherit hostName;
   };
 
   networking = {
+    hostName = "draper";
     inherit (hosts) extraHosts;
     firewall.allowedTCPPorts = [
       22 4242 8000 8096 8200 8300 8301 8302 8500 8543
@@ -89,8 +89,14 @@ in {
   services.printing.drivers = [ pkgs.cnijfilter2 ];
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  sound.enable = false;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    alsa.enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -98,14 +104,16 @@ in {
   users.users.edd = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" "docker" "cdrom"];
-    openssh.authorizedKeys.keys = people.pubkeys
+    extraGroups = [ "wheel" "docker" "cdrom" "disk"];
+    openssh.authorizedKeys.keys = people.pubkeys;
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   users.users.builder = {
     isNormalUser = true;
-    openssh.authorizedKeys.keys = people.pubkey "root" "gusting";
+    openssh.authorizedKeys.keys = [
+      (people.pubkey "root" "gusting")
+    ];
   };
   nix.settings.trusted-users = [ "builder" ];
 
@@ -216,10 +224,7 @@ in {
     settings.media_dir = ["V,/home/media/film" "A,/home/media/music/albums"];
   };
 
-  # unfortunately sops-nix can only provide secrets after activation, and the auto SSH host key -> PGP stuff is in a go module.
-  # Instead run `nix-shell --run 'sops -d sops/secrets.yaml | yaml2json | jq -r \'.consul | .["server.crt"]\' > secrets/consul-server.crt'`
-  # TODO: put this in a secrets.toml instead.
-  security.pki.certificates = [ "../../secrets/consul-server.crt" ];
+  security.pki.certificates = [ secrets.consul.server-crt ];
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

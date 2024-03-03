@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.local;
-  people = import ../../people { inherit lib; };
+  people = import ../../systems/people.nix { inherit lib; };
 in {
   options.local = {
     username = mkOption {};

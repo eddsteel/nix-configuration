@@ -31,6 +31,7 @@ in {
     inherit homedir;
     username = "edd";
     hostname = "ringo";
+    ssh = true;
   };
 
   layers = {
