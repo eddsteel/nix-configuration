@@ -5,20 +5,18 @@ with lib; let
   netcheck = "ping -c 1 1.1.1.1 &>/dev/null";
   mrINI = root: me: repos: lib.generators.toINI {} (listToAttrs (map (mkMrConfig root me) repos));
   mkMrConfig = root: me: repo: let
-    name = "${root}/${repo.name}";
-    pfx = if repo ? pfx then "/${repo.pfx}" else "";
-    remote = if repo ? remote then repo.remote else "git@github.com:${me}/${name}";
+    remote = if repo ? remote then repo.remote else "git@github.com:${me}/${repo.name}";
     stowOpts = "-t ${homedir}${pfx} -d ${root} --ignore='.gitignore.*'";
     attrs = {
-      "checkout" = "git clone ${remote} ${name}";
+      "checkout" = "git clone ${remote} ${repo.name}";
     } // (optionalAttrs (repo ? stow) {
       "post_checkout" = "stow ${stowOpts} ${repo.name}";
       "post_update" = "stow ${stowOpts} ${repo.name}";
     }) // (optionalAttrs (repo ? fork)) {
-      "post_checkout" = "git remote add fork git@github.com:${me}/${name}";
+      "post_checkout" = "git remote add fork git@github.com:${me}/${repo.name}";
       "post_update" = "git fetch fork";
     };
-  in nameValuePair name attrs;
+  in nameValuePair "${root}/${repo.name}" attrs;
 in {
   options = {
     mr = {

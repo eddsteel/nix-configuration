@@ -3,7 +3,13 @@ let
   homedir = config.home.homeDirectory;
   cfg = config.layers.shell;
   aliases = em : {
-    ec = ''${em}/bin/emacsclient --no-wait --socket=${homedir}/run/emacs/server'';
+    ".." = ''cd ..'';
+    "..." = ''cd ../..'';
+    "..3" = ''cd ../../..'';
+    "..4" = ''cd ../../../..'';
+    "..5" = ''cd ../../../../..'';
+    "..6" = ''cd ../../../../../..'';
+    ec = ''${em}/bin/emacsclient --socket=${homedir}/run/emacs/server'';
     ga = ''git add'';
     gam = ''git commit -am'';
     gap = ''git add -p'';
@@ -32,13 +38,6 @@ let
     la = ''ls -a --color=auto'';
     srsly = ''sudo $(fc -ln -1)'';
     stree = ''tree --prune -P *.scala'';
-
-    ".." = ''cd ..'';
-    "..." = ''cd ../..'';
-    "..3" = ''cd ../../..'';
-    "..4" = ''cd ../../../..'';
-    "..5" = ''cd ../../../../..'';
-    "..6" = ''cd ../../../../../..'';
   };
   EDITOR = "${cfg.emacs}/bin/emacsclient --socket=${homedir}/run/emacs/server";
 in with lib; {
