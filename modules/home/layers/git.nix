@@ -10,6 +10,7 @@ in with lib; {
     github-user = mkOption {};
     hub-token = mkOption {};
     emacs = mkOption { default = pkgs.emacs; };
+    jj = mkOption { default = false; };
   };
 
   config = mkIf cfg.enable {
@@ -23,6 +24,22 @@ in with lib; {
           protocol: https
       '';
       executable = true;
+    };
+
+    programs.jujutsu = {
+      enable = cfg.jj;
+      settings = {
+        user = {
+          name = cfg.name;
+          email = cfg.email;
+        };
+        # This isn't released yet
+#        signing = {
+#          sign-all = true;
+#          backend = "gpg";
+#          key = cfg.key;
+#        };
+      };
     };
 
     programs.git = {
@@ -55,7 +72,7 @@ in with lib; {
                  "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
                  ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
                  "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"
-                 "/result" "/.idea/" "/tf/"];
+                 "/result" "/.idea/" "tf/"];
 
       extraConfig = {
         branch.autosetuprebase = "always";

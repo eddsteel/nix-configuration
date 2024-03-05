@@ -76,6 +76,7 @@ in {
       email = secrets.user.email;
       github-user = "eddsteel";
       key = "8433C6F9F807CE8E8DFA99EFB10455BC05772724";
+      jj = true;
     };
 
     shell = {
