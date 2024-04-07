@@ -8,6 +8,10 @@ let
   people = import ../people.nix { inherit lib; };
   secrets = import <secrets>;
   zones = pkgs.callPackage ./zones.nix {};
+  srvBindMount = dir: {
+    device = "/srv/${dir}";
+    options = [ "bind" "x-systemd.requires-mounts-for=/srv" "nofail"];
+  };
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
     value = {
@@ -32,7 +36,7 @@ in {
   networking = {
     hostName = "da-shi";
     inherit (hosts) extraHosts;
-    firewall.allowedTCPPorts = [ 22 80 443 3000 4000 8300 8301 8302 8543 8500 8096 8200 6600 8080];
+    firewall.allowedTCPPorts = [ 22 80 443 2049 3000 4000 8300 8301 8302 8543 8500 8096 8200 6600 8080];
     firewall.allowedUDPPorts = [ 1900 53 55 8300 8301 8302];
   };
 
@@ -46,6 +50,12 @@ in {
     options = ["nofail"];
     neededForBoot = false;
   };
+
+  fileSystems."/export/film" = srvBindMount "data/film2";
+#  fileSystems."/export/albums" = srvBindMount "data/albums";
+#  fileSystems."/export/television" = srvBindMount "data/television";
+  fileSystems."/export/books" = srvBindMount "data/books";
+
   environment.etc."crypttab".text = ''
     external   /dev/sda1   /boot/hdd.key luks,nofail
   '';
@@ -65,8 +75,7 @@ in {
   sops.secrets."consul/server.crt".owner = config.users.users.consul.name;
   sops.secrets."consul/server.key".owner = config.users.users.consul.name;
   sops.secrets."route53/env" = {};
-  #sops.secrets."pleroma/secrets.exs".owner = config.users.users.pleroma.name;
-  #sops.secrets."backup/env".owner = config.users.users.edd.name;
+  sops.secrets."backup/env".owner = config.users.users.edd.name;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.edd = {
@@ -107,10 +116,6 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.jellyfin.enable = true;
-  services.influxdb = {
-    enable = false;
-    dataDir = "/srv/data/influx";
-  };
   services.minidlna = {
     enable = true;
     settings.media_dir = [ "V,/srv/data/film" "V,/srv/data/television" "A,/srv/data/albums" ];
@@ -137,11 +142,7 @@ in {
       };
     };
   };
-  services.pleroma = {
-    enable = false;
-    configs = [ (lib.fileContents ../../files/pleroma-config.exs) ];
-    secretConfigFile = "/run/secrets/pleroma/secrets.exs";
-  };
+
   services.postgresql = {
     enable = false;
     package = pkgs.postgresql_13;
@@ -152,16 +153,13 @@ in {
       host all all ::1/128 trust
     '';
     dataDir = "/srv/data/base";
-    ensureDatabases = [ "pleroma" "meter" ];
+    ensureDatabases = [ "meter" ];
     ensureUsers = [
       { name = "edd"; ensurePermissions = { "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES"; };}
-      { name = "pleroma"; ensurePermissions = { "DATABASE pleroma" = "ALL PRIVILEGES";};}
       { name = "meter"; ensurePermissions = { "DATABASE meter" = "ALL PRIVILEGES";};}
     ];
     initialScript = pkgs.writeText "setup-pg" ''
-      ALTER ROLE pleroma WITH LOGIN PASSWORD '${secrets.database.pleroma.password}'; 
       ALTER ROLE meter WITH LOGIN PASSWORD '${secrets.database.meter.password}';
-      ALTER DATABASE pleroma OWNER to pleroma;
       ALTER DATABASE meter OWNER to meter;
 
       CREATE SCHEMA meters;
@@ -173,7 +171,7 @@ in {
       GRANT CONNECT ON DATABASE meter to meterreader;
       GRANT USAGE ON SCHEMA meters TO meterreader;
 
-      CREATE USER grafanareader WITH LOGIN PASSWORD '${secrets.database.grafana-reader.password}'; 
+      CREATE USER grafanareader WITH LOGIN PASSWORD '${secrets.database.grafana-reader.password}';
       GRANT meterreader TO grafanareader;
     '';
   };
@@ -209,12 +207,11 @@ in {
         ''"127.in-addr.arpa. 10800 IN NS localhost."''
         ''"127.in-addr.arpa. 10800 IN SOA localhost. nobody.invalid. 2 3600 1200 604800 10800"''
         ''"1.0.0.127.in-addr.arpa. 10800 IN PTR localhost."''
-        ''"da-shi.${hosts.domain}  IN  A  ${hosts.hosts.da-shi.ip4}"''
-        ''"draper.${hosts.domain}  IN  A  ${hosts.hosts.draper.ip4}"''
-        ''"blinds.${hosts.domain}  IN  A  ${hosts.hosts.blinds.ip4}"''
-        ''"gusting.${hosts.domain}  IN  A  ${hosts.hosts.gusting.ip4}"''
+        ''"da-shi.${hosts.domain}  IN  A  ${hosts.ip4 "da-shi"}"''
+        ''"draper.${hosts.domain}  IN  A  ${hosts.ip4 "draper"}"''
+        ''"blinds.${hosts.domain}  IN  A  ${hosts.ip4 "blinds"}"''
         ] ++ (map
-          (s: ''"${s.name}.${hosts.domain}  IN  A  ${hosts.hosts.da-shi.ip4}"'')
+          (s: ''"${s.name}.${hosts.domain}  IN  A  ${hosts.ip4 "da-shi"}"'')
           hosts.services);
         private-domain = [ '' "${hosts.domain}."''];
       };
@@ -248,6 +245,16 @@ in {
         };
       };
     };
+  };
+
+  services.nfs.server = let
+  in  {
+    enable = true;
+    exports = ''
+        /export            192.168.1.200(rw,fsid=0,no_subtree_check) 192.168.1.222(rw,fsid=0,no_subtree_check)
+        /export/books      192.168.1.200(rw,nohide,insecure,no_subtree_check) 192.168.1.222(rw,nohide,insecure,no_subtree_check)
+        /export/film       192.168.1.200(rw,nohide,insecure,no_subtree_check) 192.168.1.222(rw,nohide,insecure,no_subtree_check)
+    '';
   };
 
   security.acme = {
@@ -298,12 +305,15 @@ in {
               proxy_buffering off;
             '';
           };
-          #locations."/web/" = {
-          #  proxyPass = "http://127.0.0.2:8096/web/index.html";
-          #};
+          locations."/web/" = {
+            proxyPass = "http://127.0.0.2:8096/web/index.html";
+          };
           locations."/socket" = {
             proxyPass = "http://127.0.0.2:8096";
             proxyWebsockets = true;
+          };
+          locations."/system/info/public" = {
+            proxyPass = "http://127.0.0.2:8096/system/info/public";
           };
         };
       }
@@ -365,23 +375,23 @@ rsync -aHv --size-only --delete /home "$D/current/"
       };
     };
 
-   systemd.services.temperature = {
-      wants = ["srv.mount" "network.target" ];
-      serviceConfig.Type = "oneshot";
-      path = [ pkgs.broadlink-cli ];
-      script = ''
-        temp=$(broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature)
-        dt=$(date -u +"%Y-%m-%d %H:%M:%S")
-        
-        echo "$dt,$temp" >> /srv/data/thermometer
-   '';
-   };
-   systemd.timers.temperature = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "minutely";
-      };
-   };
+#   systemd.services.temperature = {
+#      wants = ["srv.mount" "network.target" ];
+#      serviceConfig.Type = "oneshot";
+#      path = [ pkgs.broadlink-cli ];
+#      script = ''
+#        temp=$(broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature)
+#        dt=$(date -u +"%Y-%m-%d %H:%M:%S")
+#        
+#        echo "$dt,$temp" >> /srv/data/thermometer
+#   '';
+#   };
+#   systemd.timers.temperature = {
+#      wantedBy = [ "timers.target" ];
+#      timerConfig = {
+#        OnCalendar = "minutely";
+#      };
+#   };
 
    systemd.services.r53-ddns = {
     wants = [ "network.target"];

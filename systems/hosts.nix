@@ -3,34 +3,45 @@ rec {
   domain = "moron.city";
   consulMain = "da-shi";
   hosts = {
-    blinds = {
+    blinds = [{
       ip4 = "192.168.1.165";
       mac = "E0-4F-43-BC-24-EB";
-    };
-    da-shi = {
+    }];
+    da-shi = [{
       ip4 = "192.168.1.88";
       mac = "9C-2D-CD-6A-BF-D8";
-    };
-    draper = {
-      ip4 = "192.168.1.77";
-      mac = "7C-70-DB-1B-97-70";
-    };
-    gusting = {
+    }];
+    draper = [
+      {
+        ip4 = "192.168.1.200";
+        mac = "7C-70-DB-1B-97-70";
+      }
+      {
+        ip4 = "192.168.1.222";
+        mac = "A0-CE-C8-76-47-D8";
+      }
+    ];
+    gusting = [{
       ip4 = "192.168.1.39";
       mac = "B8-27-EB-2C-22-55";
-    };
-    ringo = {
+    }];
+    ringo = [{
       ip4 = "192.168.1.203";
       mac = "E8-9F-80-2A-E4-D1";
-    };
-    xbox = {
+    }];
+    xbox = [{
       ip4 = "192.168.1.99";
       mac = "BC-83-85-A7-BE-61";
-    };
+    }];
   };
-  extraHosts = (lib.concatStringsSep "\n" (
-    lib.mapAttrsToList ( host: attrs: "${attrs.ip4} ${host}") hosts
-  ));
+  ip4 = h: (builtins.elemAt hosts."${h}" 0).ip4;
+  extraHosts = lib.concatStringsSep "\n" (
+    lib.lists.flatten (
+      lib.mapAttrsToList (host: ifs:
+        (lib.lists.concatMap (inf: ["${inf.ip4} ${host}"]) ifs)
+      ) hosts
+    )
+  );
 
   services = [
     {"name" = "next"; "host" = "da-shi"; "url" = "http://da-shi:4000";}
