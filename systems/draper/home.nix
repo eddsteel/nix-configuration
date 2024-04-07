@@ -5,11 +5,7 @@ let
   emacs = pkgs.emacs29-pgtk;
   secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
 in {
-  imports = [
-    ../../modules/home/linux/gnome.nix
-    ../../modules/home/linux
-    ../../modules/home
-  ];
+  imports = [ ../../modules/home ];
 
   home.stateVersion = "21.05";
   programs.home-manager = {
@@ -28,14 +24,48 @@ in {
     ssh = true;
   };
 
-  # this is a bit weird huh? Extract brainzo to a service at least.
-  linux = {
+  services.brainzo = {
     enable = true;
     blinds-controller = secrets.brainzo.blinds.controller;
     blinds = secrets.brainzo.blinds.blinds;
   };
 
+  systemd.user.services = let
+    script = pkgs.writeShellScriptBin "nfs-save" ''
+      if [ $(ls -1 /mnt/nfs/books | wc -l) -le 0 ]; then
+        echo "unable to access NFS mounts, exiting."
+        exit
+      fi
+
+      ${pkgs.rsync}/bin/rsync -aHv /home/media/books/ /mnt/nfs/books/
+    '';
+    in {
+    nfs-save = {
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${script}/bin/nfs-save";
+      };
+      Install = { WantedBy = ["default.target"]; };
+    };
+  };
+  systemd.user.timers.nfs-save = {
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
+    Timer = {
+      OnCalendar = "daily";
+    };
+  };
+
   layers = {
+    linux = {
+      enable = true;
+      gnome = {
+        enable = true;
+        inherit homedir;
+      };
+    };
+
     git = {
       enable = true;
       inherit emacs;

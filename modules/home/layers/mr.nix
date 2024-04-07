@@ -6,7 +6,7 @@ with lib; let
   mrINI = root: me: repos: lib.generators.toINI {} (listToAttrs (map (mkMrConfig root me) repos));
   mkMrConfig = root: me: repo: let
     remote = if repo ? remote then repo.remote else "git@github.com:${me}/${repo.name}";
-    stowOpts = "-t ${homedir}${pfx} -d ${root} --ignore='.gitignore.*'";
+    stowOpts = "-t ${homedir} -d ${root} --ignore='.gitignore.*'";
     attrs = {
       "checkout" = "git clone ${remote} ${repo.name}";
     } // (optionalAttrs (repo ? stow) {

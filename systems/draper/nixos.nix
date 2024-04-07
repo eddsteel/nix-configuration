@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
-plet
+let
   sops-nix = builtins.fetchTarball {
     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
   };
   hosts = import ../hosts.nix { inherit lib; };
   people = import ../people.nix { inherit lib; };
-  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml)
+  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
 in {
   imports = [
     ../../modules/per-host.nix
