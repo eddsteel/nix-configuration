@@ -42,7 +42,19 @@ in {
     "/boot".options = ["noatime"];
     "/home".options = ["noatime"];
     "/nix".options = ["noatime"];
+    "/mnt/nfs/film" = {
+      device = "da-shi:/film";
+      fsType = "nfs";
+      options = ["noatime" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=3600"];
+    };
+    "/mnt/nfs/books" = {
+      device = "da-shi:/books";
+      fsType = "nfs";
+      options = ["noatime" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=3600"];
+    };
   };
+  # for NFS
+  services.rpcbind.enable = true;
 
   # Set your time zone.
   time.timeZone = "Canada/Pacific";
