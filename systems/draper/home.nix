@@ -30,33 +30,6 @@ in {
     blinds = secrets.brainzo.blinds.blinds;
   };
 
-  systemd.user.services = let
-    script = pkgs.writeShellScriptBin "nfs-save" ''
-      if [ $(ls -1 /mnt/nfs/books | wc -l) -le 0 ]; then
-        echo "unable to access NFS mounts, exiting."
-        exit
-      fi
-
-      ${pkgs.rsync}/bin/rsync -aHv /home/media/books/ /mnt/nfs/books/
-    '';
-    in {
-    nfs-save = {
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${script}/bin/nfs-save";
-      };
-      Install = { WantedBy = ["default.target"]; };
-    };
-  };
-  systemd.user.timers.nfs-save = {
-    Install = {
-      WantedBy = [ "timers.target" ];
-    };
-    Timer = {
-      OnCalendar = "daily";
-    };
-  };
-
   layers = {
     linux = {
       enable = true;
