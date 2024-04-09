@@ -21,9 +21,9 @@ in {
     hostName = "draper";
     inherit (hosts) extraHosts;
     firewall.allowedTCPPorts = [
-      22 4242 8000 8096 8200 8300 8301 8302 8500 8543
+      22 4242 8000 8096 8200 8300 8301 8302 8384 8500 8543 22000
     ];
-    firewall.allowedUDPPorts = [ 1900 ];
+    firewall.allowedUDPPorts = [ 1900 22000 21027];
   };
 
   boot = {
@@ -256,4 +256,35 @@ in {
 
   virtualisation.docker.enable = true;
   services.jellyfin.enable = true;
+  services.syncthing = with secrets.syncthing; {
+    enable = true;
+    user = "edd";
+    dataDir = "/home/edd/media";
+    configDir = "/home/edd/.config/syncthing";
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      gui = { inherit user password; };
+
+      devices = {
+        "ereader" = { id = ereader-id;};
+        "phone"   = { id = phone-id;};
+      };
+
+      folders = {
+        "Books" = {
+          path = "~/media/books";
+          devices = [ "ereader" "phone" ];
+        };
+        "Phone Photos" = {
+          path = "~/media/photos/phone";
+          devices = [ "phone" ];
+        };
+        "Reader Documents" = {
+          path = "~/media/reader";
+          devices = [ "ereader" ];
+        };
+      };
+    };
+  };
 }
