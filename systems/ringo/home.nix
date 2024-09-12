@@ -20,10 +20,11 @@ in {
   home.packages = with pkgs; [
     scripts kotlin pre-commit bat gettext dos2unix
     terraform terraform-docs circleci-cli aws-vpn
-    docker kubectl kubectx nixUnstable
+    docker kubectl kubectx nixVersions.git
+    podman wvlet
   ] ++ nix-work.all
     ++ work-pkgs.all
-    ++ (with mac-apps; [intellij-idea-ce caffeine orbstack]);
+    ++ (with mac-apps; [intellij-idea-ce caffeine vfkit podman-desktop]);
 
   programs.go.enable = true;
 
@@ -115,14 +116,17 @@ in {
         timer = 60;
         script = ''
             PATH="$HOME/.nix-profile/bin"
-            temp=$(nix-shell -p broadlink-cli --command 'broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature')
+            temp=$(nix-shell -p broadlink-cli --command 'broadlink_cli --type 0x5213 --host ${secrets.temperature.host} --mac ${secrets.temperature.mac} --temperature')
             printf "%s°C\n" $temp
+            echo '---'
+            echo "History | href=${secrets.temperature.url}"
           '';
       }
     ];
   };
 
-  home.activation."refresh" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD killall Finder
+  home.activation."zzzRefresh" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    echo $0
+    run killall Finder
  '';
 }

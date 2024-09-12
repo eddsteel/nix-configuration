@@ -44,8 +44,7 @@ in {
   system.stateVersion = 4;
 
   fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       fira-code
       noto-fonts
       noto-fonts-cjk
@@ -54,6 +53,7 @@ in {
       open-sans
       roboto
       roboto-mono
+      sarasa-gothic
     ];
   };
 

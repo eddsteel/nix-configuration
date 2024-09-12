@@ -14,7 +14,7 @@ in with lib; {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.hub pkgs.git-crypt ];
+    home.packages = [ pkgs.hub pkgs.git-crypt pkgs.difftastic ];
 
     xdg.configFile."hub" = {
       text = ''
@@ -29,9 +29,13 @@ in with lib; {
     programs.jujutsu = {
       enable = cfg.jj;
       settings = {
-        user = {
-          name = cfg.name;
-          email = cfg.email;
+        user.name = cfg.name;
+        user.email = cfg.email;
+        ui.default-command = "lg";
+        alias.lg = ["log" "--no-pager" "--limit" "10"];
+        alias.pr = ["sh" "-c" "hub" "pull-request" "--browse"];
+        merge-tools.difft = {
+          diff-args = ["--color=always" "$left" "$right"];
         };
         # This isn't released yet
 #        signing = {
@@ -72,7 +76,7 @@ in with lib; {
                  "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
                  ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
                  "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"
-                 "/result" "/.idea/" "tf/"];
+                 "/result" "/.idea/" "tf/" ".jj/"];
 
       extraConfig = {
         branch.autosetuprebase = "always";

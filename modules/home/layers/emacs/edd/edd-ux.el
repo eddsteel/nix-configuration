@@ -2,21 +2,21 @@
 ;;
 (use-package nano-theme
   :custom
-  (nano-light-background "#E5DFC5")
+  (nano-light-background "#FDF6E3")
   (nano-light-critical "#B65D42")
   (nano-light-strong "#42393C")
-  (nano-light-subtle "#CEC8B1")
+  (nano-light-subtle "#EEE8D5")
   (nano-light-popout "#B58A7C")
   :custom-face
-  (highlight ((t (:background "#F2EBD0"))))
+  (highlight ((t (:background "#F2EDDA"))))
   (nano-faded ((t (:foreground "#666050"))))
   (nano-faded-i ((t (:background "#666050"))))
   (nano-salient ((t (:foreground "#7CA7B5"))))
   (nano-salient-i ((t (:background "#7CA7B5"))))
   (nano-popout ((t (:foreground "#B58A7C"))))
   (nano-popout-i ((t (:background "#B58A7C"))))
-  (nano-mono ((t (:weight light :height 130 :family "Fira Code"))))
-  (nano-strong ((t (:weight normal :height 130 :family "Fira Code"))))
+  (nano-mono ((t (:weight normal :height 130 :family "Sarasa Mono J"))))
+  (nano-strong ((t (:weight normal :height 130 :family "Sarasa Mono J"))))
   (ahs-plugin-default-face ((t (:background "#B58A7C"))))
   (ahs-plugin-default-face-unfocused ((t (:background "#B58A7C"))))
   (menu ((t (:background "#CEC8B1"))))
@@ -87,18 +87,16 @@
               (progn
                 ;; fade when inactive
                 (set-frame-parameter (selected-frame) 'alpha '(100 80))
-                (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't)
+                (set-frame-font "-*-Sarasa Mono J-regular-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't)
+--                (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't)
                 (put 'default-frame-alist 'alpha '(100 80)))
             (progn
-              (set-face-attribute 'default nil :font "Fira Code-13" :weight 'normal)
-              (set-face-attribute 'fixed-pitch nil :font "Fira Code-13" :weight 'normal)
+              (set-face-attribute 'default nil :font "Sarasa Mono J-13" :weight 'normal)
+              (set-face-attribute 'fixed-pitch nil :font "Sarasa Mono J-13" :weight 'normal)
               ))
           (when (member "Noto Emoji" (font-family-list))
             (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
-          (when (member "Noto Sans CJK JP" (font-family-list))
-            (dolist (charset '(kana han symbol cjk-misc bopomofo))
-              (set-fontset-font (frame-parameter nil 'font) charset
-                                (font-spec :family "Noto Sans CJK JP"))))))))
+          ))))
 
   (setq custom-safe-themes '("4639288d273cbd3dc880992e6032f9c817f17c4a91f00f3872009a099f5b3f84" default)))
 

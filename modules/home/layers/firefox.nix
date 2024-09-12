@@ -13,17 +13,17 @@ in with lib; {
       enable = true;
       profiles."default" = {
         id = 0;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          anchors-reveal auto-tab-discard duckduckgo-privacy-essentials bitwarden
-        ];
-        path = "xtqfr4qa.default";
+        path = "xtqfr4qa.default-release";
         isDefault = true;
         settings = {
+          "app.normandy.first_run" = false;
+          "beacon.enabled" = false;
           "browser.aboutConfig.showWarning" = false;
           "browser.download.dir" = cfg.downloads;
           "browser.startup.homepage" = "about:blank";
           "browser.newtabpage.enabled" = false;
-          "browser.tabs.firefox-view" = false;
+          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+          "browser.newtabpage.activity-stream.feeds.section.topsites" = false;
           "browser.warnOnQuitShortcut" = false;
           "browser.warnOnCloseOtherTabs" = false;
           "extensions.formautofill.creditCards.enabled" = false;
@@ -31,6 +31,8 @@ in with lib; {
           "services.sync.engine.creditcards" = false;
           "services.sync.engine.passwords" = false;
           "services.sync.prefs.sync.browser.tabs.warnOnClose" = false;
+          "services.sync.declinedEngines" = "passwords";
+          "servaices.sync.rememberSignons" = false;
           "accessibility.typeaheadfind.enablesound" = false;
           "signon.rememberSignons" = false;
           "signon.autofillForms" = false;

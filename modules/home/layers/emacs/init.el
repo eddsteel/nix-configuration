@@ -8,12 +8,14 @@
 (require 'edd-bootstrap (locate-user-emacs-file "edd/edd-bootstrap.el"))
 
 (use-package edd-ux
-  :if window-system :unless noninteractive)
+  :if window-system
+  :unless noninteractive)
 
 (use-package edd-features)
 
 (use-package edd-mac
-  :if (eq 'darwin system-type) :unless noninteractive)
+  :if (eq 'darwin system-type)
+  :unless noninteractive)
 
 (use-package edd-org
   :bind (("C-c w" . edd/go-to-work)))
@@ -404,7 +406,9 @@
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
-(use-package restclient)
+(use-package restclient
+  :config
+  (use-package restclient-jq))
 
 (use-package fish-mode)
 
@@ -418,8 +422,6 @@
       (setq default-transient-input-method "compose")
       (activate-transient-input-method)
       (setq default-transient-input-method old-im))))
-
-(use-package restclient)
 
 (use-package fish-mode)
 (use-package multiple-cursors

@@ -6,7 +6,7 @@ touch versions.json
 rm -f .*-component
 
 location() {
-    header "$1" '[lL]ocation'
+    header "$1" 'location'
 }
 
 cfversion() {
@@ -15,11 +15,11 @@ cfversion() {
 
 
 location_get() {
-    curl -Is -XGET "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/[lL]ocation/{print $2}'
+    curl -Is -XGET "$1" -o /dev/null -w '%header{location}'
 }
 
 header() {
-    curl -Is "$1" | awk -v FS=": " 'BEGIN{RS="\r\n";}/'"$2"'/{print $2}' | head -n 1
+    curl -Is "$1" -o /dev/null -w "%header{$2}"
 }
 
 conditional_get_sha() {
@@ -172,6 +172,10 @@ orbstack() {
              "orbstack" "dmg" "orbstack" "os"
 }
 
+podman() {
+    github "containers/podman-desktop" "podman-desktop-" "podman" "pm" "v" "-universal.dmg"
+}
+
 wavebox linux &
 wavebox darwin &
 bitwarden &
@@ -189,6 +193,7 @@ zoomus darwin &
 tdocs &
 awsvpn &
 orbstack &
+podman &
 
 wait
 
@@ -210,7 +215,8 @@ jq -n \
    --slurpfile zul .zul-component \
    --slurpfile td .td-component \
    --slurpfile os .os-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "orbstack": $os[0]}' \
+   --slurpfile pm .pm-component \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "orbstack": $os[0], "podman": $pm[0]}' \
    >new.json
 
 rm .*-component

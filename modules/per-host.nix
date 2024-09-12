@@ -29,8 +29,7 @@ in {
       "nixpkgs-config=${pkgsconfig}"
       "nixpkgs-overlays=${overlaysconfig}"
       "nix-config=${configPath}" # ∞ set at the command line, once
-      "/nix/var/nix/profiles/per-user/root/channels"
-    ];
+    ] ++ (lib.lists.optionals (cfg.os == "darwin") [ "darwin=${toString <darwin>}"]);
 
     environment = let
       envvars = {
@@ -39,19 +38,19 @@ in {
         NIX_CONF_DIR = configPath;
       };
     in if cfg.os == "darwin"
-      then {
-        variables = envvars // {
-          NIXPKGS_CONFIG = pkgsconfig;  # It's an error to configure this in nixos 🙄
-        };
-        darwinConfig = osconfig;
-      }
-      else {
-        variables = envvars // {
-          NIXOS_CONFIG = osconfig;
-        };
-        etc."nix/nixpkgs-config.nix".source = pkgsconfig; # Just overwrite it instead 😈
-      };
+       then {
+         darwinConfig = osconfig;
+         variables = envvars // {
+           NIXPKGS_CONFIG = pkgsconfig;  # It's an error to configure this in nixos 🙄
+         };
+       }
+       else {
+         variables = envvars // {
+           NIXOS_CONFIG = osconfig;
+         };
+         etc."nix/nixpkgs-config.nix".source = pkgsconfig; # Just overwrite it instead 😈
+       };
 
-      nix.channel.enable = false;
+#    nix.channel.enable = false;
   };
 }

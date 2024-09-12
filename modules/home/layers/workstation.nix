@@ -25,7 +25,7 @@ in with lib; {
     home.packages = with pkgs; [
       gnupg
       git-secrets nix-prefetch-git
-      duplicati ripgrep mpv unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
+      duplicati ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
       bitwarden moreutils exfalso wavebox
     ];
 
@@ -69,8 +69,8 @@ in with lib; {
   home.keyboard.layout = "ca+eng";
 
   home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --quiet --import ${cfg.gpg-pub}
-    $DRY_RUN_CMD ${pkgs.gnupg}/bin/gpg --quiet --import ${cfg.gpg-sec}
+    run --quiet ${pkgs.gnupg}/bin/gpg --quiet $VERBOSE_ARG --import ${cfg.gpg-pub}
+    run --quiet ${pkgs.gnupg}/bin/gpg --quiet $VERBOSE_ARG --import ${cfg.gpg-sec}
   '';
   };
 }

@@ -6,4 +6,5 @@
   circleci-cli = pkgs.callPackage ./circleci.nix {};
   wavebox      = pkgs.callPackage ./wavebox.nix {};
   zoomus       = pkgs.callPackage ./zoomus.nix {};
+  wvlet        = pkgs.callPackage ./wvlet.nix {};
 }

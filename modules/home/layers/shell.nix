@@ -87,6 +87,30 @@ in with lib; {
 
     programs.fish = {
       enable = true;
+      functions = {
+        fish_user_key_bindings = ''
+          bind ! bind_bang
+          bind '$' bind_dollar
+        '';
+        bind_bang = ''
+          switch (commandline -t)
+          case "!"
+            commandline -t -- $history[1]
+            commandline -f repaint
+          case "*"
+            commandline -i !
+          end
+        '';
+        bind_dollar = ''
+          switch (commandline -t)
+          case "*!"
+            commandline -f backward-delete-char history-token-search-backward
+          case "*"
+            commandline -i '$'
+          end
+        '';
+      };
+
       shellInit = ''
       set -gx EDITOR "${EDITOR}"
       set -gx ALTERNATE_EDITOR "${cfg.emacs}/bin/emacs"

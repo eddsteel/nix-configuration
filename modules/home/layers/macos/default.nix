@@ -15,6 +15,7 @@ in with lib; {
 
   config = mkIf cfg.enable {
     targets.darwin = {
+      dock.enable = true;
       dock.apps = [
         "/System/Applications/System Settings.app"
         "${cfg.emacs}/Applications/Emacs.app"
@@ -93,8 +94,6 @@ in with lib; {
     home.packages = with pkgs; [
       coreutils gnugrep gnused findutils gawk python3 ps wget
     ];
-
-
 
     programs.bash.bashrcExtra = keychain;
     programs.fish.shellInit = keychain;

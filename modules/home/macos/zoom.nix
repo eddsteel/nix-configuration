@@ -9,11 +9,11 @@ in with lib; {
     home.packages = [ pkgs.zoom-us ];
 
     home.activation."defaultZoom" = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoomus --app "${pkgs.zoom-us}/Applications/zoom.us.app"
-    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoommtg --app "${pkgs.zoom-us}/Applications/zoom.us.app"
-    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoomphonecall --app "${pkgs.zoom-us}/Applications/zoom.us.app"
-    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL callto --app "${pkgs.zoom-us}/Applications/zoom.us.app"
-    $DRY_RUN_CMD ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL sip --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    run --silence ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoomus --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    run --silence ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoommtg --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    run --silence ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL zoomphonecall --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    run --silence ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL callto --app "${pkgs.zoom-us}/Applications/zoom.us.app"
+    run --silence ${pkgs.swiftdefaultapps}/bin/swda setHandler --URL sip --app "${pkgs.zoom-us}/Applications/zoom.us.app"
   '';
   };
 }

@@ -33,23 +33,13 @@
         (set-face-attribute 'default (selected-frame) :height 150)
       (set-face-attribute 'default (selected-frame) :height 120))))
 
-
 (use-package emms
-  :defer t
   :ensure nil
+  :after edd-emms
   :config
-  (defun edd-emms-volume-m-change (amount)
-    "Change m volume by AMOUNT"
-    (message "Volume: %s%%"
-             (with-temp-buffer
-               (when (zerop
-                      (call-process "m" nil (current-buffer) nil
-                                    "volume"
-                                    (format "%s%d" (if (< amount 0) "-" "+")
-                                            (abs amount))))
-                 (if (re-search-backward "Vol: \\([0-9]+\\)" nil t)
-                     (match-string 1))))))
-  (setq emms-volume-change-function 'edd-emms-volume-m-change))
+  (define-emms-simple-player
+   afplay '(file) (regexp-opt '(".mp3" ".m4a" ".aac" ".flac")) "afplay")
+  (setq emms-player-list (list emms-player-afplay)))
 
 (use-package org
   :commands edd-mac/agenda-iCal

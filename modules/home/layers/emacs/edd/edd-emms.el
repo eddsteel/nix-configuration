@@ -45,9 +45,10 @@
   (defun edd-emms/tell-consul ()
     (when edd-emms/consul-p
       (let*
-          ((artist (emms-track-get (emms-playlist-current-selected-track) 'info-artist))
-           (title (emms-track-get (emms-playlist-current-selected-track) 'info-title))
-           (album (emms-track-get (emms-playlist-current-selected-track) 'info-album))
+          ((track (emms-playlist-current-selected-track))
+           (artist (emms-track-get track 'info-artist))
+           (title (emms-track-get track 'info-title))
+           (album (emms-track-get track 'info-album))
            (time (string-to-number (format-time-string "%s000")))
            (json (json-encode-alist
                   (list (cons :artist artist)
@@ -65,7 +66,7 @@
     (emms-start))
 
   (defun edd-emms/info-track-description (track)
-    "Return a description of TRACK."
+    "Return a simple description of TRACK. At most artist and title are returned."
     (let ((artist (emms-track-get track 'info-artist))
           (title  (emms-track-get track 'info-title)))
       (cond
@@ -78,10 +79,7 @@
 
   (defun edd-emms/now-playing ()
     (if emms-player-playing-p
-                    (format emms-show-format
-                            (emms-track-description
-                             (emms-playlist-current-selected-track)))
-      ""))
+        (edd-emms/info-track-description (emms-playlist-current-selected-track)) ""))
 
   :bind (("<f8>" . emms-pause)
          ("<f7>" . edd-emms/start-or-previous)
