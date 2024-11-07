@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs ? import <nixpkgs> {} }:
 {
   brainzo      = pkgs.callPackage ../../brainzo/default.nix {};
   scripts      = pkgs.callPackage ../../scripts/default.nix {};
@@ -7,4 +7,5 @@
   wavebox      = pkgs.callPackage ./wavebox.nix {};
   zoomus       = pkgs.callPackage ./zoomus.nix {};
   wvlet        = pkgs.callPackage ./wvlet.nix {};
+  trino        = pkgs.callPackage ./trino.nix {};
 }
