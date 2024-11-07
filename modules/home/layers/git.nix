@@ -87,6 +87,8 @@ in with lib; {
         pull.rebase = true;
         push.default = "current";
         rebase.autostash = true;
+        rebase.update-refs = true;
+        safe.directory = "*";        # Not using shared machine
         submodule.recurse = true;
         tag.forceSignedAnnotated = true;
         url."git@github.com:".insteadOf = [
@@ -97,8 +99,6 @@ in with lib; {
           "git://github.com/${cfg.github-user}/"
           "https://github.com/${cfg.github-user}/"
         ];
-        # Not using shared machine
-        safe.directory = "*";
       };
     };
   };
