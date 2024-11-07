@@ -50,6 +50,7 @@ in with lib; {
       default = pkgs.emacs;
     };
     email = mkOption {};
+    vars = mkOption {};
   };
   config = mkIf cfg.enable {
     home.shellAliases = aliases cfg.emacs // cfg.extraAliases;
@@ -66,7 +67,7 @@ in with lib; {
         HISTFILESIZE = "1000000";
         NIXPKGS_CONFIG = toString <nixpkgs-config>;
         EMAIL = "${cfg.email}";
-      };
+      } // cfg.vars;
 
       bashrcExtra = ''
       if [ -f ${homedir}/.profile ]; then
@@ -87,6 +88,7 @@ in with lib; {
 
     programs.fish = {
       enable = true;
+
       functions = {
         fish_user_key_bindings = ''
           bind ! bind_bang
