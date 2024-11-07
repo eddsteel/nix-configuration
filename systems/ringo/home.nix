@@ -67,6 +67,7 @@ in {
     firefox = {
       enable = true;
       sync-user = secrets.firefox.username;
+      profile = "uooem51c.default-release-5";
     };
 
     git = {
