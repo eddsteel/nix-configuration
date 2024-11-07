@@ -44,7 +44,7 @@ in {
       soundsource = {
         inherit (secrets.soundsource) name code;
       };
-      inherit emacs;
+      emacs = config.programs.emacs.finalPackage;
     };
 
     workstation = {
