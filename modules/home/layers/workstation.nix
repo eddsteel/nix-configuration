@@ -43,7 +43,7 @@ in with lib; {
     };
 
     home.file.".aws/credentials".text = cfg.aws-credentials;
-    home.file.".aws/config".text = cfg.aws-configuration;
+    home.file.".aws/config-nix".text = cfg.aws-configuration;
 
     home.file.".aspell.conf".text = ''
       data-dir ${homedir}/.nix-profile/lib/aspell
@@ -71,6 +71,13 @@ in with lib; {
   home.activation."importKeys" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     run --quiet ${pkgs.gnupg}/bin/gpg --quiet $VERBOSE_ARG --import ${cfg.gpg-pub}
     run --quiet ${pkgs.gnupg}/bin/gpg --quiet $VERBOSE_ARG --import ${cfg.gpg-sec}
+  '';
+
+  # hack to allow docker to mount current aws config. You suck, docker!
+  home.activation."setupAWSConfig" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    rm -f "$HOME/.aws/config"
+    cp "$HOME/.aws/config-nix" "$HOME/.aws/config"
+
   '';
   };
 }
