@@ -8,10 +8,6 @@ let
   people = import ../people.nix { inherit lib; };
   secrets = import <secrets>;
   zones = pkgs.callPackage ./zones.nix {};
-  srvBindMount = dir: {
-    device = "/srv/${dir}";
-    options = [ "bind" "x-systemd.requires-mounts-for=/srv" "nofail"];
-  };
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
     value = {
@@ -32,12 +28,13 @@ in {
   ];
 
   perHost.enable = true;
+  perHost.channels = true;
 
   networking = {
     hostName = "da-shi";
     inherit (hosts) extraHosts;
-    firewall.allowedTCPPorts = [ 22 80 443 2049 3000 4000 8300 8301 8302 8543 8500 8096 8200 6600 8080];
-    firewall.allowedUDPPorts = [ 1900 53 55 8300 8301 8302];
+    firewall.allowedTCPPorts = [ 111 22 80 443 2049 3000 4000 8300 8301 8302 8543 8500 8096 8200 6600 8080];
+    firewall.allowedUDPPorts = [ 111 1900 2049 53 55 8300 8301 8302];
   };
 
   boot.initrd.kernelModules = [ "usb_storage" ];
@@ -45,19 +42,62 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  fileSystems."/srv" = {
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+
+  fileSystems."/mnt/srv" = {
     device = "/dev/mapper/external";
     options = ["nofail"];
     neededForBoot = false;
   };
 
-  fileSystems."/export/film" = srvBindMount "data/film2";
-#  fileSystems."/export/albums" = srvBindMount "data/albums";
-#  fileSystems."/export/television" = srvBindMount "data/television";
-  fileSystems."/export/books" = srvBindMount "data/books";
+  fileSystems."/srv" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=srv" "noatime" "compress=zstd" "nofail" ];
+    };
+
+  fileSystems."/srv/backup" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=backup" "noatime" "compress=zstd" "nofail" ];
+    };
+
+  fileSystems."/srv/project" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=project" "noatime" "compress=zstd" "nofail" ];
+    };
+
+  fileSystems."/srv/media/music" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=music" "noatime" "compress=zstd" "nofail" ];
+    };
+
+  fileSystems."/srv/media/book" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=book" "noatime" "compress=zstd" "nofail" ];
+    };
+
+  fileSystems."/srv/media/television" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=television" "noatime" "compress=zstd" "nofail" ];
+    };
+
+  fileSystems."/srv/data" =
+    { device = "/dev/mapper/data02";
+      fsType = "btrfs";
+      options = [ "subvol=data" "noatime" "compress=zstd" "nofail" ];
+    };
 
   environment.etc."crypttab".text = ''
-    external   /dev/sda1   /boot/hdd.key luks,nofail
+    data01     UUID=920d7680-9ceb-475a-b72f-4ce8b3f49440   /boot/array.key   luks,nofail
+    data02     UUID=516c023c-35b5-48db-ba7e-ebed6bee7c0a   /boot/array.key   luks,nofail
+    data03     UUID=379db540-f38f-4a56-b497-7af2e51353ec   /boot/array.key   luks,nofail
+    data04     UUID=82afc3e2-c7e7-45f0-9b58-b06ccca01e11   /boot/array.key   luks,nofail,discard
   '';
 
   # Set your time zone.
@@ -71,9 +111,6 @@ in {
   # };
 
   sops.defaultSopsFile = ../../sops/secrets.yaml;
-  sops.secrets."consul/ca.pem".owner = config.users.users.consul.name;
-  sops.secrets."consul/server.crt".owner = config.users.users.consul.name;
-  sops.secrets."consul/server.key".owner = config.users.users.consul.name;
   sops.secrets."route53/env" = {};
   sops.secrets."backup/env".owner = config.users.users.edd.name;
 
@@ -97,6 +134,7 @@ in {
     awscli2
     rsync
     libxfs
+    btrfs-progs
 
     dig
     rsync
@@ -116,11 +154,7 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.jellyfin.enable = true;
-  services.minidlna = {
-    enable = true;
-    settings.media_dir = [ "V,/srv/data/film" "V,/srv/data/television" "A,/srv/data/albums" ];
-    openFirewall = true;
-  };
+  services.anki.enable = true;
   services.grafana = {
     enable = true;
     dataDir = "/srv/data/grafana";
@@ -143,51 +177,7 @@ in {
     };
   };
 
-  services.postgresql = {
-    enable = false;
-    package = pkgs.postgresql_13;
-    enableTCPIP = true;
-    authentication = pkgs.lib.mkOverride 10 ''
-      local all all trust
-      host all all 127.0.0.1/32 trust
-      host all all ::1/128 trust
-    '';
-    dataDir = "/srv/data/base";
-    ensureDatabases = [ "meter" ];
-    ensureUsers = [
-      { name = "edd"; ensurePermissions = { "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES"; };}
-      { name = "meter"; ensurePermissions = { "DATABASE meter" = "ALL PRIVILEGES";};}
-    ];
-    initialScript = pkgs.writeText "setup-pg" ''
-      ALTER ROLE meter WITH LOGIN PASSWORD '${secrets.database.meter.password}';
-      ALTER DATABASE meter OWNER to meter;
-
-      CREATE SCHEMA meters;
-      CREATE ROLE meterreader;
-
-      GRANT USAGE ON SCHEMA meters TO meter;
-      GRANT ALL ON ALL TABLES IN SCHEMA meters TO meter;
-
-      GRANT CONNECT ON DATABASE meter to meterreader;
-      GRANT USAGE ON SCHEMA meters TO meterreader;
-
-      CREATE USER grafanareader WITH LOGIN PASSWORD '${secrets.database.grafana-reader.password}';
-      GRANT meterreader TO grafanareader;
-    '';
-  };
-
-  # TODO: put this in a meters project
-  # initialSetup = ''
-#      CREATE TABLE IF NOT EXISTS meter.meters.temperature (
-#        time TIMESTAMPZ,
-#        temperature REAL
-#      );
-#      GRANT SELECT ON meters.temperature TO meterreader;
-#      create index IF NOT EXISTS meters_time_brin_idx on meters.temperature using brin (time);
-#    '';
-  #'';
-
-    services.unbound = {
+  services.unbound = {
     enable = true;
     settings = {
       server = {
@@ -223,39 +213,17 @@ in {
       include = "${zones}/blocklist.conf";
     };
   };
-  services.consul = {
-    enable = true;
-    interface.bind = "eth0";
-    interface.advertise = "eth0";
-    extraConfig = {
-      ui_config.enabled = true;
-      datacenter = "edd";
-      ports = { https = 8543;};
-      bootstrap = true;
-      bootstrap_expect = 1;
-      server = true;
-      ca_file = "/run/secrets/consul/ca.pem";
-      cert_file = "/run/secrets/consul/server.crt";
-      key_file = "/run/secrets/consul/server.key";
-      http_config = {
-        response_headers = {
-          Access-Control-Allow-Origin = "*";
-          Access-Control-Allow-Methods = "GET,PUT,POST,DELETE";
-          Access-Control-Allow-Headers = "content-type,user-agent";
-        };
-      };
-    };
-  };
 
-  services.nfs.server = let
-  in  {
-    enable = true;
-    exports = ''
-        /export            192.168.1.200(rw,fsid=0,no_subtree_check) 192.168.1.222(rw,fsid=0,no_subtree_check)
-        /export/books      192.168.1.200(rw,nohide,insecure,no_subtree_check) 192.168.1.222(rw,nohide,insecure,no_subtree_check)
-        /export/film       192.168.1.200(rw,nohide,insecure,no_subtree_check) 192.168.1.222(rw,nohide,insecure,no_subtree_check)
-    '';
-  };
+#  services.nfs.server = let
+#  in  {
+#    enable = true;
+#    exports = ''
+#        /srv/media/book       192.168.1.200(rw,insecure,no_subtree_check) 192.168.1.222(rw,insecure,no_subtree_check)
+#        #/srv/media/film       192.168.1.200(rw,insecure,no_subtree_check) 192.168.1.222(rw,insecure,no_subtree_check)
+#        #/srv/media/music      192.168.1.200(rw,insecure,no_subtree_check) 192.168.1.222(rw,insecure,no_subtree_check)
+#        #/srv/media/television 192.168.1.200(rw,insecure,no_subtree_check) 192.168.1.222(rw,insecure,no_subtree_check)
+#    '';
+#  };
 
   security.acme = {
     acceptTerms = true;
@@ -300,20 +268,10 @@ in {
             proxy_headers_hash_max_size 20480;
           '';
           locations."/" = {
-            proxyPass = "http://127.0.0.2:8096";
+            proxyPass = "http://127.0.0.1:8096";
             extraConfig = ''
               proxy_buffering off;
             '';
-          };
-          locations."/web/" = {
-            proxyPass = "http://127.0.0.2:8096/web/index.html";
-          };
-          locations."/socket" = {
-            proxyPass = "http://127.0.0.2:8096";
-            proxyWebsockets = true;
-          };
-          locations."/system/info/public" = {
-            proxyPass = "http://127.0.0.2:8096/system/info/public";
           };
         };
       }
@@ -333,18 +291,22 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
-  systemd.services.s3sync = {
+# Re-enable
+#
+  systemd.services.b2sync = {
     wants = [ "network.target" "srv.mount"];
     serviceConfig.Type = "oneshot";
     serviceConfig.User = "edd";
     serviceConfig.EnvironmentFile = /run/secrets/backup/env;
-    path = [ pkgs.awscli2 ];
+    path = [ pkgs.backblaze-b2 ];
     script = ''
-      aws s3 sync --only-show-errors --size-only /srv/data/ s3://eddsteel-disk/
+      backblaze-b2 sync --compareVersion size --noProgress /srv/media b2://eddsteel-disk/media
+      backblaze-b2 sync --compareVersion size --noProgress /srv/project b2://eddsteel-disk/project
+      backblaze-b2 sync --compareVersion size --noProgress /srv/backup b2://eddsteel-disk/backup
     '';
   };
 
-  systemd.timers.s3sync = {
+  systemd.timers.b2sync = {
      wantedBy = [ "timers.target" ];
      timerConfig = {
        OnCalendar = "daily";
@@ -364,7 +326,7 @@ mkdir -p "$D/current/home"
 
 rsync -aHv --size-only --delete /boot "$D/current/"
 rsync -aHv --size-only --delete /etc "$D/current/"
-rsync -aHv --size-only --delete /home "$D/current/"
+rsync -aHv --size-only --delete --exclude=src/ --include=*/ --include=* /home "$D/current/"
     '';
   };
 
@@ -375,23 +337,22 @@ rsync -aHv --size-only --delete /home "$D/current/"
       };
     };
 
-#   systemd.services.temperature = {
-#      wants = ["srv.mount" "network.target" ];
-#      serviceConfig.Type = "oneshot";
-#      path = [ pkgs.broadlink-cli ];
-#      script = ''
-#        temp=$(broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature)
-#        dt=$(date -u +"%Y-%m-%d %H:%M:%S")
-#        
-#        echo "$dt,$temp" >> /srv/data/thermometer
-#   '';
-#   };
-#   systemd.timers.temperature = {
-#      wantedBy = [ "timers.target" ];
-#      timerConfig = {
-#        OnCalendar = "minutely";
-#      };
-#   };
+   systemd.services.temperature = {
+      wants = ["srv.mount" "network.target" ];
+      serviceConfig.Type = "oneshot";
+      path = [ pkgs.broadlink-cli ];
+      script = ''
+        temp=$(broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature)
+        dt=$(date -u +"%Y-%m-%d %H:%M:%S")
+        echo "$dt,$temp" >> /srv/data/thermometer/thermometer
+   '';
+   };
+   systemd.timers.temperature = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "minutely";
+      };
+   };
 
    systemd.services.r53-ddns = {
     wants = [ "network.target"];

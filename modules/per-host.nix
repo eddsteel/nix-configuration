@@ -11,6 +11,11 @@ in {
       default = "nixos";
       description = "nixos or darwin";
     };
+    channels = mkOption {
+      type = types.bool;
+      default = false;
+      description = "whether to use channels (default false)";
+    };
   };
 
   config = let
@@ -51,6 +56,6 @@ in {
          etc."nix/nixpkgs-config.nix".source = pkgsconfig; # Just overwrite it instead 😈
        };
 
-#    nix.channel.enable = false;
+      nix.channel.enable = cfg.channels;
   };
 }
