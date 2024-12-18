@@ -44,8 +44,8 @@ rec {
   );
 
   services = [
-    {"name" = "next"; "host" = "da-shi"; "url" = "http://da-shi:4000";}
     {"name" = "stats"; "host" = "da-shi"; "url" = "http://da-shi:3000";}
     {"name" = "media"; "host" = "da-shi"; "url" = "http://da-shi:8096";}
+    {"name" = "anki"; "host" = "da-shi"; "url" = "http://da-shi:9000";}
   ];
 }

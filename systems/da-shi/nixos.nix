@@ -6,7 +6,7 @@ let
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
   people = import ../people.nix { inherit lib; };
-  secrets = import <secrets>;
+  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
   zones = pkgs.callPackage ./zones.nix {};
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
@@ -154,7 +154,15 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.jellyfin.enable = true;
-  services.anki.enable = true;
+  services.anki-sync-server = {
+    enable = true;
+    users = [{
+	    username = secrets.anki.username;
+	    password = secrets.anki.password;
+    }];
+    port = 9000;
+  };
+  services.fail2ban.enable = true;
   services.grafana = {
     enable = true;
     dataDir = "/srv/data/grafana";
@@ -245,7 +253,7 @@ in {
     #    virtualHosts = with builtins; listToAttrs (map virtualHost hosts.services);
     virtualHosts = with builtins; listToAttrs [
       (virtualHost (elemAt hosts.services 0))
-      (virtualHost (elemAt hosts.services 1))
+      (virtualHost (elemAt hosts.services 2))
       {
         name = "media.${hosts.domain}";
         value = {
