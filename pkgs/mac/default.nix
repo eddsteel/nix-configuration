@@ -11,7 +11,6 @@ with pkgs; {
   exfalso          = callPackage ./exfalso.nix {};
   terraform-docs   = callPackage ./terraform-docs.nix {};
   aws-vpn          = callPackage ./aws-vpn {};
-  orbstack         = callPackage ./orbstack.nix {}; # If you have any more non-HFS dmgs, extract the unpacker
   podman-desktop   = callPackage ./podman-desktop.nix {};
   vfkit            = callPackage ./vfkit.nix {};
 }
