@@ -19,7 +19,7 @@ location_get() {
 }
 
 header() {
-    curl -Is "$1" -o /dev/null -w "%header{$2}"
+    curl --insecure -Is "$1" -o /dev/null -w "%header{$2}"
 }
 
 conditional_get_sha() {

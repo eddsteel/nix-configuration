@@ -42,13 +42,13 @@ in {
     "/boot".options = ["noatime"];
     "/home".options = ["noatime"];
     "/nix".options = ["noatime"];
-    "/mnt/nfs/film" = {
-      device = "da-shi:/film";
-      fsType = "nfs";
-      options = ["noatime" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=3600"];
-    };
-    "/mnt/nfs/books" = {
-      device = "da-shi:/books";
+#    "/mnt/nfs/film" = {
+#      device = "da-shi:/film";
+#      fsType = "nfs";
+#      options = ["noatime" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=3600"];
+#    };
+    "/mnt/nfs/book" = {
+      device = "da-shi:/book";
       fsType = "nfs";
       options = ["noatime" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=3600"];
     };
@@ -78,19 +78,19 @@ in {
   # };
 
   sops.defaultSopsFile = ../../sops/secrets.yaml;
-  sops.secrets."consul/ca.pem".owner = "consul";
-  sops.secrets."consul/server.crt".owner = config.users.users.consul.name;
-  sops.secrets."consul/server.key".owner = config.users.users.consul.name;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm.enable = true;
 
-  i18n.inputMethod.enabled = "ibus";
-  i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
-    anthy hangul libpinyin m17n mozc table table-others
-  ];
+  i18n.inputMethod =  {
+    enable = true;
+    type = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [
+      anthy libpinyin m17n mozc table table-others
+    ];
+  };
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -101,14 +101,8 @@ in {
   services.printing.drivers = [ pkgs.cnijfilter2 ];
 
   # Enable sound.
-  sound.enable = false;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -116,18 +110,9 @@ in {
   users.users.edd = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" "docker" "cdrom" "disk"];
+    extraGroups = [ "wheel" "docker" "cdrom" "disk" "adbusers"];
     openssh.authorizedKeys.keys = people.pubkeys;
   };
-
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-  users.users.builder = {
-    isNormalUser = true;
-    openssh.authorizedKeys.keys = [
-      (people.pubkey "root" "gusting")
-    ];
-  };
-  nix.settings.trusted-users = [ "builder" ];
 
   environment.shells = [ pkgs.fish ];
 
@@ -159,9 +144,10 @@ in {
         ipafont
         kochi-substitute
         noto-fonts
-        noto-fonts-cjk
+        noto-fonts-cjk-sans
         noto-fonts-emoji
         open-sans
+        sarasa-gothic
       ];
   };
 
@@ -180,6 +166,8 @@ in {
     enable = true;
   };
 
+  programs.adb.enable = true;
+
   programs.fish.enable = true;
 
   # List services that you want to enable:
@@ -187,56 +175,9 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.keybase.enable = true;
-  services.consul = {
-    enable = true;
-    interface.bind = "wlp0s20f3";
-    interface.advertise = "wlp0s20f3";
-    extraConfig = {
-      ui_config.enabled = true;
-      retry_join = ["gusting"];
-      datacenter = "edd";
-      ports = { https = 8543;};
-      ca_file = "/run/secrets/consul/ca.pem";
-      cert_file = "/run/secrets/consul/server.crt";
-      key_file = "/run/secrets/consul/server.key";
-      http_config = {
-        response_headers = {
-          Access-Control-Allow-Origin = "*";
-          Access-Control-Allow-Methods = "GET,PUT,POST,DELETE";
-          Access-Control-Allow-Headers = "content-type,user-agent";
-        };
-      };
-    };
-  };
-
-  environment.etc."consul.d/brainzo.json".text = ''{
-    "service": {
-      "name": "brainzo",
-      "tags": [],
-      "port": 4242,
-      "checks": [
-        {
-          "id": "api",
-          "name": "You OK bud?",
-          "http": "http://localhost:4242/bleep",
-          "method": "GET",
-          "interval": "30s",
-          "timeout": "50ms"
-        }
-      ]
-    }
-  }'';
-
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="5401", ATTR{power/wakeup}="enabled", ATTR{driver/3-7.4/power/wakeup}="enabled"
   '';
-
-  services.minidlna = {
-    enable = true;
-    settings.media_dir = ["V,/home/media/film" "A,/home/media/music/albums"];
-  };
-
-  security.pki.certificates = [ secrets.consul.server-crt ];
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -255,7 +196,7 @@ in {
   };
 
   virtualisation.docker.enable = true;
-  services.jellyfin.enable = true;
+  services.jellyfin.enable = false;
   services.syncthing = with secrets.syncthing; {
     enable = true;
     user = "edd";
@@ -272,17 +213,25 @@ in {
       };
 
       folders = {
+        # ~/Books
         "Books" = {
           path = "~/media/books";
           devices = [ "ereader" "phone" ];
         };
+        # ~/DCIM
         "Phone Photos" = {
           path = "~/media/photos/phone";
           devices = [ "phone" ];
         };
+        #
         "Reader Documents" = {
           path = "~/media/reader";
           devices = [ "ereader" ];
+        };
+        # ~/Sync
+        "Phone Sync" = {
+          path = "~/media/phone";
+          devices = [ "phone" ];
         };
       };
     };

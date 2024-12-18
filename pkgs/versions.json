@@ -32,10 +32,10 @@
     "version": "2024.2.4"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-7.31.0.dmg",
-    "sha256": "06d974iqmnvvvk5wlzrp7xzr8p6n9jj5rpfc127751h08i4j2cky",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.31.0.dmg",
-    "version": "7.31.0"
+    "name": "signal-desktop-mac-universal-7.32.0.dmg",
+    "sha256": "096nkkdz4p28bhrpk5vs1vdzyhfr9n3isvzpniifa1d12mdph3x1",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.32.0.dmg",
+    "version": "7.32.0"
   },
   "istatmenus": {
     "name": "istat-6.73.1.zip",
@@ -100,12 +100,6 @@
     "sha256": "sha256-1XRHWoC2FEmcl651YS7x/5BbtKobX3EJQg6Av5Wu/L0=",
     "url": "https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg",
     "version": "4.0.0"
-  },
-  "orbstack": {
-    "name": "orbstack-1.8.0_18332.dmg",
-    "sha256": "0dvhr9vkjxl971kvj2xdcaps7zl5jy7j37iazmvqaxcvkran3qkx",
-    "url": "https://cdn-updates.orbstack.dev/arm64/OrbStack_v1.8.0_18332_arm64.dmg",
-    "version": "1.8.0_18332"
   },
   "podman": {
     "name": "podman-desktop-1.13.3-universal.dmg",
