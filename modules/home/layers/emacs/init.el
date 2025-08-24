@@ -46,8 +46,9 @@
   (corfu-auto t "Enable auto completion")
   (corfu-quit-at-boundary t "Automatically quit at word boundary")
   (corfu-quit-no-match t "Automatically quit if there is no match")
-  :init
-  (global-corfu-mode))
+  ;:init
+  ;(global-corfu-mode)
+  )
 
 (use-package vertico
   :init
@@ -423,13 +424,14 @@
       (activate-transient-input-method)
       (setq default-transient-input-method old-im))))
 
-(use-package fish-mode)
 (use-package multiple-cursors
   :bind
   ("C-;" . mc/mark-next-like-this)
   ("C-:" . mc/mark-all-like-this)
   ("C-c ;" . mc/edit-lines)
   ("M-<down>" . mc/mark-more-like-this-extended))
+
+(use-package eat)
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

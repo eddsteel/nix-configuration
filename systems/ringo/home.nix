@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  emacs = pkgs.emacs29;
+  emacs = pkgs.emacs30;
   homedir = "/Users/edd";
   secrets =  builtins.fromTOML (builtins.readFile ./secrets.toml);
   nix-work = pkgs.callPackage ../../../nix-work {};
@@ -21,10 +21,10 @@ in {
     scripts kotlin pre-commit bat gettext dos2unix
     terraform terraform-docs circleci-cli aws-vpn
     docker kubectl kubectx nixVersions.git
-    podman wvlet
+    podman trino maven claude-code
   ] ++ nix-work.all
     ++ work-pkgs.all
-    ++ (with mac-apps; [intellij-idea-ce caffeine vfkit podman-desktop]);
+    ++ (with mac-apps; [caffeine vfkit podman-desktop ldcli intellij-idea-ce]);
 
   programs.go.enable = true;
 
@@ -85,11 +85,11 @@ in {
       enable = true;
       inherit emacs;
       inherit (secrets.user) email;
+      inherit (secrets.shell) vars funs;
       extraAliases = {
         "s3" = "AWS_PROFILE=s3-dl-personal ${pkgs.scripts}/bin/s3";
         "gradle" = "envchain gradle gradle";
       } // secrets.shell.aliases;
-      vars = secrets.shell.environment;
     };
   };
 
@@ -126,6 +126,29 @@ in {
       }
     ];
   };
+
+  home.file.".wvlet/profiles.yml".source = (pkgs.formats.yaml {}).generate "wvlet-config" {
+    profiles = secrets.wvlet.config;
+  };
+
+  home.file.".config/ldcli/config.yml".source = (pkgs.formats.yaml {}).generate "ldcli-config" secrets.launch-darkly;
+  home.file.".m2/settings.xml".text = let
+    servers = with builtins; concatStringsSep "\n" (map serverString secrets.maven.server);
+    serverString = o: ''
+      <server>
+        <id>${o.id}</id>
+        <username>${o.username}</username>
+        <password>${o.password}</password>
+      </server>
+    '';
+    in ''
+      <?xml version='1.0' encoding='utf-8'?>
+      <settings>
+        <servers>
+          ${servers}
+        </servers>
+      </settings>
+    '';
 
   home.activation."zzzRefresh" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     echo $0

@@ -231,6 +231,8 @@
   :unless noninteractive
   :init
   (load-theme 'org-beautify t)
+  :custom-face
+  (org-checkbox ((t (:foreground "#000000", :background "#93a1a1"))))
   :config
   ;;(set-face-font 'org-agenda-structure "Open Sans-12")
   ;;(set-face-font 'org-level-1 "Open Sans-18")

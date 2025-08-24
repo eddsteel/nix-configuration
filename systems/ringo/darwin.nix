@@ -15,16 +15,9 @@ in {
   };
 
   networking.hostName = "ringo";
-  launchd.user.envVariables = {
-    "EMAIL" = secrets.user.email;
-  };
 
   environment.pathsToLink = [ "/share/bash-completion" ];
   environment.shells = with pkgs; [ bashInteractive zsh fish ];
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   # programs.zsh.enable = true;  # default shell on catalina
@@ -47,7 +40,7 @@ in {
     packages = with pkgs; [
       fira-code
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       noto-fonts-extra
       open-sans
@@ -58,6 +51,7 @@ in {
   };
 
   nix = {
+    enable = true;
     gc.automatic = true;
   };
 

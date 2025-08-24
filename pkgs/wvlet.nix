@@ -12,7 +12,7 @@ in pkgs.stdenv.mkDerivation rec {
     sha256 = "c9b0e651a62b8f9239655d108d7d91c5039a710e7c2affafac24e79ae097f307";
   };
   nativeBuildInputs = [ pkgs.makeWrapper ];
-  buildinputs = [ pkgs.jdk22 ];
+  buildinputs = [ java ];
   installFlags = [ "PREFIX=$(out)" ];
   dontAutoPatchelf = true;
   postFixup = with pkgs; ''

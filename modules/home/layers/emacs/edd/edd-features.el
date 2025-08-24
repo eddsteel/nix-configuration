@@ -16,8 +16,8 @@
      If there's no ansi-term, open a new one.
      Otherwise will switch to *ansi-term*"
     (let ((bn (buffer-name))
-          (tl "*ansi-term*")
-          (newterm (lambda () (ansi-term edd-term/shell))))
+          (tl "*eat*")
+          (newterm (lambda () (eat edd-term/shell "new"))))
       (if (and (<= pfx 1) (get-buffer tl) (not (string-prefix-p tl bn)))
           (switch-to-buffer tl)
         (funcall newterm))))
@@ -39,9 +39,9 @@
 
   ;; Terminal -- kill on exit
   ;;
-  (defadvice term-handle-exit
-      (after term-kill-buffer-on-exit activate)
-    (kill-buffer))
+;;  (define-advice term-handle-exit
+;;      (after term-kill-buffer-on-exit activate)
+;;    (kill-buffer))
 
   :bind (("C-c x" . edd-term/term)
          :map term-mode-map

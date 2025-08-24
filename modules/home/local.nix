@@ -23,6 +23,11 @@ in {
       programs.ssh = {
         enable = true;
         extraConfig = ''
+      Host github.com
+        User eddsteel
+        AddKeysToAgent yes
+      #  UseKeychain yes
+
       Host *
         IgnoreUnknown UseKeychain
         UseKeychain yes

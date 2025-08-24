@@ -2,16 +2,7 @@ diff --git a/nano-modeline.el b/nano-modeline.el
 index 9b7476d..4f52919 100644
 --- a/nano-modeline.el
 +++ b/nano-modeline.el
-@@ -548,7 +548,7 @@ delay needs to be set to 0."
- (defun nano-modeline-window-dedicated (&optional symbol)
-   "Pin symbol when window is dedicated"
-   
--  (propertize (if (window-dedicated-p) (or symbol " ") "")
-+  (propertize (if (window-dedicated-p) (or symbol "📌 ") "")
-               'face (nano-modeline-face 'secondary)))
- 
- (defun nano-modeline-git-info (&optional symbol)
-@@ -558,7 +558,7 @@ delay needs to be set to 0."
+@@ -618,7 +618,7 @@ delay needs to be set to 0."
        (when-let* ((file (buffer-file-name))
                    (branch (substring-no-properties vc-mode 5))
                    (state (vc-state file)))

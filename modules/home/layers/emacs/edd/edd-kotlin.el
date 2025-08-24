@@ -44,11 +44,11 @@
   (add-to-list
    'compilation-error-regexp-alist-alist
    '(kotlin-gradle
-     "^e: \\(.*\\): (\\([0-9]+\\), \\([0-9]+\\))" 1 2 3))
+     "^e: file://\\([^:]*\\):\\([0-9]+\\):\\([0-9]+\\) " 1 2 3))
   (add-to-list
    'compilation-error-regexp-alist-alist
    '(kotlin-lint
-     "^Lint error > \\(.*\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3)))
+     "^\\(.*\\):\\([0-9]+\\):\\([0-9]+\\): Lint error >" 1 2 3)))
 
 (use-package flycheck-kotlin
   :commands flycheck-kotlin-setup

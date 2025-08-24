@@ -30,6 +30,14 @@ conditional_get_sha() {
     fi
 }
 
+conditional_get_sha_v() {
+    if [ "$(jq -r .$1.version versions.json)" != "$3" ]; then
+        nix-prefetch-url --name "$4" "$2"
+    else
+        jq -r ".$1.sha256" versions.json
+    fi
+}
+
 component_json() {
     jq -nc --arg url "$1" --arg sha "$2" --arg name "$3" --arg ver "$4"\
        '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' > ".$5-component"
@@ -58,7 +66,7 @@ awsvpn() {
     URL="https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg"
     VER=$(cfversion $URL)
     NME="AWS_VPN_Client-${VER}.pkg"
-    SHA=$(conditional_get_sha awsvpn "$URL" "$NME")
+    SHA=$(conditional_get_sha_v awsvpn "$URL" "$VER" "$NME")
     component_json "$URL" "$SHA" "$NME" "$VER" av
 }
 
@@ -167,7 +175,17 @@ zoomus() {
 }
 
 podman() {
-    github "containers/podman-desktop" "podman-desktop-" "podman" "pm" "v" "-universal.dmg"
+    github "podman-desktop/podman-desktop" "podman-desktop-" "podman" "pm" "v" "-universal.dmg"
+}
+
+launchdarkly() {
+    url=$(location "https://github.com/launchdarkly/ldcli/releases/latest")
+    VER=$(echo $url | sed "s!^.*/tag/\([-0-9.a-zA-Z]*\)\$!\1!")
+    vv=$(echo $VER | sed 's/v//g')
+    NME="ldcli_${vv}_darwin_amd64.tar.gz"
+    URL="https://github.com/launchdarkly/ldcli/releases/download/$VER/$NME"
+    SHA=$(conditional_get_sha launchdarkly "$URL" "$NME")
+    component_json "$URL" "$SHA" "$NME" "$VER" ld
 }
 
 wavebox linux &
@@ -187,9 +205,9 @@ zoomus darwin &
 tdocs &
 awsvpn &
 podman &
+launchdarkly &
 
 wait
-
 jq -n \
    --slurpfile av .av-component \
    --slurpfile wbd .wbd-component \
@@ -197,6 +215,7 @@ jq -n \
    --slurpfile bw .bw-component \
    --slurpfile ff .ff-component \
    --slurpfile ij .ij-component \
+   --slurpfile ld .ld-component \
    --slurpfile sn .sn-component \
    --slurpfile im .im-component \
    --slurpfile xb .xb-component \
@@ -208,8 +227,8 @@ jq -n \
    --slurpfile zul .zul-component \
    --slurpfile td .td-component \
    --slurpfile pm .pm-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "podman": $pm[0]}' \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "podman": $pm[0],"launchdarkly": $ld[0]}' \
    >new.json
 
-rm .*-component
+#rm .*-component
 mv new.json versions.json

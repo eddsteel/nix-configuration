@@ -13,4 +13,5 @@ with pkgs; {
   aws-vpn          = callPackage ./aws-vpn {};
   podman-desktop   = callPackage ./podman-desktop.nix {};
   vfkit            = callPackage ./vfkit.nix {};
+  ldcli            = callPackage ./ldcli.nix {};
 }

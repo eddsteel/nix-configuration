@@ -49,6 +49,7 @@ user_pref("accessibility.typeaheadfind.enablesound", false);
 user_pref("signon.rememberSignons", false);
 user_pref("signon.autofillForms", false);
 user_pref("signon.generation.enabled", false);
+user_pref("browser.ml.chat.enabled", false);
     '';
   };
 }

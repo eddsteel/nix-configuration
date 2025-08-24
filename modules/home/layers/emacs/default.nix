@@ -29,8 +29,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "rougier";
       repo = "nano-modeline";
-      rev = "631387df3f6835a975faa1f0c8b44da1fe4b57a9";
-      sha256 = "1fmxwxigf25gl0fajcic2h6kza5g74za4l5b4pv5hny7mjkz5kvw";
+      rev = "04676d57a1e602123a593836745a744d1b2028fb";
+      sha256 = "sha256-CoADZ4L4JpoF3JRMb793z2nAq8s1VE3uqb3gqFD7IOA=";
     };
     patches = [ ./nano-modeline.patch ];
   };
@@ -39,10 +39,10 @@ let
     version = "1";
     buildInputs = [ epkgs.s epkgs.cl-lib ];
     src = pkgs.fetchFromGitHub {
-      owner = "eddsteel";
+      owner = "ag91";
       repo = "ob-http";
-      rev = "8dc7e46949d1e869662351b120e1e66782ab769a";
-      sha256 = "sha256-uEcXgkibKEydCs7WMCFEsOldx7OfjwayPwnIloOs4/Q=";
+      rev = "1c6afbdb2e36db1903295ba0c02c9b30f833068d";
+      sha256 = "sha256-tZG4WU0QN1pi7tKFYV6GIUa7oaB+CrVaUCxZ/ACkRF8=";
     };
   };
 in {
@@ -153,6 +153,7 @@ in {
         restclient
         fish-mode
         multiple-cursors
+        eat
       ];
     };
 

@@ -51,23 +51,26 @@ in with lib; {
     };
     email = mkOption {};
     vars = mkOption {};
+    funs = mkOption {};
   };
-  config = mkIf cfg.enable {
+  config = let
+    vars = {
+        NIXPKGS_CONFIG = toString <nixpkgs-config>;
+        EMAIL = "${cfg.email}";
+        EDITOR = "${EDITOR}";
+        ALTERNATE_EDITOR = "${cfg.emacs}/bin/emacs";
+    } // cfg.vars;
+  in mkIf cfg.enable {
     home.shellAliases = aliases cfg.emacs // cfg.extraAliases;
     programs.bash = {
       enable = true;
       historyFile = "${homedir}/.histfile";
-
       sessionVariables = {
-        EDITOR = "${EDITOR}";
-        ALTERNATE_EDITOR = "${cfg.emacs}/bin/emacs";
         LESS = " -R ";
         HISTCONTROL = "ignoredups:erasedups";
         HISTSIZE = "100000";
         HISTFILESIZE = "1000000";
-        NIXPKGS_CONFIG = toString <nixpkgs-config>;
-        EMAIL = "${cfg.email}";
-      } // cfg.vars;
+      } // vars;
 
       bashrcExtra = ''
       if [ -f ${homedir}/.profile ]; then
@@ -111,25 +114,26 @@ in with lib; {
             commandline -i '$'
           end
         '';
-      };
+      } // cfg.funs;
 
-      shellInit = ''
-      set -gx EDITOR "${EDITOR}"
-      set -gx ALTERNATE_EDITOR "${cfg.emacs}/bin/emacs"
-      set NIXPKGS_CONFIG ${toString <nixpkgs-config>}
+      shellInit = let
+        mkVar = k: v: "set -gx ${k} \"${v}\"";
+        varString = with builtins; concatStringsSep "\n" (attrValues (mapAttrs mkVar vars));
+      in ''
+#      ${varString}
 
       # emacs dir tracking
-      if [ -n "$INSIDE_EMACS" ]
-        function prompt_AnSiT -e fish_prompt
-          printf "\eAnSiTh %s\n" (hostname) # this changes more than you would think if using VPNs
-          printf "\eAnSiTc %s\n" (pwd)
-        end
-        printf "\eAnSiTu %s\n" (whoami)
-      end
-
-      function fish_title
-        true
-      end
+      #if [ -n "$INSIDE_EMACS" ]
+      #  function prompt_AnSiT -e fish_prompt
+      #    printf "\eAnSiTh %s\n" (hostname) # this changes more than you would think if using VPNs
+      #    printf "\eAnSiTc %s\n" (pwd)
+      #  end
+      #  printf "\eAnSiTu %s\n" (whoami)
+      #end
+      #
+      #function fish_title
+      #  true
+      #end
     '';
     };
   };

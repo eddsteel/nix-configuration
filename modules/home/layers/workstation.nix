@@ -25,7 +25,7 @@ in with lib; {
     home.packages = with pkgs; [
       gnupg
       git-secrets nix-prefetch-git
-      duplicati ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
+      ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
       bitwarden moreutils exfalso wavebox
     ];
 

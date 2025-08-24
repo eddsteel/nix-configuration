@@ -162,7 +162,7 @@
      ])
 
   (transient-append-suffix
-    'magit-dispatch "G"
+    'magit-dispatch "!"
     '("@" "PRs" edd/magit-prs))
 
   (transient-append-suffix
@@ -174,7 +174,6 @@
     [("P" "Previous hunk" git-gutter:previous-hunk)
      ("N" "Next hunk" git-gutter:next-hunk)
      ("S" "Show hunk diff" git-gutter:popup-hunk)])
-
 
   (transient-define-prefix edd/magit-web-link ()
     ["browse"
@@ -190,8 +189,5 @@
     '("x" "Browse" edd/magit-web-link)))
 
 (use-package magit-filenotify :demand t)
-
-(use-package magit-delta
-  :hook ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
 
 (provide 'edd-git)
