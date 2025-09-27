@@ -431,7 +431,46 @@
   ("C-c ;" . mc/edit-lines)
   ("M-<down>" . mc/mark-more-like-this-extended))
 
-(use-package eat)
+(use-package eat
+  :bind
+  ("M-o" 
+   :map project-prefix-map
+        ("s" . eat-project)
+        ("S" . eat-project-other-window))
+  :hook
+  (eat-mode . goto-address-mode)
+  :config
+  (setq eat-kill-buffer-on-exit 't)
+  ;; override some greyscale colours
+  (let ((face-counter 0))
+    ;; 256-colors.
+    (while (< face-counter 256)
+      (let ((color
+             (if (>= face-counter 232)
+                 (format "#%06X"
+                         (* #x010101
+                            (+ 8 (* 10 (- face-counter 232)))))
+               (let ((col (- face-counter 16))
+                     (res 0)
+                     (frac (* 6 6)))
+                 (while (<= 1 frac)
+                   (setq res (* res #x000100))
+                   (let ((color-num (mod (/ col frac) 6)))
+                     (unless (zerop color-num)
+                       (setq res (+ res #x37 (* #x28 color-num)))))
+                   (setq frac (/ frac 6)))
+                 (format "#%06X" res))))
+            (fgcolor
+             (if (>= face-counter 232) ;; greys
+               (if (>= face-counter 248)
+                "#222222"
+                "#eeeeee")
+               ))
+            )
+        (custom-set-faces
+         `(,(intern (format "eat-term-color-%i" face-counter))
+           ((t :foreground ,fgcolor :background ,color)))))
+      (cl-incf face-counter))))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

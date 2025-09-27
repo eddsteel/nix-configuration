@@ -6,7 +6,6 @@
   (term-mode . edd-term/hook)
 
   :config
-  (defvar edd-term/shell "fish" "Command to run when running term")
   (defun edd-term/term (pfx)
     (interactive "p")
     "Open my currently favourite kind of terminal, smartly.
@@ -17,7 +16,7 @@
      Otherwise will switch to *ansi-term*"
     (let ((bn (buffer-name))
           (tl "*eat*")
-          (newterm (lambda () (eat edd-term/shell "new"))))
+          (newterm (lambda () (eat shell-file-name "new"))))
       (if (and (<= pfx 1) (get-buffer tl) (not (string-prefix-p tl bn)))
           (switch-to-buffer tl)
         (funcall newterm))))
