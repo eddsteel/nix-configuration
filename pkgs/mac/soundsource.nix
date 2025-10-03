@@ -1,8 +1,8 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "soundsource";
-  version = "5.8.3";
-  sha256 = "sha256-tomlsji65xVPTqX36UKf7S04M1iBxsXVJFEFqWPgBac=";
+  version = "5.8.6";
+  sha256 = "sha256-ok0TNREpG+/lVS8W/b2Ce4EB3vYBPNX5hnE8LvCdxDQ=";
 
   buildInputs = [ pkgs.unzip ];
   sourceRoot = ".";
