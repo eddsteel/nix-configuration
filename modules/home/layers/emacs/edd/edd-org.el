@@ -148,6 +148,8 @@
   (add-to-list 'org-link-abbrev-alist
                '("ghp" . "https://github.com/%(edd-org-split-gh-pr)"))
 
+  (put 'edd-org-split-gh-pr 'org-link-abbrev-safe t)
+
   (defun edd-org/set-html-styles ()
     (setq org-html-head
           (concat

@@ -21,8 +21,7 @@
   :bind (("C-c w" . edd/go-to-work)))
 
 (use-package whitespace
-  :unless noninteractive
-  :delight whitespace-mode
+  :unless noninteractive  
   :custom-face
   (whitespace-empty ((t (:background "white"))))
   (whitespace-indentation ((t (:background "white"))))
@@ -41,16 +40,17 @@
   (global-whitespace-cleanup-mode 1))
 
 (use-package corfu
+  :demand t
   :custom
   (corfu-cycle t "Enable cycling for `corfu-next'/`corfu-previous'")
   (corfu-auto t "Enable auto completion")
   (corfu-quit-at-boundary t "Automatically quit at word boundary")
   (corfu-quit-no-match t "Automatically quit if there is no match")
-  ;:init
-  ;(global-corfu-mode)
-  )
+  :init
+  (global-corfu-mode))
 
 (use-package vertico
+  :demand t
   :init
   (vertico-mode)
   :config
@@ -122,6 +122,7 @@
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package marginalia
+  :demand t
   :init (marginalia-mode))
 
 (use-package edd-util
@@ -131,11 +132,10 @@
    ("C-x k" . edd-util/kill-a-buffer)
    ("M-q" . edd-util/fill-or-unfill-paragraph)))
 
-(use-package pdf-tools
-  :init (pdf-tools-install))
+;(use-package pdf-tools
+;  :init (pdf-tools-install))
 
 (use-package flycheck
-  :delight " 🛂"
   :hook
   ((rust-mode go-mode scala-mode ruby-mode) . flycheck-mode)
   ((sbt-file-mode) . (lambda () (flycheck-mode -1))))
@@ -144,8 +144,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package auto-highlight-symbol
-  :hook (prog-mode . auto-highlight-symbol-mode)
-  :delight)
+  :hook (prog-mode . auto-highlight-symbol-mode))
 
 (use-package edd-git :demand t)
 
@@ -210,7 +209,6 @@
 (use-package less-css-mode)
 (use-package yaml-mode)
 (use-package idris-mode
-  :delight (idris-simple-indent-mode)
   :config
   (defun edd/idris-next-hole ()
       (interactive)
@@ -228,12 +226,10 @@
              '(hcl "on \\([^ ]*\\) line \\([0-9]+\\)" 1 2)))
 
 (use-package volatile-highlights
-  :delight
   :config
   (volatile-highlights-mode t))
 
 (use-package smartparens
-  :delight " 🎷"
   :hook
   ((prog-mode markdown-mode org-mode) . turn-on-smartparens-strict-mode)
   :config
@@ -304,15 +300,13 @@
         ("M-<right>" . sp-forward-barf-sexp)))
 
 (use-package anzu
-  :delight anzu-mode
   :custom-face
   (anzu-mode-line ((t (:foreground "#F2EBD0" :background "#CEC8B1"))))
   (anzu-match-1 ((t (:foreground "#A7B57C" :background "#CEC8B1"))))
   (anzu-match-2 ((t (:foreground "#7CA7B5" :background "#CEC8B1"))))
   (anzu-match-3 ((t (:foreground "#B58A7C" :background "#CEC8B1"))))
   (anzu-replace-to ((t (:foreground "#B58A7C" :background "#CEC8B1"))))
-  (anzu-replace-highlight ((t (:foreground "#B58A7C" :background "#CEC8B1"))))
-  :init (global-anzu-mode +1)
+  (anzu-replace-highlight ((t (:foreground "#B58A7C" :background "#CEC8B1"))))  
   :bind
   (("M-%" . anzu-query-replace)
    ("C-M-%" . anzu-query-replace-regexp)))
@@ -432,45 +426,16 @@
   ("M-<down>" . mc/mark-more-like-this-extended))
 
 (use-package eat
+  :demand t
   :bind
-  ("M-o" 
+  (("M-o" . other-window)
    :map project-prefix-map
         ("s" . eat-project)
         ("S" . eat-project-other-window))
   :hook
   (eat-mode . goto-address-mode)
   :config
-  (setq eat-kill-buffer-on-exit 't)
-  ;; override some greyscale colours
-  (let ((face-counter 0))
-    ;; 256-colors.
-    (while (< face-counter 256)
-      (let ((color
-             (if (>= face-counter 232)
-                 (format "#%06X"
-                         (* #x010101
-                            (+ 8 (* 10 (- face-counter 232)))))
-               (let ((col (- face-counter 16))
-                     (res 0)
-                     (frac (* 6 6)))
-                 (while (<= 1 frac)
-                   (setq res (* res #x000100))
-                   (let ((color-num (mod (/ col frac) 6)))
-                     (unless (zerop color-num)
-                       (setq res (+ res #x37 (* #x28 color-num)))))
-                   (setq frac (/ frac 6)))
-                 (format "#%06X" res))))
-            (fgcolor
-             (if (>= face-counter 232) ;; greys
-               (if (>= face-counter 248)
-                "#222222"
-                "#eeeeee")
-               ))
-            )
-        (custom-set-faces
-         `(,(intern (format "eat-term-color-%i" face-counter))
-           ((t :foreground ,fgcolor :background ,color)))))
-      (cl-incf face-counter))))
+  (setq eat-kill-buffer-on-exit 't))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
