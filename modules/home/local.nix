@@ -22,18 +22,31 @@ in {
       home.file.".ssh/id_rsa".text = with cfg; people.seckey username hostname;
       programs.ssh = {
         enable = true;
-        extraConfig = ''
-      Host github.com
-        User eddsteel
-        AddKeysToAgent yes
-      #  UseKeychain yes
-
-      Host *
-        IgnoreUnknown UseKeychain
-        UseKeychain yes
-        AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_rsa
-      '';
+        enableDefaultConfig = false;
+        matchBlocks = {
+          "*" = {
+            addKeysToAgent = "yes";
+            compression = false;
+            controlMaster = "yes";
+            controlPath = "~/.ssh/master-%r@%n:%p";
+            hashKnownHosts = false;
+            identityFile = "~/.ssh/id_rsa";
+            serverAliveCountMax = 3;
+            serverAliveInterval = 0;
+            userKnownHostsFile = "~/.ssh/known_hosts";
+            extraOptions = {
+              UseKeychain = "yes";
+              IgnoreUnknown = "UseKeychain";
+            };
+          };
+          "github.com" = {
+            user = "eddsteel";
+            addKeysToAgent = "yes";
+            extraOptions = {
+              # UseKeychain = "yes";
+            };
+          };
+        };
       };
     })
   ];
