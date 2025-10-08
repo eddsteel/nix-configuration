@@ -18,11 +18,10 @@ in {
   };
 
   home.packages = with pkgs; [
-    scripts kotlin pre-commit bat gettext dos2unix
-    terraform terraform-docs circleci-cli aws-vpn
-    docker kubectl kubectx nixVersions.git
-    podman trino maven claude-code
-  ] ++ nix-work.all
+    scripts kotlin kotlin-interactive-shell pre-commit gettext dos2unix
+    terraform terraform-docs circleci-cli aws-vpn docker kubectl kubectx
+    nixVersions.git podman trino maven claude-code
+] ++ nix-work.all
     ++ work-pkgs.all
     ++ (with mac-apps; [caffeine vfkit podman-desktop ldcli intellij-idea-ce]);
 
