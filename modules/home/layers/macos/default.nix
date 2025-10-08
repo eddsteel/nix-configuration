@@ -92,7 +92,7 @@ in with lib; {
     '';
 
     home.packages = with pkgs; [
-      coreutils gnugrep gnused findutils gawk python3 ps wget
+      coreutils gnugrep gnused findutils gawk python3 ps wget less ncurses
     ];
 
     programs.bash.bashrcExtra = keychain;
