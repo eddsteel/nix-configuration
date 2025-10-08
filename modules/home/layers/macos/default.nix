@@ -23,6 +23,7 @@ in with lib; {
         "${pkgs.iterm2}/Applications/iTerm2.app"
         "${pkgs.wavebox}/Applications/Wavebox.app"
         "${pkgs.mac-apps.bitwarden}/Applications/Bitwarden.app"
+        "${pkgs.aws-vpn}/Applications/AWS VPN Client.app"
       ];
 
       defaults = {
@@ -73,17 +74,6 @@ in with lib; {
     home.file."media/music".source = mkOSymlink "${config.home.homeDirectory}/Music";
     home.file."txt".source = mkOSymlink "${config.home.homeDirectory}/Documents/txt";
     home.file."tmp".source = mkOSymlink "${config.home.homeDirectory}/Downloads/tmp";
-
-    home.file."media/desktop.jpg".source = pkgs.fetchurl {
-      name = "desktop.jpg";
-      url = "https://eddsteel.com/desktop.jpg";
-      sha256 = "101mavys8azcah35f1cxiiblrbja5vwrf7kiczgv2byd0ymx9nhz";
-    };
-    home.file."media/face.jpg".source = pkgs.fetchurl {
-      url = "https://eddsteel.com/face.jpg";
-      name = "face.jpg";
-      sha256 = "1y6hp0n203ccgb2a248xa3i2niflj5wxbd40q69c3p7qd79x3405";
-    };
 
     home.activation."setupMacosHome" = lib.hm.dag.entryAfter ["writeBoundary"] ''
       $DRY_RUN_CMD mkdir -p $HOME/Documents/txt
@@ -157,9 +147,7 @@ in with lib; {
         enable = true;
         inherit (cfg.soundsource) name code;
       };
-      zoom = {
-        enable = true;
-      };
+      zoom.enable = true;
     };
   };
 }

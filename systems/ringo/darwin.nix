@@ -30,7 +30,7 @@ in {
     # End Nix
     '';
   programs.bash.enable = true;
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
