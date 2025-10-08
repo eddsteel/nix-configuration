@@ -39,15 +39,13 @@
   :config
   (global-whitespace-cleanup-mode 1))
 
-(use-package corfu
-  :demand t
-  :custom
-  (corfu-cycle t "Enable cycling for `corfu-next'/`corfu-previous'")
-  (corfu-auto t "Enable auto completion")
-  (corfu-quit-at-boundary t "Automatically quit at word boundary")
-  (corfu-quit-no-match t "Automatically quit if there is no match")
+(use-package completion-preview
   :init
-  (global-corfu-mode))
+  (global-completion-preview-mode))
+
+(use-package which-key
+  :init
+  (which-key-mode))
 
 (use-package vertico
   :demand t
