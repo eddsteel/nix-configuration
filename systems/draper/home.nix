@@ -2,7 +2,7 @@
 let
   username = "edd";
   homedir = "/home/${username}";
-  emacs = pkgs.emacs29-pgtk;
+  emacs = pkgs.emacs30-pgtk;
   secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
 in {
   imports = [ ../../modules/home ];
@@ -80,6 +80,8 @@ in {
       enable = true;
       inherit emacs;
       inherit (secrets.user) email;
+      vars = {};
+      funs = {};
     };
 
     workstation = {
@@ -106,6 +108,7 @@ in {
     firefox = {
       enable = true;
       sync-user = secrets.user.email;
+      profile = "xtqfr4qa.default";
     };
   };
 }
