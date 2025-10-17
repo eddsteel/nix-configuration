@@ -43,6 +43,7 @@
 ;;    (kill-buffer))
 
   :bind (("C-c x" . edd-term/term)
+         ("C-M-S-x" . edd-term/term)
          :map term-mode-map
          ("C-c x" . edd-term/term)
          ("M-p" . term-send-up)
@@ -64,7 +65,6 @@
   (after-init . edd-features/server-start-unless-running))
 
 (use-package flyspell
-  :delight " 💅"
   :hook
   ((text-mode org-mode) . flyspell-mode))
 
@@ -72,7 +72,7 @@
   :hook
   (after-save . executable-make-buffer-file-executable-if-script-p))
 
-(use-package eldoc :delight " 📜")
+(use-package eldoc)
 
 (use-package savehist
   :config
@@ -125,8 +125,6 @@
   (prog-mode . subword-mode))
 
 (use-package emacs
-  :delight
-  (auto-fill-function) (visual-line-mode)
   :init
   (autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
   :custom
@@ -155,8 +153,6 @@
    ("M-=" . count-words)
    ("C-x C-m" . execute-extended-command)
    ("M-z" . zap-up-to-char)
-   ("C-(" . previous-buffer)
-   ("C-)" . next-buffer)
    ("M-o" . other-window)
    ("C-c r" . comint-run)))
 
@@ -189,6 +185,10 @@
 (use-package wdired
   :config (setq wdired-create-parent-directories t))
 
+(use-package window
+  :bind
+  (("C-M-S-b" . switch-to-buffer)))
+
 (use-package dired-collapse
   :config (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
@@ -197,6 +197,8 @@
   :bind (:map dired-mode-map ("P" . peep-dired)))
 
 (use-package project
+  :bind-keymap
+  ("C-M-S-p" . project-prefix-map)
   :bind
   (:map project-prefix-map
     ("T" . edd-proj/test)

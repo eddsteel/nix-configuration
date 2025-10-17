@@ -128,6 +128,7 @@
   :bind
   (("C-w" . edd-util/kill-region-or-backward-kill-word)
    ("C-x k" . edd-util/kill-a-buffer)
+   ("C-M-S-k" . edd-util/kill-a-buffer)
    ("M-q" . edd-util/fill-or-unfill-paragraph)))
 
 ;(use-package pdf-tools
@@ -229,7 +230,7 @@
 
 (use-package smartparens
   :hook
-  ((prog-mode markdown-mode org-mode) . turn-on-smartparens-strict-mode)
+  ((prog-mode markdown-mode org-mode toml-mode) . turn-on-smartparens-strict-mode)
   :config
   (require 'smartparens-config)
   (sp-pair "(" ")" :wrap "C-c (")
@@ -404,7 +405,7 @@
   (use-package restclient-jq))
 
 (use-package fish-mode)
-
+k
 (use-package emacs
   :bind
   ("<Multi_key>" . edd/transient-compose)
@@ -426,7 +427,14 @@
 (use-package eat
   :demand t
   :bind
-  (("M-o" . other-window)
+  (:map eat-mode-map
+        ("M-o" . other-window)
+   :map eat-char-mode-map
+        ("M-o" . other-window)
+   :map eat-line-mode-map
+        ("M-o" . other-window)
+   :map eat-semi-char-mode-map
+        ("M-o" . other-window)
    :map project-prefix-map
         ("s" . eat-project)
         ("S" . eat-project-other-window))

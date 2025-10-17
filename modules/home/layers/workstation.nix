@@ -8,6 +8,11 @@ let
     {"name" = "home-manager"; "remote" = "git@github.com:nix-community/home-manager";}
     {"name" = "nixpkgs"; "remote" = "git@github.com:NixOS/nixpkgs"; "fork" = true; }
   ];
+  configPath =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "Library/Application Support/amp"
+    else
+      "${lib.removePrefix config.home.homeDirectory config.xdg.configHome}/amp";
 
 in with lib; {
   imports = [ ./mr.nix ];
@@ -29,8 +34,6 @@ in with lib; {
       bitwarden moreutils exfalso wavebox
     ];
 
-    xdg.configFile."zoomus.conf".source = cfg.zoomus-config;
-
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
     programs.jq.enable = true;
@@ -42,6 +45,8 @@ in with lib; {
       rootdir = "${homedir}/src";
     };
 
+    xdg.configFile."zoomus.conf".source = cfg.zoomus-config;
+
     home.file.".aws/credentials".text = cfg.aws-credentials;
     home.file.".aws/config-nix".text = cfg.aws-configuration;
 
@@ -49,6 +54,19 @@ in with lib; {
       data-dir ${homedir}/.nix-profile/lib/aspell
       lang en_CA
     '';
+
+    home.file."${configPath}/qmk/qmk.ini".text = lib.generators.toINI {} {
+      user = {
+        keyboard = "kbdfans/kbd75/rev1";
+        keymap = "eddsteel";
+      };
+      find = {
+        keymap = "default";
+      };
+      mass_compile = {
+        keymap = "default";
+      };
+    };
 
     programs.gradle = {
       enable = true;
@@ -77,7 +95,6 @@ in with lib; {
   home.activation."setupAWSConfig" = lib.hm.dag.entryAfter ["writeBoundary"] ''
     rm -f "$HOME/.aws/config"
     cp "$HOME/.aws/config-nix" "$HOME/.aws/config"
-
   '';
   };
 }
