@@ -53,6 +53,7 @@
          ("C-y" . edd-term/paste)
          ("C-c x" . edd-term/term)
          ("M-o" . other-window)
+         ("C-M-S-o" . other-window)
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)))
 
@@ -148,17 +149,27 @@
   (setq initial-scratch-message
         (concat initial-scratch-message
                 "\n(load-file user-init-file)"))
+  :bind-keymap
+  (("C-M-$" . ctl-x-4-map)              ; Meh-4
+   ("C-M-*" . iso-transl-ctl-x-8-map)   ; Meh-8
+   )
   :bind
   (("M-SPC" . cycle-spacing)
    ("M-=" . count-words)
    ("C-x C-m" . execute-extended-command)
    ("M-z" . zap-up-to-char)
    ("M-o" . other-window)
+   ("C-M-S-o" . other-window)
+   ("C-M-!" . delete-other-windows)     ; Meh-1
+   ("C-M-@" . split-window-below)       ; Meh-2
+   ("C-M-#" . split-window-right)       ; Meh-3
    ("C-c r" . comint-run)))
 
 (use-package smerge-mode :delight " ±")
 
-;; Override _ in ctl-x 8 to provide vowels with macrons
+;; Override _ in ctl-x 8 map
+;; _ to provide vowels with macrons
+;; () to provide
 (use-package emacs
   :init
   (with-eval-after-load 'iso-transl
@@ -167,7 +178,8 @@
       (add-to-list 'iso-transl-char-map '("_i" . [?ī]))
       (add-to-list 'iso-transl-char-map '("_u" . [?ū]))
       (add-to-list 'iso-transl-char-map '("_e" . [?ē]))
-      (setcdr (assoc "_o" iso-transl-char-map) [?ō])
+      (add-to-list 'iso-transl-char-map '("_o" . [?ō]))
+      (add-to-list 'iso-transl-char-map '("(" . [?○]))
       (iso-transl-define-keys iso-transl-char-map))))
 
 (use-package emacs

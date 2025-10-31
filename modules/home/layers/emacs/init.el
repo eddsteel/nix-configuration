@@ -405,7 +405,7 @@
   (use-package restclient-jq))
 
 (use-package fish-mode)
-k
+
 (use-package emacs
   :bind
   ("<Multi_key>" . edd/transient-compose)
@@ -414,7 +414,7 @@ k
     (interactive)
     (let ((old-im default-transient-input-method))
       (setq default-transient-input-method "compose")
-      (activate-transient-input-method)
+       (activate-transient-input-method)
       (setq default-transient-input-method old-im))))
 
 (use-package multiple-cursors
