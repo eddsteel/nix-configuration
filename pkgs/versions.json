@@ -1,29 +1,29 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.141.25.2.dmg",
-      "sha256": "1h82275wi1346s8ngc41h6xygjdh3dwwnng6rm9qwd60clv3mndk",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.141.25.2.dmg",
-      "version": "10.141.25.2"
+      "name": "wavebox-10.141.33.2.dmg",
+      "sha256": "13mcg97wfi79y0s9bf8p306awzb1k1d2wx9x3k7n2l74chwk0lzr",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.141.33.2.dmg",
+      "version": "10.141.33.2"
     },
     "linux": {
-      "name": "wavebox-10.141.25-2.tar.gz",
-      "sha256": "01hrs2py0l70d9phvvpw1gfqmm80h534db8wkcn0c0f1ban1qnrl",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.141.25-2.tar.gz",
-      "version": "10.141.25-2"
+      "name": "wavebox-10.141.33-2.tar.gz",
+      "sha256": "08zyllj1wwh5idnzfrwddyl1bklw7h2yi2y1wh8k81qhqnnwqg1n",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.141.33-2.tar.gz",
+      "version": "10.141.33-2"
     }
   },
   "bitwarden": {
-    "name": "bitwarden-2025.9.0.dmg",
-    "sha256": "0cdzryxfxakhnjd08g5csm68k6cqir0wc7mqgga3dcyavsan558y",
-    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2025.9.0/Bitwarden-2025.9.0-universal.dmg",
-    "version": "2025.9.0"
+    "name": "bitwarden-2025.10.0.dmg",
+    "sha256": "088szq6y2c4s8cpczjy85klbizn93fyi2kcakypxqfwdv4l59b7s",
+    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2025.10.0/Bitwarden-2025.10.0-universal.dmg",
+    "version": "2025.10.0"
   },
   "firefox": {
-    "name": "Firefox-143.0.4.dmg",
-    "sha256": "1bylkhcdnig3z3bjk727262n2wr9s55id8bs1yjzcd9iabhsakgf",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/143.0.4/mac/en-CA/Firefox%20143.0.4.dmg",
-    "version": "143.0.4"
+    "name": "Firefox-144.0.dmg",
+    "sha256": "014y0qlq62wl91qk9hwqxxmgq61z1hglgcr6w67bbb3d17apjw1b",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/144.0/mac/en-CA/Firefox%20144.0.dmg",
+    "version": "144.0"
   },
   "idea": {
     "name": "intellij-idea-ce-2025.2.3.dmg",
@@ -32,10 +32,10 @@
     "version": "2025.2.3"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-7.73.0.dmg",
-    "sha256": "05nn5cwdz67jrd5v24x5mhvgcy25f8qfajc3llbjzk2wn6xfchi8",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.73.0.dmg",
-    "version": "7.73.0"
+    "name": "signal-desktop-mac-universal-7.76.0.dmg",
+    "sha256": "057bpsw6mjz6zrykygkjkam7qy6vlvl27g4jzzmy0dqp7lpy28wk",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.76.0.dmg",
+    "version": "7.76.0"
   },
   "istatmenus": {
     "name": "istat-6.73.1.zip",
@@ -78,15 +78,15 @@
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "14zda3p1wy04nq23ghdcl1syndr119ncwjg45dbp760615kn441k",
-      "url": "https://zoom.us/client/6.6.2.65462/zoomusInstallerFull.pkg?archType=arm64",
-      "version": "6.6.2.65462"
+      "sha256": "0v249skim4d1slpsb60d0c48z31vbj82phfa2lfs8csmvdjd3j5v",
+      "url": "https://zoom.us/client/6.6.5.67181/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "6.6.5.67181"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "1s9sw9w9miqwp0nxbbbxd4jgvfniy5hbqpkilllzyks6xma3lf19",
-      "url": "https://zoom.us/client/6.6.0.4410/zoom_x86_64.pkg.tar.xz",
-      "version": "6.6.0.4410"
+      "sha256": "0k35gffjapcafr09rms0izd7ddjp1719dfhkn1rxw6ab1in4y7dj",
+      "url": "https://zoom.us/client/6.6.5.5215/zoom_x86_64.pkg.tar.xz",
+      "version": "6.6.5.5215"
     }
   },
   "terraform_docs": {
@@ -102,15 +102,15 @@
     "version": "5.3.1"
   },
   "podman": {
-    "name": "podman-desktop-1.22.0-universal.dmg",
-    "sha256": "0386zsq2rxn5hpq4nrif4i822glvfdiw4rfz3jk570idaqi6m6cd",
-    "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.22.0/podman-desktop-1.22.0-universal.dmg",
-    "version": "1.22.0"
+    "name": "podman-desktop-1.22.1-universal.dmg",
+    "sha256": "0i1i559l57raa65ym0q1394yww7lk7mid6lx8gs1p5ax8ykgi1lg",
+    "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.22.1/podman-desktop-1.22.1-universal.dmg",
+    "version": "1.22.1"
   },
   "launchdarkly": {
-    "name": "ldcli_1.18.0_darwin_amd64.tar.gz",
-    "sha256": "18h3wxrqvvds527p4hliahv1inrm0ykghw5fkns35i7h52g01bvw",
-    "url": "https://github.com/launchdarkly/ldcli/releases/download/v1.18.0/ldcli_1.18.0_darwin_amd64.tar.gz",
-    "version": "v1.18.0"
+    "name": "ldcli_2.0.1_darwin_amd64.tar.gz",
+    "sha256": "0dadp87f33d670g8pimr1kikcl0alji98pk9w29mdhl040mf45yg",
+    "url": "https://github.com/launchdarkly/ldcli/releases/download/v2.0.1/ldcli_2.0.1_darwin_amd64.tar.gz",
+    "version": "v2.0.1"
   }
 }
