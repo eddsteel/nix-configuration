@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 let
+  devices = import ../devices.nix { };
   emacs = pkgs.emacs30;
   homedir = "/Users/edd";
   secrets =  builtins.fromTOML (builtins.readFile ./secrets.toml);
@@ -35,6 +36,11 @@ in {
   };
 
   layers = {
+    home = {
+      device = secrets.home.device;
+      packets = devices.packets;
+    };
+
     macos = {
       enable = true;
       istat = {

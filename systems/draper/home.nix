@@ -4,6 +4,7 @@ let
   homedir = "/home/${username}";
   emacs = pkgs.emacs30-pgtk;
   secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
+  devices = import ../devices.nix {};
 in {
   imports = [ ../../modules/home ];
 
@@ -58,6 +59,11 @@ in {
 #  };
 
   layers = {
+    home = {
+      device = secrets.home.device;
+      packets = devices.packets;
+    };
+
     linux = {
       enable = true;
       gnome = {
