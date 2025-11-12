@@ -147,7 +147,7 @@ in with lib; {
         right-active = false;
         right-commands-json = ''{"commands":[]}'';
         center-active = true;
-        center-commands-json = ''{"commands":[{"isActive":true,"command":"echo \"$(${pkgs.broadlink-cli}/bin/broadlink_cli --type 0x5213 --host 192.168.1.162 --mac ec0baeee04b8 --temperature)°C\"","interval":1,"uuid":"d55e0c0b-fca9-48fa-ae3b-2bfb2e4de580"}]}'';
+        center-commands-json = ''{"commands":[{"isActive":true,"command":"echo \"$(roomtemp)°C\"","interval":1,"uuid":"d55e0c0b-fca9-48fa-ae3b-2bfb2e4de580"}]}'';
         center-index = 0;
         left-active = false;
         left-commands-json = ''{"commands":[{"command":"${pkgs.brainzo}/bin/b np get","interval":5,"uuid":"13f3aa20-7461-448c-ab74-0ee48989a077"}]}'';

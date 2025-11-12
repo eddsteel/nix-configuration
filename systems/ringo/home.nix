@@ -123,7 +123,7 @@ in {
         timer = 60;
         script = ''
             PATH="$HOME/.nix-profile/bin"
-            temp=$(nix-shell -p broadlink-cli --command 'broadlink_cli --type 0x5213 --host ${secrets.temperature.host} --mac ${secrets.temperature.mac} --temperature')
+            temp=$(roomtemp)
             printf "%s°C\n" $temp
             echo '---'
             echo "History | href=${secrets.temperature.url}"

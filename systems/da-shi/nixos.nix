@@ -208,6 +208,7 @@ in {
         ''"da-shi.${hosts.domain}  IN  A  ${hosts.ip4 "da-shi"}"''
         ''"draper.${hosts.domain}  IN  A  ${hosts.ip4 "draper"}"''
         ''"blinds.${hosts.domain}  IN  A  ${hosts.ip4 "blinds"}"''
+        ''"controller.${hosts.domain}  IN  A  ${hosts.ip4 "controller"}"''
         ] ++ (map
           (s: ''"${s.name}.${hosts.domain}  IN  A  ${hosts.ip4 "da-shi"}"'')
           hosts.services);
@@ -379,3 +380,4 @@ rsync -aHv --size-only --delete --exclude=src/ --include=*/ --include=* /home "$
     };
   };
 }
+  []

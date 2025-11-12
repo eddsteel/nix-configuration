@@ -7,6 +7,10 @@ rec {
       ip4 = "192.168.1.165";
       mac = "E0-4F-43-BC-24-EB";
     }];
+    controller = [{
+      ip4 = "192.168.1.162";
+      mac = "EC-0B-AE-EE-04-B8";
+    }];
     da-shi = [{
       ip4 = "192.168.1.88";
       mac = "9C-2D-CD-6A-BF-D8";
@@ -25,12 +29,9 @@ rec {
       ip4 = "192.168.1.203";
       mac = "E8-9F-80-2A-E4-D1";
     }];
-    xbox = [{
-      ip4 = "192.168.1.99";
-      mac = "BC-83-85-A7-BE-61";
-    }];
   };
   ip4 = h: (builtins.elemAt hosts."${h}" 0).ip4;
+  mac = h: (builtins.elemAt hosts."${h}" 0).mac;
   extraHosts = lib.concatStringsSep "\n" (
     lib.lists.flatten (
       lib.mapAttrsToList (host: ifs:

@@ -5,6 +5,7 @@ let
   emacs = pkgs.emacs30-pgtk;
   secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
   devices = import ../devices.nix {};
+  hosts = import ../hosts.nix { inherit lib; };
 in {
   imports = [ ../../modules/home ];
 
@@ -27,8 +28,8 @@ in {
 
   services.brainzo = {
     enable = true;
-    blinds-controller = secrets.brainzo.blinds.controller;
-    blinds = secrets.brainzo.blinds.blinds;
+    blinds-controller = secrets.home.blind-controller;
+    blinds = devices.blinds;
   };
 
 #  systemd.user.services = let
@@ -60,8 +61,10 @@ in {
 
   layers = {
     home = {
-      device = secrets.home.device;
+      device = "${secrets.home.device-controller} ${hosts.ip4 "controller"} ${lib.replaceStrings ["-"] [""] (lib.strings.toLower (hosts.mac "controller"))}";
       packets = devices.packets;
+      blinds = devices.blinds;
+      blind-controller = secrets.home.blind-controller;
     };
 
     linux = {
