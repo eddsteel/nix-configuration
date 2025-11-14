@@ -111,7 +111,7 @@
       (find-file "~/txt/gtd/projects.org")
       (widen)
       (beginning-of-buffer)
-      (search-forward-regexp "^* Projects")
+      (search-forward-regexp "^* .*Projects")
       (org-narrow-to-element)))
 
  (setq org-stuck-projects
