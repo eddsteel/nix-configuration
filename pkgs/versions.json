@@ -1,41 +1,41 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.141.33.2.dmg",
-      "sha256": "13mcg97wfi79y0s9bf8p306awzb1k1d2wx9x3k7n2l74chwk0lzr",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.141.33.2.dmg",
-      "version": "10.141.33.2"
+      "name": "wavebox-10.142.43.2.dmg",
+      "sha256": "10vpj4f2iygxh192dpbb1d4qzvjmqivgzx54bb6qryyg45mwkn01",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.142.43.2.dmg",
+      "version": "10.142.43.2"
     },
     "linux": {
-      "name": "wavebox-10.141.33-2.tar.gz",
-      "sha256": "08zyllj1wwh5idnzfrwddyl1bklw7h2yi2y1wh8k81qhqnnwqg1n",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.141.33-2.tar.gz",
-      "version": "10.141.33-2"
+      "name": "wavebox-10.142.43-2.tar.gz",
+      "sha256": "0cpsyyrlapjx0lykh0h3y0rzhrzvhn4a7rw1r0dj96ix3nmqhh22",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.142.43-2.tar.gz",
+      "version": "10.142.43-2"
     }
   },
   "bitwarden": {
-    "name": "bitwarden-2025.10.0.dmg",
-    "sha256": "088szq6y2c4s8cpczjy85klbizn93fyi2kcakypxqfwdv4l59b7s",
-    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2025.10.0/Bitwarden-2025.10.0-universal.dmg",
-    "version": "2025.10.0"
+    "name": "bitwarden-2025.11.0.dmg",
+    "sha256": "1qx1ljyg9rinap0hvyv60q3xvjrakv3jw4rm7wfikdmw7hrr3x23",
+    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2025.11.0/Bitwarden-2025.11.0-universal.dmg",
+    "version": "2025.11.0"
   },
   "firefox": {
-    "name": "Firefox-144.0.dmg",
-    "sha256": "014y0qlq62wl91qk9hwqxxmgq61z1hglgcr6w67bbb3d17apjw1b",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/144.0/mac/en-CA/Firefox%20144.0.dmg",
-    "version": "144.0"
+    "name": "Firefox-145.0.dmg",
+    "sha256": "0fpjs3ib02dcy89vpmixi800z0pk368y1djz0zjiggs6hbd7jzjm",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/145.0/mac/en-CA/Firefox%20145.0.dmg",
+    "version": "145.0"
   },
   "idea": {
-    "name": "intellij-idea-ce-2025.2.3.dmg",
-    "sha256": "1qkri4r63l195cn7s5fzfyvagznqly3q71fs6ngya6lch4649vmz",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2025.2.3-aarch64.dmg",
-    "version": "2025.2.3"
+    "name": "intellij-idea-ce-2025.2.4.dmg",
+    "sha256": "1hxn8mfywrhwi8jyn216jggqidnxz49wlvkx60nx30w6pxisxqf4",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2025.2.4-aarch64.dmg",
+    "version": "2025.2.4"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-7.76.0.dmg",
-    "sha256": "057bpsw6mjz6zrykygkjkam7qy6vlvl27g4jzzmy0dqp7lpy28wk",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.76.0.dmg",
-    "version": "7.76.0"
+    "name": "signal-desktop-mac-universal-7.79.0.dmg",
+    "sha256": "17vi8frnfn401ir5qkj6iqzrh42l7jpbs7jmqnm26kxpxs7xaxc1",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.79.0.dmg",
+    "version": "7.79.0"
   },
   "istatmenus": {
     "name": "istat-6.73.1.zip",
@@ -78,15 +78,15 @@
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "0v249skim4d1slpsb60d0c48z31vbj82phfa2lfs8csmvdjd3j5v",
-      "url": "https://zoom.us/client/6.6.5.67181/zoomusInstallerFull.pkg?archType=arm64",
-      "version": "6.6.5.67181"
+      "sha256": "07f04z8fcnsp439d3ljcvnpg0c13k17lnrwqv5biz4yawkz19sm6",
+      "url": "https://zoom.us/client/6.6.6.67409/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "6.6.6.67409"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "0k35gffjapcafr09rms0izd7ddjp1719dfhkn1rxw6ab1in4y7dj",
-      "url": "https://zoom.us/client/6.6.5.5215/zoom_x86_64.pkg.tar.xz",
-      "version": "6.6.5.5215"
+      "sha256": "071m82lfxdh9jlmwiwwljiw2350ibx8y9bwb18a1ph4a9s12gikb",
+      "url": "https://zoom.us/client/6.6.6.5306/zoom_x86_64.pkg.tar.xz",
+      "version": "6.6.6.5306"
     }
   },
   "terraform_docs": {
@@ -96,10 +96,10 @@
     "version": "0.20.0"
   },
   "awsvpn": {
-    "name": "AWS_VPN_Client-5.3.1.pkg",
-    "sha256": "05ma3gnkq1597rh6ly007839wgd7szsl399574gx92rk5h3p0777",
+    "name": "AWS_VPN_Client-5.3.2.pkg",
+    "sha256": "11l99y06akx0i72wh24bj9mgfzjgpw211rrypfxmgi3skcrgrh19",
     "url": "https://d20adtppz83p9s.cloudfront.net/OSX/latest/AWS_VPN_Client.pkg",
-    "version": "5.3.1"
+    "version": "5.3.2"
   },
   "podman": {
     "name": "podman-desktop-1.22.1-universal.dmg",
