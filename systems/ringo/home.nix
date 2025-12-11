@@ -8,6 +8,7 @@ let
   work-pkgs = pkgs.callPackage (builtins.fetchGit {
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
+  hosts = import ../hosts.nix { inherit lib; };
 in {
   imports = [ ../../modules/home ];
 
@@ -37,7 +38,9 @@ in {
 
   layers = {
     home = {
-      device = secrets.home.device;
+      device = "${secrets.home.device-controller} ${hosts.ip4 "controller"} ${lib.replaceStrings ["-"] [""] (lib.strings.toLower (hosts.mac "controller"))}";
+      blind-controller = secrets.home.blind-controller;
+      blinds = devices.blinds;
       packets = devices.packets;
     };
 

@@ -2,7 +2,7 @@
 let
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
   version = "458";
-  java = pkgs.jdk23;
+  java = pkgs.jdk21;
 in pkgs.stdenv.mkDerivation rec {
   pname = "trino";
   inherit version;

@@ -9,6 +9,6 @@ self: pkgs:
       scripts               = local.scripts;
       wavebox               = local.wavebox;
       wvlet                 = local.wvlet;
-      zoom-us               = local.zoomus;
+#      zoom-us               = local.zoomus;
       trino                 = local.trino;
     }

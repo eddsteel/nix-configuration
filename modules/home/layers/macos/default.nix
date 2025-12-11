@@ -87,10 +87,7 @@ in with lib; {
 
     programs.bash.bashrcExtra = keychain;
     programs.fish.shellInit = keychain;
-
-    programs.git.extraConfig = {
-      credential.helper = "osxkeychain";
-    };
+    programs.git.settings.credential.helper = "osxkeychain";
 
     programs = {
       istat = {

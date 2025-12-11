@@ -1,41 +1,41 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.142.43.2.dmg",
-      "sha256": "10vpj4f2iygxh192dpbb1d4qzvjmqivgzx54bb6qryyg45mwkn01",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.142.43.2.dmg",
-      "version": "10.142.43.2"
+      "name": "wavebox-10.142.47.2.dmg",
+      "sha256": "00a2qrsbrlkl6d8k141nrvmi7v4kd9vfqwprf5944algs9bx09lf",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.142.47.2.dmg",
+      "version": "10.142.47.2"
     },
     "linux": {
-      "name": "wavebox-10.142.43-2.tar.gz",
-      "sha256": "0cpsyyrlapjx0lykh0h3y0rzhrzvhn4a7rw1r0dj96ix3nmqhh22",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.142.43-2.tar.gz",
-      "version": "10.142.43-2"
+      "name": "wavebox-10.142.47-2.tar.gz",
+      "sha256": "1v8x0r7ky7wrh167bd1s00ylgsqyijpnqivhbn2a3y3vpm5m45fh",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.142.47-2.tar.gz",
+      "version": "10.142.47-2"
     }
   },
   "bitwarden": {
-    "name": "bitwarden-2025.11.0.dmg",
-    "sha256": "1qx1ljyg9rinap0hvyv60q3xvjrakv3jw4rm7wfikdmw7hrr3x23",
-    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2025.11.0/Bitwarden-2025.11.0-universal.dmg",
-    "version": "2025.11.0"
+    "name": "bitwarden-2025.11.1.dmg",
+    "sha256": "01zfmg5b6dmqyjrmc7yzbqqk297b8lb5agpz4mzqsmb037w6fk3d",
+    "url": "https://github.com/bitwarden/clients/releases/download/desktop-v2025.11.1/Bitwarden-2025.11.1-universal.dmg",
+    "version": "2025.11.1"
   },
   "firefox": {
-    "name": "Firefox-145.0.dmg",
-    "sha256": "0fpjs3ib02dcy89vpmixi800z0pk368y1djz0zjiggs6hbd7jzjm",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/145.0/mac/en-CA/Firefox%20145.0.dmg",
-    "version": "145.0"
+    "name": "Firefox-145.0.2.dmg",
+    "sha256": "0n2522v309nkpi8cdr1k23nn0dkhn2zjhnrla3qxnm11i9wmvcw3",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/145.0.2/mac/en-CA/Firefox%20145.0.2.dmg",
+    "version": "145.0.2"
   },
   "idea": {
-    "name": "intellij-idea-ce-2025.2.4.dmg",
-    "sha256": "1hxn8mfywrhwi8jyn216jggqidnxz49wlvkx60nx30w6pxisxqf4",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2025.2.4-aarch64.dmg",
-    "version": "2025.2.4"
+    "name": "intellij-idea-ce-2025.2.5.dmg",
+    "sha256": "1g75f0yr0jcapk598qw4npdb8jhmhc35zgfyyjfymw1ksj9581jj",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2025.2.5-aarch64.dmg",
+    "version": "2025.2.5"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-7.79.0.dmg",
-    "sha256": "17vi8frnfn401ir5qkj6iqzrh42l7jpbs7jmqnm26kxpxs7xaxc1",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.79.0.dmg",
-    "version": "7.79.0"
+    "name": "signal-desktop-mac-universal-7.80.1.dmg",
+    "sha256": "1pax9mdzzmjv56ich2nz055bidyhxka9bn91valcp85w7l0d8khj",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-7.80.1.dmg",
+    "version": "7.80.1"
   },
   "istatmenus": {
     "name": "istat-6.73.1.zip",
@@ -63,30 +63,30 @@
   },
   "circleci_cli": {
     "darwin": {
-      "name": "circleci-cli_0.1.33494_darwin_amd64.tar.gz",
-      "sha256": "1ki1kwd7ikgbgs9bmyx10ycgdx7pn5nbmiw51dfw8rvlnfrjzdnj",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.33494/circleci-cli_0.1.33494_darwin_amd64.tar.gz",
-      "version": "0.1.33494"
+      "name": "circleci-cli_0.1.33721_darwin_amd64.tar.gz",
+      "sha256": "0vjyh1r7xwgllhsxn5yq7gllnd9khsy3wn8fxlgwmivbh2cphmjy",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.33721/circleci-cli_0.1.33721_darwin_amd64.tar.gz",
+      "version": "0.1.33721"
     },
     "linux": {
-      "name": "circleci-cli_0.1.33494_linux_amd64.tar.gz",
-      "sha256": "0zn3mq16f6gvvkjl3kk9wa403jc5n1j8ish2mzzcf3l1cyn1rm6q",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.33494/circleci-cli_0.1.33494_linux_amd64.tar.gz",
-      "version": "0.1.33494"
+      "name": "circleci-cli_0.1.33721_linux_amd64.tar.gz",
+      "sha256": "04rm47qmqkglwrx1madjf26jjgijp0fj7j2lkgr78rdby02x7qh3",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.33721/circleci-cli_0.1.33721_linux_amd64.tar.gz",
+      "version": "0.1.33721"
     }
   },
   "zoom_us": {
     "darwin": {
       "name": "zoomusInstallerFull.pkg",
-      "sha256": "07f04z8fcnsp439d3ljcvnpg0c13k17lnrwqv5biz4yawkz19sm6",
-      "url": "https://zoom.us/client/6.6.6.67409/zoomusInstallerFull.pkg?archType=arm64",
-      "version": "6.6.6.67409"
+      "sha256": "1461a9bpqfxg8ka92kpzj5acv72zsy7qgxbdfzqs7065bwqn8vh6",
+      "url": "https://zoom.us/client/6.6.10.69071/zoomusInstallerFull.pkg?archType=arm64",
+      "version": "6.6.10.69071"
     },
     "linux": {
       "name": "zoom_x86_64.pkg.tar.xz",
-      "sha256": "071m82lfxdh9jlmwiwwljiw2350ibx8y9bwb18a1ph4a9s12gikb",
-      "url": "https://zoom.us/client/6.6.6.5306/zoom_x86_64.pkg.tar.xz",
-      "version": "6.6.6.5306"
+      "sha256": "0ny6bgxz7vpv4s8k4l0z9vsxrw0np4g1mf11pvd7wsw9zs3c1wsa",
+      "url": "https://zoom.us/client/6.6.10.5815/zoom_x86_64.pkg.tar.xz",
+      "version": "6.6.10.5815"
     }
   },
   "terraform_docs": {
@@ -102,10 +102,10 @@
     "version": "5.3.2"
   },
   "podman": {
-    "name": "podman-desktop-1.22.1-universal.dmg",
-    "sha256": "0i1i559l57raa65ym0q1394yww7lk7mid6lx8gs1p5ax8ykgi1lg",
-    "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.22.1/podman-desktop-1.22.1-universal.dmg",
-    "version": "1.22.1"
+    "name": "podman-desktop-1.23.1-universal.dmg",
+    "sha256": "0n2p0ifk5k9imm2fcgbcnsc5cl5hkhn72zifq2jnl29pypi2pwyy",
+    "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.23.1/podman-desktop-1.23.1-universal.dmg",
+    "version": "1.23.1"
   },
   "launchdarkly": {
     "name": "ldcli_2.0.1_darwin_amd64.tar.gz",
