@@ -31,7 +31,7 @@ in with lib; {
       gnupg
       git-secrets nix-prefetch-git
       ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
-      bitwarden moreutils exfalso wavebox
+      bitwarden-desktop moreutils exfalso wavebox
     ];
 
     programs.direnv.enable = true;

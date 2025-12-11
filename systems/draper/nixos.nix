@@ -148,7 +148,6 @@ in {
         terminus_font
         dejavu_fonts
         font-awesome
-        ubuntu_font_family
         source-code-pro
         source-sans-pro
         source-serif-pro
@@ -156,7 +155,7 @@ in {
         kochi-substitute
         noto-fonts
         noto-fonts-cjk-sans
-        noto-fonts-emoji
+        noto-fonts-color-emoji
         open-sans
         sarasa-gothic
       ];
