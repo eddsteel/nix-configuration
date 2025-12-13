@@ -1,12 +1,17 @@
 {pkgs, lib, config, ...}:
 let
   cfg = config.layers.linux.gnome;
-  raise = "${pkgs.scripts}/bin/raise.sh";
+  raise = pkgs.writeShellApplication {
+    name = "raise";
+    runtimeInputs = with pkgs; [ jq coreutils glib ];
+    text = builtins.readFile ./raise.sh;
+  };
   extensions = with pkgs.gnomeExtensions; [
     caffeine
     executor
     astra-monitor
     sound-output-device-chooser
+    window-calls
   ];
   findUuid = e: e.uuid or e.extensionUuid;
   extensionLink = ext: let uuid = findUuid ext; in {
@@ -103,19 +108,19 @@ in with lib; {
 
       "${mediaKeys}/custom-keybindings/custom0" = {
         binding = ''<Primary><Shift><Alt><Super>e'';
-        command = ''${raise} "emacs.Emacs" ${cfg.homedir}/.nix-profile/bin/emacs'';
+        command = ''${raise}/bin/raise "emacs" "${pkgs.emacs}/bin/emacs"'';
         name = ''Emacs'';
       };
 
       "${mediaKeys}/custom-keybindings/custom1" = {
         binding = ''<Primary><Shift><Alt><Super>f'';
-        command = ''${raise} "Navigator.firefox"  ${cfg.homedir}/.nix-profile/bin/firefox'';
+        command = ''${raise}/bin/raise "firefox" ${pkgs.firefox}/bin/firefox'';
         name = ''Firefox'';
       };
 
       "${mediaKeys}/custom-keybindings/custom2" = {
         binding = ''<Primary><Shift><Alt><Super>m'';
-        command = ''${raise} "gnome-terminal-server.Gnome-terminal" ${cfg.homedir}/.nix-profile/bin/gnome-terminal'';
+        command = ''${raise}/bin/raise "org.gnome.Terminal" ${cfg.homedir}/.nix-profile/bin/gnome-terminal'';
         name = ''Terminal'';
       };
 
@@ -133,7 +138,7 @@ in with lib; {
 
       "${mediaKeys}/custom-keybindings/custom5" = {
         binding = ''<Primary><Shift><Alt><Super>w'';
-        command = ''${raise} wavebox.Wavebox ${cfg.homedir}/.nix-profile/bin/wavebox'';
+        command = ''${raise}/bin/raise wavebox ${pkgs.wavebox}/bin/wavebox'';
         name = ''Wavebox'';
       };
 
