@@ -131,8 +131,8 @@
    ("C-M-S-k" . edd-util/kill-a-buffer)
    ("M-q" . edd-util/fill-or-unfill-paragraph)))
 
-;(use-package pdf-tools
-;  :init (pdf-tools-install))
+(use-package pdf-tools
+  :init (pdf-tools-install))
 
 (use-package flycheck
   :hook
@@ -424,17 +424,25 @@
   ("C-c ;" . mc/edit-lines)
   ("M-<down>" . mc/mark-more-like-this-extended))
 
+(use-package ace-window
+  :demand t
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  :bind
+  ("M-o" . ace-window)
+  ("C-M-S-o" . ace-window))
+
 (use-package eat
   :demand t
   :bind
   (:map eat-mode-map
-        ("M-o" . other-window)
+        ("M-o" . ace-window)
    :map eat-char-mode-map
-        ("M-o" . other-window)
+        ("M-o" . ace-window)
    :map eat-line-mode-map
-        ("M-o" . other-window)
+        ("M-o" . ace-window)
    :map eat-semi-char-mode-map
-        ("M-o" . other-window)
+        ("M-o" . ace-window)
    :map project-prefix-map
         ("s" . eat-project)
         ("S" . eat-project-other-window))
@@ -442,6 +450,11 @@
   (eat-mode . goto-address-mode)
   :config
   (setq eat-kill-buffer-on-exit 't))
+
+(use-package ace-jump-mode
+  :bind
+  ("C-M-S-j" . 'ace-jump-mode))
+
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

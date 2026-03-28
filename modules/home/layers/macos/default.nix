@@ -45,6 +45,9 @@ in with lib; {
         "com.apple.Finder" = {
           "AppleShowAllFiles" = false;
         };
+        "com.apple.PowerManagement" = {
+          "SystemPowerSettings:SleepDisabled" = false;
+        };
 
         keybindings = {
           "^u" = "deleteToBeginningOfLine:";
@@ -62,13 +65,13 @@ in with lib; {
     };
 
     # https://github.com/nix-community/home-manager/blob/db00b39a9abec04245486a01b236b8d9734c9ad0/modules/targets/darwin/linkapps.nix
-    home.file."Applications/Home Manager".source = let
-      apps = pkgs.buildEnv {
-        name = "home-manager-applications";
-        paths = config.home.packages;
-        pathsToLink = "/Applications";
-      };
-    in "${apps}/Applications";
+#    home.file."Applications/Home Manager".source = let
+#      apps = pkgs.buildEnv {
+#        name = "home-manager-applications";
+#        paths = config.home.packages;
+#        pathsToLink = "/Applications";
+#      };
+#    in "${apps}/Applications";
 
     home.file."media/film".source = mkOSymlink "${config.home.homeDirectory}/Movies";
     home.file."media/music".source = mkOSymlink "${config.home.homeDirectory}/Music";
@@ -82,7 +85,7 @@ in with lib; {
     '';
 
     home.packages = with pkgs; [
-      coreutils gnugrep gnused findutils gawk python3 ps wget less ncurses
+      coreutils gnugrep gnused findutils gawk python3 ps wget less ncurses keymapp
     ];
 
     programs.bash.bashrcExtra = keychain;
@@ -128,16 +131,15 @@ in with lib; {
       skhd = {
         enable = true;
         bindings = {
-          "shift + alt + cmd + ctrl - e" = "open ${cfg.emacs}/Applications/Emacs.app";
-          "shift + alt + cmd + ctrl - f" = "open ${pkgs.mac-apps.firefox}/Applications/Firefox.app";
-          "shift + alt + cmd + ctrl - i" = "idea";
-          "shift + alt + cmd + ctrl - j" = "if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi";
-          "shift + alt + cmd + ctrl - m" = "open ${pkgs.iterm2}/Applications/iTerm2.app";
-          "shift + alt + cmd + ctrl - w" = "open ${pkgs.wavebox}/Applications/Wavebox.app";
-          "shift + alt + cmd + ctrl - z" = "open ${pkgs.zoom-us}/Applications/zoom.us.app";
-          "f7" = "${pkgs.scripts}/bin/emms previous";
-          "f8" = "${pkgs.scripts}/bin/emms play-pause";
-          "f9" = "${pkgs.scripts}/bin/emms next";
+          "hyper - e" = "open ${cfg.emacs}/Applications/Emacs.app";
+          "hyper - f" = "open ${pkgs.mac-apps.firefox}/Applications/Firefox.app";
+          "hyper - i" = "idea";
+          "hyper - j" = "if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi";
+          "hyper - k" = "open ${pkgs.keymapp}/Applications/Keymapp.app";
+          "hyper - m" = "open ${pkgs.iterm2}/Applications/iTerm2.app";
+          "hyper - q" = "pmset sleepnow";
+          "hyper - w" = "open ${pkgs.wavebox}/Applications/Wavebox.app";
+          "hyper - z" = "open ${pkgs.zoom-us}/Applications/zoom.us.app";
         };
       };
       soundsource = {

@@ -52,8 +52,6 @@
          ("C-c SPC" . edd-emms/control)
          ("C-y" . edd-term/paste)
          ("C-c x" . edd-term/term)
-         ("M-o" . other-window)
-         ("C-M-S-o" . other-window)
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)))
 
@@ -158,8 +156,6 @@
    ("M-=" . count-words)
    ("C-x C-m" . execute-extended-command)
    ("M-z" . zap-up-to-char)
-   ("M-o" . other-window)
-   ("C-M-S-o" . other-window)
    ("C-M-!" . delete-other-windows)     ; Meh-1
    ("C-M-@" . split-window-below)       ; Meh-2
    ("C-M-#" . split-window-right)       ; Meh-3

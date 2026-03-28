@@ -17,6 +17,13 @@
   (global-set-key (kbd "s-_") (lambda () (interactive) (insert "—")))
   (global-set-key (kbd "s--") (lambda () (interactive) (insert "–")))
 
+  ;; I am not a NextSTEP user
+  (global-set-key [home] 'beginning-of-line-text)
+  (global-set-key [end] 'move-end-of-line)
+  (global-set-key (kbd "<M-right>") 'right-word)
+  (global-set-key (kbd "<M-left>") #'left-word)
+  (global-set-key (kbd "<M-delete>") #'kill-word)
+
   (eval-after-load "isearch"
     '(progn
       (define-key isearch-mode-map (kbd "<mouse-4>") 'isearch-repeat-forward)

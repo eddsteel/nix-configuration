@@ -27,8 +27,8 @@ in {
           "*" = {
             addKeysToAgent = "yes";
             compression = false;
-            controlMaster = "yes";
-            controlPath = "~/.ssh/master-%r@%n:%p";
+            controlMaster = "no";
+#            controlPath = "~/.ssh/master-%r@%n:%p";
             hashKnownHosts = false;
             identityFile = "~/.ssh/id_rsa";
             serverAliveCountMax = 3;

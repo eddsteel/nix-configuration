@@ -38,6 +38,7 @@ user_pref("browser.urlbar.suggest.topsites", false);
 user_pref("browser.urlbar.suggest.trending", false);
 user_pref("browser.urlbar.suggest.weather", false);
 user_pref("browser.urlbar.suggest.yelp", false);
+user_pref("browser.search.suggest.enabled", false);
 user_pref("services.sync.username", "${cfg.sync-user}");
 user_pref("services.sync.engine.creditcards", false);
 user_pref("services.sync.engine.passwords", false);

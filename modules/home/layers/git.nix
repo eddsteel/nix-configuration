@@ -71,7 +71,7 @@ in with lib; {
           "git://github.com/${cfg.github-user}/"
           "https://github.com/${cfg.github-user}/"
         ];
-        aliases = {
+        alias = {
           lg = "log --branches --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN> %GK? %Creset' --abbrev-commit";
           lgh = "!git lg -10 | head -n 10";
           nuke = "!git branch | while read b; do git branch -d $b; done";
