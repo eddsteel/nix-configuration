@@ -45,6 +45,17 @@ let
       sha256 = "sha256-tZG4WU0QN1pi7tKFYV6GIUa7oaB+CrVaUCxZ/ACkRF8=";
     };
   };
+  pkl-mode = epkgs: epkgs.trivialBuild {
+    pname = "pkl-mode";
+    version = "1";
+    buildInputs = [ epkgs.s ];
+    src = pkgs.fetchFromGitHub {
+      owner = "sin-ack";
+      repo = "pkl-mode";
+      rev = "c57fe374a9c57eee6432d0b449e410ab8dc40a89";
+      sha256 = "sha256-IfBFig2i4qAyRDB+lxzfPu4OOyV6hXhExlZtSnrzqnI=";
+    };
+  };
 in {
   options.layers.emacs = {
     enable = mkEnableOption "Emacs";
@@ -60,6 +71,8 @@ in {
     (setq user-emacs-directory (expand-file-name "~/.config/emacs"))
     '';
       extraPackages = epkgs: with epkgs; [
+        ace-window
+        ace-jump-mode
         delight
         basic-theme
         (ligature epkgs)
@@ -154,6 +167,8 @@ in {
         fish-mode
         multiple-cursors
         eat
+        (pkl-mode epkgs)
+        zig-mode
       ];
     };
 

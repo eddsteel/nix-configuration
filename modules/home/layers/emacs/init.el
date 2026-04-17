@@ -455,6 +455,8 @@
   :bind
   ("C-M-S-j" . 'ace-jump-mode))
 
+(use-package zig-mode)
+(use-package claudemacs :vc (:url "https://github.com/cpoile/claudemacs"))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
@@ -470,3 +472,4 @@
 ;; http://lists.madduck.net/pipermail/vcs-home/2013-August/000880.html
 ;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/
 ;; https://masteringemacs.org/article/whats-new-in-emacs-28-1
+ 
