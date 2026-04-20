@@ -1,4 +1,3 @@
-(setq user-emacs-directory "~/.config/emacs")
 (defun edd/maybe-load-config (name)
   (let ((conf (locate-user-emacs-file name)))
     (when (file-readable-p conf) (load-file conf))))

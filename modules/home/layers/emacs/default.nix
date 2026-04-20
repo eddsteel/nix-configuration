@@ -69,6 +69,7 @@ in {
       extraConfig = ''
     (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
     (setq user-emacs-directory (expand-file-name "~/.config/emacs"))
+    (load (concat user-emacs-directory "/init.el"))
     '';
       extraPackages = epkgs: with epkgs; [
         ace-window
