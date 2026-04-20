@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.layers.firefox;
-  profile = "uooem51c.default-release-5";
 in with lib; {
   options.layers.firefox = {
     enable = mkEnableOption "Standard firefox configuration";
@@ -46,6 +45,8 @@ user_pref("services.sync.prefs.sync.browser.tabs.warnOnClose", false);
 user_pref("services.sync.declinedEngines", "passwords");
 user_pref("services.sync.rememberSignons", false);
 user_pref("services.sync.prefs.sync.browser.urlbar.suggest.searches", false);
+user_pref("sidebar.verticalTabs", true);
+user_pref("sidebar.verticalTabs.dragToPinPromo.dismissed", true)
 user_pref("accessibility.typeaheadfind.enablesound", false);
 user_pref("signon.rememberSignons", false);
 user_pref("signon.autofillForms", false);

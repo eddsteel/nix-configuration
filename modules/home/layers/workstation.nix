@@ -3,7 +3,6 @@ let
   cfg = config.layers.workstation;
   homedir = config.home.homeDirectory;
   bootstrap-repos = [
-    {"name" = "nix-configuration";}
     {"name" = "nix-darwin"; "remote" = "git@github.com:LnL7/nix-darwin";}
     {"name" = "home-manager"; "remote" = "git@github.com:nix-community/home-manager";}
     {"name" = "nixpkgs"; "remote" = "git@github.com:NixOS/nixpkgs"; "fork" = true; }

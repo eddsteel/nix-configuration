@@ -122,6 +122,15 @@ in with lib; {
             keyCode = 126;
             modifierFlags = 1048576;
           };
+          reflowTodo = {
+            keyCode = 45;
+            modifierFlags = 786432;
+          };
+          subsequentExecutionMode = 0;
+          toggleTodo = {
+            keyCode = 11;
+            modifierFlags = 786432;
+          };
           rightHalf = {
             keyCode = 124;
             modifierFlags = 1048576;

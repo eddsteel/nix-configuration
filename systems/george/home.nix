@@ -25,7 +25,7 @@ in {
     terraform-docs circleci-cli aws-vpn docker kubectl kubectx
     nixVersions.git podman trino maven claude-code jdk21 ruby opentofu
 ] ++ nix-work.all
-#  ++ work-pkgs.all
+  ++ work-pkgs.all
   ++ (with mac-apps; [caffeine vfkit podman-desktop intellij-idea-ce]);
 
   programs.go.enable = true;

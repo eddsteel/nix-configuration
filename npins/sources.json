@@ -1,0 +1,92 @@
+{
+  "pins": {
+    "brainzo": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://git@github.com/eddsteel/brainzo"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "8cf8dd3bc7a50248e882adcb9e3bcbd96aaff516",
+      "url": null,
+      "hash": "sha256-xtb1q1jVw/vwjYjyC39oJ5VUWxkLf5UyPVTrs30uPCk="
+    },
+    "darwin": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "06648f4902343228ce2de79f291dd5a58ee12146",
+      "url": "https://github.com/nix-darwin/nix-darwin/archive/06648f4902343228ce2de79f291dd5a58ee12146.tar.gz",
+      "hash": "sha256-KM2WYj6EA7M/FVZVCl3rqWY+TFV5QzSyyGE2gQxeODU="
+    },
+    "git-web-link": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://git@github.com/eddsteel/git-web-link"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "30f6a9d7a3273dfcd1ccca702793e71ced9f8ff8",
+      "url": null,
+      "hash": "sha256-/gwJTTUaPOzlwjoI5w2pDk8Gp9833L3zZk1PMD7OKiQ="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "c81775b640d4507339d127f5adb4105f6015edf2",
+      "url": "https://github.com/nix-community/home-manager/archive/c81775b640d4507339d127f5adb4105f6015edf2.tar.gz",
+      "hash": "sha256-CCRzOEFg6JwCdZIR5dLD0ypah5/e2JQVuWQ/l3rYrPY="
+    },
+    "nix-work": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://git@github.com/eddsteel/nix-work"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "0143eb64879011f2af0acd8f67d462842f8d5cf1",
+      "url": null,
+      "hash": "sha256-OH0YeYJwMuXJfVNrYEc8XXAHEY4TunfwzqGjwIC7Dr4="
+    },
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "0f148f09406103ddd24749bdea08fcecfb8bf6eb",
+      "url": "https://github.com/nixos/nixpkgs/archive/0f148f09406103ddd24749bdea08fcecfb8bf6eb.tar.gz",
+      "hash": "sha256-Pcr52gi5FmJpl1s2CCmhohn+p1EraNskVykAV8OoIig="
+    },
+    "scripts": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://git@github.com/eddsteel/scripts"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "f3d0535479e1429dc74b70ce7a267cc337654dbd",
+      "url": null,
+      "hash": "sha256-/Zsz3zQ64aVq1yazV0cdv5SqKYBPAK2A18lqAYImM4M="
+    }
+  },
+  "version": 7
+}
