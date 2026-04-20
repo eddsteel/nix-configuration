@@ -10,21 +10,15 @@ function die() {
 test -n "$HOSTNAME" || die "\$HOSTNAME is required"
 
 function bootstrapDarwin() {
-    which darwin-rebuild || die "nix-darwin is required"
-    darwin-rebuild switch \
-                   -I "darwin-config=$WD/systems/$HOSTNAME/darwin.nix" \
-                   -I "nix-config=$WD"
+    nix-build $(nix-instantiate --raw --eval npins -A darwin) -A darwin-rebuild
+    sudo ./result/bin/darwin-rebuild switch -I "darwin-config=$WD/systems/$HOSTNAME/darwin.nix" -I "nix-config=$WD"
+    rm result
 }
 
 function bootstrapDarwinHome() {
-    which home-manager || die "home-manager is required"
-    NIXPKGS_CONFIG="$WD/nixpkgs.nix" home-manager switch \
-                  -I "darwin-config=$WD/systems/$HOSTNAME/darwin.nix" \
-                  -I "nix-config=$WD" \
-                  -I "nixpkgs-config=$WD/nixpkgs.nix" \
-                  -I "hm-config=$WD/systems/$HOSTNAME/home.nix" \
-                  -I "nixpkgs-overlays=$WD/overlays.nix"
-}
+    NIX_PATH="darwin-config=$WD/systems/$HOSTNAME/darwin.nix:nix-config=$WD:nixpkgs-config=$WD/nixpkgs.nix:hm-config=$WD/systems/$HOSTNAME/home.nix:nixpkgs-overlays=$WD/overlays" \
+    NIXPKGS_CONFIG="$WD/nixpkgs.nix" nix-shell -p home-manager --command "home-manager switch -f $WD/systems/$HOSTNAME/home.nix"
+ }
 
 function bootstrapNixOS() {
     which nixos-rebuild sudo || die "sudo and nixos-rebuild are required"
@@ -34,15 +28,9 @@ function bootstrapNixOS() {
 }
 
 function bootstrapNixHM() {
-    which home-manager || (echo "home-manager not found, skipping"; exit 0)
-    NIXPKGS_CONFIG="$WD/nixpkgs.nix" home-manager switch \
-                  -I "nix-config=$WD" \
-                  -I "nixpkgs-config=$WD/nixpkgs.nix" \
-                  -I "hm-config=$WD/systems/$HOSTNAME/home.nix" \
-                  -I "nixpkgs-overlays=$WD/overlays.nix"
+    NIX_PATH="nix-config=$WD:nixpkgs-config=$WD/nixpkgs.nix:hm-config=$WD/systems/$HOSTNAME/home.nix:nixpkgs-overlays=$WD/overlays" \
+    NIXPKGS_CONFIG="$WD/nixpkgs.nix" nix-shell -p home-manager --command "home-manager switch -f $WD/systems/$HOSTNAME/home.nix"
 }
-
-# TODO: put nix-env with git + cloning + installing darwin/home-manager here?
 
 case $(uname -a) in
     Darwin*) bootstrapDarwin && bootstrapDarwinHome;;

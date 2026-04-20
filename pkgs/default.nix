@@ -1,8 +1,10 @@
 { pkgs ? import <nixpkgs> {} }:
-{
-  brainzo      = pkgs.callPackage ../../brainzo/default.nix {};
-  scripts      = pkgs.callPackage ../../scripts/default.nix {};
-  git-web-link = pkgs.callPackage ../../git-web-link/default.nix {};
+let
+  sources = import ../npins;
+in {
+  brainzo      = import sources.brainzo {};
+  git-web-link = import sources.git-web-link {};
+  scripts      = import sources.scripts {};
   circleci-cli = pkgs.callPackage ./circleci.nix {};
   wavebox      = pkgs.callPackage ./wavebox.nix {};
   zoomus       = pkgs.callPackage ./zoomus.nix {};

@@ -1,6 +1,6 @@
 self: pkgs:
     rec {
-      local                 = pkgs.callPackages ../pkgs {};
+      local                 = pkgs.callPackages <nix-config/pkgs> {};
       brainzo               = local.brainzo;
       circleci-cli          = local.circleci-cli;
       exfalso               = pkgs.quodlibet;
@@ -9,6 +9,5 @@ self: pkgs:
       scripts               = local.scripts;
       wavebox               = local.wavebox;
       wvlet                 = local.wvlet;
-#      zoom-us               = local.zoomus;
       trino                 = local.trino;
     }

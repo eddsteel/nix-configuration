@@ -90,6 +90,7 @@ in with lib; {
       };
       signing.signByDefault = true;
       signing.key = cfg.key;
+      signing.format = "openpgp";
       lfs.enable = true;
       ignores = ["/target/" "lib_managed/" "tags" ".history" ".ensime*"
                  "*~" ".#*" "*#" "*.elc" ".DS_Store" "*.bak" "*.pyc" "/.stack-work/"

@@ -1,6 +1,7 @@
 { lib, config, ... }:
 with lib;
 let
+  sources = import ../npins;
   cfg = config.perHost;
   hostName = config.networking.hostName;
 in {
@@ -20,7 +21,6 @@ in {
 
   config = let
     configPath = toString <nix-config>;
-    nixpkgsPath = toString <nixpkgs>;
     pkgsconfig = "${configPath}/nixpkgs.nix";
     overlaysconfig = "${configPath}/overlays";
     localRoot = "${configPath}/systems/${hostName}";
@@ -28,13 +28,14 @@ in {
     homeconfig = "${localRoot}/home.nix";
   in mkIf cfg.enable {
     nix.nixPath = [
+      "home-manager=${sources.home-manager}"
+      "nixpkgs=${sources.nixpkgs}"
       "${cfg.os}-config=${osconfig}"
       "hm-config=${homeconfig}"
-      "nixpkgs=${nixpkgsPath}" # ∞ set before we customise config
       "nixpkgs-config=${pkgsconfig}"
       "nixpkgs-overlays=${overlaysconfig}"
       "nix-config=${configPath}" # ∞ set at the command line, once
-    ] ++ (lib.lists.optionals (cfg.os == "darwin") [ "darwin=${toString <darwin>}"]);
+    ] ++  (lib.lists.optionals (cfg.os == "darwin") [ "darwin=${sources.darwin}"]);
 
     environment = let
       envvars = {
