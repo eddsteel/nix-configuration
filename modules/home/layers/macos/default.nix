@@ -142,10 +142,6 @@ in with lib; {
           "hyper - z" = "open ${pkgs.zoom-us}/Applications/zoom.us.app";
         };
       };
-      soundsource = {
-        enable = true;
-        inherit (cfg.soundsource) name code;
-      };
       zoom.enable = true;
     };
   };

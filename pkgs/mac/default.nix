@@ -6,7 +6,6 @@ with pkgs; {
   intellij-idea-ce = callPackage ./intellij.nix {};
   istat-menus      = callPackage ./istat-menus.nix {};
   signal           = callPackage ./signal.nix {};
-  soundsource      = callPackage ./soundsource.nix {};
   xbar             = callPackage ./xbar.nix {};
   exfalso          = callPackage ./exfalso.nix {};
   terraform-docs   = callPackage ./terraform-docs.nix {};
