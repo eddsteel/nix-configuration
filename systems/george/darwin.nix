@@ -9,6 +9,8 @@ in {
     build-users-group = nixbld
   '';
 
+  ids.gids.nixbld = 350;
+
   perHost = {
     enable = true;
     os = "darwin";

@@ -1,10 +1,11 @@
 { config, pkgs, lib, ... }:
 let
   devices = import ../devices.nix { };
+  sources = import ../../npins;
   emacs = pkgs.emacs30;
-  homedir = "/Users/edd";
+  homedir = "/Users/edward";
   secrets =  builtins.fromTOML (builtins.readFile ./secrets.toml);
-  nix-work = pkgs.callPackage ../../../nix-work {};
+  nix-work = import sources.nix-work {};
   work-pkgs = pkgs.callPackage (builtins.fetchGit {
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
@@ -16,22 +17,22 @@ in {
 
   programs.home-manager = {
     enable = true;
-    path = "${homedir}/src/home-manager";
+    path = sources.home-manager.outPath;
   };
 
   home.packages = with pkgs; [
     scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
-    terraform terraform-docs circleci-cli aws-vpn docker kubectl kubectx
+    terraform-docs circleci-cli aws-vpn docker kubectl kubectx
     nixVersions.git podman trino maven claude-code jdk21 ruby opentofu
 ] ++ nix-work.all
-    ++ work-pkgs.all
-    ++ (with mac-apps; [caffeine vfkit podman-desktop ldcli intellij-idea-ce]);
+#  ++ work-pkgs.all
+  ++ (with mac-apps; [caffeine vfkit podman-desktop intellij-idea-ce]);
 
   programs.go.enable = true;
 
   local = {
     inherit homedir;
-    username = "edd";
+    username = "edward";
     hostname = "george";
     ssh = true;
   };
@@ -48,9 +49,6 @@ in {
       enable = true;
       istat = {
         inherit (secrets.istat) email serial;
-      };
-      soundsource = {
-        inherit (secrets.soundsource) name code;
       };
       emacs = config.programs.emacs.finalPackage;
     };
@@ -75,7 +73,7 @@ in {
     firefox = {
       enable = true;
       sync-user = secrets.firefox.username;
-      profile = "uooem51c.default-release-5";
+      profile = "so1243a1.default-release";
     };
 
     git = {

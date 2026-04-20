@@ -29,6 +29,10 @@ rec {
       ip4 = "192.168.1.203";
       mac = "E8-9F-80-2A-E4-D1";
     }];
+    george = [{
+      ip4 = "192.168.1.204";
+      mac = "56-8a-f0-0a-2c-b0";
+    }];
   };
   ip4 = h: (builtins.elemAt hosts."${h}" 0).ip4;
   mac = h: (builtins.elemAt hosts."${h}" 0).mac;
