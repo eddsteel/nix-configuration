@@ -1,16 +1,16 @@
 {
   "wavebox": {
     "darwin": {
-      "name": "wavebox-10.147.44.2.dmg",
-      "sha256": "0l249kfh344s02vl33isv2xqf9fr26lgrbhj2pyjaszbs6nh79pq",
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.147.44.2.dmg",
-      "version": "10.147.44.2"
+      "name": "wavebox-10.147.47.2.dmg",
+      "sha256": "1ypzdm2bjcgb83majxw0l00r3wp267cgyrr0dl0acwng5gymiwfk",
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%2010.147.47.2.dmg",
+      "version": "10.147.47.2"
     },
     "linux": {
-      "name": "wavebox-10.147.44-2.tar.gz",
-      "sha256": "1g722xlrczk1bydqmyn3sms65lb9aslshz04894jbb0z2i34rda8",
-      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.147.44-2.tar.gz",
-      "version": "10.147.44-2"
+      "name": "wavebox-10.147.47-2.tar.gz",
+      "sha256": "1xz6g36cbl0k2507bz42blkv6bkk2max6xdpxvbfby3pzl7hgdp0",
+      "url": "https://download.wavebox.app/stable/linux/tar/Wavebox_10.147.47-2.tar.gz",
+      "version": "10.147.47-2"
     }
   },
   "bitwarden": {
@@ -32,10 +32,10 @@
     "version": "2025.2.6.1"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-8.6.1.dmg",
-    "sha256": "10lf70b9a7kprln3pwmapv89zqnxj7spsw5vvqyccd130ima49zb",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-8.6.1.dmg",
-    "version": "8.6.1"
+    "name": "signal-desktop-mac-universal-8.7.0.dmg",
+    "sha256": "1r4zvg1jpr2xli6g8ixpq06rksgqjww9j103ja32b9fmzdfsx4l3",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-8.7.0.dmg",
+    "version": "8.7.0"
   },
   "istatmenus": {
     "name": "istat-6.73.1.zip",
@@ -63,16 +63,16 @@
   },
   "circleci_cli": {
     "darwin": {
-      "name": "circleci-cli_0.1.34950_darwin_amd64.tar.gz",
-      "sha256": "0k2nw2w6y9j19572p509b9kw2s6mbmqzackdw4k446y9h0kwf5d7",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34950/circleci-cli_0.1.34950_darwin_amd64.tar.gz",
-      "version": "0.1.34950"
+      "name": "circleci-cli_0.1.35213_darwin_amd64.tar.gz",
+      "sha256": "1x71a3m15b36lirgx8k2hmlcaxmpig655s88j6z3a8cbr0cg27xl",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.35213/circleci-cli_0.1.35213_darwin_amd64.tar.gz",
+      "version": "0.1.35213"
     },
     "linux": {
-      "name": "circleci-cli_0.1.34950_linux_amd64.tar.gz",
-      "sha256": "1jd821csxf7lkinb1l06avm6nnhz9x86gh1ii0c75i8m6h5z8ajj",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34950/circleci-cli_0.1.34950_linux_amd64.tar.gz",
-      "version": "0.1.34950"
+      "name": "circleci-cli_0.1.35213_linux_amd64.tar.gz",
+      "sha256": "06i1b93nd4p4fajk8318vrs8simk7p1vni3q7zxanbdjgbaq4l07",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.35213/circleci-cli_0.1.35213_linux_amd64.tar.gz",
+      "version": "0.1.35213"
     }
   },
   "zoom_us": {
@@ -108,9 +108,9 @@
     "version": "1.26.2"
   },
   "launchdarkly": {
-    "name": "ldcli_2.2.0_darwin_amd64.tar.gz",
-    "sha256": "10kvscp996hfm9981kwv3iw03lfyf2ycjv9n70j7fl27yr3xpa6l",
-    "url": "https://github.com/launchdarkly/ldcli/releases/download/v2.2.0/ldcli_2.2.0_darwin_amd64.tar.gz",
-    "version": "v2.2.0"
+    "name": "ldcli_3.0.3_darwin_amd64.tar.gz",
+    "sha256": "1cz88q4f2bd6nngc13ip85bqldd5m1b75pvjgcmz7wdyryiavpw4",
+    "url": "https://github.com/launchdarkly/ldcli/releases/download/v3.0.3/ldcli_3.0.3_darwin_amd64.tar.gz",
+    "version": "v3.0.3"
   }
 }
