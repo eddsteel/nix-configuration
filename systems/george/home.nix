@@ -103,14 +103,6 @@ in {
     enable = true;
     widgets = [
       {
-        name = "emms-show";
-        timer = 5;
-        script = ''
-            np=$(${pkgs.scripts}/bin/emms now-playing)
-            echo "$np | size=13 length=50"
-          '';
-      }
-      {
         name = "youbi";
         timer = 60;
         script = ''

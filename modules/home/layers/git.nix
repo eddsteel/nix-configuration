@@ -98,8 +98,6 @@ in with lib; {
                  ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
                  "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"
                  "/result" "/.idea/" "tf/" ".jj/"];
-
-
     };
   };
 }
