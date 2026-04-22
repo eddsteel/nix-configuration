@@ -20,10 +20,10 @@
     "version": "2026.3.1"
   },
   "firefox": {
-    "name": "Firefox-149.0.2.dmg",
-    "sha256": "1nldd77clkg4gb1bqhqfm9lgdmn3v98wkil49256v7g4kdjibbch",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/149.0.2/mac/en-CA/Firefox%20149.0.2.dmg",
-    "version": "149.0.2"
+    "name": "Firefox-150.0.dmg",
+    "sha256": "0yf0q579bb7zqvm87fdw9d9s39b7g222wvv8sypb8wapga1xv2q8",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/150.0/mac/en-CA/Firefox%20150.0.dmg",
+    "version": "150.0"
   },
   "idea": {
     "name": "intellij-idea-ce-2025.2.6.1.dmg",
@@ -108,9 +108,9 @@
     "version": "1.26.2"
   },
   "launchdarkly": {
-    "name": "ldcli_3.0.3_darwin_amd64.tar.gz",
-    "sha256": "1cz88q4f2bd6nngc13ip85bqldd5m1b75pvjgcmz7wdyryiavpw4",
-    "url": "https://github.com/launchdarkly/ldcli/releases/download/v3.0.3/ldcli_3.0.3_darwin_amd64.tar.gz",
-    "version": "v3.0.3"
+    "name": "ldcli_3.0.4_darwin_amd64.tar.gz",
+    "sha256": "1sw6xfk87lr7aslgqq6d3j5nf3b4bsvn8zsicjp48bl1ivgbr8pv",
+    "url": "https://github.com/launchdarkly/ldcli/releases/download/v3.0.4/ldcli_3.0.4_darwin_amd64.tar.gz",
+    "version": "v3.0.4"
   }
 }
