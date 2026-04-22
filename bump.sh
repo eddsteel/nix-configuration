@@ -2,7 +2,7 @@
 # TODO: use GNU parallel with -k instead of temporary files to output to versions.json directly.
 
 set -e
-touch versions.json
+touch pkgs/versions.json
 rm -f .*-component
 
 location() {
@@ -23,24 +23,24 @@ header() {
 }
 
 conditional_get_sha() {
-    if [ "$(jq -r .$1.url versions.json)" != "$2" ]; then
+    if [ "$(jq -r .$1.url pkgs/versions.json)" != "$2" ]; then
         nix-prefetch-url --name "$3" "$2"
     else
-        jq -r ".$1.sha256" versions.json
+        jq -r ".$1.sha256" pkgs/versions.json
     fi
 }
 
 conditional_get_sha_v() {
-    if [ "$(jq -r .$1.version versions.json)" != "$3" ]; then
+    if [ "$(jq -r .$1.version pkgs/versions.json)" != "$3" ]; then
         nix-prefetch-url --name "$4" "$2"
     else
-        jq -r ".$1.sha256" versions.json
+        jq -r ".$1.sha256" pkgs/versions.json
     fi
 }
 
 component_json() {
     jq -nc --arg url "$1" --arg sha "$2" --arg name "$3" --arg ver "$4"\
-       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' > ".$5-component"
+       '{"name": $name, "sha256": $sha, "url": $url, "version": $ver}' > "tmp/.$5-component"
 }
 
 standard() {
@@ -188,6 +188,7 @@ launchdarkly() {
     component_json "$URL" "$SHA" "$NME" "$VER" ld
 }
 
+mkdir -p tmp
 wavebox linux &
 wavebox darwin &
 bitwarden &
@@ -209,26 +210,27 @@ launchdarkly &
 
 wait
 jq -n \
-   --slurpfile av .av-component \
-   --slurpfile wbd .wbd-component \
-   --slurpfile wbl .wbl-component \
-   --slurpfile bw .bw-component \
-   --slurpfile ff .ff-component \
-   --slurpfile ij .ij-component \
-   --slurpfile ld .ld-component \
-   --slurpfile sn .sn-component \
-   --slurpfile im .im-component \
-   --slurpfile xb .xb-component \
-   --slurpfile ef .ef-component \
-   --slurpfile cf .cf-component \
-   --slurpfile ccd .ccd-component \
-   --slurpfile ccl .ccl-component \
-   --slurpfile zud .zud-component \
-   --slurpfile zul .zul-component \
-   --slurpfile td .td-component \
-   --slurpfile pm .pm-component \
+   --slurpfile av tmp/.av-component \
+   --slurpfile wbd tmp/.wbd-component \
+   --slurpfile wbl tmp/.wbl-component \
+   --slurpfile bw tmp/.bw-component \
+   --slurpfile ff tmp/.ff-component \
+   --slurpfile ij tmp/.ij-component \
+   --slurpfile ld tmp/.ld-component \
+   --slurpfile sn tmp/.sn-component \
+   --slurpfile im tmp/.im-component \
+   --slurpfile xb tmp/.xb-component \
+   --slurpfile ef tmp/.ef-component \
+   --slurpfile cf tmp/.cf-component \
+   --slurpfile ccd tmp/.ccd-component \
+   --slurpfile ccl tmp/.ccl-component \
+   --slurpfile zud tmp/.zud-component \
+   --slurpfile zul tmp/.zul-component \
+   --slurpfile td tmp/.td-component \
+   --slurpfile pm tmp/.pm-component \
    '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "podman": $pm[0],"launchdarkly": $ld[0]}' \
    >new.json
 
-rm .*-component
-mv new.json versions.json
+rm -r tmp
+mv new.json pkgs/versions.json
+nix-shell -p npins --command 'npins update'
