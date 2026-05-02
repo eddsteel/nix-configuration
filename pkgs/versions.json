@@ -20,22 +20,22 @@
     "version": "2026.3.1"
   },
   "firefox": {
-    "name": "Firefox-150.0.dmg",
-    "sha256": "0yf0q579bb7zqvm87fdw9d9s39b7g222wvv8sypb8wapga1xv2q8",
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/150.0/mac/en-CA/Firefox%20150.0.dmg",
-    "version": "150.0"
+    "name": "Firefox-150.0.1.dmg",
+    "sha256": "1w6m4ksg4kcdbiw4m7153r7a85m5gndbqg96p43rhbsy1hd2dz4s",
+    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/150.0.1/mac/en-CA/Firefox%20150.0.1.dmg",
+    "version": "150.0.1"
   },
   "idea": {
-    "name": "intellij-idea-ce-2025.2.6.1.dmg",
-    "sha256": "1dqgmvbnghg2drs1nrb3505m0m49amxv69w4s8z5ywfd1z13vyxn",
-    "url": "https://download.jetbrains.com/idea/ideaIC-2025.2.6.1-aarch64.dmg",
-    "version": "2025.2.6.1"
+    "name": "intellij-idea-ce-2025.2.6.2.dmg",
+    "sha256": "04v2v2b95il2q3gis3amyf454fsvmzmcszvn13vjm1nik8zsxlz3",
+    "url": "https://download.jetbrains.com/idea/ideaIC-2025.2.6.2-aarch64.dmg",
+    "version": "2025.2.6.2"
   },
   "signal": {
-    "name": "signal-desktop-mac-universal-8.7.0.dmg",
-    "sha256": "1r4zvg1jpr2xli6g8ixpq06rksgqjww9j103ja32b9fmzdfsx4l3",
-    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-8.7.0.dmg",
-    "version": "8.7.0"
+    "name": "signal-desktop-mac-universal-8.8.0.dmg",
+    "sha256": "0wv1ibbzq4yfc49b359vnh6wc9adwn6nxvyfwd7y7xdhbgvq5sxi",
+    "url": "https://updates.signal.org/desktop/signal-desktop-mac-universal-8.8.0.dmg",
+    "version": "8.8.0"
   },
   "istatmenus": {
     "name": "istat-6.73.1.zip",
@@ -63,16 +63,16 @@
   },
   "circleci_cli": {
     "darwin": {
-      "name": "circleci-cli_0.1.35213_darwin_amd64.tar.gz",
-      "sha256": "1x71a3m15b36lirgx8k2hmlcaxmpig655s88j6z3a8cbr0cg27xl",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.35213/circleci-cli_0.1.35213_darwin_amd64.tar.gz",
-      "version": "0.1.35213"
+      "name": "circleci-cli_0.1.36202_darwin_amd64.tar.gz",
+      "sha256": "1x9fgqg23j25hxhj8ar7lxmjvmxzrnm0ky84892ayvpgvyacf8gv",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.36202/circleci-cli_0.1.36202_darwin_amd64.tar.gz",
+      "version": "0.1.36202"
     },
     "linux": {
-      "name": "circleci-cli_0.1.35213_linux_amd64.tar.gz",
-      "sha256": "06i1b93nd4p4fajk8318vrs8simk7p1vni3q7zxanbdjgbaq4l07",
-      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.35213/circleci-cli_0.1.35213_linux_amd64.tar.gz",
-      "version": "0.1.35213"
+      "name": "circleci-cli_0.1.36202_linux_amd64.tar.gz",
+      "sha256": "169isd7pcl6gxsvid6ymchvihh1p09r2l671yc1fin2c7nc0378v",
+      "url": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.36202/circleci-cli_0.1.36202_linux_amd64.tar.gz",
+      "version": "0.1.36202"
     }
   },
   "zoom_us": {
@@ -102,10 +102,10 @@
     "version": "5.3.4"
   },
   "podman": {
-    "name": "podman-desktop-1.26.2-universal.dmg",
-    "sha256": "1yxiqfniqmq5hff1ngq5qb9d2x12q4ygwjsl5c6qhfnl31vj05c1",
-    "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.26.2/podman-desktop-1.26.2-universal.dmg",
-    "version": "1.26.2"
+    "name": "podman-desktop-1.27.1-universal.dmg",
+    "sha256": "0vz61irpywpj63jkbm4ixdw4qqmdysi5df847ch8hrv7l4mng3kd",
+    "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.27.1/podman-desktop-1.27.1-universal.dmg",
+    "version": "1.27.1"
   },
   "launchdarkly": {
     "name": "ldcli_3.0.4_darwin_amd64.tar.gz",

@@ -189,7 +189,6 @@ launchdarkly() {
 }
 
 mkdir -p tmp
-wavebox linux &
 wavebox darwin &
 bitwarden &
 firefox &
@@ -207,6 +206,7 @@ tdocs &
 awsvpn &
 podman &
 launchdarkly &
+wavebox linux &
 
 wait
 jq -n \
