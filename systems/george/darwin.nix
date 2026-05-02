@@ -51,9 +51,28 @@ in {
     ];
   };
 
+  system.primaryUser = "edward";
+  launchd.user.agents.nixClean = let
+    nixClean = pkgs.writeShellScriptBin "clean" ''
+      ${pkgs.home-manager}/bin/home-manager expire-generations '-9 days'
+      ${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 9d
+    '';
+  in {
+    script = "${nixClean}/bin/clean";
+    serviceConfig = {
+      StartCalendarInterval = [
+        { Weekday = 5; Hour = 11; Minute = 20; }
+      ];
+      StandardOutPath = "/tmp/nix-clean.log";
+      StandardErrorPath = "/tmp/nix-clean.error.log";
+    };
+  };
+
   nix = {
     enable = true;
     gc.automatic = true;
+    gc.interval = [{ Weekday = 5; Hour = 11; Minute = 20;}];
+    gc.options = "--delete-older-than 9d";
   };
 
   # this is currently broken
