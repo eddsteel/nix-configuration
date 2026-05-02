@@ -455,7 +455,13 @@
   ("C-M-S-j" . 'ace-jump-mode))
 
 (use-package zig-mode)
-(use-package claudemacs :vc (:url "https://github.com/cpoile/claudemacs"))
+(use-package claudemacs
+  :vc (:url "https://github.com/cpoile/claudemacs")
+  :bind
+  (:map project-prefix-map
+        ("A" . claudemacs-switch-to-session))
+  :config ;; projectile marker should be the same as project and doesn't require projectile
+  (setq claudemacs-prefer-projectile-root 't))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

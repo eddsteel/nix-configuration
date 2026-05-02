@@ -210,7 +210,8 @@
   :bind
   (:map project-prefix-map
     ("T" . edd-proj/test)
-    ("C" . edd-proj/browse-ci))
+    ("C" . edd-proj/browse-ci)
+    ("C-M-S-p" . project-switch-project))
   :init
   (setq
    project-switch-use-entire-map 't)
