@@ -107,9 +107,10 @@ in with lib; {
         enable = true;
         settings-file = ./files/karabiner.json;
       };
+
       rectangle = {
         enable = true;
-        preferences = {
+        defaults = {
           SUEnableAutomaticChecks = 0;
           SUHasLaunchedBefore = 1;
           hideMenubarIcon = 1;
