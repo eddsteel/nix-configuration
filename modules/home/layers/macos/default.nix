@@ -41,9 +41,16 @@ in with lib; {
         };
         "NSGlobalDomain" = {
           "AppleShowAllExtensions" = true;
+          "NSAutomaticCapitalizationEnabled"  = false;
+          "NSAutomaticDashSubstitutionEnabled"  = false;
+          "NSAutomaticPeriodSubstitutionEnabled"  = false;
+          "NSAutomaticQuoteSubstitutionEnabled"  = false;
+          "NSAutomaticSpellingCorrectionEnabled" = false;
+          "NSDocumentSaveNewDocumentsToCloud" = false;
         };
         "com.apple.Finder" = {
-          "AppleShowAllFiles" = false;
+          "AppleShowAllFiles" = true;
+          "FXShowPosixPathInTitle" = true;
         };
         "com.apple.PowerManagement" = {
           "SystemPowerSettings:SleepDisabled" = false;
