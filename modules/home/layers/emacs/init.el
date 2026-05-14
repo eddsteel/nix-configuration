@@ -463,6 +463,7 @@
   :config ;; projectile marker should be the same as project and doesn't require projectile
   (setq claudemacs-prefer-projectile-root 't))
 
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;

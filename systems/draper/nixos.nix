@@ -82,6 +82,7 @@ in {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.desktopManager.gnome.enable = true;
+  services.gnome.gnome-browser-connector.enable = true;
   services.displayManager.gdm.enable = true;
 
   i18n.inputMethod =  {
@@ -127,18 +128,26 @@ in {
   };
 
   environment.shells = [ pkgs.fish ];
+  environment.systemPackages = let
+    libbluray-full = pkgs.libbluray.override {
+      withAACS = true;
+      withBDplus = true;
+      withJava = true;
+    };
 
-  environment.systemPackages = with pkgs; [
-    awscli2
-    git
-    links2
-    mr
-    nixos-option
-    playerctl
-    vim
-    wayland
-    wget
-  ];
+    vlc = pkgs.vlc.override { inherit libbluray-full; };
+   in [
+     pkgs.awscli2
+     pkgs.git
+     pkgs.links2
+     pkgs.mr
+     pkgs.nixos-option
+     pkgs.playerctl
+     pkgs.vim
+     pkgs.wayland
+     pkgs.wget
+     vlc
+   ];
 
   fonts = {
       fontDir.enable = true;
@@ -176,8 +185,6 @@ in {
   programs.gnupg.agent = {
     enable = true;
   };
-
-  programs.adb.enable = true;
 
   programs.fish.enable = true;
 
@@ -241,6 +248,7 @@ in {
         "Phone Photos" = {
           path = "~/media/photos/phone";
           devices = [ "phone" ];
+          ignore-delete = true;
         };
         #
         "Reader Documents" = {

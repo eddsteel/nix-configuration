@@ -168,7 +168,8 @@ in {
         fish-mode
         multiple-cursors
         eat
-        (pkl-mode epkgs)
+        ace-jump-mode
+        ace-window
         zig-mode
       ];
     };
