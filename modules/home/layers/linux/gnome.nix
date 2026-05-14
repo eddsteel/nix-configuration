@@ -87,8 +87,8 @@ in with lib; {
       };
 
       "org/gnome/desktop/wm/keybindings" = {
-        switch-input-source = [ "<Primary><Shift><Alt><Super>space" ];
-        switch-input-source-backward = [ "<Primary><Alt><Super>space" ];
+        switch-input-source = [ "<Primary><Shift><Alt><Super>return" ];
+        switch-input-source-backward = [ "<Primary><Alt><Super>return" ];
       };
 
       "org/gnome/desktop/interface" = {
