@@ -21,9 +21,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "06648f4902343228ce2de79f291dd5a58ee12146",
-      "url": "https://github.com/nix-darwin/nix-darwin/archive/06648f4902343228ce2de79f291dd5a58ee12146.tar.gz",
-      "hash": "sha256-KM2WYj6EA7M/FVZVCl3rqWY+TFV5QzSyyGE2gQxeODU="
+      "revision": "56c666e108467d87d13508936aade6d567f2a501",
+      "url": "https://github.com/nix-darwin/nix-darwin/archive/56c666e108467d87d13508936aade6d567f2a501.tar.gz",
+      "hash": "sha256-zXcwYQGCT6pzinK+1dBB2ekTVtfxGZAapb3Evdcu4fY="
     },
     "git-web-link": {
       "type": "Git",
@@ -46,9 +46,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "9cb587ade2aa1b4a7257f0238d41072690b0ca4f",
-      "url": "https://github.com/nix-community/home-manager/archive/9cb587ade2aa1b4a7257f0238d41072690b0ca4f.tar.gz",
-      "hash": "sha256-egYNbRrkn+6SwTHinhdb6WUfzzdC3nXfCRqS321VylY="
+      "revision": "447fd9ff62501dae7206dfe180ee89f8de27b7d5",
+      "url": "https://github.com/nix-community/home-manager/archive/447fd9ff62501dae7206dfe180ee89f8de27b7d5.tar.gz",
+      "hash": "sha256-CHo7k65YTL3HY+WQVedDTupji+LMgNlKCdrtRHZFAK4="
     },
     "nix-work": {
       "type": "Git",
@@ -66,14 +66,14 @@
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs"
       },
-      "branch": "master",
+      "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "5018d858b9b0de64a5bb29e58efee2a57f0fa70b",
-      "url": "https://github.com/nixos/nixpkgs/archive/5018d858b9b0de64a5bb29e58efee2a57f0fa70b.tar.gz",
-      "hash": "sha256-eszkldLpy7LLc6pBNlDaSMLEuCvhm8F66iw/Swq4C0U="
+      "revision": "331800de5053fcebacf6813adb5db9c9dca22a0c",
+      "url": "https://github.com/NixOS/nixpkgs/archive/331800de5053fcebacf6813adb5db9c9dca22a0c.tar.gz",
+      "hash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw="
     },
     "scripts": {
       "type": "Git",

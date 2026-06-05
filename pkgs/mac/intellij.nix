@@ -9,7 +9,7 @@ let
     phases = [ "unpackPhase" "installPhase" ];
     installPhase = ''
       mkdir -p $out/Applications
-      cp -r "IntelliJ IDEA CE.app" $out/Applications/IDEA.app
+      cp -r "IntelliJ IDEA.app" $out/Applications/IDEA.app
     '';
 
     src = pkgs.fetchurl { inherit (versions) name url sha256; };

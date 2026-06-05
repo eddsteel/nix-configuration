@@ -13,7 +13,6 @@ cfversion() {
     header "$1" x-amz-meta-version
 }
 
-
 location_get() {
     curl -Is -XGET "$1" -o /dev/null -w '%header{location}'
 }
@@ -105,7 +104,7 @@ firefox() {
 idea() {
     url=$(location 'https://data.services.jetbrains.com/products/download?code=IIC&platform=mac')
     url2=$(echo $url | sed 's/.dmg$/-aarch64.dmg/')
-    URL="$url2" standard '#' '^.*/ideaIC-\([0-9.]*\)-aarch64.dmg$' \
+    URL="$url2" standard '#' '^.*/idea-\([0-9.]*\)-aarch64.dmg$' \
              "intellij-idea-ce" "dmg" "idea" ij
 }
 
@@ -228,7 +227,8 @@ jq -n \
    --slurpfile zul tmp/.zul-component \
    --slurpfile td tmp/.td-component \
    --slurpfile pm tmp/.pm-component \
-   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "podman": $pm[0],"launchdarkly": $ld[0]}' \
+   --slurpfile tw tmp/.tw-component \
+   '{ "wavebox": {"darwin": $wbd[0], "linux": $wbl[0]}, "bitwarden": $bw[0], "firefox": $ff[0], "idea": $ij[0], "signal": $sn[0], "istatmenus": $im[0], "xbar": $xb[0], "exfalso": $ef[0], "caffeine": $cf[0], "circleci_cli": {"darwin": $ccd[0], "linux": $ccl[0]}, "zoom_us": {"darwin": $zud[0], "linux": $zul[0]}, "terraform_docs": $td[0], "awsvpn": $av[0], "podman": $pm[0],"launchdarkly": $ld[0], "treasurework": $tw[0]}' \
    >new.json
 
 rm -r tmp
