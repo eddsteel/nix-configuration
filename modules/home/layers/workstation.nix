@@ -27,7 +27,7 @@ in with lib; {
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      gnupg
+      fish gnupg
       git-secrets nix-prefetch-git
       ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
       moreutils exfalso wavebox
@@ -67,6 +67,15 @@ in with lib; {
       };
     };
 
+    xdg.configFile."ghostty/config.ghostty".text = ''
+      theme = Tearout
+      shell-integration = fish
+      shell-integration-features = true
+      macos-option-as-alt = true
+      macos-icon = glass
+      command = ${pkgs.fish}/bin/fish
+    '';
+      
     programs.gradle = {
       enable = true;
       settings = {
