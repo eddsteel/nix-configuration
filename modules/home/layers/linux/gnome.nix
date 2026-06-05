@@ -10,6 +10,7 @@ let
     caffeine
     executor
     astra-monitor
+    paperwm
     sound-output-device-chooser
     window-calls
   ];
@@ -120,8 +121,8 @@ in with lib; {
 
       "${mediaKeys}/custom-keybindings/custom2" = {
         binding = ''<Primary><Shift><Alt><Super>m'';
-        command = ''${raise}/bin/raise "org.gnome.Terminal" ${cfg.homedir}/.nix-profile/bin/gnome-terminal'';
-        name = ''Terminal'';
+        command = ''${raise}/bin/raise "ghostty" ${pkgs.ghostty}/bin/ghostty'';
+        name = ''Ghostty'';
       };
 
       "${mediaKeys}/custom-keybindings/custom3" = {
