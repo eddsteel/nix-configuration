@@ -115,36 +115,6 @@ in with lib; {
         settings-file = ./files/karabiner.json;
       };
 
-      rectangle = {
-        enable = true;
-        defaults = {
-          SUEnableAutomaticChecks = 0;
-          SUHasLaunchedBefore = 1;
-          hideMenubarIcon = 1;
-          launchOnLogin = 1;
-          leftHalf = {
-            keyCode = 123;
-            modifierFlags = 1048576;
-          };
-          maximize = {
-            keyCode = 126;
-            modifierFlags = 1048576;
-          };
-          reflowTodo = {
-            keyCode = 45;
-            modifierFlags = 786432;
-          };
-          subsequentExecutionMode = 0;
-          toggleTodo = {
-            keyCode = 11;
-            modifierFlags = 786432;
-          };
-          rightHalf = {
-            keyCode = 124;
-            modifierFlags = 1048576;
-          };
-        };
-      };
       skhd = {
         enable = true;
         bindings = {
@@ -153,7 +123,7 @@ in with lib; {
           "hyper - i" = "idea";
           "hyper - j" = "if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi";
           "hyper - k" = "open ${pkgs.keymapp}/Applications/Keymapp.app";
-          "hyper - m" = "open ${pkgs.iterm2}/Applications/iTerm2.app";
+          "hyper - m" = "open ${pkgs.ghostty-bin}/Applications/Ghostty.app";
           "hyper - q" = "pmset sleepnow";
           "hyper - w" = "open ${pkgs.wavebox}/Applications/Wavebox.app";
           "hyper - z" = "open ${pkgs.zoom-us}/Applications/zoom.us.app";

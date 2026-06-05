@@ -10,8 +10,12 @@ let
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
   hosts = import ../hosts.nix { inherit lib; };
+  paneru = builtins.getFlake "github:karinushka/paneru";
 in {
-  imports = [ ../../modules/home ];
+  imports = [
+    ../../modules/home
+    paneru.homeModules.paneru
+  ];
 
   home.stateVersion = "21.05";
 
@@ -35,6 +39,48 @@ in {
     username = "edward";
     hostname = "george";
     ssh = true;
+  };
+
+  services.paneru = {
+    enable = true;
+    settings = {
+      bindings = {
+        window_focus_north       = "cmd - uparrow";
+        window_focus_south       = "cmd - downarrow";
+        window_focus_west        = "cmd - leftarrow";
+        window_focus_east        = "cmd - rightarrow";
+        window_focus_first       = "cmd - home";
+        window_focus_last        = "cmd - end";
+        window_virtual_north     = "cmd - pageup";
+        window_virtual_south     = "cmd - pagedown";
+        window_swap_north        = "cmd + shift - uparrow";
+        window_swap_south        = "cmd + shift - downarrow";
+        window_swap_west         = "cmd + shift - leftarrow";
+        window_swap_east         = "cmd + shift - rightarrow";
+        window_swap_first        = "cmd + shift - home";
+        window_swap_last         = "cmd + shift - end";
+        window_virtualmove_north = "cmd + shift - pageup";
+        window_virtualmove_south = "cmd + shift - pagedown";
+        window_grow              = "cmd + ctrl - uparrow";
+        window_shrink            = "cmd + ctrl - downarrow";
+        window_stack             = "cmd + ctrl - leftarrow";
+        window_unstack           = "cmd + ctrl - rightarrow";
+        window_center            = "cmd + ctrl - home";
+        window_fullwidth         = "cmd + ctrl - end";
+        window_virtualsend_north = "cmd + ctrl - pageup";
+        window_virtualsend_south = "cmd + ctrl - pagedown";
+        window_manage            = "cmd + ctrl - m";
+        window_equalize          = "cmd + ctrl - equal";
+        window_snap              = "cmd + ctrl - minus";
+      };
+      options = {
+        focus_follows_mouse = true;
+        mouse_follows_focus = true;
+        preset_column_widths = [0.25 0.33 0.5 0.66 0.75 1.0];
+        animation_speed = 12;
+      };
+      swipe.scroll.modifier = "ctrl + alt + shift + cmd"; # i.e. hyper
+    };
   };
 
   layers = {
