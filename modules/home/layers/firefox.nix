@@ -1,6 +1,49 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.layers.firefox;
+  script = pkgs.writers.writePython3 "fix-firefox-py" {} ''
+  import re
+  import sys
+  path, target = sys.argv[1], sys.argv[2]
+
+  with open(path) as f:
+      content = f.read()
+
+  sections = re.split(r'(?=^\[)', content, flags=re.MULTILINE)
+  result = []
+  changed = False
+
+  for section in sections:
+      if re.match(r'^\[Install', section):
+          new = re.sub(
+              r'^Default=.*$',
+              f'Default={target}',
+              section,
+              flags=re.MULTILINE)
+          if new != section:
+              changed = True
+          elif 'Default=' not in section:
+              new = new.rstrip('\n') + f'\nDefault={target}\nLocked=1\n\n'
+              changed = True
+          section = new
+          if 'Locked=' not in section:
+              section = section.rstrip('\n') + '\nLocked=1\n\n'
+              changed = True
+      result.append(section)
+
+  if changed:
+      with open(path, 'w') as f:
+          f.write("".join(result))
+  '';
+  fixFirefoxProfile = pkgs.writeShellScript "fix-firefox-profile" ''
+    case "$(uname)" in
+      Darwin) profiles="$HOME/Library/Application Support/Firefox/profiles.ini" ;;
+      *)      profiles="$HOME/.mozilla/firefox/profiles.ini" ;;
+    esac
+    target="Profiles/${cfg.profile}"
+
+    ${pkgs.python3}/bin/python3 ${script} "$profiles" "$target"
+'';
 in with lib; {
   options.layers.firefox = {
     enable = mkEnableOption "Standard firefox configuration";
@@ -53,5 +96,6 @@ user_pref("signon.autofillForms", false);
 user_pref("signon.generation.enabled", false);
 user_pref("browser.ml.chat.enabled", false);
     '';
+    home.activation.fixFirefoxProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''${fixFirefoxProfile}'';
   };
 }
