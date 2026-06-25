@@ -188,24 +188,25 @@ launchdarkly() {
 }
 
 mkdir -p tmp
-wavebox darwin &
-bitwarden &
-firefox &
-idea &
-signal &
-istat &
-xbar &
-exfalso &
-caffeine &
-circleci linux &
-circleci darwin &
-zoomus linux &
-zoomus darwin &
-tdocs &
-awsvpn &
-podman &
-launchdarkly &
-wavebox linux &
+(wavebox darwin) &
+(bitwarden) &
+(firefox) &
+(idea) &
+(signal) &
+(istat) &
+(xbar) &
+(exfalso) &
+(caffeine) &
+(circleci linux) &
+(circleci darwin) &
+(zoomus linux) &
+(zoomus darwin) &
+(tdocs) &
+(awsvpn) &
+(podman) &
+(launchdarkly) &
+(wavebox linux) &
+(treasurework) &
 
 wait
 jq -n \
