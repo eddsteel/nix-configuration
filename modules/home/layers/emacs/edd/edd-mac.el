@@ -1,4 +1,9 @@
 (use-package emacs
+  :init
+  ;; otherwise with-editor calls emacsclient wrong
+  ;; we can remove this once either is updated
+  (setenv "TERM" "dumb")
+
   :config
   ;; certain builds do otherwise
   ;;
