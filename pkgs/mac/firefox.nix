@@ -1,9 +1,10 @@
 { pkgs }:
 let
-  versions = with builtins; (fromJSON (readFile ../versions.json)).firefox;
+  source = (import ../../npins).firefox;
+  version = builtins.head (builtins.match ".*/firefox/releases/([^/]+)/mac/.*" source.url);
 in pkgs.stdenv.mkDerivation rec {
   pname = "firefox-mac";
-  inherit (versions) version;
+  inherit version;
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
@@ -12,8 +13,11 @@ in pkgs.stdenv.mkDerivation rec {
         mkdir -p "$out/Applications"
         cp -r Firefox.app "$out/Applications/Firefox.app"
       '';
-
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
+  src = pkgs.fetchurl {
+    inherit (source) url;
+    sha256 = source.hash;
+    name = "Firefox-${version}.dmg";
+  };
 
   meta = with pkgs.lib; {
     description = "The Firefox web browser";

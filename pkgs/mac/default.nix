@@ -5,12 +5,10 @@ with pkgs; {
   firefox          = callPackage ./firefox.nix {};
   intellij-idea-ce = callPackage ./intellij.nix {};
   istat-menus      = callPackage ./istat-menus.nix {};
-  signal           = callPackage ./signal.nix {};
   xbar             = callPackage ./xbar.nix {};
   exfalso          = callPackage ./exfalso.nix {};
   terraform-docs   = callPackage ./terraform-docs.nix {};
   aws-vpn          = callPackage ./aws-vpn {};
   podman-desktop   = callPackage ./podman-desktop.nix {};
   vfkit            = callPackage ./vfkit.nix {};
-  ldcli            = callPackage ./ldcli.nix {};
 }

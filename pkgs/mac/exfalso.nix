@@ -1,9 +1,10 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).exfalso;
+  src = (import ../../npins).exfalso;
+  version = "4.4.0";
 in pkgs.stdenv.mkDerivation rec {
   pname = "exfalso";
-  inherit (versions) version;
+  inherit version src;
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
@@ -12,8 +13,6 @@ in pkgs.stdenv.mkDerivation rec {
         mkdir -p "$out/Applications"
         cp -r ExFalso.app "$out/Applications/ExFalso.app"
       '';
-
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
   meta = with pkgs.lib; {
     description = "ExFalso";

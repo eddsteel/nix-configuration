@@ -1,11 +1,11 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  versions = with builtins; (fromJSON (readFile ../versions.json)).terraform_docs;
+  src = (import ../../npins).terraform-docs;
+  version = builtins.head (builtins.match ".*/terraform-docs-v(.*)-darwin-arm64.tar.gz" src.url);
 in pkgs.stdenv.mkDerivation rec {
-  inherit (versions) version;
+  inherit src version;
   pname = "terraform-docs";
   phases = [ "unpackPhase" "installPhase" ];
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
   installPhase = ''
     mkdir -p $out/bin
     cp output/terraform-docs $out/bin/

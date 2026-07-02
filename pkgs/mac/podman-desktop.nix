@@ -1,6 +1,7 @@
 { pkgs ? import <nixpkgs> {}}:
 let
-  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).podman;
+  src = (import ../../npins).podman;
+  version = builtins.head (builtins.match "https://github.com/podman-desktop/podman-desktop/releases/download/v(.*)/podman-desktop.*.dmg" src.url);
   undmgsh = pkgs.writeShellScriptBin "undmg.sh" ''
     # https://discourse.nixos.org/t/help-with-error-only-hfs-file-systems-are-supported-on-ventura/25873/7
     mnt=$(mktemp -d -t ci-XXXXXXXXXX)
@@ -18,8 +19,8 @@ let
   '';
 in
   pkgs.stdenv.mkDerivation rec {
+    inherit version src;
     pname = "podman";
-    inherit (versions) version;
     buildInputs = [];
     sourceRoot = ".";
     phases = [ "unpackPhase" "installPhase" ];
@@ -28,8 +29,6 @@ in
       mkdir -p $out/Applications
       cp -r "Podman Desktop.app" $out/Applications/PodmanDesktop.app
     '';
-
-    src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
     meta = with pkgs.lib; {
       description = "Podman";

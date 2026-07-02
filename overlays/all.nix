@@ -2,7 +2,6 @@ self: pkgs:
     rec {
       local                 = pkgs.callPackages <nix-config/pkgs> {};
       brainzo               = local.brainzo;
-      circleci-cli          = local.circleci-cli;
       exfalso               = pkgs.quodlibet;
       git-web-link          = local.git-web-link;
       power-profiles-daemon = pkgs.power-profiles-daemon.overrideAttrs (final: previous:  { doCheck = false; });
@@ -10,4 +9,5 @@ self: pkgs:
       wavebox               = local.wavebox;
       wvlet                 = local.wvlet;
       trino                 = local.trino;
+      zoomus                = local.zoomus;
     }

@@ -1,9 +1,8 @@
 { pkgs, lib } :
 let
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
-  allversions = with builtins; fromJSON (readFile ./versions.json);
-  versions = allversions.zoom_us."${platform}";
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
+  source = (import ../npins)."zoom-${platform}";
+  src = source;
   pname = "zoom";
   dontPatchELF = true;
   meta = with pkgs.lib; {
@@ -14,10 +13,10 @@ let
     platforms = platforms.darwin ++ platforms.linux;
     maintainers = [ lib.maintainers.eddsteel ];
   };
+  version = builtins.head (builtins.match ".*/client/([^/]+)/zoom.*" source.url);
 in if platform == "darwin"
    then pkgs.stdenv.mkDerivation rec {
-     inherit (versions) version;
-     inherit meta pname dontPatchELF src;
+     inherit meta pname dontPatchELF src version;
 
      unpackPhase = ''
       xar -xf $src
@@ -81,8 +80,7 @@ in if platform == "darwin"
        zlib
      ];
    in pkgs.stdenv.mkDerivation rec {
-     inherit (versions) version;
-     inherit meta pname dontPatchELF src;
+     inherit meta pname dontPatchELF src version;
 
      dontUnpack = true;
      nativeBuildInputs = [ pkgs.makeWrapper ];

@@ -126,7 +126,7 @@ in with lib; {
           "hyper - m" = "open ${pkgs.ghostty-bin}/Applications/Ghostty.app";
           "hyper - q" = "pmset sleepnow";
           "hyper - w" = "open ${pkgs.wavebox}/Applications/Wavebox.app";
-          "hyper - z" = "open ${pkgs.zoom-us}/Applications/zoom.us.app";
+          "hyper - z" = "open ${pkgs.zoomus}/Applications/zoom.us.app";
         };
       };
       zoom.enable = true;

@@ -1,6 +1,7 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).bitwarden;
+  source = (import ../../npins).bitwarden;
+  version = builtins.head (builtins.match ".*Bitwarden-(.*)-universal.dmg&.*" source.url);
   undmgsh = pkgs.writeShellScriptBin "undmg.sh" ''
     # https://discourse.nixos.org/t/help-with-error-only-hfs-file-systems-are-supported-on-ventura/25873/7
     mnt=$(mktemp -d -t ci-XXXXXXXXXX)
@@ -18,7 +19,7 @@ let
   '';
 in  pkgs.stdenv.mkDerivation rec {
   pname = "bitwarden";
-  inherit (versions) version;
+  inherit version;
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
   phases = [ "unpackPhase" "installPhase" ];
@@ -28,7 +29,11 @@ in  pkgs.stdenv.mkDerivation rec {
     cp -r Bitwarden.app $out/Applications
   '';
 
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
+  src = pkgs.fetchurl {
+    inherit (source) url;
+    name = "Bitwarden-${version}-universal.dmg";
+    sha256 = source.hash;
+  };
 
   meta = with pkgs.lib; {
     description = "Bitwarden password manager";

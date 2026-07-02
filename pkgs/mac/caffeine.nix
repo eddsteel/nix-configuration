@@ -1,9 +1,10 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ../versions.json)).caffeine;
+  src = (import ../../npins).caffeine;
+  version = "1.1.4";
 in pkgs.stdenv.mkDerivation rec {
-  pname = "signal";
-  inherit (versions) version;
+  pname = "caffeine";
+  inherit src version;
 
   buildInputs = [ pkgs.undmg ];
   sourceRoot = ".";
@@ -12,8 +13,6 @@ in pkgs.stdenv.mkDerivation rec {
     mkdir -p $out/Applications
     cp -r Caffeine.app $out/Applications/Caffeine.app
   '';
-
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
 
   meta = with pkgs.lib; {
     description = "Caffeine";

@@ -1,9 +1,10 @@
 { pkgs }:
 let
-  versions = (builtins.fromJSON (builtins.readFile ../../versions.json)).awsvpn;
+  source = (import ../../../npins).awsvpn;
+  version = "5.4.0";
 in pkgs.stdenv.mkDerivation rec {
   pname = "aws-vpn";
-  inherit (versions) version;
+  inherit version;
 
   nativeBuildInputs = with pkgs; [ cpio xar ];
   sourceRoot = ".";
@@ -22,7 +23,7 @@ in pkgs.stdenv.mkDerivation rec {
     cp ${./acvc-16.png} "$out/Applications/AWS VPN Client.app/Contents/Resources/acvc-16.png"
   '';
 
-  src = pkgs.fetchurl { inherit (versions) name url sha256; };
+  src = source;
 
   meta = with pkgs.lib; {
     description = "AWS VPN client";

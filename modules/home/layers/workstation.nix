@@ -30,7 +30,7 @@ in with lib; {
       fish gnupg
       git-secrets nix-prefetch-git
       ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
-      moreutils exfalso wavebox
+      moreutils exfalso wavebox zoomus
     ];
 
     programs.direnv.enable = true;

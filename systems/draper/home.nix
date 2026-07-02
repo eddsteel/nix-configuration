@@ -16,7 +16,7 @@ in {
   };
 
   home.packages = with pkgs; [
-    calibre discord handbrake imagemagick ledger wavebox psmisc wmctrl zoom-us
+    calibre discord handbrake imagemagick ledger wavebox psmisc wmctrl
     tree-sitter keymapp kontroll
   ];
 

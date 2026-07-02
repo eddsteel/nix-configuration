@@ -1,7 +1,8 @@
 { pkgs ? import <nixpkgs> {}, lib }:
 let
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
-  versions = (builtins.fromJSON (builtins.readFile ./versions.json)).wavebox."${platform}";
+  source = (import ../npins)."wavebox-${platform}";
+  version = builtins.head (builtins.match "https://download.wavebox.app/stable/[^/]+/Install%20Wavebox%20(.*)\\.[^.]+$" source.url);
   meta = with pkgs.lib; {
     description = "Wavebox";
     homepage = "https://wavebox.io";
@@ -13,8 +14,7 @@ let
   pname = "wavebox";
 in if platform == "darwin"
    then pkgs.stdenv.mkDerivation rec {
-     inherit (versions) version;
-     inherit pname meta;
+     inherit version pname meta;
 
      buildInputs = [ pkgs.undmg ];
      sourceRoot = ".";
@@ -24,7 +24,12 @@ in if platform == "darwin"
         cp -r Wavebox.app "$out/Applications/Wavebox.app"
       '';
 
-     src = pkgs.fetchurl { inherit (versions) name url sha256; };
+     src = pkgs.fetchurl {
+       inherit version;
+       inherit (source) url;
+       sha256 = source.hash;
+       name = "wavebox-${version}.dmg";
+     };
    }
    else let
      desktopItem = pkgs.makeDesktopItem rec {
@@ -36,11 +41,13 @@ in if platform == "darwin"
        categories = [ "Network" "WebBrowser" ];
      };
    in with pkgs; stdenv.mkDerivation rec {
-     inherit (versions) version;
-     inherit pname meta;
+     inherit pname meta version;
 
      src = pkgs.fetchurl {
-       inherit (versions) name url sha256;
+       inherit version;
+       inherit (source) url;
+       sha256 = source.hash;
+       name = "wavebox-${version}.tar.gz";
      };
 
      # don't remove runtime deps
