@@ -10,7 +10,7 @@
       "type": "MutableUrl",
       "update_url": "https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg",
       "unpack": false,
-      "url": "https://release-assets.githubusercontent.com/github-production-release-asset/53538899/44ef4f29-3874-4a28-a2a1-c268d37170d6?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-07-01T01%3A15%3A01Z&rscd=attachment%3B+filename%3DBitwarden-2026.6.1-universal.dmg&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-07-01T00%3A14%3A29Z&ske=2026-07-01T01%3A15%3A01Z&sks=b&skv=2018-11-09&sig=QNFyERxcr3Msg9tBkKS1yTc5vWBOdI66HYpaGSchFbE%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4Mjg2ODYzNSwibmJmIjoxNzgyODY1MDM1LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.btgGaNkb8efv1YeQkzzSl4NUTj5oAGgRnHzJSz4EfxM&response-content-disposition=attachment%3B%20filename%3DBitwarden-2026.6.1-universal.dmg&response-content-type=application%2Foctet-stream",
+      "url": "https://release-assets.githubusercontent.com/github-production-release-asset/53538899/44ef4f29-3874-4a28-a2a1-c268d37170d6?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-07-02T21%3A36%3A32Z&rscd=attachment%3B+filename%3DBitwarden-2026.6.1-universal.dmg&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-07-02T20%3A36%3A17Z&ske=2026-07-02T21%3A36%3A32Z&sks=b&skv=2018-11-09&sig=a4P%2F1Cui7g3G87P0Ncjmjm0%2FTze%2F2KE2pWgFm9YWCZE%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4MzAyODk5MCwibmJmIjoxNzgzMDI1MzkwLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.NfKu2PAKz8qaKQtODzx1U6Ip1cYgA2BsPLjR258XDxw&response-content-disposition=attachment%3B%20filename%3DBitwarden-2026.6.1-universal.dmg&response-content-type=application%2Foctet-stream",
       "hash": "sha256-TeM0lHT9Dk+g3FsFENOFW3BbjfdD94VYUWe9rFLt+8g="
     },
     "brainzo": {
@@ -78,9 +78,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "2a37d71bbe69e1522ddabf03a4cea0374958bdbe",
-      "url": "https://github.com/nix-community/home-manager/archive/2a37d71bbe69e1522ddabf03a4cea0374958bdbe.tar.gz",
-      "hash": "sha256-vzs4SBgPsK4aNzlJR2PpFwtARazXMOxZonQnDz0YHxk="
+      "revision": "a4d410db95a6416d1008049330bd86b85b5db45a",
+      "url": "https://github.com/nix-community/home-manager/archive/a4d410db95a6416d1008049330bd86b85b5db45a.tar.gz",
+      "hash": "sha256-oE+TNK98Pl7nHW4VU1oBvUKD5JR45U+py/NJmLoTNHI="
     },
     "idea": {
       "type": "MutableUrl",
