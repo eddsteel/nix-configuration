@@ -11,6 +11,8 @@ let
   }) secrets.workpkgs.args;
   hosts = import ../hosts.nix { inherit lib; };
   paneru = builtins.getFlake "github:karinushka/paneru";
+  herdrFlake = builtins.getFlake "github:ogulcancelik/herdr";
+  herdr =  herdrFlake.outputs.packages.${builtins.currentSystem}.default;
 in {
   imports = [
     ../../modules/home
@@ -28,6 +30,7 @@ in {
     npins scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
     terraform-docs circleci-cli aws-vpn docker kubectl kubectx
     nixVersions.git podman trino maven claude-code jdk21 ruby opentofu
+    herdr nono
 ] ++ nix-work.all
   ++ work-pkgs.all
   ++ (with mac-apps; [caffeine vfkit podman-desktop intellij-idea-ce]);
@@ -173,6 +176,10 @@ in {
 
   home.file.".wvlet/profiles.yml".source = (pkgs.formats.yaml {}).generate "wvlet-config" {
     profiles = secrets.wvlet.config;
+  };
+
+  home.file.".config/herdr/config.toml".source = (pkgs.formats.toml {}).generate "herdr-config" {
+    terminal.default_shell = "${pkgs.fish}/bin/fish";
   };
 
   home.file.".config/ldcli/config.yml".source = (pkgs.formats.yaml {}).generate "ldcli-config" secrets.launch-darkly;
