@@ -74,6 +74,11 @@ in with lib; {
       macos-option-as-alt = true
       macos-icon = glass
       command = ${pkgs.fish}/bin/fish
+      keybind = ctrl+i=text:\t
+      keybind = ctrl+shift+c=copy_to_clipboard
+      keybind = ctrl+shift+x=text:\t
+      keybind = ctrl+shift+v=paste_from_clipboard
+      'a'keybind = global:cmd+backquote=toggle_quick_terminal
     '';
       
     programs.gradle = {
