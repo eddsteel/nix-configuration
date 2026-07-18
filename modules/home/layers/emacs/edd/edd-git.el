@@ -155,7 +155,7 @@
 
   (transient-define-prefix edd/magit-prs ()
     ["PRs"
-     [("c" "create" edd-git-create-pr)
+     [("@" "create" edd-git-create-pr)
       ("b" "browse" edd-git-browse-pr)
       ("d" "draft"  edd-git-create-draft-pr)
       ]
