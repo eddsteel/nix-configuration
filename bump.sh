@@ -42,22 +42,10 @@ caffeine() {
     conditional_pin caffeine "https://github.com/Intelliscape/caffeine/releases/download/$version/Caffeine.dmg"
 }
 
-zoom() {
-  if [ $1 == "linux" ]; then
-      VER=$(curl -Ls 'https://zoom.us/rest/download?os=linux' | jq -r .result.downloadVO.zoom.version)
-      conditional_pin zoom-linux "https://zoom.us/client/$VER/zoom_x86_64.pkg.tar.xz"
-  else
-      VER=$(curl -Ls 'https://zoom.us/rest/download?os=mac' | jq -r .result.downloadVO.zoomArm64.version)
-      conditional_pin zoom-darwin "https://zoom.us/client/$VER/zoomusInstallerFull.pkg?archType=arm64"
-  fi
-}
-
 podman &
 xbar &
 tdocs &
 caffeine &
-zoom linux &
-zoom darwin &
 
 wait
 

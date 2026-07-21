@@ -6,7 +6,6 @@ in {
   git-web-link = import sources.git-web-link {};
   scripts      = import sources.scripts {};
   wavebox      = pkgs.callPackage ./wavebox.nix {};
-  zoomus       = pkgs.callPackage ./zoomus.nix {};
   wvlet        = pkgs.callPackage ./wvlet.nix {};
   trino        = pkgs.callPackage ./trino.nix {};
 }

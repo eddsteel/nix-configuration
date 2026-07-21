@@ -23,14 +23,13 @@ in with lib; {
     gpg-sec = mkOption { default = <nix-config> + "/keys/secring.gpg"; };
     aws-credentials = mkOption {};
     aws-configuration = mkOption {};
-    zoomus-config = mkOption { default = ./zoomus.conf; };
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       fish gnupg
       git-secrets nix-prefetch-git
       ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
-      moreutils exfalso wavebox zoomus
+      moreutils exfalso wavebox 
     ];
 
     programs.direnv.enable = true;
@@ -43,8 +42,6 @@ in with lib; {
       repos = bootstrap-repos ++ cfg.mr-repos;
       rootdir = "${homedir}/src";
     };
-
-    xdg.configFile."zoomus.conf".source = cfg.zoomus-config;
 
     home.file.".aws/credentials".text = cfg.aws-credentials;
     home.file.".aws/config-nix".text = cfg.aws-configuration;

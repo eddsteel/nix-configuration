@@ -6,6 +6,5 @@
     ./karabiner.nix
     ./skhd.nix
     ./xbar.nix
-    ./zoom.nix
   ];
 }

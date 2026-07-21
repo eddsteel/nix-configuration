@@ -164,18 +164,6 @@
       "url": "https://github.com/matryer/xbar/releases/download/v2.1.7-beta/xbar.v2.1.7-beta.dmg",
       "unpack": false,
       "hash": "sha256-Cn6nxA5NTi7M4NrjycN3PUWd31r4Z0T3DES5+ZAbxz8="
-    },
-    "zoom-darwin": {
-      "type": "Url",
-      "url": "https://zoom.us/client/7.1.0.83064/zoomusInstallerFull.pkg?archType=arm64",
-      "unpack": false,
-      "hash": "sha256-HReyDktQ+EiHM857kgvzQD8tSHtSFYrAfv1YSTVFCLw="
-    },
-    "zoom-linux": {
-      "type": "Url",
-      "url": "https://zoom.us/client/7.1.0.3715/zoom_x86_64.pkg.tar.xz",
-      "unpack": false,
-      "hash": "sha256-OxzJtNqV50C2kPonXylvyOL3/3ItChkpDw7KIOzDiPw="
     }
   },
   "version": 8

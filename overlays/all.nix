@@ -9,5 +9,4 @@ self: pkgs:
       wavebox               = local.wavebox;
       wvlet                 = local.wvlet;
       trino                 = local.trino;
-      zoomus                = local.zoomus;
     }
