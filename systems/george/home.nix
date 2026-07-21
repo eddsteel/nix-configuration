@@ -12,7 +12,7 @@ let
   hosts = import ../hosts.nix { inherit lib; };
   paneru = builtins.getFlake "github:karinushka/paneru";
   herdrFlake = builtins.getFlake "github:ogulcancelik/herdr";
-  herdr =  herdrFlake.outputs.packages.${builtins.currentSystem}.default;
+  herdr = herdrFlake.outputs.packages.${builtins.currentSystem}.default;
 in {
   imports = [
     ../../modules/home
@@ -122,7 +122,7 @@ in {
     firefox = {
       enable = true;
       sync-user = secrets.firefox.username;
-      profile = "so1243a1.default-release";
+      profile = "h1kq3q88.default-release";
     };
 
     git = {
