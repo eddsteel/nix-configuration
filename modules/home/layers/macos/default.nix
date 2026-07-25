@@ -129,7 +129,6 @@ in with lib; {
           "hyper - z" = "open -a zoom.us";
         };
       };
-      zoom.enable = true;
     };
   };
 }
