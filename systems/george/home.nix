@@ -10,8 +10,8 @@ let
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
   hosts = import ../hosts.nix { inherit lib; };
-  paneru = builtins.getFlake "github:karinushka/paneru";
-  herdrFlake = builtins.getFlake "github:ogulcancelik/herdr";
+  paneru = builtins.getFlake "github:karinushka/paneru/v0.4.4";
+  herdrFlake = builtins.getFlake "github:ogulcancelik/herdr/v0.8.0";
   herdr = herdrFlake.outputs.packages.${builtins.currentSystem}.default;
 in {
   imports = [
@@ -83,6 +83,7 @@ in {
         animation_speed = 12;
       };
       swipe.scroll.modifier = "ctrl + alt + shift + cmd"; # i.e. hyper
+      restore.enable = false;
     };
   };
 
