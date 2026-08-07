@@ -4,14 +4,14 @@
       "type": "Url",
       "url": "https://d20adtppz83p9s.cloudfront.net/OSX_ARM64/latest/AWS_VPN_Client_ARM64.pkg",
       "unpack": false,
-      "hash": "sha256-qXeN0s56/0D5ty9dlhVtrw2QSdlYxtGuyolColw13r8="
+      "hash": "sha256-nHg/Ploo90p1sSKTNqbzwD3PT5en7iMDok+GT5Ivw8A="
     },
     "bitwarden": {
       "type": "MutableUrl",
       "update_url": "https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg",
       "unpack": false,
-      "url": "https://release-assets.githubusercontent.com/github-production-release-asset/53538899/44ef4f29-3874-4a28-a2a1-c268d37170d6?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-07-21T17%3A46%3A37Z&rscd=attachment%3B+filename%3DBitwarden-2026.6.1-universal.dmg&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-07-21T16%3A45%3A58Z&ske=2026-07-21T17%3A46%3A37Z&sks=b&skv=2018-11-09&sig=%2FkI2WASv6MkKqxXZ0hHiS3Gu5cKDC9WgMRGam%2F26SwI%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NDY1NjM2MywibmJmIjoxNzg0NjUyNzYzLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.odW94kA03wOA_JMBGbNJP9qMY7UHplI7WEyeEnjqofo&response-content-disposition=attachment%3B%20filename%3DBitwarden-2026.6.1-universal.dmg&response-content-type=application%2Foctet-stream",
-      "hash": "sha256-TeM0lHT9Dk+g3FsFENOFW3BbjfdD94VYUWe9rFLt+8g="
+      "url": "https://release-assets.githubusercontent.com/github-production-release-asset/53538899/6cf8f603-d61d-4226-90b0-4a8424ff3161?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-07T22%3A43%3A24Z&rscd=attachment%3B+filename%3DBitwarden-2026.7.0-universal.dmg&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-07T21%3A42%3A36Z&ske=2026-08-07T22%3A43%3A24Z&sks=b&skv=2018-11-09&sig=asLryWBd62SnXJ9PYqOzt86pGMU%2Fd%2BWcvNCUFQw4oYQ%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NjE0Mjc4MywibmJmIjoxNzg2MTM5MTgzLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.BHhiAvqrijUf7k8z29Yeqp9_ZCbu8JFHDMXAlZgf7Pk&response-content-disposition=attachment%3B%20filename%3DBitwarden-2026.7.0-universal.dmg&response-content-type=application%2Foctet-stream",
+      "hash": "sha256-UKfAPcbRcr8AmfwEafdKz/qxYk96rQbT9WtYsDClvpI="
     },
     "brainzo": {
       "type": "Git",
@@ -40,9 +40,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "57a3171f94705599a2499248ca5758d5eb47c0e0",
-      "url": "https://github.com/nix-darwin/nix-darwin/archive/57a3171f94705599a2499248ca5758d5eb47c0e0.tar.gz",
-      "hash": "sha256-UvORnAxTRHax7RG74W8Z2t4GvIkX6AjJ5kk0QlwZomo="
+      "revision": "15abb8c98f336cd8bd840d71059adebabe60bf04",
+      "url": "https://github.com/nix-darwin/nix-darwin/archive/15abb8c98f336cd8bd840d71059adebabe60bf04.tar.gz",
+      "hash": "sha256-0tLW8Ff5yt8AH97jw4ZpFJ0OCJ122zIlgWGDmOfU/VU="
     },
     "exfalso": {
       "type": "Url",
@@ -54,8 +54,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA",
       "unpack": false,
-      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/153.0/mac/en-CA/Firefox%20153.0.dmg",
-      "hash": "sha256-4PQk418JoXIQl/FuueLDLz1TkbMkZ5vYK2xLJRqw/Gk="
+      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/153.0.3/mac/en-CA/Firefox%20153.0.3.dmg",
+      "hash": "sha256-rCQB6YwfNP4vcNxrd/14OvT9lO9ML7F+YnFYqNJYnz4="
     },
     "git-web-link": {
       "type": "Git",
@@ -78,16 +78,16 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "deeb6b7eb7e0c44ae1819c051ce175bd92a85100",
-      "url": "https://github.com/nix-community/home-manager/archive/deeb6b7eb7e0c44ae1819c051ce175bd92a85100.tar.gz",
-      "hash": "sha256-ouZe80aWEhMLVMkqICFDN+JUw+0FJtCr/bh+hHtRtMg="
+      "revision": "7834e82588860aaf780cec1366524456a70898d7",
+      "url": "https://github.com/nix-community/home-manager/archive/7834e82588860aaf780cec1366524456a70898d7.tar.gz",
+      "hash": "sha256-TIDlLTLI1/pB7IqgjzcKQjpODQsZE2oII4XGG9B6KjI="
     },
     "idea": {
       "type": "MutableUrl",
       "update_url": "https://data.services.jetbrains.com/products/download?code=IIU&platform=macM1",
       "unpack": false,
-      "url": "https://download-cdn.jetbrains.com/idea/idea-2026.2-aarch64.dmg",
-      "hash": "sha256-M+J/qXlYESst1t/fuqzTroWZ7J+oEyLIrTeAbwp5IVs="
+      "url": "https://download-cdn.jetbrains.com/idea/idea-2026.2.0.1-aarch64.dmg",
+      "hash": "sha256-vN2wVaM5V9H5Xnrjv9MIKT0PgSJQqrk5kWQWOqEYOZ8="
     },
     "istat": {
       "type": "MutableUrl",
@@ -117,15 +117,21 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "241313f4e8e508cb9b13278c2b0fa25b9ca27163",
-      "url": "https://github.com/NixOS/nixpkgs/archive/241313f4e8e508cb9b13278c2b0fa25b9ca27163.tar.gz",
-      "hash": "sha256-vlHUuqAcbcH2RKmHbPiuQzbv1pnzzavXnI62RD0bqCU="
+      "revision": "b7c2ada94fe99c15b0dbcf4d11fd7850b957a436",
+      "url": "https://github.com/NixOS/nixpkgs/archive/b7c2ada94fe99c15b0dbcf4d11fd7850b957a436.tar.gz",
+      "hash": "sha256-IItrdb7Puk05RqOBWZYFC5X6Wl1sJmCfh5MWVHw5iMM="
     },
     "podman": {
       "type": "Url",
-      "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.28.3/podman-desktop-1.28.3-universal.dmg",
+      "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.29.1/podman-desktop-1.29.1-universal.dmg",
       "unpack": false,
-      "hash": "sha256-sW+B1mUO2ELq2k+tEI48ZxIbPHPm6MqPRaqL2bpTfwM="
+      "hash": "sha256-4YpSXBaJ8xLk4xS1nnqfft53y1wiWJRhQzEjlMvQMFA="
+    },
+    "privx-cmd": {
+      "type": "Url",
+      "url": "https://www.ssh.com/hubfs/Downloads/Features/privx-cmd/PrivX-Cmd-44.0-58_f645c83f1e.zip",
+      "unpack": false,
+      "hash": "sha256-Bs1UTK41kGuiNhIr5I95alv+iQvNZNk33NK/u6hHsUI="
     },
     "scripts": {
       "type": "Git",
@@ -149,8 +155,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.wavebox.app/latest/stable/macuniversal",
       "unpack": false,
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20150.2.131.2.dmg",
-      "hash": "sha256-DliNJUeUiN5suXj5rXDjZraf/d2+gFn+TgXSGeRjLfo="
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20151.2.148.2.dmg",
+      "hash": "sha256-52AckeZOGhUx866Vnne/nHR6mmgsf6NumU5B1rfkdO4="
     },
     "wavebox-linux": {
       "type": "MutableUrl",
