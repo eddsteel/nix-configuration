@@ -26,7 +26,7 @@ in with lib; {
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      fish gnupg
+      fish gnupg npins
       git-secrets nix-prefetch-git
       ripgrep unzip awscli2 aspell aspellDicts.en git-web-link envchain tree
       moreutils exfalso wavebox 

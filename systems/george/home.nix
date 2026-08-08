@@ -27,7 +27,7 @@ in {
   };
 
   home.packages = with pkgs; [
-    npins scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
+    scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
     terraform-docs circleci-cli aws-vpn docker kubectl kubectx
     nixVersions.git podman trino maven claude-code jdk21 ruby opentofu
     herdr nono

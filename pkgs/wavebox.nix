@@ -2,7 +2,8 @@
 let
   platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
   source = (import ../npins)."wavebox-${platform}";
-  version = builtins.head (builtins.match "https://download.wavebox.app/stable/[^/]+/Install%20Wavebox%20(.*)\\.[^.]+$" source.url);
+  version_re = "https://download.wavebox.app/stable/([^/]+/)?[^/]+/(Install%20)?Wavebox(%20|_)(.+[-.][0-9]+)(\\.[^.]+){1,2}$";
+  version = builtins.elemAt (builtins.match version_re source.url) 3;
   meta = with pkgs.lib; {
     description = "Wavebox";
     homepage = "https://wavebox.io";

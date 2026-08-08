@@ -109,7 +109,7 @@ in with lib; {
 
       "${mediaKeys}/custom-keybindings/custom0" = {
         binding = ''<Primary><Shift><Alt><Super>e'';
-        command = ''${raise}/bin/raise "emacs" "${pkgs.emacs}/bin/emacs"'';
+        command = ''${raise}/bin/raise "emacs" "${cfg.homedir}/.nix-profile/bin/emacs"'';
         name = ''Emacs'';
       };
 
