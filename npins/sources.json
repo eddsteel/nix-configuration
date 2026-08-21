@@ -33,9 +33,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "15abb8c98f336cd8bd840d71059adebabe60bf04",
-      "url": "https://github.com/nix-darwin/nix-darwin/archive/15abb8c98f336cd8bd840d71059adebabe60bf04.tar.gz",
-      "hash": "sha256-0tLW8Ff5yt8AH97jw4ZpFJ0OCJ122zIlgWGDmOfU/VU="
+      "revision": "4cff07de74b50e64bdd68cd4e722ab5b6b35ee48",
+      "url": "https://github.com/nix-darwin/nix-darwin/archive/4cff07de74b50e64bdd68cd4e722ab5b6b35ee48.tar.gz",
+      "hash": "sha256-oQFip+v0luP8NIxJzmiW4Wu8bILsbFWom5l0zonl8hQ="
     },
     "exfalso": {
       "type": "Url",
@@ -47,8 +47,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA",
       "unpack": false,
-      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/153.0.3/mac/en-CA/Firefox%20153.0.3.dmg",
-      "hash": "sha256-rCQB6YwfNP4vcNxrd/14OvT9lO9ML7F+YnFYqNJYnz4="
+      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/154.0/mac/en-CA/Firefox%20154.0.dmg",
+      "hash": "sha256-iSiaNWfBOSo2mlYwuef67XbU+VT18gc8tnLXJAI63WM="
     },
     "git-web-link": {
       "type": "Git",
@@ -71,16 +71,16 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "7834e82588860aaf780cec1366524456a70898d7",
-      "url": "https://github.com/nix-community/home-manager/archive/7834e82588860aaf780cec1366524456a70898d7.tar.gz",
-      "hash": "sha256-TIDlLTLI1/pB7IqgjzcKQjpODQsZE2oII4XGG9B6KjI="
+      "revision": "c53d643b3737e2fcd04e6cb3b3580ef50b2087a0",
+      "url": "https://github.com/nix-community/home-manager/archive/c53d643b3737e2fcd04e6cb3b3580ef50b2087a0.tar.gz",
+      "hash": "sha256-djoRr6jBpe35q/0JwAvXpFXg1Ktf+X54NU2RLR7wnHw="
     },
     "idea": {
       "type": "MutableUrl",
       "update_url": "https://data.services.jetbrains.com/products/download?code=IIU&platform=macM1",
       "unpack": false,
-      "url": "https://download-cdn.jetbrains.com/idea/idea-2026.2.0.1-aarch64.dmg",
-      "hash": "sha256-vN2wVaM5V9H5Xnrjv9MIKT0PgSJQqrk5kWQWOqEYOZ8="
+      "url": "https://download-cdn.jetbrains.com/idea/idea-2026.2.1-aarch64.dmg",
+      "hash": "sha256-ucUhunZvflNy6dBfbWhEKtoT80znWK8xjKIfAXwLsZ8="
     },
     "istat": {
       "type": "MutableUrl",
@@ -110,9 +110,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "b7c2ada94fe99c15b0dbcf4d11fd7850b957a436",
-      "url": "https://github.com/NixOS/nixpkgs/archive/b7c2ada94fe99c15b0dbcf4d11fd7850b957a436.tar.gz",
-      "hash": "sha256-IItrdb7Puk05RqOBWZYFC5X6Wl1sJmCfh5MWVHw5iMM="
+      "revision": "ffb3c9b700e759be2ef13237c9d8f953b32a1e46",
+      "url": "https://github.com/NixOS/nixpkgs/archive/ffb3c9b700e759be2ef13237c9d8f953b32a1e46.tar.gz",
+      "hash": "sha256-RD2kNWCG+Bjo6h+JVjWVNntZs2GtRoeY2xHjts/FNkA="
     },
     "podman": {
       "type": "Url",
@@ -148,8 +148,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.wavebox.app/latest/stable/macuniversal",
       "unpack": false,
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20151.2.148.2.dmg",
-      "hash": "sha256-52AckeZOGhUx866Vnne/nHR6mmgsf6NumU5B1rfkdO4="
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20151.2.154.2.dmg",
+      "hash": "sha256-Nizjl0zFPX+ffoBn9a9OIE2TNWZePDRh6bLDV9Ch14M="
     },
     "wavebox-linux": {
       "type": "MutableUrl",
