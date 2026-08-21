@@ -1,6 +1,5 @@
 { pkgs ? import <nixpkgs> {} }:
 with pkgs; {
-  bitwarden        = callPackage ./bitwarden.nix {};
   caffeine         = callPackage ./caffeine.nix {};
   firefox          = callPackage ./firefox.nix {};
   intellij-idea-ce = callPackage ./intellij.nix {};

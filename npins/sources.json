@@ -6,13 +6,6 @@
       "unpack": false,
       "hash": "sha256-nHg/Ploo90p1sSKTNqbzwD3PT5en7iMDok+GT5Ivw8A="
     },
-    "bitwarden": {
-      "type": "MutableUrl",
-      "update_url": "https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg",
-      "unpack": false,
-      "url": "https://release-assets.githubusercontent.com/github-production-release-asset/53538899/6cf8f603-d61d-4226-90b0-4a8424ff3161?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-07T22%3A43%3A24Z&rscd=attachment%3B+filename%3DBitwarden-2026.7.0-universal.dmg&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-07T21%3A42%3A36Z&ske=2026-08-07T22%3A43%3A24Z&sks=b&skv=2018-11-09&sig=asLryWBd62SnXJ9PYqOzt86pGMU%2Fd%2BWcvNCUFQw4oYQ%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NjE0Mjc4MywibmJmIjoxNzg2MTM5MTgzLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.BHhiAvqrijUf7k8z29Yeqp9_ZCbu8JFHDMXAlZgf7Pk&response-content-disposition=attachment%3B%20filename%3DBitwarden-2026.7.0-universal.dmg&response-content-type=application%2Foctet-stream",
-      "hash": "sha256-UKfAPcbRcr8AmfwEafdKz/qxYk96rQbT9WtYsDClvpI="
-    },
     "brainzo": {
       "type": "Git",
       "repository": {

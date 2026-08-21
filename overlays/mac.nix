@@ -1,7 +1,6 @@
 self: pkgs:
     pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin rec {
       mac-apps       = pkgs.callPackages ../pkgs/mac {};
-      bitwarden      = self.mac-apps.bitwarden;
       firefox        = self.mac-apps.firefox;
       intellij-idea  = self.mac-apps.intellij-idea-ce;
       exfalso        = self.mac-apps.exfalso;

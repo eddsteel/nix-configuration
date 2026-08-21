@@ -22,7 +22,6 @@ in with lib; {
         "${pkgs.mac-apps.firefox}/Applications/Firefox.app"
         "${pkgs.iterm2}/Applications/iTerm2.app"
         "${pkgs.wavebox}/Applications/Wavebox.app"
-        "${pkgs.mac-apps.bitwarden}/Applications/Bitwarden.app"
         "${pkgs.aws-vpn}/Applications/AWS VPN Client.app"
       ];
 
