@@ -53,6 +53,7 @@
   (ansi-color-bright-cyan ((t :background "#2aa198")))
   (term-color-bright-green ((t :background "#859900")))
   (ansi-color-bright-green ((t :background "#859900")))
+  (region ((t :background "#f97c63")))
 
   :config
   (nano-mode)
