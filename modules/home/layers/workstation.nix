@@ -75,7 +75,7 @@ in with lib; {
       keybind = ctrl+shift+c=copy_to_clipboard
       keybind = ctrl+shift+x=text:\t
       keybind = ctrl+shift+v=paste_from_clipboard
-      'a'keybind = global:cmd+backquote=toggle_quick_terminal
+      keybind = global:cmd+backquote=toggle_quick_terminal
     '';
       
     programs.gradle = {
