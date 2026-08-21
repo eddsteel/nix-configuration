@@ -36,6 +36,8 @@
                    "master")))
       branch))
 
+  (use-package majutsu)
+
   (defun edd-git-web-link-capture (&rest args)
     ""
     (let

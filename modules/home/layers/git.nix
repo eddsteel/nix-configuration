@@ -38,11 +38,11 @@ in with lib; {
           diff-args = ["--color=always" "$left" "$right"];
         };
         # This isn't released yet
-#        signing = {
-#          sign-all = true;
-#          backend = "gpg";
-#          key = cfg.key;
-#        };
+        signing = {
+          sign-all = true;
+          backend = "gpg";
+          key = cfg.key;
+        };
       };
     };
 
@@ -51,10 +51,10 @@ in with lib; {
       settings = {
         user.name = cfg.name;
         user.email = cfg.email;
+        github.user = cfg.github-user;
         branch.autosetuprebase = "always";
         color.ui = true;
         core.editor = "${cfg.emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
-        github.user = cfg.github-user;
         init.defaultBranch = "main";
         pull.rebase = true;
         push.default = "current";

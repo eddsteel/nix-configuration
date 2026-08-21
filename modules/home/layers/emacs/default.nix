@@ -56,6 +56,17 @@ let
       sha256 = "sha256-IfBFig2i4qAyRDB+lxzfPu4OOyV6hXhExlZtSnrzqnI=";
     };
   };
+  majutsu = epkgs: epkgs.trivialBuild {
+    pname = "majutsu";
+    version = "1";
+    buildInputs = [ epkgs.s epkgs.magit-section epkgs.with-editor epkgs.plz epkgs.magit epkgs.consult ];
+    src = pkgs.fetchFromGitHub {
+      owner = "0WD0";
+      repo = "majutsu";
+      rev = "512f8e94eeddf700ef4afc3b3aa9af28ca315f04";
+      sha256 = "sha256-ZfMs8mQsGBp1hkrKolHENEa7gJt9vH4Uvjj+LnoQOZ8=";
+    };
+  };
 in {
   options.layers.emacs = {
     enable = mkEnableOption "Emacs";
@@ -79,6 +90,7 @@ in {
         (ligature epkgs)
 
         consult
+        plz
         corfu
         embark
         embark-consult
@@ -132,6 +144,8 @@ in {
         magit-delta
         magit-filenotify
         magit-section
+        (majutsu epkgs)
+        forge
         ripgrep
         graphviz-dot-mode
         hcl-mode
