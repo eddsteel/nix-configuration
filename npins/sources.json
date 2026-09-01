@@ -47,8 +47,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA",
       "unpack": false,
-      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/154.0/mac/en-CA/Firefox%20154.0.dmg",
-      "hash": "sha256-iSiaNWfBOSo2mlYwuef67XbU+VT18gc8tnLXJAI63WM="
+      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/155.0/mac/en-CA/Firefox%20155.0.dmg",
+      "hash": "sha256-JeG0ryHzGci+NhtZCZjWfqTdUHjn0E8Se/+b8WQOD3o="
     },
     "git-web-link": {
       "type": "Git",
@@ -71,9 +71,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "c53d643b3737e2fcd04e6cb3b3580ef50b2087a0",
-      "url": "https://github.com/nix-community/home-manager/archive/c53d643b3737e2fcd04e6cb3b3580ef50b2087a0.tar.gz",
-      "hash": "sha256-djoRr6jBpe35q/0JwAvXpFXg1Ktf+X54NU2RLR7wnHw="
+      "revision": "1dc2d1f720ab17fc7981e087346bf54b26d284b1",
+      "url": "https://github.com/nix-community/home-manager/archive/1dc2d1f720ab17fc7981e087346bf54b26d284b1.tar.gz",
+      "hash": "sha256-G0F2rFORVcFkEvVdE/qWQTnYekIc77YP5/vRF9nZlxU="
     },
     "idea": {
       "type": "MutableUrl",
@@ -110,9 +110,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "ffb3c9b700e759be2ef13237c9d8f953b32a1e46",
-      "url": "https://github.com/NixOS/nixpkgs/archive/ffb3c9b700e759be2ef13237c9d8f953b32a1e46.tar.gz",
-      "hash": "sha256-RD2kNWCG+Bjo6h+JVjWVNntZs2GtRoeY2xHjts/FNkA="
+      "revision": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
+      "url": "https://github.com/NixOS/nixpkgs/archive/34ab99075ac4f7e40cf037eef32cb1c360bb85e9.tar.gz",
+      "hash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo="
     },
     "podman": {
       "type": "Url",
@@ -148,8 +148,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.wavebox.app/latest/stable/macuniversal",
       "unpack": false,
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20151.2.154.2.dmg",
-      "hash": "sha256-Nizjl0zFPX+ffoBn9a9OIE2TNWZePDRh6bLDV9Ch14M="
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20152.2.174.2.dmg",
+      "hash": "sha256-F6ff//HSInG0OBzpSU0+hXyWrcTBsr6Q5ecTutDod7I="
     },
     "wavebox-linux": {
       "type": "MutableUrl",
