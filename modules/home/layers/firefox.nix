@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   cfg = config.layers.firefox;
   script = pkgs.writers.writePython3 "fix-firefox-py" {} ''
 import re
@@ -91,9 +92,10 @@ in with lib; {
     profile = mkOption {};
   };
 
-  config = mkIf cfg.enable {
-    home.packages = [pkgs.firefox];
-    home.file."Library/Application Support/Firefox/Profiles/${cfg.profile}/user.js".text = ''
+  config = mkMerge [
+    (mkIf cfg.enable {
+      home.packages = [pkgs.firefox];
+      home.file."Library/Application Support/Firefox/Profiles/${cfg.profile}/user.js".text = ''
 user_pref("app.normandy.first_run", false);
 user_pref("beacon.enabled", false);
 user_pref("browser.aboutConfig.showWarning", false);
@@ -135,6 +137,25 @@ user_pref("signon.autofillForms", false);
 user_pref("signon.generation.enabled", false);
 user_pref("browser.ml.chat.enabled", false);
     '';
-    home.activation.fixFirefoxProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''${fixFirefoxProfile}'';
-  };
+      home.activation.fixFirefoxProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''${fixFirefoxProfile}'';
+    })
+    (mkIf isDarwin {
+      # macOS: Dock / Finder / `open` from skhd inherit the launchd GUI-session
+      # environment. Set it there via a RunAtLoad agent.
+      launchd.agents.moz-legacy-profiles = {
+        enable = true;
+        config = {
+          ProgramArguments = [ "/bin/launchctl" "setenv" "MOZ_LEGACY_PROFILES" "1" ];
+          RunAtLoad = true;
+        };
+      };
+    })
+   (mkIf (!isDarwin) {
+     # Linux (systemd + Wayland/X): systemd imports ~/.config/environment.d/*.conf
+     # into the graphical session at login, so GUI launches pick this up.
+     xdg.configFile."environment.d/firefox-legacy-profiles.conf".text = ''
+       MOZ_LEGACY_PROFILES=1
+     '';
+   })
+  ];
 }
