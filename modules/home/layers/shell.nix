@@ -91,6 +91,7 @@ in with lib; {
 
     programs.fish = {
       enable = true;
+      generateCompletions = false;
 
       functions = {
         fish_user_key_bindings = ''

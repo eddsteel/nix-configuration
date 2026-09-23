@@ -16,7 +16,7 @@ in {
   };
 
   home.packages = with pkgs; [
-    calibre discord handbrake imagemagick ledger wavebox psmisc wmctrl
+    calibre discord handbrake imagemagick psmisc wmctrl
     tree-sitter keymapp kontroll
   ];
 
@@ -79,6 +79,7 @@ in {
       enable = true;
       inherit emacs;
       hub-token = secrets.hub.token;
+      jj = true;
       name = secrets.user.name;
       email = secrets.user.email;
       github-user = "eddsteel";

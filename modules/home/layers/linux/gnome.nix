@@ -11,7 +11,7 @@ let
     executor
     astra-monitor
     paperwm
-    sound-output-device-chooser
+    sound-output-organizer
     window-calls
   ];
   findUuid = e: e.uuid or e.extensionUuid;
@@ -36,7 +36,6 @@ in with lib; {
       gst_all_1.gst-plugins-bad
       gst_all_1.gst-plugins-ugly
       gst_all_1.gst-libav
-      gst_all_1.gst-vaapi
       lm_sensors
       pciutils
       gtop
@@ -135,12 +134,6 @@ in with lib; {
         binding = ''<Primary>AudioRaiseVolume'';
         command = ''${pkgs.gnome-control-center}/bin/gnome-control-center sound'';
         name = ''sound preferences'';
-      };
-
-      "${mediaKeys}/custom-keybindings/custom5" = {
-        binding = ''<Primary><Shift><Alt><Super>w'';
-        command = ''${raise}/bin/raise wavebox ${pkgs.wavebox}/bin/wavebox'';
-        name = ''Wavebox'';
       };
 
       "org/gnome/settings-daemon/plugins/color" = {
