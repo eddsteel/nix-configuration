@@ -11,3 +11,7 @@ creation_rules:
       - *host_draper
       - *host_gusting
       - *host_da_shi
+  - path_regex: systems/da-shi/secrets(\.enc)?.yaml$
+    age: age10dz2azdxsqr5cra8259vkt2squdkm8k9m520hawgh9zwp4krxs8sddmnxl
+  - path_regex: systems/draper/secrets(\.enc)?.yaml$
+    age: age1vvfcw3zl7kwqyzx7k5t6fuzcz6kzgh25xwdflhkj83yqddyf9chq63jntt

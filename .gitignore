@@ -2,3 +2,5 @@
 .*-component
 result
 /keys/
+secrets.toml
+secrets.yaml

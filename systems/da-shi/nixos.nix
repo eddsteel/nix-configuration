@@ -6,7 +6,6 @@ let
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
   people = import ../people.nix { inherit lib; };
-  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
   zones = pkgs.callPackage ./zones.nix {};
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
@@ -113,6 +112,7 @@ in {
   sops.defaultSopsFile = ../../sops/secrets.yaml;
   sops.secrets."route53/env" = {};
   sops.secrets."backup/env".owner = config.users.users.edd.name;
+  sops.secrets."anki/pw" = {};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.edd = {
@@ -157,8 +157,8 @@ in {
   services.anki-sync-server = {
     enable = true;
     users = [{
-	    username = secrets.anki.username;
-	    password = secrets.anki.password;
+	    username = edd
+	    passwordFile = "/run/secrets/anki/pw";
     }];
     port = 9000;
   };

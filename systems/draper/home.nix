@@ -3,7 +3,7 @@ let
   username = "edd";
   homedir = "/home/${username}";
   emacs = pkgs.emacs30-pgtk;
-  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
+  secrets = builtins.fromYAML (builtins.readFile ./secrets.toml);
   devices = import ../devices.nix {};
   hosts = import ../hosts.nix { inherit lib; };
 in {
