@@ -10,9 +10,9 @@ let
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
   hosts = import ../hosts.nix { inherit lib; };
-  paneru = builtins.getFlake "github:karinushka/paneru/v0.4.4";
-  herdrFlake = builtins.getFlake "github:ogulcancelik/herdr/v0.8.0";
-  herdr = herdrFlake.outputs.packages.${builtins.currentSystem}.default;
+  paneru = builtins.getFlake "github:karinushka/paneru/v0.5.1";
+  herdr = (builtins.getFlake "github:ogulcancelik/herdr/v0.9.1").outputs.packages.${builtins.currentSystem}.default;
+  omp = (builtins.getFlake "github:yuxqiu/omp-nix").outputs.packages.${builtins.currentSystem}.default;
 in {
   imports = [
     ../../modules/home
@@ -27,10 +27,10 @@ in {
   };
 
   home.packages = with pkgs; [
-    scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
-    terraform-docs circleci-cli aws-vpn docker kubectl kubectx
+    npins scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
+    terraform-docs circleci-cli aws-vpn kubectl kubectx
     nixVersions.git podman trino maven claude-code jdk21 ruby opentofu
-    herdr nono
+    herdr nono omp
 ] ++ nix-work.all
   ++ work-pkgs.all
   ++ (with mac-apps; [caffeine vfkit podman-desktop intellij-idea-ce]);

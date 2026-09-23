@@ -1,10 +1,10 @@
 { pkgs }:
 let
-  source = (import ../../../npins).awsvpn;
+  src = (import ../../../npins).awsvpn;
   version = "5.4.0";
 in pkgs.stdenv.mkDerivation rec {
   pname = "aws-vpn";
-  inherit version;
+  inherit src version;
 
   nativeBuildInputs = with pkgs; [ cpio xar ];
   sourceRoot = ".";
@@ -12,18 +12,15 @@ in pkgs.stdenv.mkDerivation rec {
 
   unpackPhase = ''
     xar -xf $src
-    cd AWS_VPN_Client.pkg
+    cd aws-vpn-client-component.pkg
     zcat < Payload | cpio -i
     cd ..
   '';
 
   installPhase = ''
     mkdir -p $out/Applications
-    cp -R "AWS_VPN_Client.pkg/AWS VPN Client/AWS VPN Client.app" $out/Applications
-    cp ${./acvc-16.png} "$out/Applications/AWS VPN Client.app/Contents/Resources/acvc-16.png"
-  '';
-
-  src = source;
+    cp -R "aws-vpn-client-component.pkg/Applications/AWS VPN Client/AWS VPN Client.app" $out/Applications
+ '';
 
   meta = with pkgs.lib; {
     description = "AWS VPN client";

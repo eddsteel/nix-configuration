@@ -53,8 +53,7 @@ in with lib; {
 
     home.file."${configPath}/qmk/qmk.ini".text = lib.generators.toINI {} {
       user = {
-        keyboard = "kbdfans/kbd75/rev1";
-        keymap = "eddsteel";
+        overlay_dir = "${config.home.homeDirectory}/keys";
       };
       find = {
         keymap = "default";

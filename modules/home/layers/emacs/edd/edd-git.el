@@ -1,3 +1,5 @@
+(setq auth-sources '("~/.authinfo.gpg"))
+
 (use-package git-gutter
   :delight
   :custom-face

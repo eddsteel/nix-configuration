@@ -32,12 +32,17 @@ in with lib; {
         user.name = cfg.name;
         user.email = cfg.email;
         ui.default-command = "lg";
-        alias.lg = ["log" "--no-pager" "--limit" "10"];
-        alias.pr = ["sh" "-c" "hub" "pull-request" "--browse"];
+        aliases.lg = ["log" "--no-pager" "--limit" "10"];
+        aliases.pr = ["sh" "-c" "hub" "pull-request" "--browse"];
+        aliases.tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
         merge-tools.difft = {
           diff-args = ["--color=always" "$left" "$right"];
         };
-        # This isn't released yet
+        git.push-new-bookmarks = true;
+#        template-aliases = {
+#          "format_short_change_id(id)" = "id.shortest";
+#        };
+
         signing = {
           sign-all = true;
           backend = "gpg";
@@ -55,6 +60,7 @@ in with lib; {
         branch.autosetuprebase = "always";
         color.ui = true;
         core.editor = "${cfg.emacs}/bin/emacsclient -s ${config.home.homeDirectory}/run/emacs/server";
+        core.excludesFile = "${config.home.homeDirectory}/.config/git/ignore";
         init.defaultBranch = "main";
         pull.rebase = true;
         push.default = "current";
@@ -97,7 +103,7 @@ in with lib; {
                  "/GPATH" "/GRTAGS" "/GTAGS" ".tramp_history" ".agignore"
                  ".rgignore" ".sbt-hydra-history" "ensime.sbt" ".sbt-hydra-history"
                  "/node_modules" ".projectile" "/out/" ".envrc" ".env" ".tool-versions"
-                 "/result" "/.idea/" "tf/" ".jj/"];
+                 "/result" "/.idea/" "tf/" ".jj/" ".dir-locals.el"];
     };
   };
 }
