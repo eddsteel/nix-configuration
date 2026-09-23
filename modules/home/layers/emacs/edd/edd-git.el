@@ -9,6 +9,11 @@
   :config
   (global-git-gutter-mode 1))
 
+(use-package with-editor
+  :bind
+  ((:map with-editor-mode-map
+         ("s-<return>" . with-editor-finish))))
+
 (use-package magit
   :bind
   (("C-c g" . magit-file-dispatch)

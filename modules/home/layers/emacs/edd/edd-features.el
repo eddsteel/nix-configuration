@@ -159,7 +159,8 @@
    ("C-M-!" . delete-other-windows)     ; Meh-1
    ("C-M-@" . split-window-below)       ; Meh-2
    ("C-M-#" . split-window-right)       ; Meh-3
-   ("C-c r" . comint-run)))
+   ("C-c r" . comint-run)
+   ("s-<return>" . save-buffer)))
 
 (use-package smerge-mode :delight " ±")
 
