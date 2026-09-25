@@ -6,7 +6,6 @@ in with lib; {
     settings-file = mkOption {};
   };
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.karabiner-elements ];
     xdg.configFile."karabiner/karabiner.json".source = cfg.settings-file;
   };
 }
