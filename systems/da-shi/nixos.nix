@@ -1,11 +1,12 @@
 { config, pkgs, lib, ... }:
 let
   sops-nix = builtins.fetchTarball {
-    url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
+    url = "https://github.com/Mic92/sops-nix/archive/1ebd41717762d837d5115f7108522c29cdb00fbb.tar.gz";
   };
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
   people = import ../people.nix { inherit lib; };
+  secrets = builtins.fromYAML (builtins.readFile ./secrets.yaml);
   zones = pkgs.callPackage ./zones.nix {};
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";
@@ -43,13 +44,9 @@ in {
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
-
-  fileSystems."/mnt/srv" = {
-    device = "/dev/mapper/external";
-    options = ["nofail"];
-    neededForBoot = false;
-  };
-
+  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-25.11";
+  boot.loader.systemd-boot.configurationLimit = 10;
+  
   fileSystems."/srv" =
     { device = "/dev/mapper/data02";
       fsType = "btrfs";
@@ -112,7 +109,6 @@ in {
   sops.defaultSopsFile = ../../sops/secrets.yaml;
   sops.secrets."route53/env" = {};
   sops.secrets."backup/env".owner = config.users.users.edd.name;
-  sops.secrets."anki/pw" = {};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.edd = {
@@ -150,23 +146,20 @@ in {
   # };
 
   # List services that you want to enable:
+  systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.jellyfin.enable = true;
-  services.anki-sync-server = {
+  services.jellyfin = {
     enable = true;
-    users = [{
-	    username = edd
-	    passwordFile = "/run/secrets/anki/pw";
-    }];
-    port = 9000;
+    cacheDir = "/srv/data/cache/jellyfin";
   };
   services.fail2ban.enable = true;
   services.grafana = {
     enable = true;
     dataDir = "/srv/data/grafana";
     settings = {
+      security.secret_key = secrets.grafana.key;
       server = {
         # Listening Address
         http_addr = "0.0.0.0";
@@ -239,7 +232,7 @@ in {
     defaults = {
       email = "edd@eddsteel.com";
       dnsProvider = "route53";
-      credentialsFile = /run/secrets/route53/env;
+      environmentFile = "/run/secrets/route53/env";
     };
   };
 
@@ -254,7 +247,6 @@ in {
     #    virtualHosts = with builtins; listToAttrs (map virtualHost hosts.services);
     virtualHosts = with builtins; listToAttrs [
       (virtualHost (elemAt hosts.services 0))
-      (virtualHost (elemAt hosts.services 2))
       {
         name = "media.${hosts.domain}";
         value = {
@@ -309,9 +301,9 @@ in {
     serviceConfig.EnvironmentFile = /run/secrets/backup/env;
     path = [ pkgs.backblaze-b2 ];
     script = ''
-      backblaze-b2 sync --compareVersion size --noProgress /srv/media b2://eddsteel-disk/media
-      backblaze-b2 sync --compareVersion size --noProgress /srv/project b2://eddsteel-disk/project
-      backblaze-b2 sync --compareVersion size --noProgress /srv/backup b2://eddsteel-disk/backup
+      backblaze-b2 sync --compare-versions size --no-progress --exclude-regex '.*nfo' --exclude-all-symlinks /srv/media b2://eddsteel-disk/media
+      backblaze-b2 sync --compare-versions size --no-progress --exclude-regex '.*nfo' --exclude-all-symlinks /srv/project b2://eddsteel-disk/project
+      backblaze-b2 sync --compare-versions size --no-progress --exclude-regex '.*nfo' --exclude-all-symlinks /srv/backup b2://eddsteel-disk/backup
     '';
   };
 
@@ -380,4 +372,3 @@ rsync -aHv --size-only --delete --exclude=src/ --include=*/ --include=* /home "$
     };
   };
 }
-  []
