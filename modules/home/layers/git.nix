@@ -33,8 +33,8 @@ in with lib; {
         user.email = cfg.email;
         ui.default-command = "lg";
         aliases.lg = ["log" "--no-pager" "--limit" "10"];
-        aliases.pr = ["sh" "-c" "hub" "pull-request" "--browse"];
-        aliases.tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
+        aliases.pr = ["util" "exec" "--" "sh" "-c" "hub" "pull-request" "--browse" "-h" "closest_bookmark(@)"];
+        colors.prefix.underline = true;
         merge-tools.difft = {
           diff-args = ["--color=always" "$left" "$right"];
         };
@@ -42,7 +42,7 @@ in with lib; {
 #        template-aliases = {
 #          "format_short_change_id(id)" = "id.shortest";
 #        };
-
+        revsets.bookmark-advance-to = "closest_pushable(@)";
         signing = {
           sign-all = true;
           backend = "gpg";
