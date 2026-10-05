@@ -2,7 +2,7 @@
 let
   devices = import ../devices.nix { };
   sources = import ../../npins;
-  emacs = pkgs.emacs30;
+  emacs = pkgs.emacs;
   homedir = "/Users/edward";
   secrets =  builtins.fromTOML (builtins.readFile ./secrets.toml);
   nix-work = import sources.nix-work {};
@@ -10,9 +10,9 @@ let
     inherit (secrets.workpkgs) url ref rev;
   }) secrets.workpkgs.args;
   hosts = import ../hosts.nix { inherit lib; };
-  paneru = builtins.getFlake "github:karinushka/paneru/v0.5.1";
-  herdr = (builtins.getFlake "github:ogulcancelik/herdr/v0.9.1").outputs.packages.${builtins.currentSystem}.default;
-  omp = (builtins.getFlake "github:yuxqiu/omp-nix").outputs.packages.${builtins.currentSystem}.default;
+  paneru = builtins.getFlake "github:karinushka/paneru/${sources.paneru.version}";
+  herdr = (builtins.getFlake "github:ogulcancelik/herdr/${sources.herdr.version}").outputs.packages.${builtins.currentSystem}.default;
+  omp = (builtins.getFlake "github:yuxqiu/omp-nix/${sources.omp.version}").outputs.packages.${builtins.currentSystem}.default;
 in {
   imports = [
     ../../modules/home
