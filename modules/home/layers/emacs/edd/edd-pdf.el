@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; It's often useful to split a frame with a PDF and a text buffer (to
 ;; run examples or take notes).  These functions are useful to
 ;; navigate a PDF, that's zoomed to fit a column width, where moving

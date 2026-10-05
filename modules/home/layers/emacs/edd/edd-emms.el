@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package emms
   :hook
   (emms-player-started . edd-emms/tell-consul)

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package kotlin-mode
   :mode ("build.gradle.kts" . kotlin-mode)
   :hook edd-kt/imenu

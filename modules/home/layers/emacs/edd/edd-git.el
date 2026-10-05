@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (setq auth-sources '("~/.authinfo.gpg"))
 
 (use-package git-gutter

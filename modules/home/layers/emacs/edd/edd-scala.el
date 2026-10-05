@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package emacs
   ;; sbt env file plugin
   :config

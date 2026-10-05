@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (defun edd-util/kill-region-or-backward-kill-word (&optional arg region)
   "`kill-region' if the region is active, otherwise `backward-kill-word'"
   (interactive (list (prefix-numeric-value current-prefix-arg) (use-region-p)))

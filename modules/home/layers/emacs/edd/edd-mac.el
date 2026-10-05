@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package emacs
   :init
   ;; otherwise with-editor calls emacsclient wrong

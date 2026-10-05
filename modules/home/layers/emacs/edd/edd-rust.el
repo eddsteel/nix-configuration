@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package rust-mode
   :config
   (defun edd-rust-ivy-function ()

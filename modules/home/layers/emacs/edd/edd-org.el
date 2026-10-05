@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun org-plus-contrib ())
 
 (use-package org

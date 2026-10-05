@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; Process is:
 ;; - Paste from online banking sites
 ;; - Run (edd/ledger-prep-from-paste)

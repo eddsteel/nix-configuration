@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package hi2
   :delight
   (hi2-mode))

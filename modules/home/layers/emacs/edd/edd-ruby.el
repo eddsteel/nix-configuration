@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package ruby-mode
   :mode "\\.rbi"
   :config

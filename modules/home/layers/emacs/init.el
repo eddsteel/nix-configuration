@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (defun edd/maybe-load-config (name)
   (let ((conf (locate-user-emacs-file name)))
     (when (file-readable-p conf) (load-file conf))))

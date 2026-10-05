@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; Features -- tweaking of stuff that's built-in
 ;;
 (use-package term
