@@ -4,7 +4,7 @@
       "type": "Url",
       "url": "https://d20adtppz83p9s.cloudfront.net/OSX_ARM64/latest/AWS_VPN_Client_ARM64.pkg",
       "unpack": false,
-      "hash": "sha256-nHg/Ploo90p1sSKTNqbzwD3PT5en7iMDok+GT5Ivw8A="
+      "hash": "sha256-JadT3J4k0Ku6PuSqARggnDUtZAWezign4zz7Uj5Qo2o="
     },
     "brainzo": {
       "type": "Git",
@@ -47,8 +47,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA",
       "unpack": false,
-      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/156.0.1/mac/en-CA/Firefox%20156.0.1.dmg",
-      "hash": "sha256-iSTSlM35WggHGBdVPVPGDr3ENSECMDozG4n9Zvc8Xos="
+      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/157.0/mac/en-CA/Firefox%20157.0.dmg",
+      "hash": "sha256-F2yWnhrwUOSWeillCXjaHrOUMZVaHY1B3rXVJl7EBbc="
     },
     "git-web-link": {
       "type": "Git",
@@ -62,6 +62,22 @@
       "url": null,
       "hash": "sha256-/gwJTTUaPOzlwjoI5w2pDk8Gp9833L3zZk1PMD7OKiQ="
     },
+    "herdr": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "herdrdev",
+        "repo": "herdr"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.9.3",
+      "revision": "7eaf574ba6362c36c3d8fe89f411bb7d5bb34660",
+      "url": "https://api.github.com/repos/herdrdev/herdr/tarball/refs/tags/v0.9.3",
+      "hash": "sha256-uu452Xe23pSvFk7w7fKPjiaqY5QenUIljao2SFAxpc0="
+    },
     "home-manager": {
       "type": "Git",
       "repository": {
@@ -71,9 +87,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "4b9add8645d5e2b0f7de18f7a442d08fe2bdcc91",
-      "url": "https://github.com/nix-community/home-manager/archive/4b9add8645d5e2b0f7de18f7a442d08fe2bdcc91.tar.gz",
-      "hash": "sha256-z+knvdMItRrMonmG4RIsqKYIa/hwYUzKjotDTfC5DDc="
+      "revision": "f53f3267f5d009dd8f99443505e609389d7ff267",
+      "url": "https://github.com/nix-community/home-manager/archive/f53f3267f5d009dd8f99443505e609389d7ff267.tar.gz",
+      "hash": "sha256-DiuwfdoZtEqVRsWuAhXcHa+cfvkr0t/xWW8ugkcxNyI="
     },
     "idea": {
       "type": "MutableUrl",
@@ -110,9 +126,41 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "4975466d324710c576dc11ad614684e6bd8cad8e",
-      "url": "https://github.com/NixOS/nixpkgs/archive/4975466d324710c576dc11ad614684e6bd8cad8e.tar.gz",
-      "hash": "sha256-xJ+X4hBtOcAFGBOe5nAMyMUeF9foJBmIOu3NjBqBycU="
+      "revision": "a7868a727837f3c09cee2ce0ca671c76b1589fed",
+      "url": "https://github.com/NixOS/nixpkgs/archive/a7868a727837f3c09cee2ce0ca671c76b1589fed.tar.gz",
+      "hash": "sha256-KgItSKML8Xvte0B7/uGnBDsYzSnnKHcOaiUbgWBXLXw="
+    },
+    "omp": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "yuxqiu",
+        "repo": "omp-nix"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v18.6.1",
+      "revision": "9dfadebdc1c57d3d99f73da73f8424ae5ed43a26",
+      "url": "https://api.github.com/repos/yuxqiu/omp-nix/tarball/refs/tags/v18.6.1",
+      "hash": "sha256-CKZPeKzWfNSjTcY1F5/z1QsRAKQ0CA6+QQLoFS/5pbg="
+    },
+    "paneru": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "karinushka",
+        "repo": "paneru"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.5.2",
+      "revision": "b1b6abbd3f1a4be138152b6f0389c9ff1b27a269",
+      "url": "https://api.github.com/repos/karinushka/paneru/tarball/refs/tags/v0.5.2",
+      "hash": "sha256-OCMg6Yk0ysF+JHOaPIY9SP9azox4KVmS7R4pkuwD+K0="
     },
     "podman": {
       "type": "Url",
