@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {}, lib }:
 let
-  platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
+  platform = if pkgs.stdenv.hostPlatform.isDarwin then "darwin" else "linux";
   source = (import ../npins)."wavebox-${platform}";
   version_re = "https://download.wavebox.app/stable/([^/]+/)?[^/]+/(Install%20)?Wavebox(%20|_)(.+[-.][0-9]+)(\\.[^.]+){1,2}$";
   version = builtins.elemAt (builtins.match version_re source.url) 3;

@@ -1,5 +1,5 @@
 self: pkgs:
-    pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin rec {
+    pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin rec {
       mac-apps       = pkgs.callPackages ../pkgs/mac {};
       firefox        = self.mac-apps.firefox;
       intellij-idea  = self.mac-apps.intellij-idea-ce;

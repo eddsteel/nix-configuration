@@ -1,6 +1,6 @@
 { pkgs, lib }:
 let
-  platform = if pkgs.stdenv.isDarwin then "darwin" else "linux";
+  platform = if pkgs.stdenv.hostPlatform.isDarwin then "darwin" else "linux";
   version = "2024.9.0";
   java = pkgs.jdk22;
 in pkgs.stdenv.mkDerivation rec {
