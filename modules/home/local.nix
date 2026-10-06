@@ -23,7 +23,7 @@ in {
       programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks = {
+        settings = {
           "*" = {
             addKeysToAgent = "yes";
             compression = false;
@@ -34,17 +34,12 @@ in {
             serverAliveCountMax = 3;
             serverAliveInterval = 0;
             userKnownHostsFile = "~/.ssh/known_hosts";
-            extraOptions = {
-              UseKeychain = "yes";
-              IgnoreUnknown = "UseKeychain";
-            };
+            UseKeychain = "yes";
+            IgnoreUnknown = "UseKeychain";
           };
           "github.com" = {
             user = "eddsteel";
             addKeysToAgent = "yes";
-            extraOptions = {
-              # UseKeychain = "yes";
-            };
           };
         };
       };

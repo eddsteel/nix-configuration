@@ -151,8 +151,6 @@ user_pref("browser.ml.chat.enabled", false);
       };
     })
    (mkIf (!isDarwin) {
-     # Linux (systemd + Wayland/X): systemd imports ~/.config/environment.d/*.conf
-     # into the graphical session at login, so GUI launches pick this up.
      xdg.configFile."environment.d/firefox-legacy-profiles.conf".text = ''
        MOZ_LEGACY_PROFILES=1
      '';
