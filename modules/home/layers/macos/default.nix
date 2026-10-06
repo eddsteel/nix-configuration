@@ -20,7 +20,6 @@ in with lib; {
         "/System/Applications/System Settings.app"
         "${cfg.emacs}/Applications/Emacs.app"
         "${pkgs.mac-apps.firefox}/Applications/Firefox.app"
-        "${pkgs.iterm2}/Applications/iTerm2.app"
         "${pkgs.wavebox}/Applications/Wavebox.app"
         "${pkgs.aws-vpn}/Applications/AWS VPN Client.app"
       ];
@@ -71,13 +70,13 @@ in with lib; {
     };
 
     # https://github.com/nix-community/home-manager/blob/db00b39a9abec04245486a01b236b8d9734c9ad0/modules/targets/darwin/linkapps.nix
-#    home.file."Applications/Home Manager".source = let
-#      apps = pkgs.buildEnv {
-#        name = "home-manager-applications";
-#        paths = config.home.packages;
-#        pathsToLink = "/Applications";
-#      };
-#    in "${apps}/Applications";
+    home.file."Applications/HM".source = let
+      apps = pkgs.buildEnv {
+        name = "home-manager-applications";
+        paths = config.home.packages;
+        pathsToLink = ["/Applications"];
+      };
+    in "${apps}/Applications";
 
     home.file."media/film".source = mkOSymlink "${config.home.homeDirectory}/Movies";
     home.file."media/music".source = mkOSymlink "${config.home.homeDirectory}/Music";
@@ -91,7 +90,7 @@ in with lib; {
     '';
 
     home.packages = with pkgs; [
-      coreutils gnugrep gnused findutils gawk python3 ps wget less ncurses keymapp
+      coreutils gnugrep gnused findutils gawk python3 ps wget less keymapp
     ];
 
     programs.bash.bashrcExtra = keychain;
@@ -112,21 +111,6 @@ in with lib; {
       karabiner = {
         enable = true;
         settings-file = ./files/karabiner.json;
-      };
-
-      skhd = {
-        enable = true;
-        bindings = {
-          "hyper - e" = "open ${cfg.emacs}/Applications/Emacs.app";
-          "hyper - f" = "open ${pkgs.mac-apps.firefox}/Applications/Firefox.app";
-          "hyper - i" = "idea";
-          "hyper - j" = "if [ -f ~/.nix-profile/bin/jira ]; then ~/.nix-profile/bin/jira; fi";
-          "hyper - k" = "open ${pkgs.keymapp}/Applications/Keymapp.app";
-          "hyper - m" = "open ${pkgs.ghostty-bin}/Applications/Ghostty.app";
-          "hyper - q" = "pmset sleepnow";
-          "hyper - w" = "open ${pkgs.wavebox}/Applications/Wavebox.app";
-          "hyper - z" = "open -a zoom.us";
-        };
       };
     };
   };
