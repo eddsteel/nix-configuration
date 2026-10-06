@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: nil; -*-
 
 ;; theme
 ;;
@@ -10,6 +10,7 @@
   (nano-light-subtle "#EEE8D5")
   (nano-light-popout "#B58A7C")
   :config
+  (custom-set-faces '(default ((t (:height 160)))))
   (custom-set-faces '(highlight ((t (:background "#F2EDDA")))))
   (custom-set-faces '(nano-faded ((t (:foreground "#666050")))))
   (custom-set-faces '(nano-faded-i ((t (:background "#666050")))))
@@ -17,8 +18,7 @@
   (custom-set-faces '(nano-salient-i ((t (:background "#7CA7B5")))))
   (custom-set-faces '(nano-popout ((t (:foreground "#B58A7C")))))
   (custom-set-faces '(nano-popout-i ((t (:background "#B58A7C")))))
-  (custom-set-faces '(nano-mono ((t (:weight normal :height 130 :family "Sarasa Mono J")))))
-  (custom-set-faces '(nano-strong ((t (:weight normal :height 130 :family "Sarasa Mono J")))))
+  (custom-set-faces '(nano-mono ((t (:inherit (default) :family "Sarasa Mono J")))))
   (custom-set-faces '(ahs-plugin-default-face ((t (:background "#B58A7C")))))
   (custom-set-faces '(ahs-plugin-default-face-unfocused ((t (:background "#B58A7C")))))
   (custom-set-faces '(menu ((t (:background "#CEC8B1")))))

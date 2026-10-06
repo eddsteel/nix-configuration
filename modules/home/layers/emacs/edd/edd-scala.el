@@ -179,37 +179,4 @@
   (setq sbt:buffer-project-root (sbt:find-root))
   )
 
-
-
-;; Gets "package com.eddsteel.project.package.name" from
-;; - project src/main/scala/com/eddsteel/project/package/name/File.scala
-;; - project src/main/scala/project/package/name/File.scala
-;; - project src/main/scala/package/name/File.scala
-;; - project src/com/eddsteel/project/package/name/File.scala
-;; - project src/project/package/name/File.scala
-;; - project src/package/name/File.scala
-;;
-;; Gets "package com.eddsteel.project" from
-;; - project src/main/scala/File.scala
-;; - project src/File.scala
-;;
-(defun edd-scala/guess-package (project relfile)
-    (let*
-      ((root edd-scala/root-package)
-       (projectdir (file-name-as-directory project))
-       (rootpkgdir (file-name-as-directory (edd-scala/fileize-pkg root)))
-       (srcfile (s-chop-prefixes (list "src/" "main/scala/" rootpkgdir projectdir) relfile))
-       (srcdir (if-let ((dir (file-name-directory srcfile)))
-		   (directory-file-name dir))))
-      (concat "package " root "." project (if srcdir (concat "." (edd-scala/pkgize-file srcdir)) ""))))
-
-(defun edd-scala/guess-package-buffer ()
-  "Guess and insert the package for this scala file."
-  (interactive)
-  (if (projectile-project-p)
-      (insert (edd-scala/guess-package
-	       (file-name-nondirectory (directory-file-name (projectile-project-root)))
-	       (car (projectile-make-relative-to-root (list (buffer-file-name))))))
-    (message "Must be in a projectile project.")))
-
 (provide 'edd-scala)
