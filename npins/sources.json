@@ -33,9 +33,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "4cff07de74b50e64bdd68cd4e722ab5b6b35ee48",
-      "url": "https://github.com/nix-darwin/nix-darwin/archive/4cff07de74b50e64bdd68cd4e722ab5b6b35ee48.tar.gz",
-      "hash": "sha256-oQFip+v0luP8NIxJzmiW4Wu8bILsbFWom5l0zonl8hQ="
+      "revision": "f0ec2b3fae4df92ea7788359aef9e07bb88d720f",
+      "url": "https://github.com/nix-darwin/nix-darwin/archive/f0ec2b3fae4df92ea7788359aef9e07bb88d720f.tar.gz",
+      "hash": "sha256-jto4pdsl0bgErQ5vaMc3gOyj//PILLRJuqX3I7fUk6s="
     },
     "exfalso": {
       "type": "Url",
@@ -47,8 +47,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-CA",
       "unpack": false,
-      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/157.0/mac/en-CA/Firefox%20157.0.dmg",
-      "hash": "sha256-F2yWnhrwUOSWeillCXjaHrOUMZVaHY1B3rXVJl7EBbc="
+      "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/158.0.1/mac/en-CA/Firefox%20158.0.1.dmg",
+      "hash": "sha256-r94wNp7eEtt9psxCWm3b2O5LSAQEbMlqa/K1ScH3MnQ="
     },
     "git-web-link": {
       "type": "Git",
@@ -73,10 +73,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.9.3",
-      "revision": "7eaf574ba6362c36c3d8fe89f411bb7d5bb34660",
-      "url": "https://api.github.com/repos/herdrdev/herdr/tarball/refs/tags/v0.9.3",
-      "hash": "sha256-uu452Xe23pSvFk7w7fKPjiaqY5QenUIljao2SFAxpc0="
+      "version": "v0.9.5",
+      "revision": "7573e821895d32c8d1f78b3f6c9a2f85a46df4ac",
+      "url": "https://api.github.com/repos/herdrdev/herdr/tarball/refs/tags/v0.9.5",
+      "hash": "sha256-N7e7oCKxeCoxek6UT8Lweq16rSsQQi34QMb7C2iNpm8="
     },
     "home-manager": {
       "type": "Git",
@@ -87,16 +87,17 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f53f3267f5d009dd8f99443505e609389d7ff267",
-      "url": "https://github.com/nix-community/home-manager/archive/f53f3267f5d009dd8f99443505e609389d7ff267.tar.gz",
-      "hash": "sha256-DiuwfdoZtEqVRsWuAhXcHa+cfvkr0t/xWW8ugkcxNyI="
+      "revision": "ec80131710bffcdf3b8498cf41f3a0579833b023",
+      "url": "https://github.com/nix-community/home-manager/archive/ec80131710bffcdf3b8498cf41f3a0579833b023.tar.gz",
+      "hash": "sha256-TyoYH983Nsc++1scw0SoOEKshPSJWJDxK7tTmuZ974M="
     },
     "idea": {
       "type": "MutableUrl",
       "update_url": "https://data.services.jetbrains.com/products/download?code=IIU&platform=macM1",
       "unpack": false,
       "url": "https://download-cdn.jetbrains.com/idea/idea-2026.2.3-aarch64.dmg",
-      "hash": "sha256-qsPNxthEG5QFJHP+43qWeSQqNvSfYP3ObM6qPnrUbjM="
+      "hash": "sha256-qsPNxthEG5QFJHP+43qWeSQqNvSfYP3ObM6qPnrUbjM=",
+      "frozen": true
     },
     "istat": {
       "type": "MutableUrl",
@@ -126,9 +127,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "a7868a727837f3c09cee2ce0ca671c76b1589fed",
-      "url": "https://github.com/NixOS/nixpkgs/archive/a7868a727837f3c09cee2ce0ca671c76b1589fed.tar.gz",
-      "hash": "sha256-KgItSKML8Xvte0B7/uGnBDsYzSnnKHcOaiUbgWBXLXw="
+      "revision": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "url": "https://github.com/NixOS/nixpkgs/archive/09063bd1f2b36fd9fd793c36dfade7bd40a93dfc.tar.gz",
+      "hash": "sha256-Mh0PUaIv4nFY+8wAGonaEh8iBzwsmdNlwjVHmFg1Biw="
     },
     "omp": {
       "type": "GitRelease",
@@ -141,10 +142,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v18.6.1",
-      "revision": "9dfadebdc1c57d3d99f73da73f8424ae5ed43a26",
-      "url": "https://api.github.com/repos/yuxqiu/omp-nix/tarball/refs/tags/v18.6.1",
-      "hash": "sha256-CKZPeKzWfNSjTcY1F5/z1QsRAKQ0CA6+QQLoFS/5pbg="
+      "version": "v18.12.3",
+      "revision": "b5c317ab72958593bee47ca3463f4747344a11b9",
+      "url": "https://api.github.com/repos/yuxqiu/omp-nix/tarball/refs/tags/v18.12.3",
+      "hash": "sha256-l/zq0mZN12FTQ+eXcu5AiNHTHc0assug4D6cnlwrBWE="
     },
     "paneru": {
       "type": "GitRelease",
@@ -164,9 +165,9 @@
     },
     "podman": {
       "type": "Url",
-      "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.29.3/podman-desktop-1.29.3-universal.dmg",
+      "url": "https://github.com/podman-desktop/podman-desktop/releases/download/v1.30.5/podman-desktop-1.30.5-universal.dmg",
       "unpack": false,
-      "hash": "sha256-eeKXs1ng4V18+Cg9coCy1QVsEP8CGuhQ3aatL8hneQY="
+      "hash": "sha256-1IKMFAg9OgLdwRYFhB8qL6uolB2Heo3AtcC2Lg48IWQ="
     },
     "privx-cmd": {
       "type": "Url",
@@ -196,8 +197,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.wavebox.app/latest/stable/macuniversal",
       "unpack": false,
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20154.3.5.2.dmg",
-      "hash": "sha256-JPLJ5kCRalAQFALaz+IY/H4e2vGjoV4bVcI04Dk4psw="
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20155.3.18.2.dmg",
+      "hash": "sha256-6Or7E4hyXgjw5Yl0NE51FLOMVeTaAL6SSaZwOsKSHFA="
     },
     "wavebox-linux": {
       "type": "MutableUrl",
