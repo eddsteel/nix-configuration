@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+# TODO: move omp/herdr/paneru to macos layer
 let
   devices = import ../devices.nix { };
   sources = import ../../npins;
@@ -28,9 +29,8 @@ in {
 
   home.packages = with pkgs; [
     npins scripts kotlin kotlin-interactive-shell gettext dos2unix pre-commit
-    terraform-docs circleci-cli aws-vpn kubectl kubectx
-    nixVersions.git podman trino maven claude-code jdk21 ruby opentofu
-    herdr nono omp
+    terraform-docs kubectl kubectx nixVersions.git podman trino maven
+    claude-code jdk21 ruby opentofu herdr nono omp ghostty-bin wavebox
 ] ++ nix-work.all
   ++ work-pkgs.all
   ++ (with mac-apps; [caffeine vfkit podman-desktop intellij-idea-ce]);
@@ -77,11 +77,17 @@ in {
         window_snap              = "cmd + ctrl - minus";
       };
       options = {
-        preset_column_widths = [0.25 0.33 0.5 0.66 0.75 1.0];
+        preset_column_widths = [0.33 0.5 0.75 1.0];
         animation_speed = 12;
+        mouse_follows_focus = false;
       };
       swipe.scroll.modifier = "ctrl + alt + shift + cmd"; # i.e. hyper
       restore.enable = false;
+      windows.aws_vpn_client = {
+        bundle_id = "com.amazonaws.acvc.osx";
+        title = "^AWS VPN Client$";
+        manage = false;
+      };
     };
   };
 
