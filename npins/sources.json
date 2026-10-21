@@ -4,7 +4,7 @@
       "type": "Url",
       "url": "https://d20adtppz83p9s.cloudfront.net/OSX_ARM64/latest/AWS_VPN_Client_ARM64.pkg",
       "unpack": false,
-      "hash": "sha256-JadT3J4k0Ku6PuSqARggnDUtZAWezign4zz7Uj5Qo2o="
+      "hash": "sha256-ReCK6+ZphUr9eFHkYpi3uqLeyHk5J0ImVrqOFJzYWCY="
     },
     "brainzo": {
       "type": "Git",
@@ -33,9 +33,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f0ec2b3fae4df92ea7788359aef9e07bb88d720f",
-      "url": "https://github.com/nix-darwin/nix-darwin/archive/f0ec2b3fae4df92ea7788359aef9e07bb88d720f.tar.gz",
-      "hash": "sha256-jto4pdsl0bgErQ5vaMc3gOyj//PILLRJuqX3I7fUk6s="
+      "revision": "b2f8c5cabf046fccc55bda9375643684c7fd2acd",
+      "url": "https://github.com/nix-darwin/nix-darwin/archive/b2f8c5cabf046fccc55bda9375643684c7fd2acd.tar.gz",
+      "hash": "sha256-rGPhon9BPrx8/suy0Vz6/xH28AOPvWfbcBPYJYP6FNA="
     },
     "exfalso": {
       "type": "Url",
@@ -87,9 +87,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ec80131710bffcdf3b8498cf41f3a0579833b023",
-      "url": "https://github.com/nix-community/home-manager/archive/ec80131710bffcdf3b8498cf41f3a0579833b023.tar.gz",
-      "hash": "sha256-TyoYH983Nsc++1scw0SoOEKshPSJWJDxK7tTmuZ974M="
+      "revision": "ab97a5d09e0f2aa7339cfd35ec5824fd6653e27c",
+      "url": "https://github.com/nix-community/home-manager/archive/ab97a5d09e0f2aa7339cfd35ec5824fd6653e27c.tar.gz",
+      "hash": "sha256-J73EBU30r2hXvHCcBtaigQDAIu/GGPYk1nc6P9THcmg="
     },
     "idea": {
       "type": "MutableUrl",
@@ -127,9 +127,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
-      "url": "https://github.com/NixOS/nixpkgs/archive/09063bd1f2b36fd9fd793c36dfade7bd40a93dfc.tar.gz",
-      "hash": "sha256-Mh0PUaIv4nFY+8wAGonaEh8iBzwsmdNlwjVHmFg1Biw="
+      "revision": "02c087f3fe673c9e317f206a627cb6b910336dbe",
+      "url": "https://github.com/NixOS/nixpkgs/archive/02c087f3fe673c9e317f206a627cb6b910336dbe.tar.gz",
+      "hash": "sha256-IoNisKcGbUjdd45qCqywGMCYmZ5EnkxezvLII0FWwNA="
     },
     "omp": {
       "type": "GitRelease",
@@ -142,10 +142,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v18.12.3",
-      "revision": "b5c317ab72958593bee47ca3463f4747344a11b9",
-      "url": "https://api.github.com/repos/yuxqiu/omp-nix/tarball/refs/tags/v18.12.3",
-      "hash": "sha256-l/zq0mZN12FTQ+eXcu5AiNHTHc0assug4D6cnlwrBWE="
+      "version": "v18.12.5",
+      "revision": "7a63c0e813ab0aceb34c22022ed97e81ed882f59",
+      "url": "https://api.github.com/repos/yuxqiu/omp-nix/tarball/refs/tags/v18.12.5",
+      "hash": "sha256-DXaT+BU7egDGeFW7QZLEm+IIgj3cogtnWLH9YLTjHJo="
     },
     "paneru": {
       "type": "GitRelease",
@@ -197,8 +197,8 @@
       "type": "MutableUrl",
       "update_url": "https://download.wavebox.app/latest/stable/macuniversal",
       "unpack": false,
-      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20155.3.18.2.dmg",
-      "hash": "sha256-6Or7E4hyXgjw5Yl0NE51FLOMVeTaAL6SSaZwOsKSHFA="
+      "url": "https://download.wavebox.app/stable/macuniversal/Install%20Wavebox%20156.3.20.2.dmg",
+      "hash": "sha256-xEDQazTz2XppRek0ICKZhloKIC9RQ80LkrBEQV0e7F4="
     },
     "wavebox-linux": {
       "type": "MutableUrl",
