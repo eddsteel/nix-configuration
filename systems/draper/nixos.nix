@@ -5,7 +5,7 @@ let
   };
   hosts = import ../hosts.nix { inherit lib; };
   people = import ../people.nix { inherit lib; };
-  secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
+  secrets = builtins.fromJSON (builtins.readFile ./secrets.json);
 in {
   imports = [
     ../../modules/per-host.nix

@@ -2,8 +2,8 @@
 let
   username = "edd";
   homedir = "/home/${username}";
-  emacs = pkgs.emacs30-pgtk;
-  secrets = builtins.fromYAML (builtins.readFile ./secrets.toml);
+  emacs = pkgs.emacs-pgtk;
+  secrets = builtins.fromJSON (builtins.readFile ./secrets.json);
   devices = import ../devices.nix {};
   hosts = import ../hosts.nix { inherit lib; };
 in {
