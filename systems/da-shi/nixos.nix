@@ -6,7 +6,7 @@ let
   hostName = "da-shi";
   hosts = import ../hosts.nix { inherit lib; };
   people = import ../people.nix { inherit lib; };
-  secrets = builtins.fromYAML (builtins.readFile ./secrets.yaml);
+  secrets = builtins.fromJSON (builtins.readFile ./secrets.json);
   zones = pkgs.callPackage ./zones.nix {};
   virtualHost = svc: {
     name = "${svc.name}.${hosts.domain}";

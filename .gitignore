@@ -4,3 +4,4 @@ result
 /keys/
 secrets.toml
 secrets.yaml
+secrets.json
